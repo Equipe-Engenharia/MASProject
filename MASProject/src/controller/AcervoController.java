@@ -8,20 +8,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import view.FormAcervo;
 
 public class AcervoController {
 	private JLabel imagem;
-	private JButton inserir;
-	private JButton remover;
 	
-	public AcervoController(JLabel imagem,  JButton inserir, JButton remover){
-		this.inserir = inserir;
+	public AcervoController(JLabel imagem){
 		this.imagem = imagem;
-		this.remover = remover;
 	}
 	
 	public void procuraArquivo() {
@@ -45,7 +39,7 @@ public class AcervoController {
 		}
 	}
 	
-	public ActionListener Inserir = new ActionListener() {
+	public ActionListener inserir_imagem = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -54,7 +48,7 @@ public class AcervoController {
 
 	};
 
-	public ActionListener Remover = new ActionListener() {
+	public ActionListener remover_imagem = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {

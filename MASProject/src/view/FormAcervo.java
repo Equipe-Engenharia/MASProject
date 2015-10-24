@@ -175,9 +175,9 @@ public class FormAcervo extends JFrame {
 		btnExcluirImagem.setBounds(497, 188, 46, 23);
 		contentPane.add(btnExcluirImagem);
 		
-		AcervoController Acontroller = new AcervoController(lblSelecImagem, btnExcluirImagem, btnExcluirImagem);
+		AcervoController Acontroller = new AcervoController(lblSelecImagem);
 		
-		btnPesquisarImagem.addActionListener(Acontroller.Inserir);
-		btnExcluirImagem.addActionListener(Acontroller.Remover);
+		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
+		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
 	}
 }
