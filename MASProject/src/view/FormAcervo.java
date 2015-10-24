@@ -20,6 +20,7 @@ import javax.swing.JMenuBar;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
+import javax.swing.ImageIcon;
 
 public class FormAcervo extends JFrame {
 
@@ -77,6 +78,7 @@ public class FormAcervo extends JFrame {
 		nome_artist.setColumns(10);
 		
 		JButton btnPesquisaArtist = new JButton("");
+		btnPesquisaArtist.setIcon(new ImageIcon("C:\\Users\\Denys\\workspace\\MASProject\\icons\\search.png"));
 		btnPesquisaArtist.setBounds(280, 66, 29, 23);
 		contentPane.add(btnPesquisaArtist);
 		
@@ -152,18 +154,21 @@ public class FormAcervo extends JFrame {
 		btnGravar.setBounds(36, 588, 89, 23);
 		contentPane.add(btnGravar);
 		
-		JLabel lblSelecImagem = new JLabel("Selecione uma imagem...");
+		JLabel lblSelecImagem = new JLabel("");
+		lblSelecImagem.setIcon(new ImageIcon("C:\\Users\\Denys\\workspace\\MASProject\\icons\\painting.png"));
 		lblSelecImagem.setBackground(SystemColor.inactiveCaption);
 		lblSelecImagem.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSelecImagem.setBounds(397, 26, 189, 151);
 		lblSelecImagem.setBorder(BorderFactory.createLineBorder(Color.black, 1));  
 		contentPane.add(lblSelecImagem);
 		
-		JButton btnPesquisar = new JButton("+");
+		JButton btnPesquisar = new JButton("");
+		btnPesquisar.setIcon(new ImageIcon("C:\\Users\\Denys\\workspace\\MASProject\\icons\\add.png"));
 		btnPesquisar.setBounds(440, 188, 46, 23);
 		contentPane.add(btnPesquisar);
 		
-		JButton btnExcluir = new JButton("x");
+		JButton btnExcluir = new JButton("");
+		btnExcluir.setIcon(new ImageIcon("C:\\Users\\Denys\\workspace\\MASProject\\icons\\delete.png"));
 		btnExcluir.setBounds(497, 188, 46, 23);
 		contentPane.add(btnExcluir);
 		
