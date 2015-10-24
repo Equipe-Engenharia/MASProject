@@ -78,7 +78,7 @@ public class FormAcervo extends JFrame {
 		nome_artist.setColumns(10);
 		
 		JButton btnPesquisaArtist = new JButton("");
-		btnPesquisaArtist.setIcon(new ImageIcon("C:\\Users\\Denys\\workspace\\MASProject\\icons\\search.png"));
+		btnPesquisaArtist.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		btnPesquisaArtist.setBounds(280, 66, 29, 23);
 		contentPane.add(btnPesquisaArtist);
 		
@@ -155,22 +155,22 @@ public class FormAcervo extends JFrame {
 		contentPane.add(btnGravar);
 		
 		JLabel lblSelecImagem = new JLabel("");
-		lblSelecImagem.setIcon(new ImageIcon("C:\\Users\\Denys\\workspace\\MASProject\\icons\\painting.png"));
+		lblSelecImagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
 		lblSelecImagem.setBackground(SystemColor.inactiveCaption);
 		lblSelecImagem.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSelecImagem.setBounds(397, 26, 189, 151);
 		lblSelecImagem.setBorder(BorderFactory.createLineBorder(Color.black, 1));  
 		contentPane.add(lblSelecImagem);
 		
-		JButton btnPesquisar = new JButton("");
-		btnPesquisar.setIcon(new ImageIcon("C:\\Users\\Denys\\workspace\\MASProject\\icons\\add.png"));
-		btnPesquisar.setBounds(440, 188, 46, 23);
-		contentPane.add(btnPesquisar);
+		JButton btnPesquisarImagem = new JButton("");
+		btnPesquisarImagem.setIcon(new ImageIcon("../MASProject/icons/add.png"));
+		btnPesquisarImagem.setBounds(440, 188, 46, 23);
+		contentPane.add(btnPesquisarImagem);
 		
-		JButton btnExcluir = new JButton("");
-		btnExcluir.setIcon(new ImageIcon("C:\\Users\\Denys\\workspace\\MASProject\\icons\\delete.png"));
-		btnExcluir.setBounds(497, 188, 46, 23);
-		contentPane.add(btnExcluir);
+		JButton btnExcluirImagem = new JButton("");
+		btnExcluirImagem.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
+		btnExcluirImagem.setBounds(497, 188, 46, 23);
+		contentPane.add(btnExcluirImagem);
 		
 		
 	}
