@@ -72,7 +72,7 @@ public class ArquivosController implements IArquivosController{
 
 	@Override
 	public void leDiretorio(String diretorio) throws IOException {
-		File dir = new File(diretorio); //Abrindo o conteudo do diretorio
+		File dir = new File(diretorio); //Abrindo o conteudo do diretório
 		if(dir.exists()){
 			File[] listaArquivos = dir.listFiles();
 			for (File f : listaArquivos){
