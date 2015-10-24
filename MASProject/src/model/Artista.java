@@ -2,7 +2,17 @@ package model;
 
 public class Artista {
 	
+	private int identificacao;
 	private String nome;
+	
+	
+	public int getIdentificacao() {
+		return identificacao;
+	}
+
+	public void setIdentificacao(int identificacao) {
+		this.identificacao = identificacao;
+	}
 
 	public String getNome() {
 		return nome;

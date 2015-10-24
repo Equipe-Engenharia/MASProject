@@ -43,7 +43,7 @@ public class ArquivosController implements IArquivosController{
 	}
 	
 	@Override
-	public void escreveArquivo(String diretorio, String arquivo)
+	public void escreveArquivo(String diretorio, String arquivo, Object object)
 			throws IOException {
 		String linha = JOptionPane.showInputDialog("Digite algo: ");
 		StringBuffer buffer = new StringBuffer();
