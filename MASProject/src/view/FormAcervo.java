@@ -18,6 +18,9 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.JMenuBar;
 import javax.swing.border.TitledBorder;
+
+import controller.AcervoController;
+
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.ImageIcon;
@@ -172,6 +175,9 @@ public class FormAcervo extends JFrame {
 		btnExcluirImagem.setBounds(497, 188, 46, 23);
 		contentPane.add(btnExcluirImagem);
 		
+		AcervoController Acontroller = new AcervoController(lblSelecImagem, btnExcluirImagem, btnExcluirImagem);
 		
+		btnPesquisarImagem.addActionListener(Acontroller.Inserir);
+		btnExcluirImagem.addActionListener(Acontroller.Remover);
 	}
 }
