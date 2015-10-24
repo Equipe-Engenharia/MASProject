@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.RegisSetorController;
+
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
@@ -66,5 +69,7 @@ public class RegisSetor extends JFrame {
 		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setBounds(10, 89, 89, 23);
 		contentPane.add(btnGravar);
+		
+		RegisSetorController RsContrl = new RegisSetorController(id_setor,lblNomeDoSetor,btnGravar);
 	}
 }
