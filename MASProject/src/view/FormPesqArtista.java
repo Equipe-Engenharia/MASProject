@@ -9,12 +9,17 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+
+import controller.ComboArtistaController;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class FormPesqArtista extends JFrame {
 
 	private JPanel contentPane;
+	private JComboBox<String> cbArtista;
+	private JLabel lblArtista;
 
 	/**
 	 * Launch the application.
@@ -37,6 +42,7 @@ public class FormPesqArtista extends JFrame {
 	 */
 	public FormPesqArtista() {
 		setTitle("Pesquisar Artista - MASP");
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -44,11 +50,11 @@ public class FormPesqArtista extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblArtista = new JLabel("Artista:");
+		lblArtista = new JLabel("Artista:");
 		lblArtista.setBounds(47, 40, 70, 15);
 		contentPane.add(lblArtista);
 		
-		JComboBox cbArtista = new JComboBox();
+		cbArtista = new JComboBox<String>();
 		cbArtista.setBounds(135, 37, 224, 20);
 		contentPane.add(cbArtista);
 		
@@ -59,5 +65,8 @@ public class FormPesqArtista extends JFrame {
 		JButton btnNovoArtista = new JButton("Novo Artista");
 		btnNovoArtista.setBounds(218, 160, 141, 25);
 		contentPane.add(btnNovoArtista);
+		
+		ComboArtistaController pesqArtista = new ComboArtistaController(cbArtista);
+		cbArtista.addComponentListener(pesqArtista);
 	}
 }
