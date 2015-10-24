@@ -33,7 +33,9 @@ public class PesqArtistaController implements ComponentListener{
 	}
 
 	@Override
-	public void componentHidden(ComponentEvent e) {}
+	public void componentHidden(ComponentEvent e) {
+		
+	}
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
