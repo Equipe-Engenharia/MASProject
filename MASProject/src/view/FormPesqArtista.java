@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
-import controller.ComboArtistaController;
+import controller.PesqArtistaController;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -66,7 +66,7 @@ public class FormPesqArtista extends JFrame {
 		btnNovoArtista.setBounds(218, 160, 141, 25);
 		contentPane.add(btnNovoArtista);
 		
-		ComboArtistaController pesqArtista = new ComboArtistaController(cbArtista);
+		PesqArtistaController pesqArtista = new PesqArtistaController(cbArtista);
 		cbArtista.addComponentListener(pesqArtista);
 	}
 }

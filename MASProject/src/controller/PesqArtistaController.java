@@ -8,12 +8,12 @@ import java.io.IOException;
 
 import javax.swing.JComboBox;
 
-public class ComboArtistaController implements ComponentListener{
+public class PesqArtistaController implements ComponentListener{
 
 	private JComboBox<String> cbArtista;
 	private ArquivosController arqController;
 	
-	public ComboArtistaController(JComboBox<String> cbArtista){
+	public PesqArtistaController(JComboBox<String> cbArtista){
 		this.cbArtista = cbArtista;
 	}
 	
