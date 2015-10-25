@@ -82,7 +82,7 @@ public class AcervoController implements ComponentListener {
 		String linha = new String();
 		arqController = new ArquivosController();
 		try {
-			arqController.leArquivo("../MASProject/", "materiais");
+			arqController.leArquivo("../MASProject/dados/", "materiais");
 			linha = arqController.getBuffer();
 			String [] categoria = linha.split(";");
 			for(String s : categoria){

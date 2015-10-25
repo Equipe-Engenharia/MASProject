@@ -151,9 +151,9 @@ public class FormAcervo extends JFrame {
 		JPanel panel_terceiros = new JPanel();
 		abas.addTab("Obra de Terceiro", null, panel_terceiros, null);
 		
-		JButton btnGravar = new JButton("GRAVAR");
+		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnGravar.setBounds(347, 594, 107, 34);
+		btnGravar.setBounds(339, 595, 107, 34);
 		contentPane.add(btnGravar);
 		
 		JLabel lblSelecImagem = new JLabel("");
@@ -182,12 +182,13 @@ public class FormAcervo extends JFrame {
 		AcervoController listaMaterial = new AcervoController(cbMaterial); // Preechendo a comboBox MATERIAL
 		
 		JButton btnFechar = new JButton("Fechar");
+		btnFechar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
 		btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		btnFechar.setBounds(480, 593, 117, 34);
+		btnFechar.setBounds(472, 594, 117, 34);
 		contentPane.add(btnFechar);
 		
 		JButton btnEditarCategoria = new JButton("Editar Categoria");
