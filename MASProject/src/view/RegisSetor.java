@@ -71,5 +71,6 @@ public class RegisSetor extends JFrame {
 		contentPane.add(btnGravar);
 		
 		RegisSetorController RsContrl = new RegisSetorController(id_setor,lblNomeDoSetor,btnGravar);
+		btnGravar.addActionListener(RsContrl.gravarSetor);
 	}
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -18,7 +19,7 @@ public class AcervoController {
 		this.imagem = imagem;
 	}
 	
-	public void procuraArquivo() {
+	public void procuraImagem() {
 		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de imagem (jpg, png, gif)", "jpg", "png",
 				"gif");
 		String diretorioBase = System.getProperty("user.home") + "/Desktop";
@@ -35,15 +36,16 @@ public class AcervoController {
 		if (retorno == JFileChooser.APPROVE_OPTION) {
 			caminhoArquivo = choose.getSelectedFile().getAbsolutePath();
 			imagem.setIcon(new ImageIcon(caminhoArquivo));
-            
 		}
 	}
+	
+	
 	
 	public ActionListener inserir_imagem = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			procuraArquivo();
+			procuraImagem();
 		}
 
 	};

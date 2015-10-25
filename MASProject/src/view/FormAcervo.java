@@ -24,6 +24,9 @@ import controller.AcervoController;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.ImageIcon;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.CompoundBorder;
 
 public class FormAcervo extends JFrame {
 
@@ -62,44 +65,44 @@ public class FormAcervo extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblId = new JLabel("ID.Obra:");
-		lblId.setBounds(69, 26, 46, 14);
+		lblId.setBounds(87, 29, 46, 14);
 		contentPane.add(lblId);
 		
 		textField = new JTextField();
-		textField.setBounds(125, 23, 86, 17);
+		textField.setBounds(143, 26, 86, 17);
 		textField.setEditable(false);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblArtista = new JLabel("Artista:");
-		lblArtista.setBounds(79, 69, 46, 14);
+		lblArtista.setBounds(97, 72, 46, 14);
 		contentPane.add(lblArtista);
 		
 		nome_artist = new JTextField();
-		nome_artist.setBounds(125, 66, 145, 20);
+		nome_artist.setBounds(143, 69, 145, 20);
 		contentPane.add(nome_artist);
 		nome_artist.setColumns(10);
 		
 		JButton btnPesquisaArtist = new JButton("");
 		btnPesquisaArtist.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		btnPesquisaArtist.setBounds(280, 66, 29, 23);
+		btnPesquisaArtist.setBounds(298, 69, 29, 23);
 		contentPane.add(btnPesquisaArtist);
 		
 		JLabel lblNomeDaObra = new JLabel("Nome da obra:");
-		lblNomeDaObra.setBounds(39, 114, 76, 14);
+		lblNomeDaObra.setBounds(57, 117, 76, 14);
 		contentPane.add(lblNomeDaObra);
 		
 		nome_obra = new JTextField();
-		nome_obra.setBounds(125, 111, 145, 20);
+		nome_obra.setBounds(143, 114, 145, 20);
 		contentPane.add(nome_obra);
 		nome_obra.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Data de composi\u00E7\u00E3o:");
-		lblNewLabel.setBounds(12, 163, 105, 14);
+		lblNewLabel.setBounds(28, 166, 105, 14);
 		contentPane.add(lblNewLabel);
 		
 		data_obra = new JTextField();
-		data_obra.setBounds(125, 160, 86, 20);
+		data_obra.setBounds(143, 163, 86, 20);
 		contentPane.add(data_obra);
 		data_obra.setColumns(10);
 		
@@ -154,15 +157,16 @@ public class FormAcervo extends JFrame {
 		abas.addTab("Obra de Terceiro", null, panel_terceiros, null);
 		
 		JButton btnGravar = new JButton("GRAVAR");
-		btnGravar.setBounds(36, 588, 89, 23);
+		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
+		btnGravar.setBounds(36, 588, 107, 23);
 		contentPane.add(btnGravar);
 		
 		JLabel lblSelecImagem = new JLabel("");
 		lblSelecImagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
 		lblSelecImagem.setBackground(SystemColor.inactiveCaption);
 		lblSelecImagem.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSelecImagem.setBounds(397, 26, 189, 151);
-		lblSelecImagem.setBorder(BorderFactory.createLineBorder(Color.black, 1));  
+		lblSelecImagem.setBounds(397, 26, 189, 147);
+		lblSelecImagem.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));  
 		contentPane.add(lblSelecImagem);
 		
 		JButton btnPesquisarImagem = new JButton("");
