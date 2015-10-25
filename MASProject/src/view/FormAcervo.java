@@ -1,30 +1,19 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
-import javax.swing.JMenuBar;
-import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.CompoundBorder;
 import controller.AcervoController;
-import controller.MaterialController;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -38,6 +27,8 @@ public class FormAcervo extends JFrame {
 	private JTextField data_obra;
 	private JComboBox<String> cbCategoria;
 	private JComboBox<String> cbMaterial;
+	private JComboBox <String> cbSetor;
+	private JComboBox <String> comboStatus;
 	private JTextField textField_valor;
 
 	/**
@@ -70,62 +61,62 @@ public class FormAcervo extends JFrame {
 		setLocationRelativeTo(null);
 		
 		JLabel lblId = new JLabel("ID.Obra");
-		lblId.setBounds(138, 26, 62, 14);
+		lblId.setBounds(103, 27, 62, 14);
 		contentPane.add(lblId);
 		
 		textField = new JTextField();
 		textField.setEnabled(false);
-		textField.setBounds(201, 26, 86, 17);
+		textField.setBounds(166, 27, 86, 17);
 		textField.setEditable(false);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblArtista = new JLabel("Artista");
-		lblArtista.setBounds(148, 55, 52, 14);
+		lblArtista.setBounds(113, 56, 52, 14);
 		contentPane.add(lblArtista);
 		
 		nome_artist = new JTextField();
-		nome_artist.setBounds(201, 55, 352, 20);
+		nome_artist.setBounds(166, 56, 352, 20);
 		contentPane.add(nome_artist);
 		nome_artist.setColumns(10);
 		
 		JButton btnPesquisaArtist = new JButton("");
 		btnPesquisaArtist.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		btnPesquisaArtist.setBounds(557, 51, 29, 28);
+		btnPesquisaArtist.setBounds(522, 52, 29, 28);
 		contentPane.add(btnPesquisaArtist);
 		
 		JLabel lblNomeDaObra = new JLabel("Nome da Obra");
-		lblNomeDaObra.setBounds(102, 87, 98, 14);
+		lblNomeDaObra.setBounds(67, 88, 98, 14);
 		contentPane.add(lblNomeDaObra);
 		
 		nome_obra = new JTextField();
-		nome_obra.setBounds(201, 87, 352, 20);
+		nome_obra.setBounds(166, 88, 352, 20);
 		contentPane.add(nome_obra);
 		nome_obra.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Data de Composição");
-		lblNewLabel.setBounds(63, 119, 139, 14);
+		lblNewLabel.setBounds(28, 120, 139, 14);
 		contentPane.add(lblNewLabel);
 		
 		data_obra = new JTextField();
-		data_obra.setBounds(203, 119, 86, 20);
+		data_obra.setBounds(168, 120, 86, 20);
 		contentPane.add(data_obra);
 		data_obra.setColumns(10);
 		
 		JLabel lblCategoriaDaObra = new JLabel("Categoria da Obra");
-		lblCategoriaDaObra.setBounds(79, 151, 122, 14);
+		lblCategoriaDaObra.setBounds(44, 152, 122, 14);
 		contentPane.add(lblCategoriaDaObra);
 		
 		cbCategoria = new JComboBox<String>();
-		cbCategoria.setBounds(202, 151, 122, 20);
+		cbCategoria.setBounds(167, 152, 133, 20);
 		contentPane.add(cbCategoria);
 		
 		JLabel lblMaterial = new JLabel("Material da Obra");
-		lblMaterial.setBounds(84, 228, 122, 14);
+		lblMaterial.setBounds(49, 219, 122, 14);
 		contentPane.add(lblMaterial);
 		
 		cbMaterial = new JComboBox<String>();
-		cbMaterial.setBounds(201, 228, 122, 20);
+		cbMaterial.setBounds(166, 219, 133, 20);
 		contentPane.add(cbMaterial);
 		
 		JLabel lblNewLabel_1 = new JLabel("Descrição da Obra");
@@ -136,19 +127,13 @@ public class FormAcervo extends JFrame {
 		editor_descricao.setBounds(28, 346, 558, 81);
 		contentPane.add(editor_descricao);
 		
-		JLabel lblNoEncontrouA = new JLabel("N\u00E3o encontrou a categoria?");
-		lblNoEncontrouA.setBounds(28, 193, 178, 14);
-		contentPane.add(lblNoEncontrouA);
-		
 		JButton btnNovaCategoria = new JButton("Nova Categoria");
-		btnNovaCategoria.setBounds(201, 183, 122, 34);
+		btnNovaCategoria.setToolTipText("Não encontrou a categoria?");
+		btnNovaCategoria.setBounds(167, 178, 133, 29);
 		contentPane.add(btnNovaCategoria);
 		
-		JLabel lblNoEncontrouO = new JLabel("N\u00E3o encontrou o material?");
-		lblNoEncontrouO.setBounds(36, 260, 165, 23);
-		contentPane.add(lblNoEncontrouO);
-		
 		JButton btnNovoMaterial = new JButton("Novo Material");
+		btnNovoMaterial.setToolTipText("Não encontrou o material?");
 		btnNovoMaterial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FormMaterial frame = new FormMaterial();  	  
@@ -156,7 +141,7 @@ public class FormAcervo extends JFrame {
 				frame.setLocationRelativeTo(null);
 			}
 		});
-		btnNovoMaterial.setBounds(202, 254, 122, 34);
+		btnNovoMaterial.setBounds(166, 245, 133, 29);
 		contentPane.add(btnNovoMaterial);
 		
 		JTabbedPane abas = new JTabbedPane(JTabbedPane.TOP);
@@ -171,7 +156,7 @@ public class FormAcervo extends JFrame {
 		lblStatus.setBounds(62, 11, 46, 14);
 		panel_proprio.add(lblStatus);
 		
-		JComboBox comboStatus = new JComboBox();
+		comboStatus = new JComboBox<String>();
 		comboStatus.setBounds(118, 8, 95, 20);
 		panel_proprio.add(comboStatus);
 		
@@ -179,9 +164,9 @@ public class FormAcervo extends JFrame {
 		Setor.setBounds(240, 11, 46, 14);
 		panel_proprio.add(Setor);
 		
-		JComboBox comboSetor = new JComboBox();
-		comboSetor.setBounds(279, 8, 95, 20);
-		panel_proprio.add(comboSetor);
+		cbSetor = new JComboBox<String>();
+		cbSetor.setBounds(279, 8, 95, 20);
+		panel_proprio.add(cbSetor);
 		
 		JLabel lblValorDaAquisio = new JLabel("Valor da aquisi\u00E7\u00E3o (R$)");
 		lblValorDaAquisio.setBounds(10, 54, 118, 14);
@@ -218,12 +203,11 @@ public class FormAcervo extends JFrame {
 		btnExcluirImagem.setBounds(497, 299, 46, 35);
 		contentPane.add(btnExcluirImagem);
 		
-		AcervoController Acontroller = new AcervoController(lblSelecImagem);
+		AcervoController Acontroller = new AcervoController(lblSelecImagem,cbSetor,cbMaterial);
 		
 		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
 		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
 		
-		AcervoController listaMaterial = new AcervoController(cbMaterial); // Preechendo a comboBox MATERIAL
 		
 		JButton btnFechar = new JButton("Fechar");
 		btnFechar.addActionListener(new ActionListener() {
@@ -233,6 +217,14 @@ public class FormAcervo extends JFrame {
 		});
 		btnFechar.setBounds(480, 593, 117, 34);
 		contentPane.add(btnFechar);
-		cbMaterial.addComponentListener(listaMaterial);
+		
+		JButton btnEditarCategoria = new JButton("Editar Categoria");
+		btnEditarCategoria.setBounds(29, 178, 133, 29);
+		contentPane.add(btnEditarCategoria);
+		
+		JButton btnEditarMaterial = new JButton("Editar Material");
+		btnEditarMaterial.setBounds(28, 245, 133, 29);
+		contentPane.add(btnEditarMaterial);
+		cbMaterial.addComponentListener(Acontroller);
 	}
 }

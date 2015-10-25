@@ -74,11 +74,11 @@ public class FormMaterial extends JFrame {
 		txtMaterial.setColumns(10);
 
 		JLabel lblCategoria = new JLabel("Categoria da Obra");
-		lblCategoria.setBounds(47, 43, 113, 16);
+		lblCategoria.setBounds(43, 43, 117, 16);
 		contentPane.add(lblCategoria);
 
 		JLabel lblMaterial = new JLabel("Material");
-		lblMaterial.setBounds(99, 89, 61, 16);
+		lblMaterial.setBounds(110, 89, 50, 16);
 		contentPane.add(lblMaterial);
 
 		JButton btnGravar = new JButton("Gravar");

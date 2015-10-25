@@ -21,7 +21,7 @@ public class PesqArtistaController implements ComponentListener{
 		String linha = new String();
 		arqController = new ArquivosController();
 		try {
-			arqController.leArquivo("../MASProject/", "artistas");
+			arqController.leArquivo("../MASProject/dados/", "artistas");
 			linha = arqController.getBuffer();
 			String [] artista = linha.split(";");
 			for(String s : artista){
