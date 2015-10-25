@@ -3,7 +3,6 @@ package controller;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.IOException;
-
 import javax.swing.JComboBox;
 
 public class MaterialController implements ComponentListener{
