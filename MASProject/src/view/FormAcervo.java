@@ -38,6 +38,7 @@ public class FormAcervo extends JFrame {
 	private JTextField data_obra;
 	private JComboBox<String> cbCategoria;
 	private JComboBox<String> cbMaterial;
+	private JTextField textField_valor;
 
 	/**
 	 * Launch the application.
@@ -159,16 +160,42 @@ public class FormAcervo extends JFrame {
 		contentPane.add(btnNovoMaterial);
 		
 		JTabbedPane abas = new JTabbedPane(JTabbedPane.TOP);
-		abas.setBounds(21, 438, 576, 144);
+		abas.setBounds(21, 438, 576, 111);
 		contentPane.add(abas);
 		
 		JPanel panel_proprio = new JPanel();
 		abas.addTab("Obra Pr\u00F3pria", null, panel_proprio, null);
+		panel_proprio.setLayout(null);
+		
+		JLabel lblStatus = new JLabel("Status");
+		lblStatus.setBounds(62, 11, 46, 14);
+		panel_proprio.add(lblStatus);
+		
+		JComboBox comboStatus = new JComboBox();
+		comboStatus.setBounds(118, 8, 95, 20);
+		panel_proprio.add(comboStatus);
+		
+		JLabel Setor = new JLabel("Setor");
+		Setor.setBounds(240, 11, 46, 14);
+		panel_proprio.add(Setor);
+		
+		JComboBox comboSetor = new JComboBox();
+		comboSetor.setBounds(279, 8, 95, 20);
+		panel_proprio.add(comboSetor);
+		
+		JLabel lblValorDaAquisio = new JLabel("Valor da aquisi\u00E7\u00E3o (R$)");
+		lblValorDaAquisio.setBounds(10, 54, 118, 14);
+		panel_proprio.add(lblValorDaAquisio);
+		
+		textField_valor = new JTextField();
+		textField_valor.setBounds(127, 51, 86, 20);
+		panel_proprio.add(textField_valor);
+		textField_valor.setColumns(10);
 		
 		JPanel panel_terceiros = new JPanel();
 		abas.addTab("Obra de Terceiro", null, panel_terceiros, null);
 		
-		JButton btnGravar = new JButton("GRAVAR");
+		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.setBounds(347, 594, 107, 34);
 		contentPane.add(btnGravar);
