@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -82,6 +83,7 @@ public class FormMaterial extends JFrame {
 		contentPane.add(lblMaterial);
 
 		JButton btnGravar = new JButton("Gravar");
+		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -89,18 +91,19 @@ public class FormMaterial extends JFrame {
 
 			}
 		});
-		btnGravar.setBounds(249, 167, 117, 29);
+		btnGravar.setBounds(288, 166, 97, 34);
 		contentPane.add(btnGravar);
 
 		MaterialController listaCategoria = new MaterialController(cbCategoria); // Preechendo a comboBox CATEGORIA
 		
 		JButton btnFechar = new JButton("Fechar");
+		btnFechar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
 		btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
 		});
-		btnFechar.setBounds(382, 167, 117, 29);
+		btnFechar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnFechar);
 		cbCategoria.addComponentListener(listaCategoria);
 	}
@@ -110,7 +113,7 @@ public class FormMaterial extends JFrame {
 		IArquivosController arqContr = new ArquivosController();
 		material.setNome(txtMaterial.getText());
 		try {
-			arqContr.escreveArquivo("../MASProject/", "materiais", txtMaterial.getText(), material); // Gravando o novo registro no arquivo.
+			arqContr.escreveArquivo("../MASProject/dados/", "materiais", txtMaterial.getText(), material); // Gravando o novo registro no arquivo.
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
