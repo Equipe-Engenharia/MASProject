@@ -15,13 +15,13 @@ import model.Setor;
 
 public class RegisSetorController {
 
-	private JLabel idsetor,mensagemGravado, mensagemVazio;
-	private JTextField nomeset;
+	private JLabel mensagemGravado, mensagemVazio;
+	private JTextField nomeset, idsetor;
 	private JButton btnGravar;
 	private Setor setor = new Setor();
 	private static int contador = 1;
 
-	public RegisSetorController(JLabel id_setor, JTextField nomeDigit, JButton btnGravar, JLabel mensagemGravado, JLabel mensagemVazio) {
+	public RegisSetorController(JTextField id_setor, JTextField nomeDigit, JButton btnGravar, JLabel mensagemGravado, JLabel mensagemVazio) {
 		this.idsetor = id_setor;
 		this.mensagemGravado = mensagemGravado;
 		this.mensagemVazio = mensagemVazio;
@@ -42,6 +42,7 @@ public class RegisSetorController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			mensagemGravado.setText(nomeset.getText()+" salvo com sucesso!!!");
 			mensagemGravado.setVisible(true);
 		}else{
 			mensagemGravado.setVisible(false);

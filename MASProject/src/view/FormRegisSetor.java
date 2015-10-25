@@ -19,6 +19,7 @@ public class FormRegisSetor extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtDigitado;
+	private JTextField id_setor;
 
 	/**
 	 * Launch the application.
@@ -53,10 +54,6 @@ public class FormRegisSetor extends JFrame {
 		lblIdDoSetor.setBounds(10, 23, 67, 14);
 		contentPane.add(lblIdDoSetor);
 
-		JLabel id_setor = new JLabel("");
-		id_setor.setBounds(69, 23, 67, 14);
-		contentPane.add(id_setor);
-
 		JLabel lblNomeDoSetor = new JLabel("Setor:");
 		lblNomeDoSetor.setBounds(10, 51, 76, 14);
 		contentPane.add(lblNomeDoSetor);
@@ -71,7 +68,7 @@ public class FormRegisSetor extends JFrame {
 		btnGravar.setBounds(342, 96, 89, 23);
 		contentPane.add(btnGravar);
 
-		JLabel mensagemGravado = new JLabel("SALVO COM SUCESSO!!!");
+		JLabel mensagemGravado = new JLabel("");
 		mensagemGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
 		mensagemGravado.setBounds(10, 96, 192, 23);
 		mensagemGravado.setVisible(false);
@@ -82,6 +79,12 @@ public class FormRegisSetor extends JFrame {
 		mensagemVazio.setBounds(10, 96, 192, 23);
 		mensagemVazio.setVisible(false);
 		contentPane.add(mensagemVazio);
+		
+		id_setor = new JTextField();
+		id_setor.setEditable(false);
+		id_setor.setBounds(69, 20, 86, 20);
+		contentPane.add(id_setor);
+		id_setor.setColumns(10);
 		
 		RegisSetorController RsContrl = new RegisSetorController(id_setor, txtDigitado, btnGravar, mensagemGravado, mensagemVazio);
 
