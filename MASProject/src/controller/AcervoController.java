@@ -35,8 +35,12 @@ public class AcervoController {
 		int retorno = choose.showOpenDialog(null);
 		if (retorno == JFileChooser.APPROVE_OPTION) {
 			caminhoArquivo = choose.getSelectedFile().getAbsolutePath();
-			imagem.setIcon(new ImageIcon(caminhoArquivo));
+			ImageIcon img = new ImageIcon(caminhoArquivo);
+			Image newImg= img.getImage().getScaledInstance(189,147, Image.SCALE_DEFAULT);
+			imagem.setIcon(new ImageIcon(newImg));
+			 
 		}
+		
 	}
 	
 	
