@@ -1,8 +1,9 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
-
+import java.awt.SystemColor;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -14,19 +15,19 @@ import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
-import java.awt.Color;
-import java.awt.SystemColor;
 import javax.swing.JMenuBar;
 import javax.swing.border.TitledBorder;
-
-import controller.AcervoController;
-
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.CompoundBorder;
+import controller.AcervoController;
+import controller.MaterialController;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 
 public class FormAcervo extends JFrame {
 
@@ -35,6 +36,8 @@ public class FormAcervo extends JFrame {
 	private JTextField nome_artist;
 	private JTextField nome_obra;
 	private JTextField data_obra;
+	private JComboBox<String> cbCategoria;
+	private JComboBox<String> cbMaterial;
 
 	/**
 	 * Launch the application.
@@ -63,91 +66,100 @@ public class FormAcervo extends JFrame {
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 		
-		JLabel lblId = new JLabel("ID.Obra:");
-		lblId.setBounds(87, 29, 46, 14);
+		JLabel lblId = new JLabel("ID.Obra");
+		lblId.setBounds(138, 26, 62, 14);
 		contentPane.add(lblId);
 		
 		textField = new JTextField();
-		textField.setBounds(143, 26, 86, 17);
+		textField.setEnabled(false);
+		textField.setBounds(201, 26, 86, 17);
 		textField.setEditable(false);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblArtista = new JLabel("Artista:");
-		lblArtista.setBounds(97, 72, 46, 14);
+		JLabel lblArtista = new JLabel("Artista");
+		lblArtista.setBounds(148, 55, 52, 14);
 		contentPane.add(lblArtista);
 		
 		nome_artist = new JTextField();
-		nome_artist.setBounds(143, 69, 145, 20);
+		nome_artist.setBounds(201, 55, 352, 20);
 		contentPane.add(nome_artist);
 		nome_artist.setColumns(10);
 		
 		JButton btnPesquisaArtist = new JButton("");
 		btnPesquisaArtist.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		btnPesquisaArtist.setBounds(298, 69, 29, 23);
+		btnPesquisaArtist.setBounds(557, 51, 29, 28);
 		contentPane.add(btnPesquisaArtist);
 		
-		JLabel lblNomeDaObra = new JLabel("Nome da obra:");
-		lblNomeDaObra.setBounds(57, 117, 76, 14);
+		JLabel lblNomeDaObra = new JLabel("Nome da Obra");
+		lblNomeDaObra.setBounds(102, 87, 98, 14);
 		contentPane.add(lblNomeDaObra);
 		
 		nome_obra = new JTextField();
-		nome_obra.setBounds(143, 114, 145, 20);
+		nome_obra.setBounds(201, 87, 352, 20);
 		contentPane.add(nome_obra);
 		nome_obra.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Data de composi\u00E7\u00E3o:");
-		lblNewLabel.setBounds(28, 166, 105, 14);
+		JLabel lblNewLabel = new JLabel("Data de Composição");
+		lblNewLabel.setBounds(63, 119, 139, 14);
 		contentPane.add(lblNewLabel);
 		
 		data_obra = new JTextField();
-		data_obra.setBounds(143, 163, 86, 20);
+		data_obra.setBounds(203, 119, 86, 20);
 		contentPane.add(data_obra);
 		data_obra.setColumns(10);
 		
-		JLabel lblCategoriaDaObra = new JLabel("Categoria da obra:");
-		lblCategoriaDaObra.setBounds(20, 260, 145, 14);
+		JLabel lblCategoriaDaObra = new JLabel("Categoria da Obra");
+		lblCategoriaDaObra.setBounds(79, 151, 122, 14);
 		contentPane.add(lblCategoriaDaObra);
 		
-		JComboBox comboBox_categoria = new JComboBox();
-		comboBox_categoria.setBounds(143, 257, 122, 20);
-		contentPane.add(comboBox_categoria);
+		cbCategoria = new JComboBox<String>();
+		cbCategoria.setBounds(202, 151, 122, 20);
+		contentPane.add(cbCategoria);
 		
-		JLabel lblMaterial = new JLabel("Material:");
-		lblMaterial.setBounds(57, 311, 58, 14);
+		JLabel lblMaterial = new JLabel("Material da Obra");
+		lblMaterial.setBounds(84, 228, 122, 14);
 		contentPane.add(lblMaterial);
 		
-		JComboBox comboBox_material = new JComboBox();
-		comboBox_material.setBounds(143, 308, 122, 20);
-		contentPane.add(comboBox_material);
+		cbMaterial = new JComboBox<String>();
+		cbMaterial.setBounds(201, 228, 122, 20);
+		contentPane.add(cbMaterial);
 		
-		JLabel lblNewLabel_1 = new JLabel("Descri\u00E7\u00E3o da Obra:");
-		lblNewLabel_1.setBounds(12, 346, 131, 14);
+		JLabel lblNewLabel_1 = new JLabel("Descrição da Obra");
+		lblNewLabel_1.setBounds(28, 330, 139, 14);
 		contentPane.add(lblNewLabel_1);
 		
 		JEditorPane editor_descricao = new JEditorPane();
-		editor_descricao.setBounds(153, 346, 433, 81);
+		editor_descricao.setBounds(28, 346, 558, 81);
 		contentPane.add(editor_descricao);
 		
 		JLabel lblNoEncontrouA = new JLabel("N\u00E3o encontrou a categoria?");
-		lblNoEncontrouA.setBounds(275, 260, 162, 14);
+		lblNoEncontrouA.setBounds(28, 193, 178, 14);
 		contentPane.add(lblNoEncontrouA);
 		
 		JButton btnNovaCategoria = new JButton("Nova Categoria");
-		btnNovaCategoria.setBounds(440, 256, 122, 23);
+		btnNovaCategoria.setBounds(201, 183, 122, 34);
 		contentPane.add(btnNovaCategoria);
 		
 		JLabel lblNoEncontrouO = new JLabel("N\u00E3o encontrou o material?");
-		lblNoEncontrouO.setBounds(275, 311, 162, 14);
+		lblNoEncontrouO.setBounds(36, 260, 165, 23);
 		contentPane.add(lblNoEncontrouO);
 		
 		JButton btnNovoMaterial = new JButton("Novo Material");
-		btnNovoMaterial.setBounds(440, 307, 122, 23);
+		btnNovoMaterial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormMaterial frame = new FormMaterial();  	  
+				frame.setVisible(true);
+				frame.setLocationRelativeTo(null);
+			}
+		});
+		btnNovoMaterial.setBounds(202, 254, 122, 34);
 		contentPane.add(btnNovoMaterial);
 		
 		JTabbedPane abas = new JTabbedPane(JTabbedPane.TOP);
-		abas.setBounds(39, 438, 547, 127);
+		abas.setBounds(21, 438, 576, 144);
 		contentPane.add(abas);
 		
 		JPanel panel_proprio = new JPanel();
@@ -158,30 +170,42 @@ public class FormAcervo extends JFrame {
 		
 		JButton btnGravar = new JButton("GRAVAR");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnGravar.setBounds(36, 588, 107, 23);
+		btnGravar.setBounds(347, 594, 107, 34);
 		contentPane.add(btnGravar);
 		
 		JLabel lblSelecImagem = new JLabel("");
 		lblSelecImagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
 		lblSelecImagem.setBackground(SystemColor.inactiveCaption);
 		lblSelecImagem.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSelecImagem.setBounds(397, 26, 189, 147);
-		lblSelecImagem.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));  
+		lblSelecImagem.setBounds(397, 137, 189, 147);
+		lblSelecImagem.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));  
 		contentPane.add(lblSelecImagem);
 		
 		JButton btnPesquisarImagem = new JButton("");
 		btnPesquisarImagem.setIcon(new ImageIcon("../MASProject/icons/add.png"));
-		btnPesquisarImagem.setBounds(440, 188, 46, 23);
+		btnPesquisarImagem.setBounds(440, 299, 46, 35);
 		contentPane.add(btnPesquisarImagem);
 		
 		JButton btnExcluirImagem = new JButton("");
 		btnExcluirImagem.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		btnExcluirImagem.setBounds(497, 188, 46, 23);
+		btnExcluirImagem.setBounds(497, 299, 46, 35);
 		contentPane.add(btnExcluirImagem);
 		
 		AcervoController Acontroller = new AcervoController(lblSelecImagem);
 		
 		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
 		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
+		
+		AcervoController listaMaterial = new AcervoController(cbMaterial); // Preechendo a comboBox MATERIAL
+		
+		JButton btnFechar = new JButton("Fechar");
+		btnFechar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnFechar.setBounds(480, 593, 117, 34);
+		contentPane.add(btnFechar);
+		cbMaterial.addComponentListener(listaMaterial);
 	}
 }

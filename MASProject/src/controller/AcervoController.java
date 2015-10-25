@@ -3,21 +3,34 @@ package controller;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
-public class AcervoController {
+public class AcervoController implements ComponentListener {
+	
 	private JLabel imagem;
+	private JComboBox<String> cbMaterial;
+	private ArquivosController arqController;
 	
 	public AcervoController(JLabel imagem){
 		this.imagem = imagem;
 	}
+	
+	public AcervoController(JComboBox<String> cbMaterial){
+		this.cbMaterial = cbMaterial;
+	}
+	
+	
 	
 	public void procuraImagem() {
 		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de imagem (jpg, png, gif)", "jpg", "png",
@@ -63,4 +76,47 @@ public class AcervoController {
 		}
 
 	};
+	
+	
+	private void preencherComboBoxMaterial(){
+		String linha = new String();
+		arqController = new ArquivosController();
+		try {
+			arqController.leArquivo("../MASProject/", "materiais");
+			linha = arqController.getBuffer();
+			String [] categoria = linha.split(";");
+			for(String s : categoria){
+				cbMaterial.addItem(s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		preencherComboBoxMaterial();
+
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

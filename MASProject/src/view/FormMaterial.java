@@ -18,6 +18,7 @@ import controller.ArquivosController;
 import controller.IArquivosController;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.Font;
 
 public class FormMaterial extends JFrame {
 
@@ -88,10 +89,19 @@ public class FormMaterial extends JFrame {
 
 			}
 		});
-		btnGravar.setBounds(369, 155, 117, 29);
+		btnGravar.setBounds(249, 167, 117, 29);
 		contentPane.add(btnGravar);
 
 		MaterialController listaCategoria = new MaterialController(cbCategoria); // Preechendo a comboBox CATEGORIA
+		
+		JButton btnFechar = new JButton("Fechar");
+		btnFechar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnFechar.setBounds(382, 167, 117, 29);
+		contentPane.add(btnFechar);
 		cbCategoria.addComponentListener(listaCategoria);
 	}
 
@@ -105,5 +115,4 @@ public class FormMaterial extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
 }
