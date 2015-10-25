@@ -17,23 +17,25 @@ public class RegisSetorController {
 
 	private JLabel mensagemGravado, mensagemVazio;
 	private JTextField nomeset, idsetor;
-	private JButton btnGravar;
 	private Setor setor = new Setor();
 	private static int contador = 1;
+	private String registro_set[] = new String[2];
+	private ArquivosController arqController = new ArquivosController();
 
-	public RegisSetorController(JTextField id_setor, JTextField nomeDigit, JButton btnGravar, JLabel mensagemGravado, JLabel mensagemVazio) {
+	public RegisSetorController(JTextField id_setor, JTextField nomeDigit, JLabel mensagemGravado, JLabel mensagemVazio) {
 		this.idsetor = id_setor;
 		this.mensagemGravado = mensagemGravado;
 		this.mensagemVazio = mensagemVazio;
 		this.nomeset = nomeDigit;
-		this.btnGravar = btnGravar;
 	}
 
 	public void gravaSetor() {
-		ArquivosController arqController = new ArquivosController();
+		
 		// Falta implementar
-		// setor.setIdentificacao(idsetor.getText());
+		setor.setIdentificacao(idsetor.getText());
 		setor.setNome(nomeset.getText());
+		
+		
 		//se o campo não estiver vazio
 		if (!nomeset.getText().isEmpty()) {
 			try {
@@ -51,6 +53,19 @@ public class RegisSetorController {
 		// implementar a acao de apagar o campo de nome e criar uma nova id
 		// quando clicar em gravar
 	}
+	
+	public void excluiSetor(){
+		
+		registro_set[1] = setor.getNome();
+		registro_set[0] = setor.getIdentificacao();
+		
+		try {
+			arqController.excluiDadosArquivo("../MASProject/", "setores", registro_set);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public ActionListener gravarSetor = new ActionListener() {
 
@@ -58,6 +73,15 @@ public class RegisSetorController {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			gravaSetor();
+		}
+	};
+	
+public ActionListener excluiSetor = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			excluiSetor();
 		}
 	};
 
@@ -99,5 +123,7 @@ public class RegisSetorController {
             mensagemVazio.setVisible(false);
 		}
 	};
+	
+	
 
 }

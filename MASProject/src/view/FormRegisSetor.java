@@ -86,7 +86,7 @@ public class FormRegisSetor extends JFrame {
 		contentPane.add(id_setor);
 		id_setor.setColumns(10);
 		
-		RegisSetorController RsContrl = new RegisSetorController(id_setor, txtDigitado, btnGravar, mensagemGravado, mensagemVazio);
+		RegisSetorController RsContrl = new RegisSetorController(id_setor, txtDigitado, mensagemGravado, mensagemVazio);
 
 		txtDigitado.addMouseListener(RsContrl.limpaCampo);
 		txtDigitado.addActionListener(RsContrl.gravarSetor);
