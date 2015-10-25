@@ -28,7 +28,7 @@ public class RegisSetorController {
 		//setor.setIdentificacao(idsetor.getText());
 		setor.setNome(nomeset.getText());
 		try {
-			arqController.escreveArquivo("../MASProject/", "setores", setor);
+			arqController.escreveArquivo("../MASProject/", "setores", nomeset.getText(), setor);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
