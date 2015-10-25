@@ -34,10 +34,10 @@ public class RegisSetorController {
 		// Falta implementar
 		// setor.setIdentificacao(idsetor.getText());
 		setor.setNome(nomeset.getText());
-		//se o campo não estiver vazio
+		//se o campo nï¿½o estiver vazio
 		if (!nomeset.getText().isEmpty()) {
 			try {
-				arqController.escreveArquivo("../MASProject/", "setores", nomeset.getText(), setor);
+				arqController.escreveArquivo("../MASProject/dados/", "setores", nomeset.getText(), setor);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -94,7 +94,7 @@ public class RegisSetorController {
 				nomeset.setText("");
 				contador += 1;
 			}
-			//para que a mensagem não fique visivel a todo momento
+			//para que a mensagem nï¿½o fique visivel a todo momento
 			mensagemGravado.setVisible(false);
             mensagemVazio.setVisible(false);
 		}
