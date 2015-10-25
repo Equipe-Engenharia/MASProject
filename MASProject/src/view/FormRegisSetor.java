@@ -60,7 +60,7 @@ public class FormRegisSetor extends JFrame {
 
 		txtDigitado = new JTextField();
 		txtDigitado.setText("Digite o nome do setor...");
-		txtDigitado.setBounds(69, 48, 149, 20);
+		txtDigitado.setBounds(69, 48, 169, 20);
 		contentPane.add(txtDigitado);
 		txtDigitado.setColumns(10);
 
