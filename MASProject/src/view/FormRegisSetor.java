@@ -12,12 +12,13 @@ import controller.RegisSetorController;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class RegisSetor extends JFrame {
+public class FormRegisSetor extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtDigiteUmNome;
+	private JTextField txtDigitado;
 
 	/**
 	 * Launch the application.
@@ -26,7 +27,7 @@ public class RegisSetor extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegisSetor frame = new RegisSetor();
+					FormRegisSetor frame = new FormRegisSetor();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,7 +39,7 @@ public class RegisSetor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegisSetor() {
+	public FormRegisSetor() {
 		setTitle("Cadastrar um novo setor");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,30 +48,46 @@ public class RegisSetor extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblIdDoSetor = new JLabel("ID. Setor:");
 		lblIdDoSetor.setBounds(10, 23, 67, 14);
 		contentPane.add(lblIdDoSetor);
-		
+
 		JLabel id_setor = new JLabel("");
 		id_setor.setBounds(69, 23, 67, 14);
 		contentPane.add(id_setor);
-		
+
 		JLabel lblNomeDoSetor = new JLabel("Setor:");
 		lblNomeDoSetor.setBounds(10, 51, 76, 14);
 		contentPane.add(lblNomeDoSetor);
-		
-		txtDigiteUmNome = new JTextField();
-		txtDigiteUmNome.setText("Digite o nome do setor...");
-		txtDigiteUmNome.setBounds(69, 48, 133, 20);
-		contentPane.add(txtDigiteUmNome);
-		txtDigiteUmNome.setColumns(10);
-		
+
+		txtDigitado = new JTextField();
+		txtDigitado.setText("Digite o nome do setor...");
+		txtDigitado.setBounds(69, 48, 149, 20);
+		contentPane.add(txtDigitado);
+		txtDigitado.setColumns(10);
+
 		JButton btnGravar = new JButton("Gravar");
-		btnGravar.setBounds(10, 89, 89, 23);
+		btnGravar.setBounds(342, 96, 89, 23);
 		contentPane.add(btnGravar);
+
+		JLabel mensagemGravado = new JLabel("SALVO COM SUCESSO!!!");
+		mensagemGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
+		mensagemGravado.setBounds(10, 96, 192, 23);
+		mensagemGravado.setVisible(false);
+		contentPane.add(mensagemGravado);
+
+		JLabel mensagemVazio = new JLabel("CAMPO VAZIO!");
+		mensagemVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
+		mensagemVazio.setBounds(10, 96, 192, 23);
+		mensagemVazio.setVisible(false);
+		contentPane.add(mensagemVazio);
 		
-		RegisSetorController RsContrl = new RegisSetorController(id_setor,lblNomeDoSetor,btnGravar);
+		RegisSetorController RsContrl = new RegisSetorController(id_setor, txtDigitado, btnGravar, mensagemGravado, mensagemVazio);
+
+		txtDigitado.addMouseListener(RsContrl.limpaCampo);
+		txtDigitado.addActionListener(RsContrl.gravarSetor);
 		btnGravar.addActionListener(RsContrl.gravarSetor);
+
 	}
 }
