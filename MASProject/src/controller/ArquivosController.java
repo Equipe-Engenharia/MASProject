@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,8 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-
-import javax.swing.JOptionPane;
 
 public class ArquivosController implements IArquivosController {
 
@@ -43,15 +40,11 @@ public class ArquivosController implements IArquivosController {
 	}
 
 	@Override
-	public void escreveArquivo(String diretorio, String arquivo, Object object) throws IOException {
-		String linha = JOptionPane.showInputDialog("Digite algo: ");
+	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
+		String linha = texto;
 		StringBuffer buffer = new StringBuffer();
-		while (!linha.trim().equals("")) {
 			buffer.append(linha);
-			buffer.append("\r\n"); // no bloco de notas a quebra de linha é
-									// \r\n, os demais ignoram o \r
-			linha = JOptionPane.showInputDialog("Digite algo: ");
-		}
+			buffer.append("\r\n"); // no bloco de notas a quebra de linha é \r\n, os demais ignoram o \r
 		File arq = new File(diretorio, arquivo);
 		boolean arquivoExiste;
 		if (arq.exists()) {
@@ -66,8 +59,6 @@ public class ArquivosController implements IArquivosController {
 		gravaDados.flush();
 		gravaDados.close();
 		escreveArquivo.close();
-		// Desktop desk = Desktop.getDesktop();
-		// desk.open(arq);
 	}
 
 	@Override
