@@ -47,7 +47,7 @@ public class FormMaterial extends JFrame {
 	 */
 	public FormMaterial() {
 		setTitle("Registrar Material - MASP");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
