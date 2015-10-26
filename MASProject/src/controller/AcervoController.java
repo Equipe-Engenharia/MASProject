@@ -7,7 +7,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -27,56 +26,6 @@ public class AcervoController implements ComponentListener {
 		this.cbMaterial = cbMaterial;
 		this.cbSetor = comboSetor;
 	}
-	
-		
-	
-	
-	public void procuraImagem() {
-		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de imagem (jpg, png, gif)", "jpg", "png",
-				"gif");
-		String diretorioBase = System.getProperty("user.home") + "/Desktop";
-		File dir = new File(diretorioBase);
-
-		JFileChooser choose = new JFileChooser();
-		choose.setCurrentDirectory(dir);
-		choose.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		choose.setAcceptAllFileFilterUsed(false);
-		choose.addChoosableFileFilter(filtro);
-		String caminhoArquivo = "";
-
-		int retorno = choose.showOpenDialog(null);
-		if (retorno == JFileChooser.APPROVE_OPTION) {
-			caminhoArquivo = choose.getSelectedFile().getAbsolutePath();
-			ImageIcon img = new ImageIcon(caminhoArquivo);
-			Image newImg= img.getImage().getScaledInstance(imagem.getWidth(),imagem.getHeight(), Image.SCALE_DEFAULT);
-			imagem.setIcon(new ImageIcon(newImg));
-			 
-		}
-		
-	}
-	
-	
-	
-	
-	public ActionListener inserir_imagem = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			procuraImagem();
-		}
-
-	};
-
-	public ActionListener remover_imagem = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			imagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
-			
-		}
-
-	};
-	
 	
 	private void preencherComboBoxMaterial(){
 		String linha = new String();
@@ -108,13 +57,50 @@ public class AcervoController implements ComponentListener {
 			e.printStackTrace();
 		}
 	}
-	
 
+	public void procuraImagem() {
+		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de imagem (jpg, png, gif)", "jpg", "png",
+				"gif");
+		String diretorioBase = System.getProperty("user.home") + "/Desktop";
+		File dir = new File(diretorioBase);
+
+		JFileChooser choose = new JFileChooser();
+		choose.setCurrentDirectory(dir);
+		choose.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		choose.setAcceptAllFileFilterUsed(false);
+		choose.addChoosableFileFilter(filtro);
+		String caminhoArquivo = "";
+
+		int retorno = choose.showOpenDialog(null);
+		if (retorno == JFileChooser.APPROVE_OPTION) {
+			caminhoArquivo = choose.getSelectedFile().getAbsolutePath();
+			ImageIcon img = new ImageIcon(caminhoArquivo);
+			Image newImg= img.getImage().getScaledInstance(imagem.getWidth(),imagem.getHeight(), Image.SCALE_DEFAULT);
+			imagem.setIcon(new ImageIcon(newImg));
+			 
+		}
+		
+	}
+	
+	
+	public ActionListener inserir_imagem = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			procuraImagem();
+		}
+	};
+
+	public ActionListener remover_imagem = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			imagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));			
+		}
+	};
+	
 
 	@Override
 	public void componentResized(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
 	@Override
@@ -122,18 +108,15 @@ public class AcervoController implements ComponentListener {
 		// TODO Auto-generated method stub
 		preencherComboBoxMaterial();
 		preencherComboBoxSetores();
-
 	}
 
 	@Override
 	public void componentShown(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
 	@Override
 	public void componentHidden(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 }
