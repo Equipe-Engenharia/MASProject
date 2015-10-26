@@ -27,6 +27,9 @@ public class FormAcervo extends JFrame {
 	private JTextField data_obra;
 	private JComboBox<String> cbCategoria;
 	private JComboBox<String> cbMaterial;
+	private JComboBox <String> cbSetor;
+	private JComboBox <String> comboStatus;
+	private JTextField textField_valor;
 
 	/**
 	 * Launch the application.
@@ -142,11 +145,37 @@ public class FormAcervo extends JFrame {
 		contentPane.add(btnNovoMaterial);
 		
 		JTabbedPane abas = new JTabbedPane(JTabbedPane.TOP);
-		abas.setBounds(21, 438, 576, 144);
+		abas.setBounds(21, 438, 576, 111);
 		contentPane.add(abas);
 		
 		JPanel panel_proprio = new JPanel();
 		abas.addTab("Obra Pr\u00F3pria", null, panel_proprio, null);
+		panel_proprio.setLayout(null);
+		
+		JLabel lblStatus = new JLabel("Status");
+		lblStatus.setBounds(62, 11, 46, 14);
+		panel_proprio.add(lblStatus);
+		
+		comboStatus = new JComboBox<String>();
+		comboStatus.setBounds(118, 8, 95, 20);
+		panel_proprio.add(comboStatus);
+		
+		JLabel Setor = new JLabel("Setor");
+		Setor.setBounds(240, 11, 46, 14);
+		panel_proprio.add(Setor);
+		
+		cbSetor = new JComboBox<String>();
+		cbSetor.setBounds(279, 8, 95, 20);
+		panel_proprio.add(cbSetor);
+		
+		JLabel lblValorDaAquisio = new JLabel("Valor da aquisi\u00E7\u00E3o (R$)");
+		lblValorDaAquisio.setBounds(10, 54, 118, 14);
+		panel_proprio.add(lblValorDaAquisio);
+		
+		textField_valor = new JTextField();
+		textField_valor.setBounds(127, 51, 86, 20);
+		panel_proprio.add(textField_valor);
+		textField_valor.setColumns(10);
 		
 		JPanel panel_terceiros = new JPanel();
 		abas.addTab("Obra de Terceiro", null, panel_terceiros, null);
@@ -174,12 +203,11 @@ public class FormAcervo extends JFrame {
 		btnExcluirImagem.setBounds(497, 299, 46, 35);
 		contentPane.add(btnExcluirImagem);
 		
-		AcervoController Acontroller = new AcervoController(lblSelecImagem);
+		AcervoController Acontroller = new AcervoController(lblSelecImagem,cbSetor,cbMaterial);
 		
 		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
 		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
 		
-		AcervoController listaMaterial = new AcervoController(cbMaterial); // Preechendo a comboBox MATERIAL
 		
 		JButton btnFechar = new JButton("Fechar");
 		btnFechar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
@@ -198,6 +226,6 @@ public class FormAcervo extends JFrame {
 		JButton btnEditarMaterial = new JButton("Editar Material");
 		btnEditarMaterial.setBounds(28, 245, 133, 29);
 		contentPane.add(btnEditarMaterial);
-		cbMaterial.addComponentListener(listaMaterial);
+		cbMaterial.addComponentListener(Acontroller);
 	}
 }

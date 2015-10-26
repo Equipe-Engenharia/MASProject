@@ -20,16 +20,16 @@ public class AcervoController implements ComponentListener {
 	
 	private JLabel imagem;
 	private JComboBox<String> cbMaterial;
+	private JComboBox<String> cbSetor;
 	private ArquivosController arqController;
 	
-	public AcervoController(JLabel imagem){
+	public AcervoController(JLabel imagem, JComboBox<String> comboSetor,JComboBox<String> cbMaterial){
 		this.imagem = imagem;
-	}
-	
-	public AcervoController(JComboBox<String> cbMaterial){
 		this.cbMaterial = cbMaterial;
+		this.cbSetor = comboSetor;
 	}
 	
+		
 	
 	
 	public void procuraImagem() {
@@ -58,6 +58,7 @@ public class AcervoController implements ComponentListener {
 	
 	
 	
+	
 	public ActionListener inserir_imagem = new ActionListener() {
 
 		@Override
@@ -82,11 +83,27 @@ public class AcervoController implements ComponentListener {
 		String linha = new String();
 		arqController = new ArquivosController();
 		try {
+			arqController.leArquivo("../MASProject/dados", "materiais");
 			arqController.leArquivo("../MASProject/dados/", "materiais");
 			linha = arqController.getBuffer();
 			String [] categoria = linha.split(";");
 			for(String s : categoria){
 				cbMaterial.addItem(s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void preencherComboBoxSetores(){
+		String linha = new String();
+		arqController = new ArquivosController();
+		try {
+			arqController.leArquivo("../MASProject/dados", "setores");
+			linha = arqController.getBuffer();
+			String [] setor = linha.split(";");
+			for(String s : setor){
+				cbSetor.addItem(s);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -105,6 +122,7 @@ public class AcervoController implements ComponentListener {
 	public void componentMoved(ComponentEvent e) {
 		// TODO Auto-generated method stub
 		preencherComboBoxMaterial();
+		preencherComboBoxSetores();
 
 	}
 
