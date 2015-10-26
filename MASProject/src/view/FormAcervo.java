@@ -53,7 +53,7 @@ public class FormAcervo extends JFrame {
 	public FormAcervo() {
 		setResizable(false);
 		setTitle("Registro de Acervo");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 615, 674);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -145,7 +145,7 @@ public class FormAcervo extends JFrame {
 		contentPane.add(btnNovoMaterial);
 		
 		JTabbedPane abas = new JTabbedPane(JTabbedPane.TOP);
-		abas.setBounds(21, 438, 576, 111);
+		abas.setBounds(21, 438, 576, 144);
 		contentPane.add(abas);
 		
 		JPanel panel_proprio = new JPanel();
@@ -153,27 +153,27 @@ public class FormAcervo extends JFrame {
 		panel_proprio.setLayout(null);
 		
 		JLabel lblStatus = new JLabel("Status");
-		lblStatus.setBounds(62, 11, 46, 14);
+		lblStatus.setBounds(131, 23, 46, 14);
 		panel_proprio.add(lblStatus);
 		
 		comboStatus = new JComboBox<String>();
-		comboStatus.setBounds(118, 8, 95, 20);
+		comboStatus.setBounds(183, 21, 110, 20);
 		panel_proprio.add(comboStatus);
 		
 		JLabel Setor = new JLabel("Setor");
-		Setor.setBounds(240, 11, 46, 14);
+		Setor.setBounds(316, 21, 46, 14);
 		panel_proprio.add(Setor);
 		
 		cbSetor = new JComboBox<String>();
-		cbSetor.setBounds(279, 8, 95, 20);
+		cbSetor.setBounds(355, 21, 110, 20);
 		panel_proprio.add(cbSetor);
 		
 		JLabel lblValorDaAquisio = new JLabel("Valor da aquisi\u00E7\u00E3o (R$)");
-		lblValorDaAquisio.setBounds(10, 54, 118, 14);
+		lblValorDaAquisio.setBounds(34, 64, 143, 14);
 		panel_proprio.add(lblValorDaAquisio);
 		
 		textField_valor = new JTextField();
-		textField_valor.setBounds(127, 51, 86, 20);
+		textField_valor.setBounds(183, 61, 110, 20);
 		panel_proprio.add(textField_valor);
 		textField_valor.setColumns(10);
 		
