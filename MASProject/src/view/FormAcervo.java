@@ -129,6 +129,13 @@ public class FormAcervo extends JFrame {
 		
 		JButton btnNovaCategoria = new JButton("Nova Categoria");
 		btnNovaCategoria.setToolTipText("Não encontrou a categoria?");
+		btnNovaCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormRegisCategObra formCate = new FormRegisCategObra();
+				formCate.setVisible(true);
+				formCate.setLocationRelativeTo(null);
+			}
+		});
 		btnNovaCategoria.setBounds(167, 178, 133, 29);
 		contentPane.add(btnNovaCategoria);
 		
