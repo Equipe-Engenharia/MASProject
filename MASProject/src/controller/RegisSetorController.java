@@ -74,6 +74,7 @@ public class RegisSetorController {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			gravaSetor();
+			nomeset.setText("");
 		}
 	};
 	
