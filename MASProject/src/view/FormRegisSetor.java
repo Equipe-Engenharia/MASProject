@@ -70,7 +70,7 @@ public class FormRegisSetor extends JFrame {
 
 		JLabel mensagemGravado = new JLabel("");
 		mensagemGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
-		mensagemGravado.setBounds(10, 96, 192, 23);
+		mensagemGravado.setBounds(46, 96, 192, 23);
 		mensagemGravado.setVisible(false);
 		contentPane.add(mensagemGravado);
 
