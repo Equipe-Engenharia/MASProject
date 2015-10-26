@@ -2,15 +2,15 @@ package model;
 
 public class Categoria {
 
-	private int identificação;
+	private int identificaÃ§Ã£o;
 	private String nome;
 	
-	public int getIdentificação() {
-		return identificação;
+	public int getIdentificaÃ§Ã£o() {
+		return identificaÃ§Ã£o;
 	}
 	
-	public void setIdentificação(int identificação) {
-		this.identificação = identificação;
+	public void setIdentificaÃ§Ã£o(int identificaÃ§Ã£o) {
+		this.identificaÃ§Ã£o = identificaÃ§Ã£o;
 	}
 	
 	public String getNome() {
