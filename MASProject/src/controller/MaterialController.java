@@ -13,16 +13,15 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import model.Material;
 
-public class MaterialController implements ComponentListener{
-	
+public class MaterialController implements ComponentListener {
+
 	private JLabel msgGravado, msgVazio;
 	private JComboBox<String> Categoria;
 	private JTextField nomeMaterial, idsetor;
 	private JButton btnGravar;
 	private ArquivosController arqController;
 	Material material = new Material();
-	
-	
+
 	public MaterialController(JComboBox<String> Categoria, JTextField id_setor, JTextField nomeDigit, JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
 		this.Categoria = Categoria;
 		this.idsetor = id_setor;
@@ -32,43 +31,45 @@ public class MaterialController implements ComponentListener{
 		this.btnGravar = btnGravar;
 	}
 
-	
-	private void preencherComboBoxCategoria(){
+	private void preencherComboBoxCategoria() {
 		String linha = new String();
-		
+
 		arqController = new ArquivosController();
 		try {
 			arqController.leArquivo("../MASProject/dados/", "categorias");
 			linha = arqController.getBuffer();
-			String [] categoria = linha.split(";");
-			for(String s : categoria){
+			String[] categoria = linha.split(";");
+			for (String s : categoria) {
 				Categoria.addItem(s);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void gravaMaterial() { 
+
+	public void gravaMaterial() {
 
 		IArquivosController arqContr = new ArquivosController();
 		material.setNome(nomeMaterial.getText());
-		
-				if (!nomeMaterial.getText().isEmpty()) {  //se o campo não estiver vazio
-		try {
-			arqContr.escreveArquivo("../MASProject/dados/", "materiais", nomeMaterial.getText(), material); // Gravando o novo registro no arquivo.
-		} catch (IOException e) {
-			e.printStackTrace();
+
+		if (nomeMaterial.getText().equals("Digite o novo material…")) { //se o usuário tentar gravar sem preencher
+			nomeMaterial.setText(null);
 		}
-		msgGravado.setText(nomeMaterial.getText()+" salvo.");
-		msgGravado.setVisible(true);
-		nomeMaterial.setText(null);//limpa o campo previnindo gravar em duplicidade
-				}else{
-					msgGravado.setVisible(false);
-					msgVazio.setVisible(true);
-				}
+		if (!nomeMaterial.getText().isEmpty()) { // se o campo não estiver vazio
+			try {
+				arqContr.escreveArquivo("../MASProject/dados/", "materiais", nomeMaterial.getText(), material); // Gravando o novo registro no arquivo.
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			msgGravado.setText(nomeMaterial.getText() + " salvo.");
+			msgGravado.setVisible(true);
+			nomeMaterial.setText(null);// limpa o campo previnindo gravar em duplicidade
+		} else {
+			msgGravado.setVisible(false);
+			msgVazio.setVisible(true);
+		}
 	}
-	
+
 	public ActionListener gravarMaterial = new ActionListener() {
 
 		@Override
@@ -106,14 +107,15 @@ public class MaterialController implements ComponentListener{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			nomeMaterial.setText(null); //limpa o campo
-			msgGravado.setVisible(false); //para que a mensagem não fique visível a todo momento
-            msgVazio.setVisible(false);
+			nomeMaterial.setText(null); // limpa o campo
+			msgGravado.setVisible(false); // para que a mensagem não fique visível a todo momento
+			msgVazio.setVisible(false);
 		}
 	};
-	
+
 	@Override
-	public void componentHidden(ComponentEvent e) {}
+	public void componentHidden(ComponentEvent e) {
+	}
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
@@ -121,9 +123,11 @@ public class MaterialController implements ComponentListener{
 	}
 
 	@Override
-	public void componentResized(ComponentEvent e) {}
+	public void componentResized(ComponentEvent e) {
+	}
 
 	@Override
-	public void componentShown(ComponentEvent e) {}
+	public void componentShown(ComponentEvent e) {
+	}
 
 }
