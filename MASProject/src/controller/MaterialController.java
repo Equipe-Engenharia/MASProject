@@ -7,7 +7,6 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -16,19 +15,17 @@ import model.Material;
 public class MaterialController implements ComponentListener {
 
 	private JLabel msgGravado, msgVazio;
-	private JComboBox<String> Categoria;
-	private JTextField nomeMaterial, idsetor;
-	private JButton btnGravar;
+	private JComboBox<String> listaCategoria;
+	private JTextField nomeMaterial, idMaterial;
 	private ArquivosController arqController;
 	Material material = new Material();
 
-	public MaterialController(JComboBox<String> Categoria, JTextField id_setor, JTextField nomeDigit, JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
-		this.Categoria = Categoria;
-		this.idsetor = id_setor;
+	public MaterialController(JComboBox<String> cbCategoria, JTextField txtID, JTextField txtMaterial, JLabel msgGravado, JLabel msgVazio) {
+		this.listaCategoria = cbCategoria;
+		this.idMaterial = txtID; // falta implementar
 		this.msgGravado = msgGravado;
 		this.msgVazio = msgVazio;
-		this.nomeMaterial = nomeDigit;
-		this.btnGravar = btnGravar;
+		this.nomeMaterial = txtMaterial;
 	}
 
 	private void preencherComboBoxCategoria() {
@@ -40,7 +37,7 @@ public class MaterialController implements ComponentListener {
 			linha = arqController.getBuffer();
 			String[] categoria = linha.split(";");
 			for (String s : categoria) {
-				Categoria.addItem(s);
+				listaCategoria.addItem(s);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -61,7 +58,7 @@ public class MaterialController implements ComponentListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			msgGravado.setText("O material " + nomeMaterial.getText() + " foi salvo.");
+			msgGravado.setText("O material " + nomeMaterial.getText() + " salvo.");
 			msgGravado.setVisible(true);
 			nomeMaterial.setText(null);// limpa o campo previnindo gravar em duplicidade
 		} else {

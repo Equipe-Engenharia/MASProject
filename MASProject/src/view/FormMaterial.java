@@ -117,7 +117,7 @@ public class FormMaterial extends JFrame {
 		id_material.setColumns(10);
 		
 		
-		MaterialController ctrlMaterial = new MaterialController(cbCategoria,id_material, txtMaterial, btnGravar, msgGravado, msgVazio);
+		MaterialController ctrlMaterial = new MaterialController(cbCategoria,id_material, txtMaterial, msgGravado, msgVazio);
 
 		cbCategoria.addComponentListener(ctrlMaterial);
 		txtMaterial.addMouseListener(ctrlMaterial.limpaCampo);
