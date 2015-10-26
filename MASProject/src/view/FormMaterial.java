@@ -20,7 +20,7 @@ public class FormMaterial extends JFrame {
 	private JPanel contentPane;
 	private JComboBox<String> cbCategoria;
 	private JTextField txtMaterial;
-	private JTextField id_material;
+	private JTextField idMaterial;
 	
 
 	/**
@@ -101,14 +101,14 @@ public class FormMaterial extends JFrame {
 		contentPane.add(btnFechar);
 		
 		
-		id_material = new JTextField();
-		id_material.setEditable(false);
-		id_material.setBounds(180, 33, 86, 20);
-		contentPane.add(id_material);
-		id_material.setColumns(10);
+		idMaterial = new JTextField();
+		idMaterial.setEditable(false);
+		idMaterial.setBounds(180, 33, 86, 20);
+		contentPane.add(idMaterial);
+		idMaterial.setColumns(10);
 		
 		
-		MaterialController ctrlMaterial = new MaterialController(cbCategoria,id_material, txtMaterial, msgGravado, msgVazio);
+		MaterialController ctrlMaterial = new MaterialController(cbCategoria,idMaterial, txtMaterial, msgGravado, msgVazio);
 
 		cbCategoria.addComponentListener(ctrlMaterial);
 		txtMaterial.addMouseListener(ctrlMaterial.limpaCampo);
