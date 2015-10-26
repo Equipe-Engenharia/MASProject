@@ -65,12 +65,6 @@ public class FormMaterial extends JFrame {
 
 		
 		txtMaterial = new JTextField();
-		/*txtMaterial.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				txtMaterial.setText(null);  //limpa a caixa de texto
-			}
-		});*/
 		txtMaterial.setToolTipText("Digite o novo material…");
 		txtMaterial.setText("Digite o novo material…");
 		txtMaterial.setBounds(179, 110, 178, 28);
