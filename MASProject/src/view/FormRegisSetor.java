@@ -67,6 +67,7 @@ public class FormRegisSetor extends JFrame {
 		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setBounds(342, 96, 89, 23);
 		contentPane.add(btnGravar);
+		btnGravar.setEnabled(false);
 
 		JLabel mensagemGravado = new JLabel("");
 		mensagemGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
@@ -86,7 +87,7 @@ public class FormRegisSetor extends JFrame {
 		contentPane.add(id_setor);
 		id_setor.setColumns(10);
 		
-		RegisSetorController RsContrl = new RegisSetorController(id_setor, txtDigitado, mensagemGravado, mensagemVazio);
+		RegisSetorController RsContrl = new RegisSetorController(id_setor, txtDigitado, mensagemGravado, mensagemVazio, btnGravar);
 
 		txtDigitado.addMouseListener(RsContrl.limpaCampo);
 		txtDigitado.addActionListener(RsContrl.gravarSetor);

@@ -17,16 +17,18 @@ public class RegisSetorController {
 
 	private JLabel mensagemGravado, mensagemVazio;
 	private JTextField nomeset, idsetor;
+	private JButton btnGravar;
 	private Setor setor = new Setor();
 	private static int contador = 1;
 	private String registro_set[] = new String[2];
 	private ArquivosController arqController = new ArquivosController();
 
-	public RegisSetorController(JTextField id_setor, JTextField nomeDigit, JLabel mensagemGravado, JLabel mensagemVazio) {
+	public RegisSetorController(JTextField id_setor, JTextField nomeDigit, JLabel mensagemGravado, JLabel mensagemVazio, JButton btnGravar) {
 		this.idsetor = id_setor;
 		this.mensagemGravado = mensagemGravado;
 		this.mensagemVazio = mensagemVazio;
 		this.nomeset = nomeDigit;
+		this.btnGravar = btnGravar;
 	}
 
 	public void gravaSetor() {
@@ -121,6 +123,7 @@ public ActionListener excluiSetor = new ActionListener() {
 				contador += 1;
 			}
 			//para que a mensagem n�o fique visivel a todo momento
+			btnGravar.setEnabled(true);
 			mensagemGravado.setVisible(false);
             mensagemVazio.setVisible(false);
 		}
