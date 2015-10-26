@@ -1,12 +1,15 @@
 package controller;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class ArquivosController implements IArquivosController {
 
@@ -79,5 +82,53 @@ public class ArquivosController implements IArquivosController {
 		} else {
 			throw new IOException("DiretÃ³rio inexistente");
 		}
+	}
+ 
+	//não testado************
+	@Override
+	public void excluiDadosArquivo(String diretorio, String arquivo, String registro[]) throws IOException {
+		File file = new File(diretorio, arquivo);
+		try {
+			FileReader freader = new FileReader(file);
+			BufferedReader breader = new BufferedReader(freader);
+			
+			String linha = breader.readLine();
+			
+			//lista para gravar o que não for igual ao conteúdo do vetor registro
+			ArrayList <String>salvar = new ArrayList<String>();
+			System.out.println(registro[0]);
+			while(linha != null){
+				//se a linha não for igual a id do selecionado, salva.
+				if (linha.equals(registro[0]) == false){
+					salvar.add(linha);
+				}else{
+					/*se a linha for a id do selecionado, o laço conta o até a posição 
+					final do vetor, para gravar somente o que vir depois*/
+				for(int i=0;i<registro.length;i++){
+						linha = breader.readLine();
+				 }
+				linha=breader.readLine();
+				}
+			}
+			freader.close();
+			breader.close();
+			FileWriter fwriter2 = new FileWriter(file, true);
+			fwriter2.close();
+			
+			FileWriter fwriter = new FileWriter(file);
+			BufferedWriter bwriter = new BufferedWriter(fwriter);
+			//salva todo o conteudo da lista novamente no arquivo
+			for (int i = 0; i < salvar.size(); i++){
+				bwriter.write(salvar.get(i));
+				bwriter.newLine();
+			}
+			bwriter.close();
+			fwriter.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 }

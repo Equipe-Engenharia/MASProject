@@ -1,5 +1,7 @@
-Setor A
+
+SetorA
 SetorB
+<<<<<<< HEAD
  SetorB
 setorC
  setorD
@@ -13,3 +15,6 @@ setor G
 Setor Z
 1
 setor D
+=======
+SetorC
+>>>>>>> branch 'master' of https://github.com/Equipe-Engenharia/MASProject.git

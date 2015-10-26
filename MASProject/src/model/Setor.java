@@ -2,15 +2,15 @@ package model;
 
 public class Setor {
 
-	private int identificacao;
+	private String identificacao;
 	private String nome;
 
-	public int getIdentificacao() {
+	public String getIdentificacao() {
 		return identificacao;
 	}
 
-	public void setIdentificacao(int identificacao) {
-		this.identificacao = identificacao;
+	public void setIdentificacao(String string) {
+		this.identificacao = string;
 	}
 
 	public String getNome() {
