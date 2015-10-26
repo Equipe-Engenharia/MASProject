@@ -56,7 +56,7 @@ public class RegisSetorController {
 	}
 	
 	public void excluiSetor(){
-		
+		//teste
 		registro_set[1] = setor.getNome();
 		registro_set[0] = setor.getIdentificacao();
 		
