@@ -61,7 +61,7 @@ public class MaterialController implements ComponentListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			msgGravado.setText(nomeMaterial.getText() + " salvo.");
+			msgGravado.setText("O material " + nomeMaterial.getText() + " foi salvo.");
 			msgGravado.setVisible(true);
 			nomeMaterial.setText(null);// limpa o campo previnindo gravar em duplicidade
 		} else {
