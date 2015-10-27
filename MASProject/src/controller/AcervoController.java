@@ -108,7 +108,7 @@ public class AcervoController implements ComponentListener {
 
 					System.out.println("Item id : " + eElement.getAttribute("id"));
 					System.out.println("Nome : " + eElement.getElementsByTagName("nome").item(0).getTextContent());
-					System.out.println("PreÁo : " + eElement.getElementsByTagName("preco").item(0).getTextContent());
+					System.out.println("Pre√ßo : " + eElement.getElementsByTagName("preco").item(0).getTextContent());
 
 				}
 			}
@@ -169,7 +169,7 @@ public class AcervoController implements ComponentListener {
 			if(s.equalsIgnoreCase(palavraChave)){
 				System.out.println("Achou");
 			}else{
-				System.out.println("n„o Achou");
+				System.out.println("n√£o Achou");
 
 			}
 		}
@@ -241,13 +241,13 @@ public class AcervoController implements ComponentListener {
 
 		if (nomeArtista.getText().isEmpty()) {
 			msgVazio.setVisible(true);
-			msgVazio.setText("Campo Artista È obrigatÛrio");
+			msgVazio.setText("Campo Artista √© obrigat√≥rio");
 		} else if (nomeObra.getText().isEmpty()) {
 			msgVazio.setVisible(true);
-			msgVazio.setText("Campo Obra È obrigatÛrio");
+			msgVazio.setText("Campo Obra √© obrigat√≥rio");
 		} else if (dataAquisicao.getText().isEmpty()) {
 			msgVazio.setVisible(true);
-			msgVazio.setText("Campo Data È obrigatÛrio");
+			msgVazio.setText("Campo Data √© obrigat√≥rio");
 		} else {
 			msgGravado.setVisible(true);
 			msgVazio.setVisible(false);

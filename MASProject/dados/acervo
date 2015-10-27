@@ -1,10 +1,20 @@
 Nome do Artista: denys
 Nome da obra: oba
-Descri��o: asdasdasd
+Descrição: asdasdasd
 Categoria: Pinturas
 Data: 121212
 Imagem: ../MASProject/icons/painting.png
 Material: Esculturas
 Setor: SetorA
 Valor: 
+---------------------------
+Nome do Artista: Fernando
+Nome da obra: Teste
+Descrição: testando o crud
+Categoria: Fotografia
+Data: 22102015
+Imagem: ../MASProject/icons/painting.png
+Material: Ferro
+Setor: SetorD
+Valor: 1000,00
 ---------------------------
