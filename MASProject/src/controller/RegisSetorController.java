@@ -32,7 +32,7 @@ public class RegisSetorController {
 	}
 
 	public void gravaSetor() {
-		
+		//teste
 		// Falta implementar
 		setor.setIdentificacao(idsetor.getText());
 		setor.setNome(nomeset.getText());

@@ -12,6 +12,9 @@ import javax.swing.JEditorPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
+
+import org.w3c.dom.CDATASection;
+
 import javax.swing.ImageIcon;
 import controller.AcervoController;
 import java.awt.event.ActionListener;
@@ -27,8 +30,10 @@ public class FormAcervo extends JFrame {
 	private JTextField data_obra;
 	private JComboBox<String> cbCategoria;
 	private JComboBox<String> cbMaterial;
-	private JComboBox <String> cbSetor;
+	private JComboBox <String> comboSetor;
+	private JComboBox <String> comboSetorT;
 	private JComboBox <String> comboStatus;
+	private JComboBox <String> comboStatusT;
 	private JTextField textField_valor;
 
 	/**
@@ -168,12 +173,12 @@ public class FormAcervo extends JFrame {
 		panel_proprio.add(comboStatus);
 		
 		JLabel Setor = new JLabel("Setor");
-		Setor.setBounds(316, 21, 46, 14);
+		Setor.setBounds(317, 23, 46, 14);
 		panel_proprio.add(Setor);
 		
-		cbSetor = new JComboBox<String>();
-		cbSetor.setBounds(355, 21, 110, 20);
-		panel_proprio.add(cbSetor);
+		comboSetor = new JComboBox<String>();
+		comboSetor.setBounds(357, 20, 110, 20);
+		panel_proprio.add(comboSetor);
 		
 		JLabel lblValorDaAquisio = new JLabel("Valor da aquisi\u00E7\u00E3o (R$)");
 		lblValorDaAquisio.setBounds(34, 64, 143, 14);
@@ -186,6 +191,24 @@ public class FormAcervo extends JFrame {
 		
 		JPanel panel_terceiros = new JPanel();
 		abas.addTab("Obra de Terceiro", null, panel_terceiros, null);
+		panel_terceiros.setLayout(null);
+		
+		JLabel lblStatus_1 = new JLabel("Status");
+		lblStatus_1.setBounds(131, 23, 46, 14);
+		panel_terceiros.add(lblStatus_1);
+		
+		comboStatusT = new JComboBox<String>();
+		comboStatusT.setBounds(183, 21, 110, 20);
+		panel_terceiros.add(comboStatusT);
+		
+		JLabel lblSetor = new JLabel("Setor");
+		lblSetor.setBounds(317, 23, 46, 14);
+		panel_terceiros.add(lblSetor);
+		
+		comboSetorT= new JComboBox<String>();
+		comboSetorT.setBounds(357, 20, 110, 20);
+		panel_terceiros.add(comboSetorT);
+		
 		
 		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
@@ -211,7 +234,7 @@ public class FormAcervo extends JFrame {
 		contentPane.add(btnExcluirImagem);
 		
 		JButton btnFechar = new JButton("Fechar");
-		btnFechar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
+		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
 		btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -229,12 +252,14 @@ public class FormAcervo extends JFrame {
 		btnEditarMaterial.setBounds(28, 245, 133, 29);
 		contentPane.add(btnEditarMaterial);
 		
-		AcervoController Acontroller = new AcervoController(lblSelecImagem,cbSetor,cbCategoria, cbMaterial);
+		AcervoController Acontroller = new AcervoController(lblSelecImagem,comboSetor,comboSetorT,comboStatus,comboStatusT,cbCategoria, cbMaterial);
 		
 		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
 		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
 		Acontroller.preencherComboBoxCategoria();
 		Acontroller.preencherComboBoxMaterial();
 		Acontroller.preencherComboBoxSetores();
+		Acontroller.preencherComboStatusProprio();
+		Acontroller.preencherComboStatusTerceiro();
 	}
 }
