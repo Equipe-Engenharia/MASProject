@@ -48,7 +48,7 @@ public class MaterialController implements ComponentListener {
 				if (id.length == 1) {//Se o arquivo está vazio
 					idMaterial.setText("MT" + 1);
 				} else {
-					int num = Integer.parseInt(id[(id.length - 1) - 2]);//Extra a última posição do identificador
+					int num = Integer.parseInt(id[(id.length - 1) - 2]);//Extrai a última posição do identificador
 					idMaterial.setText("MT" + Integer.toString(num + 1));//Incrementa o identificador
 				}
 			} catch (IOException e) {
