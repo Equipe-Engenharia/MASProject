@@ -37,7 +37,7 @@ public class MaterialController implements ComponentListener {
 
 		arqController = new ArquivosController();
 		try {
-			arqController.leArquivo("../MASProject/dados/", "categorias");
+			arqController.leArquivo("../MASProject/dados", "categorias");
 			linha = arqController.getBuffer();
 			String[] categoria = linha.split(";");
 			for (String s : categoria) {
