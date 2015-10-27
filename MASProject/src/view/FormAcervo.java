@@ -269,6 +269,7 @@ public class FormAcervo extends JFrame {
 		//AcervoController Acontroller = new AcervoController(lblSelecImagem,comboSetor,comboSetorT,comboStatus,comboStatusT,cbCategoria, cbMaterial);
 		AcervoController Acontroller = new AcervoController(lblSelecImagem,comboSetor,comboSetorT,comboStatus,comboStatusT,cbCategoria, 
 				cbMaterial,nome_artist, nome_obra, data_obra, editor_descricao,msgGravado,msgVazio,textField_valor);
+		btnGravar.addActionListener(Acontroller.gravarAcervo);
 		
 		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
 		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
