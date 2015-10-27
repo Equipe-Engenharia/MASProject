@@ -2,23 +2,24 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.SystemColor;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
-import javax.swing.ImageIcon;
+
 import controller.AcervoController;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
-public class FormAcervo extends JFrame {
-
+public class FormAlteraDelAcervo extends JFrame{
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField nome_artist;
@@ -29,15 +30,12 @@ public class FormAcervo extends JFrame {
 	private JComboBox<String> cbSetor;
 	private JComboBox<String> comboStatus;
 	private JTextField textField_valor;
-
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormAcervo frame = new FormAcervo();
+					FormAlteraDelAcervo frame = new FormAlteraDelAcervo();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,13 +43,9 @@ public class FormAcervo extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
-	public FormAcervo() {
+	public FormAlteraDelAcervo() {
 		setResizable(false);
-		setTitle("Registro de Acervo");
+		setTitle("Excluir/Alterar Acervo");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 615, 674);
 		contentPane = new JPanel();
@@ -96,6 +90,16 @@ public class FormAcervo extends JFrame {
 		btnPesquisaArtist.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		btnPesquisaArtist.setBounds(522, 52, 29, 28);
 		contentPane.add(btnPesquisaArtist);
+		
+		JButton btnPesquisaId = new JButton("");
+		btnPesquisaId.setIcon(new ImageIcon("../MASProject/icons/search.png"));
+		btnPesquisaId.setBounds(255, 18, 29, 28);
+		contentPane.add(btnPesquisaId);
+		
+		JButton btnPesquisaNome = new JButton("");
+		btnPesquisaNome.setIcon(new ImageIcon("../MASProject/icons/search.png"));
+		btnPesquisaNome.setBounds(522, 85, 29, 28);
+		contentPane.add(btnPesquisaNome);
 
 		JLabel lblNomeDaObra = new JLabel("Nome da Obra");
 		lblNomeDaObra.setBounds(67, 88, 98, 14);
@@ -155,46 +159,24 @@ public class FormAcervo extends JFrame {
 		});
 		btnNovoMaterial.setBounds(166, 245, 133, 29);
 		contentPane.add(btnNovoMaterial);
-
-		JTabbedPane abas = new JTabbedPane(JTabbedPane.TOP);
-		abas.setBounds(21, 438, 576, 144);
-		contentPane.add(abas);
-
-		JPanel panel_proprio = new JPanel();
-		abas.addTab("Obra Pr\u00F3pria", null, panel_proprio, null);
-		panel_proprio.setLayout(null);
-
+		
 		JLabel lblStatus = new JLabel("Status");
-		lblStatus.setBounds(131, 23, 46, 14);
-		panel_proprio.add(lblStatus);
 
-		comboStatus = new JComboBox<String>();
-		comboStatus.setBounds(183, 21, 110, 20);
-		panel_proprio.add(comboStatus);
+		lblStatus.setBounds(28, 438, 576, 144);
+		contentPane.add(lblStatus);
 
-		JLabel Setor = new JLabel("Setor");
-		Setor.setBounds(316, 21, 46, 14);
-		panel_proprio.add(Setor);
+		JLabel lblValor = new JLabel("Valor :");
 
-		cbSetor = new JComboBox<String>();
-		cbSetor.setBounds(355, 21, 110, 20);
-		panel_proprio.add(cbSetor);
-
-		JLabel lblValorDaAquisio = new JLabel("Valor da aquisi\u00E7\u00E3o (R$)");
-		lblValorDaAquisio.setBounds(34, 64, 143, 14);
-		panel_proprio.add(lblValorDaAquisio);
-
+		lblValor.setBounds(28, 388, 576, 144);
+		contentPane.add(lblValor);
 		textField_valor = new JTextField();
-		textField_valor.setBounds(183, 61, 110, 20);
-		panel_proprio.add(textField_valor);
-		textField_valor.setColumns(10);
+		textField_valor.setBounds(68, 448, 110, 20);
+		contentPane.add(textField_valor);
 
-		JPanel panel_terceiros = new JPanel();
-		abas.addTab("Obra de Terceiro", null, panel_terceiros, null);
 
-		JButton btnGravar = new JButton("Gravar");
+		JButton btnGravar = new JButton("Gravar Alterações");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnGravar.setBounds(339, 595, 107, 34);
+		btnGravar.setBounds(200, 594, 177, 34);
 		contentPane.add(btnGravar);
 
 		JLabel lblSelecImagem = new JLabel("");
@@ -215,23 +197,23 @@ public class FormAcervo extends JFrame {
 		btnExcluirImagem.setBounds(497, 299, 46, 35);
 		contentPane.add(btnExcluirImagem);
 
-		AcervoController Acontroller = new AcervoController(lblSelecImagem, cbSetor, cbMaterial, cbCategoria,
-				nome_artist, nome_obra, data_obra, editor_descricao,msgGravado,msgVazio,textField_valor);
+		//AcervoController Acontroller = new AcervoController(lblSelecImagem, cbSetor, cbMaterial, cbCategoria,
+		//		nome_artist, nome_obra, data_obra, editor_descricao,msgGravado,msgVazio,textField_valor);
 
-		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
+		//btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
 
-		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
-		btnGravar.addActionListener(Acontroller.gravarAcervo);
+		//btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
+		//btnGravar.addActionListener(Acontroller.gravarAcervo);
 
-		JButton btnFechar = new JButton("Fechar");
-		btnFechar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
-		btnFechar.addActionListener(new ActionListener() {
+		JButton btnExcluir = new JButton("Excluir Obra");
+		btnExcluir.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
+		/*btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
-		});
-		btnFechar.setBounds(472, 594, 117, 34);
-		contentPane.add(btnFechar);
+		});*/
+		btnExcluir.setBounds(402, 594, 177, 34);
+		contentPane.add(btnExcluir);
 
 		JButton btnEditarCategoria = new JButton("Editar Categoria");
 		btnEditarCategoria.setBounds(29, 178, 133, 29);
@@ -240,6 +222,6 @@ public class FormAcervo extends JFrame {
 		JButton btnEditarMaterial = new JButton("Editar Material");
 		btnEditarMaterial.setBounds(28, 245, 133, 29);
 		contentPane.add(btnEditarMaterial);
-		cbMaterial.addComponentListener(Acontroller);
+		//cbMaterial.addComponentListener(Acontroller);
 	}
 }
