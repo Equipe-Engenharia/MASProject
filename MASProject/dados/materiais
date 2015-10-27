@@ -1,10 +1,8 @@
-Ferro
-Bronze
-Madeira
-Alumínio
-Gelo
-Chumbo
-Plástico
-Óleo
-Marfim
-Ouro
+1;Esculturas;Ferro
+2;Esculturas;Bronze
+3;Esculturas;Prata
+4;Pinturas;Óleo sobre Tela
+5;Pinturas;Aquarela
+6;Arqueologia;Mármore
+7;Arqueologia;Pedra Sabão
+8;Arqueologia;Jade

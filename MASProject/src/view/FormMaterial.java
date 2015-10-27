@@ -71,8 +71,7 @@ public class FormMaterial extends JFrame {
 		
 		txtMaterial = new JTextField();
 		txtMaterial.setToolTipText("Digite o novo material…");
-		txtMaterial.setText("Digite o novo material…");
-		txtMaterial.setBounds(179, 110, 178, 28);
+		txtMaterial.setBounds(179, 101, 178, 28);
 		contentPane.add(txtMaterial);
 		txtMaterial.setColumns(10);
 		
@@ -106,8 +105,12 @@ public class FormMaterial extends JFrame {
 		contentPane.add(btnFechar);
 		
 		MaterialController ctrlMaterial = new MaterialController(cbCategoria,idMaterial, txtMaterial, btnGravar, msgGravado, msgVazio);
+		
+		JLabel lblNovoMaterial = new JLabel("Novo Material");
+		lblNovoMaterial.setBounds(83, 107, 97, 16);
+		contentPane.add(lblNovoMaterial);
 
-		ctrlMaterial.autalizaID();
+		ctrlMaterial.atualizaID();
 		ctrlMaterial.preencherComboBoxCategoria();
 		btnGravar.addActionListener(ctrlMaterial.gravarMaterial);
 		txtMaterial.addMouseListener(ctrlMaterial.limpaCampo);
