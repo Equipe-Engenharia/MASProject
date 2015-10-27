@@ -29,7 +29,7 @@ public class ArquivosController implements IArquivosController {
 			String linha = bufferLeitura.readLine();
 			buffer = new StringBuffer();
 			while (linha != null) {
-				System.out.println(linha);
+				//System.out.println(linha);
 				buffer.append(linha);
 				buffer.append(";");
 				linha = bufferLeitura.readLine();
@@ -71,12 +71,12 @@ public class ArquivosController implements IArquivosController {
 			File[] listaArquivos = dir.listFiles();
 			for (File f : listaArquivos) {
 				if (f.isDirectory()) {
-					System.out.println("[" + f.getName() + "]");
+					//System.out.println("[" + f.getName() + "]");
 				}
 			}
 			for (File f : listaArquivos) {
 				if (f.isFile()) {
-					System.out.println(f.getName());
+					//System.out.println(f.getName());
 				}
 			}
 		} else {
@@ -84,7 +84,7 @@ public class ArquivosController implements IArquivosController {
 		}
 	}
  
-	//não testado************
+	//nï¿½o testado************
 	@Override
 	public void excluiDadosArquivo(String diretorio, String arquivo, String registro[]) throws IOException {
 		File file = new File(diretorio, arquivo);
@@ -94,15 +94,15 @@ public class ArquivosController implements IArquivosController {
 			
 			String linha = breader.readLine();
 			
-			//lista para gravar o que não for igual ao conteúdo do vetor registro
+			//lista para gravar o que nï¿½o for igual ao conteï¿½do do vetor registro
 			ArrayList <String>salvar = new ArrayList<String>();
 			System.out.println(registro[0]);
 			while(linha != null){
-				//se a linha não for igual a id do selecionado, salva.
+				//se a linha nï¿½o for igual a id do selecionado, salva.
 				if (linha.equals(registro[0]) == false){
 					salvar.add(linha);
 				}else{
-					/*se a linha for a id do selecionado, o laço conta o até a posição 
+					/*se a linha for a id do selecionado, o laï¿½o conta o atï¿½ a posiï¿½ï¿½o 
 					final do vetor, para gravar somente o que vir depois*/
 				for(int i=0;i<registro.length;i++){
 						linha = breader.readLine();
