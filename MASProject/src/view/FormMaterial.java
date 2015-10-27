@@ -59,10 +59,15 @@ public class FormMaterial extends JFrame {
 		lblCategoria.setBounds(50, 70, 117, 16);
 		contentPane.add(lblCategoria);
 		
+		idMaterial = new JTextField();
+		idMaterial.setEditable(false);
+		idMaterial.setBounds(180, 33, 86, 20);
+		contentPane.add(idMaterial);
+		idMaterial.setColumns(10);
+		
 		cbCategoria = new JComboBox<String>();
 		cbCategoria.setBounds(179, 65, 178, 28);
 		contentPane.add(cbCategoria);
-
 		
 		txtMaterial = new JTextField();
 		txtMaterial.setToolTipText("Digite o novo material…");
@@ -84,6 +89,7 @@ public class FormMaterial extends JFrame {
 		contentPane.add(msgVazio);
 
 		JButton btnGravar = new JButton("Gravar");
+		btnGravar.setEnabled(false);
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.setBounds(288, 166, 97, 34);
 		contentPane.add(btnGravar);
@@ -95,24 +101,15 @@ public class FormMaterial extends JFrame {
 				dispose();
 			}
 		});
-		
-		
+				
 		btnFechar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnFechar);
 		
-		
-		idMaterial = new JTextField();
-		idMaterial.setEditable(false);
-		idMaterial.setBounds(180, 33, 86, 20);
-		contentPane.add(idMaterial);
-		idMaterial.setColumns(10);
-		
-		
-		MaterialController ctrlMaterial = new MaterialController(cbCategoria,idMaterial, txtMaterial, msgGravado, msgVazio);
+		MaterialController ctrlMaterial = new MaterialController(cbCategoria,idMaterial, txtMaterial, btnGravar, msgGravado, msgVazio);
 
-		cbCategoria.addComponentListener(ctrlMaterial);
+		ctrlMaterial.preencherComboBoxCategoria();
+		btnGravar.addActionListener(ctrlMaterial.gravarMaterial);
 		txtMaterial.addMouseListener(ctrlMaterial.limpaCampo);
 		txtMaterial.addActionListener(ctrlMaterial.gravarMaterial);
-		btnGravar.addActionListener(ctrlMaterial.gravarMaterial);
 	}
 }

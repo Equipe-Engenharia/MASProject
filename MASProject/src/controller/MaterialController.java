@@ -7,28 +7,32 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import model.Material;
 
 public class MaterialController implements ComponentListener {
-
-	private JLabel msgGravado, msgVazio;
+	
 	private JComboBox<String> listaCategoria;
 	private JTextField nomeMaterial, idMaterial;
+	private JButton btGravar;
+	private JLabel msgGravado, msgVazio;
 	private ArquivosController arqController;
 	Material material = new Material();
 
-	public MaterialController(JComboBox<String> cbCategoria, JTextField txtID, JTextField txtMaterial, JLabel msgGravado, JLabel msgVazio) {
+	public MaterialController(JComboBox<String> cbCategoria, JTextField txtID, JTextField txtMaterial, JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
 		this.listaCategoria = cbCategoria;
 		this.idMaterial = txtID; // falta implementar
+		this.btGravar = btnGravar;
 		this.msgGravado = msgGravado;
 		this.msgVazio = msgVazio;
 		this.nomeMaterial = txtMaterial;
 	}
 
-	private void preencherComboBoxCategoria() {
+	public void preencherComboBoxCategoria() {
 		String linha = new String();
 
 		arqController = new ArquivosController();
@@ -49,9 +53,6 @@ public class MaterialController implements ComponentListener {
 		IArquivosController arqContr = new ArquivosController();
 		material.setNome(nomeMaterial.getText());
 
-		if (nomeMaterial.getText().equals("Digite o novo material…")) { //se o usuário tentar gravar sem preencher
-			nomeMaterial.setText(null);
-		}
 		if (!nomeMaterial.getText().isEmpty()) { // se o campo não estiver vazio
 			try {
 				arqContr.escreveArquivo("../MASProject/dados/", "materiais", nomeMaterial.getText(), material); // Gravando o novo registro no arquivo.
@@ -105,6 +106,7 @@ public class MaterialController implements ComponentListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			nomeMaterial.setText(null); // limpa o campo
+			btGravar.setEnabled(true);
 			msgGravado.setVisible(false); // para que a mensagem não fique visível a todo momento
 			msgVazio.setVisible(false);
 		}
