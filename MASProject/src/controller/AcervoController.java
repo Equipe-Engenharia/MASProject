@@ -47,10 +47,15 @@ public class AcervoController implements ComponentListener {
 
 	private String caminhoImagem;
 	private JComboBox<String> cbSetor;
+	private JComboBox <String> comboSetorT;
+	private JComboBox <String> comboStatus;
+	private JComboBox <String> comboStatusT;
+	
 	private ArquivosController arqController;
-
-	public AcervoController(JLabel imagem, JComboBox<String> comboSetor, JComboBox<String> cbMaterial,
-			JComboBox<String> cbCategoria, JTextField nomeArtista, JTextField nomeObra, JTextField dataAquisicao,
+//lblSelecImagem,comboSetor,comboSetorT,comboStatus,comboStatusT,cbCategoria, cbMaterial
+	public AcervoController(JLabel imagem, JComboBox<String> comboSetor,JComboBox<String> comboSetorT,
+			JComboBox<String> comboStatus,JComboBox<String> comboStatusT, JComboBox<String> cbCategoria,
+			JComboBox<String> cbMaterial, JTextField nomeArtista, JTextField nomeObra, JTextField dataAquisicao,
 			JEditorPane descricaoObra, JLabel msgGravado, JLabel msgVazio, JTextField textField_valor) {
 		this.imagem = imagem;
 		this.nomeArtista = nomeArtista;
@@ -60,6 +65,9 @@ public class AcervoController implements ComponentListener {
 		this.cbMaterial = cbMaterial;
 		this.cbCategoria = cbCategoria;
 		this.cbSetor = comboSetor;
+		this.comboSetorT = comboSetorT;
+		this.comboStatus = comboStatus;
+		this.comboStatusT = comboStatusT;
 		this.caminhoImagem = "../MASProject/icons/painting.png";
 		this.msgGravado = msgGravado;
 		this.msgVazio = msgVazio;
@@ -219,21 +227,7 @@ public class AcervoController implements ComponentListener {
 
 	};
 
-	private void preencherComboBoxMaterial() {
-		String linha = new String();
-		arqController = new ArquivosController();
-		try {
-			arqController.leArquivo("../MASProject/dados", "materiais");
-			arqController.leArquivo("../MASProject/dados/", "materiais");
-			linha = arqController.getBuffer();
-			String[] categoria = linha.split(";");
-			for (String s : categoria) {
-				cbMaterial.addItem(s);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	
 
 	public void gravarAcervo() {
 		Obra obra = new Obra();
@@ -307,6 +301,36 @@ public class AcervoController implements ComponentListener {
 		cbSetor.setSelectedIndex(0);
 
 	}
+	public void preencherComboBoxMaterial() {
+		String linha = new String();
+		arqController = new ArquivosController();
+		try {
+			arqController.leArquivo("../MASProject/dados", "materiais");
+			arqController.leArquivo("../MASProject/dados/", "materiais");
+			linha = arqController.getBuffer();
+			String[] categoria = linha.split(";");
+			for (String s : categoria) {
+				cbMaterial.addItem(s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void preencherComboBoxCategoria(){
+		String linha = new String();
+		arqController = new ArquivosController();
+		try {
+			arqController.leArquivo("../MASProject/dados", "categorias");
+			linha = arqController.getBuffer();
+			String [] categoria = linha.split(";");
+			for(String s : categoria){
+				cbCategoria.addItem(s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void preencherComboBoxSetores() {
 		String linha = new String();
@@ -317,11 +341,44 @@ public class AcervoController implements ComponentListener {
 			String[] setor = linha.split(";");
 			for (String s : setor) {
 				cbSetor.addItem(s);
+				comboSetorT.addItem(s);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public void preencherComboStatusProprio(){
+		String linha = new String();
+		arqController = new ArquivosController();
+		try {
+			arqController.leArquivo("../MASProject/dados", "status_obra_propria");
+			linha = arqController.getBuffer();
+			String [] proprio = linha.split(";");
+			for(String s : proprio){
+				comboStatus.addItem(s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void preencherComboStatusTerceiro(){
+		String linha = new String();
+		arqController = new ArquivosController();
+		try {
+			arqController.leArquivo("../MASProject/dados", "status_obra_terceiros");
+			linha = arqController.getBuffer();
+			String [] terceiro = linha.split(";");
+			for(String s : terceiro){
+				comboStatusT.addItem(s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+
 
 	@Override
 	public void componentResized(ComponentEvent e) {
