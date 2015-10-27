@@ -203,12 +203,6 @@ public class FormAcervo extends JFrame {
 		btnExcluirImagem.setBounds(497, 299, 46, 35);
 		contentPane.add(btnExcluirImagem);
 		
-		AcervoController Acontroller = new AcervoController(lblSelecImagem,cbSetor,cbMaterial);
-		
-		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
-		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
-		
-		
 		JButton btnFechar = new JButton("Fechar");
 		btnFechar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
 		btnFechar.addActionListener(new ActionListener() {
@@ -216,6 +210,7 @@ public class FormAcervo extends JFrame {
 				dispose();
 			}
 		});
+		
 		btnFechar.setBounds(472, 594, 117, 34);
 		contentPane.add(btnFechar);
 		
@@ -226,6 +221,13 @@ public class FormAcervo extends JFrame {
 		JButton btnEditarMaterial = new JButton("Editar Material");
 		btnEditarMaterial.setBounds(28, 245, 133, 29);
 		contentPane.add(btnEditarMaterial);
-		cbMaterial.addComponentListener(Acontroller);
+		
+		AcervoController Acontroller = new AcervoController(lblSelecImagem,cbSetor,cbCategoria, cbMaterial);
+		
+		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
+		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
+		Acontroller.preencherComboBoxCategoria();
+		Acontroller.preencherComboBoxMaterial();
+		Acontroller.preencherComboBoxSetores();
 	}
 }

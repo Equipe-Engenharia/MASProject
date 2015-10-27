@@ -17,25 +17,41 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class AcervoController implements ComponentListener {
 	
 	private JLabel imagem;
+	private JComboBox<String> cbCategoria;
 	private JComboBox<String> cbMaterial;
 	private JComboBox<String> cbSetor;
 	private ArquivosController arqController;
 	
-	public AcervoController(JLabel imagem, JComboBox<String> comboSetor,JComboBox<String> cbMaterial){
+	public AcervoController(JLabel imagem, JComboBox<String> comboSetor,JComboBox<String> comboCategoria, JComboBox<String> comboMaterial){
 		this.imagem = imagem;
-		this.cbMaterial = cbMaterial;
+		this.cbCategoria = comboCategoria;
+		this.cbMaterial = comboMaterial;
 		this.cbSetor = comboSetor;
 	}
 	
-	private void preencherComboBoxMaterial(){
+	public void preencherComboBoxCategoria(){
+		String linha = new String();
+		arqController = new ArquivosController();
+		try {
+			arqController.leArquivo("../MASProject/dados", "categorias");
+			linha = arqController.getBuffer();
+			String [] categoria = linha.split(";");
+			for(String s : categoria){
+				cbCategoria.addItem(s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void preencherComboBoxMaterial(){
 		String linha = new String();
 		arqController = new ArquivosController();
 		try {
 			arqController.leArquivo("../MASProject/dados", "materiais");
-			arqController.leArquivo("../MASProject/dados/", "materiais");
 			linha = arqController.getBuffer();
-			String [] categoria = linha.split(";");
-			for(String s : categoria){
+			String [] material = linha.split(";");
+			for(String s : material){
 				cbMaterial.addItem(s);
 			}
 		} catch (IOException e) {
@@ -105,9 +121,7 @@ public class AcervoController implements ComponentListener {
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		preencherComboBoxMaterial();
-		preencherComboBoxSetores();
+		// TODO Auto-generated method stub	
 	}
 
 	@Override
