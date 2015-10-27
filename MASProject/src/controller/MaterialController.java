@@ -21,11 +21,13 @@ public class MaterialController implements ComponentListener {
 	private JButton btGravar;
 	private JLabel msgGravado, msgVazio;
 	private ArquivosController arqController;
+	
+	IArquivosController arqContr = new ArquivosController();
 	Material material = new Material();
 
 	public MaterialController(JComboBox<String> cbCategoria, JTextField txtID, JTextField txtMaterial, JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
 		this.listaCategoria = cbCategoria;
-		this.idMaterial = txtID; // falta implementar
+		this.idMaterial = txtID;
 		this.btGravar = btnGravar;
 		this.msgGravado = msgGravado;
 		this.msgVazio = msgVazio;
@@ -34,7 +36,6 @@ public class MaterialController implements ComponentListener {
 
 	public void preencherComboBoxCategoria() {
 		String linha = new String();
-
 		arqController = new ArquivosController();
 		try {
 			arqController.leArquivo("../MASProject/dados", "categorias");
@@ -47,10 +48,18 @@ public class MaterialController implements ComponentListener {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public void autalizaID(){
+		int num = 0;
+		
+		idMaterial.setText("MT"+ Integer.toString(num++));
+	}
 
 	public void gravaMaterial() {
-
-		IArquivosController arqContr = new ArquivosController();
+		
+		material.setID(Integer.parseInt(idMaterial.getText()));
+		material.setCategoria(listaCategoria.getSelectedItem().toString());
 		material.setNome(nomeMaterial.getText());
 
 		if (!nomeMaterial.getText().isEmpty()) { // se o campo não estiver vazio
@@ -72,7 +81,6 @@ public class MaterialController implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			gravaMaterial();
 		}
 	};
@@ -81,25 +89,18 @@ public class MaterialController implements ComponentListener {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 
@@ -118,7 +119,6 @@ public class MaterialController implements ComponentListener {
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
-		preencherComboBoxCategoria();
 	}
 
 	@Override

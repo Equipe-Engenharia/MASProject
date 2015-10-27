@@ -107,6 +107,7 @@ public class FormMaterial extends JFrame {
 		
 		MaterialController ctrlMaterial = new MaterialController(cbCategoria,idMaterial, txtMaterial, btnGravar, msgGravado, msgVazio);
 
+		ctrlMaterial.autalizaID();
 		ctrlMaterial.preencherComboBoxCategoria();
 		btnGravar.addActionListener(ctrlMaterial.gravarMaterial);
 		txtMaterial.addMouseListener(ctrlMaterial.limpaCampo);
