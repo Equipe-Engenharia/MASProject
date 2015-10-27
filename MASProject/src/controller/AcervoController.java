@@ -20,13 +20,52 @@ public class AcervoController implements ComponentListener {
 	private JComboBox<String> cbCategoria;
 	private JComboBox<String> cbMaterial;
 	private JComboBox<String> cbSetor;
+	private JComboBox <String> comboSetorT;
+	private JComboBox <String> comboStatus;
+	private JComboBox <String> comboStatusT;
 	private ArquivosController arqController;
-	
-	public AcervoController(JLabel imagem, JComboBox<String> comboSetor,JComboBox<String> comboCategoria, JComboBox<String> comboMaterial){
+	//lblSelecImagem,comboSetor,comboSetorT,comboStatus,comboStatusT,cbCategoria, cbMaterial
+	public AcervoController(JLabel imagem, JComboBox<String> comboSetor,JComboBox<String> comboSetorT,
+			JComboBox<String> comboStatus, JComboBox<String> comboStatusT, JComboBox<String> comboCategoria, 
+			JComboBox<String> comboMaterial){
 		this.imagem = imagem;
+		this.cbSetor = comboSetor;
+		this.comboSetorT = comboSetorT;
+		this.comboStatus = comboStatus;
+		this.comboStatusT = comboStatusT;
 		this.cbCategoria = comboCategoria;
 		this.cbMaterial = comboMaterial;
-		this.cbSetor = comboSetor;
+	
+	
+	}
+	public void preencherComboStatusProprio(){
+		String linha = new String();
+		arqController = new ArquivosController();
+		try {
+			arqController.leArquivo("../MASProject/dados", "status_obra_propria");
+			linha = arqController.getBuffer();
+			String [] proprio = linha.split(";");
+			for(String s : proprio){
+				comboStatus.addItem(s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void preencherComboStatusTerceiro(){
+		String linha = new String();
+		arqController = new ArquivosController();
+		try {
+			arqController.leArquivo("../MASProject/dados", "status_obra_terceiros");
+			linha = arqController.getBuffer();
+			String [] terceiro = linha.split(";");
+			for(String s : terceiro){
+				comboStatusT.addItem(s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void preencherComboBoxCategoria(){
@@ -68,6 +107,7 @@ public class AcervoController implements ComponentListener {
 			String [] setor = linha.split(";");
 			for(String s : setor){
 				cbSetor.addItem(s);
+				comboSetorT.addItem(s);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
