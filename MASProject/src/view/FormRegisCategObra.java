@@ -46,7 +46,7 @@ public class FormRegisCategObra extends JFrame {
 	 */
 	public FormRegisCategObra(){
 		setTitle("Registro de Categoria de Obra");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 425, 166);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
