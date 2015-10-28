@@ -24,7 +24,8 @@ public class RegisSetorController {
 	private String registro_set[] = new String[2];
 	private ArquivosController arqController = new ArquivosController();
 
-	public RegisSetorController(JTextField id_setor, JTextField nomeDigit, JLabel mensagemGravado, JLabel mensagemVazio, JButton btnGravar) {
+	public RegisSetorController(JTextField id_setor, JTextField nomeDigit, JLabel mensagemGravado, JLabel mensagemVazio,
+			JButton btnGravar) {
 		this.idsetor = id_setor;
 		this.mensagemGravado = mensagemGravado;
 		this.mensagemVazio = mensagemVazio;
@@ -32,14 +33,20 @@ public class RegisSetorController {
 		this.btnGravar = btnGravar;
 	}
 
+	public void gerarIdSetor() {
+		//Chamada deste metodo no gravaSetor e no FormRegisSetor
+		String indice = "SET";
+		GeradordeID geraID = new GeradordeID(indice);
+		idsetor.setText(geraID.geraID());
+	}
+
 	public void gravaSetor() {
 		Setor setor = new Setor();
 		SetorArquivoImpl setorImpl = new SetorArquivoImpl();
-		
+
 		setor.setIdentificacao(idsetor.getText());
 		setor.setNome(nomeset.getText());
-		
-		
+
 		if (!nomeset.getText().isEmpty()) {
 			try {
 				setorImpl.escreveArquivo("../MASProject/dados/", "setores", nomeset.getText(), setor);
@@ -47,21 +54,22 @@ public class RegisSetorController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			mensagemGravado.setText(nomeset.getText()+" salvo com sucesso!!!");
+			mensagemGravado.setText(nomeset.getText() + " salvo com sucesso!!!");
 			mensagemGravado.setVisible(true);
-		}else{
+			gerarIdSetor();
+		} else {
 			mensagemGravado.setVisible(false);
 			mensagemVazio.setVisible(true);
 		}
 		// implementar a acao de apagar o campo de nome e criar uma nova id
 		// quando clicar em gravar
 	}
-	
-	public void excluiSetor(){
-		//teste
+
+	public void excluiSetor() {
+		// teste
 		registro_set[1] = setor.getNome();
 		registro_set[0] = setor.getIdentificacao();
-		
+
 		try {
 			arqController.excluiDadosArquivo("../MASProject/dados", "setores", registro_set);
 		} catch (IOException e) {
@@ -79,9 +87,9 @@ public class RegisSetorController {
 			nomeset.setText("");
 		}
 	};
-	
-public ActionListener excluiSetor = new ActionListener() {
-		
+
+	public ActionListener excluiSetor = new ActionListener() {
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
@@ -117,18 +125,17 @@ public ActionListener excluiSetor = new ActionListener() {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			//se for clicado pela primeira vez o campo fica limpo para preencher com o nome do setor
+			// se for clicado pela primeira vez o campo fica limpo para
+			// preencher com o nome do setor
 			if (contador == 1) {
 				nomeset.setText("");
 				contador += 1;
 			}
-			//para que a mensagem n�o fique visivel a todo momento
+			// para que a mensagem n�o fique visivel a todo momento
 			btnGravar.setEnabled(true);
 			mensagemGravado.setVisible(false);
-            mensagemVazio.setVisible(false);
+			mensagemVazio.setVisible(false);
 		}
 	};
-	
-	
 
 }

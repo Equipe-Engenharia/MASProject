@@ -10,6 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import controller.AlteraDelSetorController;
+
 import java.awt.Color;
 
 public class FormAlteraDelSetor extends JFrame {
@@ -105,5 +108,14 @@ public class FormAlteraDelSetor extends JFrame {
 		lblDigiteUmDos.setForeground(Color.RED);
 		lblDigiteUmDos.setBounds(10, 11, 362, 14);
 		contentPane.add(lblDigiteUmDos);
+		
+		AlteraDelSetorController ADSetor = new AlteraDelSetorController(txtDigiteOId,txtDigitadoN,btnPesqIdSet,btnPesqNomSet,btnGravar,btnExcluir);
+	
+		btnPesqIdSet.addActionListener(ADSetor.pesquisaIDSetor);
+		btnPesqNomSet.addActionListener(ADSetor.pesquisaNomeSetor);
+		btnGravar.addActionListener(ADSetor.gravarAlteracoesSetor);
+		btnExcluir.addActionListener(ADSetor.excluirSetor);
+		
 	}
+	
 }

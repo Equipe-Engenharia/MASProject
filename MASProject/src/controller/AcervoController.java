@@ -70,7 +70,6 @@ public class AcervoController implements ComponentListener {
 		this.msgVazio = msgVazio;
 		this.textField_valor = textField_valor;
 
-		// lerAcervo();
 		lerAcervo();
 	}
 
@@ -171,33 +170,6 @@ public class AcervoController implements ComponentListener {
 		}
 
 	}
-
-	public ActionListener inserir_imagem = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			procuraImagem();
-		}
-
-	};
-
-	public ActionListener gravarAcervo = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			gravarAcervo();
-		}
-
-	};
-	public ActionListener remover_imagem = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			imagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
-
-		}
-
-	};
 
 	public void gravarAcervo() {
 		Obra obra = new Obra();
@@ -391,6 +363,37 @@ public class AcervoController implements ComponentListener {
 			e.printStackTrace();
 		}
 	}
+	
+	//Controle de botões
+	
+	public ActionListener inserir_imagem = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			procuraImagem();
+		}
+
+	};
+
+	public ActionListener gravarAcervo = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			gravarAcervo();
+		}
+
+	};
+	public ActionListener remover_imagem = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			imagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
+
+		}
+
+	};
+	
+	//Eventos de comboBox
 
 	@Override
 	public void componentResized(ComponentEvent e) {
