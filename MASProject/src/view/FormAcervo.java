@@ -128,6 +128,7 @@ public class FormAcervo extends JFrame {
 		data_obra.setBounds(168, 120, 133, 20);
 		contentPane.add(data_obra);
 		data_obra.setColumns(10);
+		data_obra.setHorizontalAlignment(data_obra.CENTER);
 
 		JLabel lblCategoriaDaObra = new JLabel("Categoria da Obra");
 		lblCategoriaDaObra.setBounds(44, 152, 122, 14);

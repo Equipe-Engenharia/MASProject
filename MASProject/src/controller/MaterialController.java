@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import model.Categoria;
 import model.Material;
 
 import persistence.MaterialArquivoImpl;
@@ -51,15 +53,28 @@ public class MaterialController implements ComponentListener {
 	public void preencherComboBoxCategoria() {
 		String linha = new String();
 		ctrlArquivos = new ArquivosController();
+		ArrayList<String> listString = new ArrayList<>();
+		ArrayList<Categoria> listCategorias = new ArrayList<>();
+
 		try {
-			ctrlArquivos.leArquivo("../MASProject/dados", "categorias");
+			ctrlArquivos.leArquivo("../MASProject/dados/", "categorias");
 			linha = ctrlArquivos.getBuffer();
-			String[] categoria = linha.split(";");
-			for (String s : categoria) {
-				listaCategoria.addItem(s);
+			String[] materias = linha.split(";");
+			for (String s : materias) {
+				String text = s.replaceAll(".*:", "");
+				listString.add(text);
+				if (s.contains("-")) {
+					Categoria c = new Categoria();
+					c.setNome(listString.get(1));
+					listCategorias.add(c);
+					listString.clear();
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+		for (Categoria c : listCategorias) {
+			listaCategoria.addItem(c.getNome());
 		}
 	}
 
