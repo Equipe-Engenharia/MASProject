@@ -2,16 +2,16 @@ package model;
 
 public class Material {
 	
-	private String id;
+	private String idMaterial;
 	private String categoria;
-	private String nome;
+	private String nomeMaterial;
 	
 	public String getID(){
-		return id;
+		return idMaterial;
 	}
 	
 	public void setID(String id){
-		this.id = id;
+		this.idMaterial = id;
 	}
 	
 	public String getCategoria(){
@@ -23,11 +23,11 @@ public class Material {
 	}
 
 	public String getNome() {
-		return nome;
+		return nomeMaterial;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNome(String nomeMaterial) {
+		this.nomeMaterial = nomeMaterial;
 	}
 	
 }

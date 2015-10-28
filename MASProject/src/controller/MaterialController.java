@@ -6,12 +6,13 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -19,36 +20,69 @@ import javax.swing.JTextField;
 
 import model.Categoria;
 import model.Material;
-
 import persistence.MaterialArquivoImpl;
 
 public class MaterialController implements ComponentListener {
 
-	private JComboBox<String> listaCategoria;
+	private JComboBox<String> cbCategoria;
 	private JTextField nomeMaterial, idMaterial;
 	private JButton btApagar;
 	private JButton btGravar;
 	private JLabel msgGravado, msgVazio;
+	private List<Material> materiais;
 	private ArquivosController ctrlArquivos;
 
-	Material material = new Material();
+	// Material material = new Material();
 
 	public MaterialController(JComboBox<String> cbCategoria, JTextField txtID, JTextField txtMaterial,
 			JButton btnApagar, JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
 
-		this.listaCategoria = cbCategoria;
+		this.cbCategoria = cbCategoria;
 		this.idMaterial = txtID;
 		this.btApagar = btnApagar;
 		this.btGravar = btnGravar;
 		this.msgGravado = msgGravado;
 		this.msgVazio = msgVazio;
 		this.nomeMaterial = txtMaterial;
+		this.materiais = new ArrayList<Material>();
+		
+		lerMaterial();
 	}
 
 	public void atualizaID() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date date = new Date();
 		idMaterial.setText("MT" + dateFormat.format(date));
+	}
+
+	public void lerMaterial() {
+		String linha = new String();
+		ArrayList<String> tipoMaterial = new ArrayList<>();
+
+		ctrlArquivos = new ArquivosController();
+		try {
+			ctrlArquivos.leArquivo("../MASProject/dados/", "materiais");
+			linha = ctrlArquivos.getBuffer();
+			String[] listaMaterial = linha.split(";");
+			for (String s : listaMaterial) {
+				String text = s.replaceAll(".*:", "");
+				tipoMaterial.add(text);
+				if (s.contains("-")) {
+					Material material = new Material();
+					material.setID(tipoMaterial.get(0));
+					material.setNome(tipoMaterial.get(1));
+					material.setCategoria(tipoMaterial.get(2));
+					materiais.add(material);
+					tipoMaterial.clear();
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		for(Material m :  materiais){
+			System.out.println(m.getNome());
+		}
 	}
 
 	public void preencherComboBoxCategoria() {
@@ -60,8 +94,8 @@ public class MaterialController implements ComponentListener {
 		try {
 			ctrlArquivos.leArquivo("../MASProject/dados/", "categorias");
 			linha = ctrlArquivos.getBuffer();
-			String[] materias = linha.split(";");
-			for (String s : materias) {
+			String[] categorias = linha.split(";");
+			for (String s : categorias) {
 				String text = s.replaceAll(".*:", "");
 				listString.add(text);
 				if (s.contains("-")) {
@@ -75,7 +109,7 @@ public class MaterialController implements ComponentListener {
 			e.printStackTrace();
 		}
 		for (Categoria c : listCategorias) {
-			listaCategoria.addItem(c.getNome());
+			cbCategoria.addItem(c.getNome());
 		}
 	}
 
@@ -85,7 +119,7 @@ public class MaterialController implements ComponentListener {
 
 		material.setID(idMaterial.getText());
 		material.setNome(nomeMaterial.getText());
-		material.setCategoria(listaCategoria.getSelectedItem().toString());
+		material.setCategoria(cbCategoria.getSelectedItem().toString());
 
 		if (!nomeMaterial.getText().isEmpty()) {
 			try {
