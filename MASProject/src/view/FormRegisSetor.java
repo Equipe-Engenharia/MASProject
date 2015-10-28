@@ -66,7 +66,7 @@ public class FormRegisSetor extends JFrame {
 		
 		id_setor = new JTextField();
 		id_setor.setEditable(false);
-		id_setor.setBounds(69, 20, 86, 20);
+		id_setor.setBounds(69, 20, 169, 20);
 		contentPane.add(id_setor);
 		id_setor.setColumns(10);
 		
@@ -77,7 +77,7 @@ public class FormRegisSetor extends JFrame {
 
 		JLabel mensagemGravado = new JLabel("");
 		mensagemGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
-		mensagemGravado.setBounds(46, 96, 192, 23);
+		mensagemGravado.setBounds(10, 96, 228, 23);
 		mensagemGravado.setVisible(false);
 		contentPane.add(mensagemGravado);
 
@@ -89,7 +89,8 @@ public class FormRegisSetor extends JFrame {
 		
 		
 		RegisSetorController RsContrl = new RegisSetorController(id_setor, txtDigitado, mensagemGravado, mensagemVazio, btnGravar);
-
+		//Essa linha abaixo será excluida quando o menu estiver pronto***
+        RsContrl.gerarIdSetor();
 		txtDigitado.addMouseListener(RsContrl.limpaCampo);
 		txtDigitado.addActionListener(RsContrl.gravarSetor);
 		btnGravar.addActionListener(RsContrl.gravarSetor);
