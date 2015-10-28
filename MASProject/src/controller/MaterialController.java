@@ -12,8 +12,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -98,14 +96,14 @@ public class MaterialController implements ComponentListener {
 			}
 			msgGravado.setText(nomeMaterial.getText()+" salvo com sucesso!!!");
 			msgGravado.setVisible(true);
-			nomeMaterial.setText(null);
-			atualizaID();
+			
+			
 		}else{
 			msgGravado.setVisible(false);
 			msgVazio.setVisible(true);
 		}
-		// implementar a acao de apagar o campo de nome e criar uma nova id
-		// quando clicar em gravar
+		nomeMaterial.setText(null);
+		atualizaID();
 	}
 
 	public ActionListener gravarMaterial = new ActionListener() {
