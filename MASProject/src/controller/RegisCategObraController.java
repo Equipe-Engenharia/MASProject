@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import persistence.CategObraArquivoImpl;
 import model.Categoria;
 
 public class RegisCategObraController {
@@ -19,6 +20,7 @@ public class RegisCategObraController {
 	private JLabel lblMensagemGravado, lblMensagemVazio;
 	private JTextField tfNomeCategoria, tfidCategoria;
 	private JButton btnGravar;
+
 
 	private Categoria categoria = new Categoria();
 	private static int contador = 1;
@@ -31,15 +33,16 @@ public class RegisCategObraController {
 		this.btnGravar = btnGravar;
 	}
 	
-	public void gravaSetor() {
-		ArquivosController arqController = new ArquivosController();
-		// Falta implementar
-		// setor.setIdentificacao(idsetor.getText());
+	public void gravaCategoria() {
+		Categoria categoria = new Categoria();
+		CategObraArquivoImpl categImpl = new CategObraArquivoImpl();
+		
+		//LEMBRETE : Verificar como que vai ficar a parte do preenchimento automatico do tfidCategoria
 		categoria.setNome(tfNomeCategoria.getText());
-		//se o campo nï¿½o estiver vazio
+
 		if (!tfNomeCategoria.getText().isEmpty()) {
 			try {
-				arqController.escreveArquivo("../MASProject/dados/", "categorias", tfNomeCategoria.getText(), categoria);
+				categImpl.escreveArquivo("../MASProject/dados/", "categorias", tfNomeCategoria.getText(), categoria);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -54,12 +57,11 @@ public class RegisCategObraController {
 		// quando clicar em gravar
 	}
 
-	public ActionListener gravarSetor = new ActionListener() {
+	public ActionListener gravarCategoria = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			gravaSetor();
+			gravaCategoria();
 		}
 	};
 
@@ -96,7 +98,7 @@ public class RegisCategObraController {
 				tfNomeCategoria.setText("");
 				contador += 1;
 			}
-			//para que a mensagem nï¿½o fique visivel a todo momento
+			//para que a mensagem não fique visivel a todo momento
 			lblMensagemGravado.setVisible(false);
             lblMensagemVazio.setVisible(false);
 		}

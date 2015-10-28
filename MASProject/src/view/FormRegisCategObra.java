@@ -92,8 +92,8 @@ public class FormRegisCategObra extends JFrame {
 		RegisCategObraController rCatObra = new RegisCategObraController(lblMensagemGravada, lblMensagemVazio, btnGravar, tfIdCategoria, tfNomeCategoria); 
 		
 		tfNomeCategoria.addMouseListener(rCatObra.limpaCampo);
-		tfNomeCategoria.addActionListener(rCatObra.gravarSetor);
-		btnGravar.addActionListener(rCatObra.gravarSetor);
+		tfNomeCategoria.addActionListener(rCatObra.gravarCategoria);
+		btnGravar.addActionListener(rCatObra.gravarCategoria);
 	}
 }
 
