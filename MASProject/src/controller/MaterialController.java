@@ -6,21 +6,25 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
+
 import java.io.IOException;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import model.Material;
+
+import persistence.MaterialArquivoImpl;
 
 public class MaterialController implements ComponentListener {
 	
 	private JComboBox<String> listaCategoria;
 	private JTextField nomeMaterial, idMaterial;
 	private JButton btGravar;
-	private JLabel msgPositivo, msgNegativo;
+	private JLabel msgGravado, msgVazio;
 	private ArquivosController ctrlArquivos;
 	
 	Material material = new Material();
@@ -31,32 +35,15 @@ public class MaterialController implements ComponentListener {
 		this.listaCategoria = cbCategoria;
 		this.idMaterial = txtID;
 		this.btGravar = btnGravar;
-		this.msgPositivo = msgGravado;
-		this.msgNegativo = msgVazio;
+		this.msgGravado = msgGravado;
+		this.msgVazio = msgVazio;
 		this.nomeMaterial = txtMaterial;
 	}
-
+	
 	public void atualizaID() {
-		File arquivo = new File("../MASProject/dados/", "materiais");// verifica se o arquivo existe
-		if (arquivo.exists()) {
-			String linha = new String();
-			ctrlArquivos = new ArquivosController();
-			try {
-				ctrlArquivos.leArquivo("../MASProject/dados/", "materiais");
-				linha = ctrlArquivos.getBuffer();
-				String[] id = linha.split(";");
-				if (id.length == 1) {//Se o arquivo está vazio
-					idMaterial.setText("MT" + 1);
-				} else {
-					int num = Integer.parseInt(id[(id.length - 1) - 2]);//Extrai a última posição do identificador
-					idMaterial.setText("MT" + Integer.toString(num + 1));//Incrementa o identificador
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
-			idMaterial.setText("MT" + 1);
-		}
+		Random random = new Random();  
+		int idNum = random.nextInt(9999);
+		idMaterial.setText("MT" + String.format("%04d",idNum));
 	}
 	
 	public void preencherComboBoxCategoria() {
@@ -75,33 +62,37 @@ public class MaterialController implements ComponentListener {
 	}
 
 	public void gravaMaterial() {
-
-		material.setID(idMaterial.getText().replaceAll("\\D", ""));
-		material.setCategoria(listaCategoria.getSelectedItem().toString());
+		Material material = new Material();
+		MaterialArquivoImpl materialImpl = new MaterialArquivoImpl();
+		
+		material.setID(idMaterial.getText());
 		material.setNome(nomeMaterial.getText());
-
-		if (!nomeMaterial.getText().isEmpty()) { // se o campo não estiver vazio
+		material.setCategoria(listaCategoria.getSelectedItem().toString());
+		
+		if (!nomeMaterial.getText().isEmpty()) {
 			try {
-				ctrlArquivos.escreveArquivo("../MASProject/dados/", "materiais", idMaterial.getText().replaceAll("\\D", "") + ";"
-			+ listaCategoria.getSelectedItem().toString() + ";" + nomeMaterial.getText(), material); // Gravando o novo registro no arquivo.
+				materialImpl.escreveArquivo("../MASProject/dados/", "materiais", nomeMaterial.getText(), material);
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			msgGravado.setText(nomeMaterial.getText()+" salvo com sucesso!!!");
+			msgGravado.setVisible(true);
+			nomeMaterial.setText(null);
 			atualizaID();
-			msgPositivo.setText("O material " + nomeMaterial.getText() + " salvo.");
-			msgPositivo.setVisible(true);
-			nomeMaterial.setText(null);// limpa o campo previnindo gravar em duplicidade
-		} else {
-			msgPositivo.setVisible(false);
-			msgNegativo.setVisible(true);
+		}else{
+			msgGravado.setVisible(false);
+			msgVazio.setVisible(true);
 		}
+		// implementar a acao de apagar o campo de nome e criar uma nova id
+		// quando clicar em gravar
 	}
 
 	public ActionListener gravarMaterial = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			gravaMaterial();
+			gravaMaterial();			
 		}
 	};
 
@@ -126,10 +117,11 @@ public class MaterialController implements ComponentListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			
 			nomeMaterial.setText(null); // limpa o campo
 			btGravar.setEnabled(true);
-			msgPositivo.setVisible(false); // para que a mensagem não fique visível a todo momento
-			msgNegativo.setVisible(false);
+			msgGravado.setVisible(false); // para que a mensagem não fique visível a todo momento
+			msgVazio.setVisible(false);
 		}
 	};
 

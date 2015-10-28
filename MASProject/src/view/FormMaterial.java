@@ -109,7 +109,6 @@ public class FormMaterial extends JFrame {
 		JLabel lblNovoMaterial = new JLabel("Novo Material");
 		lblNovoMaterial.setBounds(83, 107, 97, 16);
 		contentPane.add(lblNovoMaterial);
-
 		ctrlMaterial.atualizaID();
 		ctrlMaterial.preencherComboBoxCategoria();
 		btnGravar.addActionListener(ctrlMaterial.gravarMaterial);

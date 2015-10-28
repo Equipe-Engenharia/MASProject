@@ -1,8 +1,12 @@
-1;Esculturas;Ferro
-2;Esculturas;Bronze
-3;Esculturas;Prata
-4;Pinturas;Óleo sobre Tela
-5;Pinturas;Aquarela
-6;Arqueologia;Mármore
-7;Arqueologia;Pedra Sabão
-8;Arqueologia;Jade
+ID: MT7643
+Material: Pedra
+Categoria: Esculturas
+---------------------------
+ID: MT1278
+Material: Gesso
+Categoria: Esculturas
+---------------------------
+ID: MT9599
+Material: Madeira
+Categoria: Gravuras
+---------------------------
