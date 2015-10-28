@@ -8,7 +8,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -45,9 +48,9 @@ public class MaterialController implements ComponentListener {
 	}
 	
 	public void atualizaID() {
-		Random random = new Random();  
-		int idNum = random.nextInt(9999);
-		idMaterial.setText("MT" + String.format("%04d",idNum));
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date date = new Date();
+		idMaterial.setText("MT" + dateFormat.format(date));
 	}
 	
 	public void preencherComboBoxCategoria() {

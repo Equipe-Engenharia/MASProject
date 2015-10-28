@@ -64,7 +64,7 @@ public class FormMaterialEdit extends JFrame {
 		
 		idMaterial = new JTextField();
 		idMaterial.setToolTipText("Digite o ID do Material");
-		idMaterial.setBounds(180, 33, 86, 20);
+		idMaterial.setBounds(180, 33, 178, 20);
 		contentPane.add(idMaterial);
 		idMaterial.setColumns(10);
 		

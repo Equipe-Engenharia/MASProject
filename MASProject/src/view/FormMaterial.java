@@ -64,7 +64,7 @@ public class FormMaterial extends JFrame {
 		
 		idMaterial = new JTextField();
 		idMaterial.setEditable(false);
-		idMaterial.setBounds(180, 33, 86, 20);
+		idMaterial.setBounds(180, 33, 178, 20);
 		contentPane.add(idMaterial);
 		idMaterial.setColumns(10);
 		
