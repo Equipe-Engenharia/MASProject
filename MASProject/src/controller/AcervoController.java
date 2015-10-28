@@ -263,8 +263,8 @@ public class AcervoController implements ComponentListener {
 				if (s.contains("---")) {
 					Material m = new Material();
 					m.setID(listString.get(0));
-					//m.setNome(listString.get(1));
-					//m.setCategoria(listString.get(2));
+					m.setNome(listString.get(1));
+					m.setCategoria(listString.get(2));
 					listMateriais.add(m);
 					listString.clear();
 				}
