@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class GeradordeID {
+public class  GeradordeID {
 	private String indice;
 	
 	public GeradordeID(String indice){

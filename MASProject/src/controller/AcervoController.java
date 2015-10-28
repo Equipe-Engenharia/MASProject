@@ -260,7 +260,7 @@ public class AcervoController implements ComponentListener {
 			for (String s : materias) {
 				String text = s.replaceAll(".*:", "");
 				listString.add(text);
-				if (s.contains("-")) {
+				if (s.contains("---")) {
 					Material m = new Material();
 					m.setID(listString.get(0));
 					m.setNome(listString.get(1));
@@ -290,7 +290,7 @@ public class AcervoController implements ComponentListener {
 			for (String s : materias) {
 				String text = s.replaceAll(".*:", "");
 				listString.add(text);
-				if (s.contains("-")) {
+				if (s.contains("---")) {
 					Categoria c = new Categoria();
 					c.setNome(listString.get(1));
 					listCategorias.add(c);
@@ -318,7 +318,7 @@ public class AcervoController implements ComponentListener {
 			for (String s : setores) {
 				String text = s.replaceAll(".*:", "");
 				listString.add(text);
-				if (s.contains("-")) {
+				if (s.contains("---")) {
 					Setor setor = new Setor();
 					setor.setNome(listString.get(1));
 					listSetores.add(setor);
