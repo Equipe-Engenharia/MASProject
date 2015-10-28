@@ -30,5 +30,4 @@ public class Material {
 		this.nome = nome;
 	}
 	
-	
 }
