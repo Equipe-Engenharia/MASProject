@@ -49,7 +49,7 @@ public class ObraArquivoImpl implements IArquivosController{
 		buffer.append("\r\n");
 		buffer.append("Nome da obra: "+((Obra) object).getNomeObra());
 		buffer.append("\r\n");
-		buffer.append("Descrição: "+((Obra) object).getDescricaoObra());
+		buffer.append("Descriï¿½ï¿½o: "+((Obra) object).getDescricaoObra());
 		buffer.append("\r\n");
 		buffer.append("Categoria: "+((Obra) object).getCategoria().getNome());
 		buffer.append("\r\n");

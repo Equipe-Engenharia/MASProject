@@ -7,12 +7,8 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -46,13 +42,13 @@ public class MaterialController implements ComponentListener {
 		this.nomeMaterial = txtMaterial;
 		this.materiais = new ArrayList<Material>();
 		
-		lerMaterial();
+		//lerMaterial();
 	}
 
-	public void atualizaID() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-		Date date = new Date();
-		idMaterial.setText("MT" + dateFormat.format(date));
+	public void gerarIdSetor() {
+		String indice = "MAT";
+		GeradordeID geraID = new GeradordeID(indice);
+		idMaterial.setText(geraID.geraID());
 	}
 
 	public void lerMaterial() {
@@ -80,9 +76,9 @@ public class MaterialController implements ComponentListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		for(Material m :  materiais){
-			System.out.println(m.getNome());
-		}
+		//for(Material m :  materiais){
+			//System.out.println(m.getNome());
+		//}
 	}
 
 	public void preencherComboBoxCategoria() {
@@ -130,7 +126,7 @@ public class MaterialController implements ComponentListener {
 			msgGravado.setText(nomeMaterial.getText() + " salvo com sucesso!!!");
 			msgGravado.setVisible(true);
 			nomeMaterial.setText(null);
-			atualizaID();
+			gerarIdSetor();
 		} else {
 			msgGravado.setVisible(false);
 			msgVazio.setVisible(true);
