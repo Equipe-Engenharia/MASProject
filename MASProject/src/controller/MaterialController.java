@@ -23,19 +23,19 @@ import model.Material;
 import persistence.MaterialArquivoImpl;
 
 public class MaterialController implements ComponentListener {
-	
+
 	private JComboBox<String> listaCategoria;
 	private JTextField nomeMaterial, idMaterial;
 	private JButton btApagar;
 	private JButton btGravar;
 	private JLabel msgGravado, msgVazio;
 	private ArquivosController ctrlArquivos;
-	
+
 	Material material = new Material();
 
-	public MaterialController(JComboBox<String> cbCategoria, JTextField txtID, 
-			JTextField txtMaterial, JButton btnApagar, JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
-		
+	public MaterialController(JComboBox<String> cbCategoria, JTextField txtID, JTextField txtMaterial,
+			JButton btnApagar, JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
+
 		this.listaCategoria = cbCategoria;
 		this.idMaterial = txtID;
 		this.btApagar = btnApagar;
@@ -44,13 +44,13 @@ public class MaterialController implements ComponentListener {
 		this.msgVazio = msgVazio;
 		this.nomeMaterial = txtMaterial;
 	}
-	
+
 	public void atualizaID() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date date = new Date();
 		idMaterial.setText("MT" + dateFormat.format(date));
 	}
-	
+
 	public void preencherComboBoxCategoria() {
 		String linha = new String();
 		ctrlArquivos = new ArquivosController();
@@ -82,35 +82,32 @@ public class MaterialController implements ComponentListener {
 	public void gravaMaterial() {
 		Material material = new Material();
 		MaterialArquivoImpl materialImpl = new MaterialArquivoImpl();
-		
+
 		material.setID(idMaterial.getText());
 		material.setNome(nomeMaterial.getText());
 		material.setCategoria(listaCategoria.getSelectedItem().toString());
-		
+
 		if (!nomeMaterial.getText().isEmpty()) {
 			try {
 				materialImpl.escreveArquivo("../MASProject/dados/", "materiais", nomeMaterial.getText(), material);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			msgGravado.setText(nomeMaterial.getText()+" salvo com sucesso!!!");
+			msgGravado.setText(nomeMaterial.getText() + " salvo com sucesso!!!");
 			msgGravado.setVisible(true);
-			
-			
-		}else{
+			nomeMaterial.setText(null);
+			atualizaID();
+		} else {
 			msgGravado.setVisible(false);
 			msgVazio.setVisible(true);
 		}
-		nomeMaterial.setText(null);
-		atualizaID();
 	}
 
 	public ActionListener gravarMaterial = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			gravaMaterial();			
+			gravaMaterial();
 		}
 	};
 
@@ -135,10 +132,9 @@ public class MaterialController implements ComponentListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			
-			nomeMaterial.setText(null); // limpa o campo
+			nomeMaterial.setText(null);
 			btGravar.setEnabled(true);
-			msgGravado.setVisible(false); // para que a mensagem não fique visível a todo momento
+			msgGravado.setVisible(false);
 			msgVazio.setVisible(false);
 		}
 	};
