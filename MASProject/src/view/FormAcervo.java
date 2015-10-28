@@ -144,12 +144,26 @@ public class FormAcervo extends JFrame {
 
 		JButton btnNovaCategoria = new JButton("Nova Categoria");
 		btnNovaCategoria.setToolTipText("Não encontrou a categoria?");
+		btnNovaCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormRegisCategObra formCate = new FormRegisCategObra();
+				formCate.setVisible(true);
+				formCate.setLocationRelativeTo(null);
+			}
+		});
 		
 		btnNovaCategoria.setBounds(167, 178, 133, 29);
 		contentPane.add(btnNovaCategoria);
 
 		JButton btnNovoMaterial = new JButton("Novo Material");
 		btnNovoMaterial.setToolTipText("Não encontrou o material?");
+		btnNovoMaterial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormMaterial frame = new FormMaterial();
+				frame.setVisible(true);
+				frame.setLocationRelativeTo(null);
+			}
+		});
 		
 		btnNovoMaterial.setBounds(166, 245, 133, 29);
 		contentPane.add(btnNovoMaterial);
@@ -244,6 +258,15 @@ public class FormAcervo extends JFrame {
 		JButton btnEditarMaterial = new JButton("Editar Material");
 		btnEditarMaterial.setBounds(28, 245, 133, 29);
 		contentPane.add(btnEditarMaterial);
+		btnEditarMaterial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormMaterialEdit frame = new FormMaterialEdit();
+				frame.setVisible(true);
+				frame.setLocationRelativeTo(null);
+			}
+		});
+		
+		
 		AcervoController Acontroller = new AcervoController(lblSelecImagem, comboSetor, comboSetorT, comboStatus,
 				comboStatusT, cbCategoria, cbMaterial, nome_artist, nome_obra, data_obra, editor_descricao, msgGravado,
 				msgVazio, textField_valor);
@@ -253,22 +276,6 @@ public class FormAcervo extends JFrame {
 		btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-			}
-		});
-		
-		btnNovaCategoria.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				FormRegisCategObra formCate = new FormRegisCategObra();
-				formCate.setVisible(true);
-				formCate.setLocationRelativeTo(null);
-			}
-		});
-		
-		btnNovoMaterial.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				FormMaterial frame = new FormMaterial();
-				frame.setVisible(true);
-				frame.setLocationRelativeTo(null);
 			}
 		});
 		
