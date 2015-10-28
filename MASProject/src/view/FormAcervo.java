@@ -2,6 +2,7 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.SystemColor;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -15,13 +16,16 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.ImageIcon;
+
 import controller.AcervoController;
+
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
 
 public class FormAcervo extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField nome_artist;
@@ -128,7 +132,7 @@ public class FormAcervo extends JFrame {
 		data_obra.setBounds(168, 120, 133, 20);
 		contentPane.add(data_obra);
 		data_obra.setColumns(10);
-		data_obra.setHorizontalAlignment(data_obra.CENTER);
+		data_obra.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JLabel lblCategoriaDaObra = new JLabel("Categoria da Obra");
 		lblCategoriaDaObra.setBounds(44, 152, 122, 14);
