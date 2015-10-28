@@ -23,6 +23,7 @@ public class MaterialController implements ComponentListener {
 	
 	private JComboBox<String> listaCategoria;
 	private JTextField nomeMaterial, idMaterial;
+	private JButton btApagar;
 	private JButton btGravar;
 	private JLabel msgGravado, msgVazio;
 	private ArquivosController ctrlArquivos;
@@ -30,10 +31,11 @@ public class MaterialController implements ComponentListener {
 	Material material = new Material();
 
 	public MaterialController(JComboBox<String> cbCategoria, JTextField txtID, 
-			JTextField txtMaterial, JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
+			JTextField txtMaterial, JButton btnApagar, JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
 		
 		this.listaCategoria = cbCategoria;
 		this.idMaterial = txtID;
+		this.btApagar = btnApagar;
 		this.btGravar = btnGravar;
 		this.msgGravado = msgGravado;
 		this.msgVazio = msgVazio;
