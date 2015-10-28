@@ -84,7 +84,7 @@ public class ArquivosController implements IArquivosController {
 		}
 	}
  
-	//n�o testado************
+	//não testado************
 	@Override
 	public void excluiDadosArquivo(String diretorio, String arquivo, String registro[]) throws IOException {
 		File file = new File(diretorio, arquivo);
@@ -94,15 +94,15 @@ public class ArquivosController implements IArquivosController {
 			
 			String linha = breader.readLine();
 			
-			//lista para gravar o que n�o for igual ao conte�do do vetor registro
+			//lista para gravar o que não for igual ao conteúdo do vetor registro
 			ArrayList <String>salvar = new ArrayList<String>();
 			System.out.println(registro[0]);
 			while(linha != null){
-				//se a linha n�o for igual a id do selecionado, salva.
+				//se a linha não for igual a id do selecionado, salva.
 				if (linha.equals(registro[0]) == false){
 					salvar.add(linha);
 				}else{
-					/*se a linha for a id do selecionado, o la�o conta o at� a posi��o 
+					/*se a linha for a id do selecionado, o laço conta o até a posição 
 					final do vetor, para gravar somente o que vir depois*/
 				for(int i=0;i<registro.length;i++){
 						linha = breader.readLine();
