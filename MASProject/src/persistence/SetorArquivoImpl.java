@@ -47,9 +47,9 @@ public class SetorArquivoImpl implements IArquivosController{
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID do Setor "+((Setor) object).getIdentificacao());
+		buffer.append("ID do Setor: "+((Setor) object).getIdentificacao());
 		buffer.append("\r\n");
-		buffer.append("Nome do Setor "+((Setor) object).getNome());
+		buffer.append("Nome do Setor: "+((Setor) object).getNome());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");

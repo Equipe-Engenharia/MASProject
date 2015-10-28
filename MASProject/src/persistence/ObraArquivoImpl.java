@@ -49,7 +49,7 @@ public class ObraArquivoImpl implements IArquivosController{
 		buffer.append("\r\n");
 		buffer.append("Nome da obra: "+((Obra) object).getNomeObra());
 		buffer.append("\r\n");
-		buffer.append("DescriÃ§Ã£o: "+((Obra) object).getDescricaoObra());
+		buffer.append("Descrição: "+((Obra) object).getDescricaoObra());
 		buffer.append("\r\n");
 		buffer.append("Categoria: "+((Obra) object).getCategoria().getNome());
 		buffer.append("\r\n");
@@ -62,6 +62,10 @@ public class ObraArquivoImpl implements IArquivosController{
 		buffer.append("Setor: "+((Obra) object).getSetor().getNome());
 		buffer.append("\r\n");
 		buffer.append("Valor: "+((Obra) object).getPreco());
+		buffer.append("\r\n");
+		buffer.append("Obra Propria: "+((Obra) object).isProprietario());
+		buffer.append("\r\n");
+		buffer.append("Status: "+((Obra) object).getStatus());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");

@@ -7,6 +7,8 @@ public class Obra {
 	private String dataComposicao;
 	private boolean proprietario;
 	private Categoria categoria;
+	private String status;
+
 	private Material material;
 	private Artista artista;
 	private Setor setor;
@@ -72,6 +74,12 @@ public class Obra {
 	}
 	public void setPreco(String preco) {
 		this.preco = preco;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
