@@ -42,7 +42,7 @@ public class MaterialController implements ComponentListener {
 		this.nomeMaterial = txtMaterial;
 		this.materiais = new ArrayList<Material>();
 		
-		lerMaterial();
+		//lerMaterial();
 	}
 
 	public void gerarIdSetor() {

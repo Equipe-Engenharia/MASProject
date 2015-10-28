@@ -4,7 +4,7 @@ public class Material {
 	
 	private String idMaterial;
 	private String categoria;
-	private String nomeMaterial;
+	private String nome;
 	
 	public String getID(){
 		return idMaterial;
@@ -23,11 +23,11 @@ public class Material {
 	}
 
 	public String getNome() {
-		return nomeMaterial;
+		return nome;
 	}
 
-	public void setNome(String nomeMaterial) {
-		this.nomeMaterial = nomeMaterial;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	
 }

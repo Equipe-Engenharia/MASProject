@@ -142,7 +142,7 @@ public class AcervoController implements ComponentListener {
 			if (s.equalsIgnoreCase(palavraChave)) {
 				System.out.println("Achou");
 			} else {
-				System.out.println("não Achou");
+				System.out.println("nï¿½o Achou");
 			}
 		}
 	}
@@ -181,14 +181,14 @@ public class AcervoController implements ComponentListener {
 		obra.setProprietario(false);
 		if (nomeArtista.getText().isEmpty()) {
 			msgVazio.setVisible(true);
-			msgVazio.setText("Campo Artista é obrigatório");
+			msgVazio.setText("Campo Artista ï¿½ obrigatï¿½rio");
 
 		} else if (nomeObra.getText().isEmpty()) {
 			msgVazio.setVisible(true);
-			msgVazio.setText("Campo Obra é obrigatório");
+			msgVazio.setText("Campo Obra ï¿½ obrigatï¿½rio");
 		} else if (dataAquisicao.getText().isEmpty()) {
 			msgVazio.setVisible(true);
-			msgVazio.setText("Campo Data é obrigatório");
+			msgVazio.setText("Campo Data ï¿½ obrigatï¿½rio");
 		} else {
 			if (!(textField_valor.getText().isEmpty())) {
 				obra.setProprietario(true);
@@ -263,8 +263,8 @@ public class AcervoController implements ComponentListener {
 				if (s.contains("-")) {
 					Material m = new Material();
 					m.setID(listString.get(0));
-					m.setNome(listString.get(1));
-					m.setCategoria(listString.get(2));
+					//m.setNome(listString.get(1));
+					//m.setCategoria(listString.get(2));
 					listMateriais.add(m);
 					listString.clear();
 				}
@@ -364,7 +364,7 @@ public class AcervoController implements ComponentListener {
 		}
 	}
 	
-	//Controle de botões
+	//Controle de botï¿½es
 	
 	public ActionListener inserir_imagem = new ActionListener() {
 
