@@ -9,14 +9,15 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
+import javax.swing.JFormattedTextField;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
-
-
+import javax.swing.text.MaskFormatter;
 import javax.swing.ImageIcon;
 import controller.AcervoController;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 
 public class FormAcervo extends JFrame {
@@ -25,7 +26,8 @@ public class FormAcervo extends JFrame {
 	private JTextField textField;
 	private JTextField nome_artist;
 	private JTextField nome_obra;
-	private JTextField data_obra;
+	private JFormattedTextField data_obra;
+	private MaskFormatter maskData;
 	private JComboBox<String> cbCategoria;
 	private JComboBox<String> cbMaterial;
 	private JComboBox<String> comboSetor;
@@ -53,7 +55,7 @@ public class FormAcervo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormAcervo() {
+	public FormAcervo() throws ParseException{
 		setResizable(false);
 		setTitle("Registro de Acervo");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -120,8 +122,10 @@ public class FormAcervo extends JFrame {
 		lblNewLabel.setBounds(28, 120, 139, 14);
 		contentPane.add(lblNewLabel);
 
-		data_obra = new JTextField();
-		data_obra.setBounds(168, 120, 86, 20);
+		maskData = new MaskFormatter("##/##/####");
+		
+		data_obra = new JFormattedTextField(maskData);
+		data_obra.setBounds(168, 120, 133, 20);
 		contentPane.add(data_obra);
 		data_obra.setColumns(10);
 
