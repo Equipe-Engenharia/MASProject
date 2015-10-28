@@ -99,6 +99,13 @@ public class FormAcervo extends JFrame {
 		btnPesquisaArtist.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		btnPesquisaArtist.setBounds(522, 52, 29, 28);
 		contentPane.add(btnPesquisaArtist);
+		btnPesquisaArtist.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormPesqArtista frmPesqArt = new FormPesqArtista();
+				frmPesqArt.setVisible(true);
+				frmPesqArt.setLocationRelativeTo(null);
+			}
+		});
 
 		JLabel lblNomeDaObra = new JLabel("Nome da Obra");
 		lblNomeDaObra.setBounds(67, 88, 98, 14);
@@ -144,6 +151,8 @@ public class FormAcervo extends JFrame {
 
 		JButton btnNovaCategoria = new JButton("Nova Categoria");
 		btnNovaCategoria.setToolTipText("Não encontrou a categoria?");
+		btnNovaCategoria.setBounds(167, 178, 133, 29);
+		contentPane.add(btnNovaCategoria);
 		btnNovaCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FormRegisCategObra formCate = new FormRegisCategObra();
@@ -152,11 +161,14 @@ public class FormAcervo extends JFrame {
 			}
 		});
 		
-		btnNovaCategoria.setBounds(167, 178, 133, 29);
-		contentPane.add(btnNovaCategoria);
+		JButton btnEditarCategoria = new JButton("Editar Categoria");
+		btnEditarCategoria.setBounds(29, 178, 133, 29);
+		contentPane.add(btnEditarCategoria);
 
 		JButton btnNovoMaterial = new JButton("Novo Material");
 		btnNovoMaterial.setToolTipText("Não encontrou o material?");
+		btnNovoMaterial.setBounds(166, 245, 133, 29);
+		contentPane.add(btnNovoMaterial);
 		btnNovoMaterial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FormMaterial frame = new FormMaterial();
@@ -165,8 +177,16 @@ public class FormAcervo extends JFrame {
 			}
 		});
 		
-		btnNovoMaterial.setBounds(166, 245, 133, 29);
-		contentPane.add(btnNovoMaterial);
+		JButton btnEditarMaterial = new JButton("Editar Material");
+		btnEditarMaterial.setBounds(28, 245, 133, 29);
+		contentPane.add(btnEditarMaterial);
+		btnEditarMaterial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormMaterialEdit frame = new FormMaterialEdit();
+				frame.setVisible(true);
+				frame.setLocationRelativeTo(null);
+			}
+		});
 
 		JTabbedPane abas = new JTabbedPane(JTabbedPane.TOP);
 		abas.setBounds(21, 438, 576, 144);
@@ -246,38 +266,19 @@ public class FormAcervo extends JFrame {
 
 		JButton btnFechar = new JButton("Fechar");
 		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
-		
-
 		btnFechar.setBounds(472, 594, 117, 34);
 		contentPane.add(btnFechar);
-
-		JButton btnEditarCategoria = new JButton("Editar Categoria");
-		btnEditarCategoria.setBounds(29, 178, 133, 29);
-		contentPane.add(btnEditarCategoria);
-
-		JButton btnEditarMaterial = new JButton("Editar Material");
-		btnEditarMaterial.setBounds(28, 245, 133, 29);
-		contentPane.add(btnEditarMaterial);
-		btnEditarMaterial.addActionListener(new ActionListener() {
+		btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FormMaterialEdit frame = new FormMaterialEdit();
-				frame.setVisible(true);
-				frame.setLocationRelativeTo(null);
+				dispose();
 			}
 		});
-		
 		
 		AcervoController Acontroller = new AcervoController(lblSelecImagem, comboSetor, comboSetorT, comboStatus,
 				comboStatusT, cbCategoria, cbMaterial, nome_artist, nome_obra, data_obra, editor_descricao, msgGravado,
 				msgVazio, textField_valor);
 		
 		btnGravar.addActionListener(Acontroller.gravarAcervo);
-		
-		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
 		
 		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
 		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
