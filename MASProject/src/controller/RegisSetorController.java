@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import model.Setor;
+import persistence.SetorArquivoImpl;
 
 public class RegisSetorController {
 
@@ -32,17 +33,16 @@ public class RegisSetorController {
 	}
 
 	public void gravaSetor() {
-		//teste
-		// Falta implementar
+		Setor setor = new Setor();
+		SetorArquivoImpl setorImpl = new SetorArquivoImpl();
+		
 		setor.setIdentificacao(idsetor.getText());
 		setor.setNome(nomeset.getText());
 		
 		
-		//se o campo não estiver vazio
-		//se o campo nï¿½o estiver vazio
 		if (!nomeset.getText().isEmpty()) {
 			try {
-				arqController.escreveArquivo("../MASProject/dados/", "setores", nomeset.getText(), setor);
+				setorImpl.escreveArquivo("../MASProject/dados/", "setores", nomeset.getText(), setor);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

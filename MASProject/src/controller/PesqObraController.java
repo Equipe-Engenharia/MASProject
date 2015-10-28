@@ -16,7 +16,7 @@ public class PesqObraController implements ComponentListener, ActionListener{
 	private JComboBox<String> cbNomeObra;
 	private JButton btnEncontreiObra;
 	
-	public void PesqObraController(JComboBox<String> cbProprietario,
+	public PesqObraController(JComboBox<String> cbProprietario,
 			JComboBox<String> cbArtista, JComboBox<String> cbIdObra,
 			JComboBox<String> cbNomeObra, JButton btnEncontreiObra){
 
