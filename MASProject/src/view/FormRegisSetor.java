@@ -63,7 +63,13 @@ public class FormRegisSetor extends JFrame {
 		txtDigitado.setBounds(69, 48, 169, 20);
 		contentPane.add(txtDigitado);
 		txtDigitado.setColumns(10);
-
+		
+		id_setor = new JTextField();
+		id_setor.setEditable(false);
+		id_setor.setBounds(69, 20, 86, 20);
+		contentPane.add(id_setor);
+		id_setor.setColumns(10);
+		
 		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setBounds(342, 96, 89, 23);
 		contentPane.add(btnGravar);
@@ -81,11 +87,6 @@ public class FormRegisSetor extends JFrame {
 		mensagemVazio.setVisible(false);
 		contentPane.add(mensagemVazio);
 		
-		id_setor = new JTextField();
-		id_setor.setEditable(false);
-		id_setor.setBounds(69, 20, 86, 20);
-		contentPane.add(id_setor);
-		id_setor.setColumns(10);
 		
 		RegisSetorController RsContrl = new RegisSetorController(id_setor, txtDigitado, mensagemGravado, mensagemVazio, btnGravar);
 
