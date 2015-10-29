@@ -20,8 +20,8 @@ import persistence.MaterialArquivoImpl;
 
 public class RegisMaterialController implements ComponentListener {
 
+	private JTextField idMaterial, nomeMaterial;
 	private JComboBox<String> cbCategoria;
-	private JTextField nomeMaterial, idMaterial;
 	private JButton btGravar;
 	private JLabel msgGravado, msgVazio;
 	private List<Material> materiais;
