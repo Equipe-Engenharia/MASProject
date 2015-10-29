@@ -29,8 +29,6 @@ public class MaterialController implements ComponentListener {
 	private static int contador = 1;
 	private ArquivosController ctrlArquivos;
 
-	// Material material = new Material();
-
 	public MaterialController(JComboBox<String> cbCategoria, JTextField txtID, JTextField txtMaterial,
 			JButton btnApagar, JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
 
@@ -43,7 +41,7 @@ public class MaterialController implements ComponentListener {
 		this.nomeMaterial = txtMaterial;
 		this.materiais = new ArrayList<Material>();
 		
-		//lerMaterial();
+		lerMaterial();
 	}
 
 	public void gerarIdSetor() {
@@ -54,7 +52,7 @@ public class MaterialController implements ComponentListener {
 
 	public void lerMaterial() {
 		String linha = new String();
-		ArrayList<String> tipoMaterial = new ArrayList<>();
+		ArrayList<String> list = new ArrayList<>();
 
 		ctrlArquivos = new ArquivosController();
 		try {
@@ -63,23 +61,23 @@ public class MaterialController implements ComponentListener {
 			String[] listaMaterial = linha.split(";");
 			for (String s : listaMaterial) {
 				String text = s.replaceAll(".*:", "");
-				tipoMaterial.add(text);
-				if (s.contains("-")) {
+				list.add(text);
+				if (s.contains("---")) {
 					Material material = new Material();
-					material.setID(tipoMaterial.get(0));
-					material.setNome(tipoMaterial.get(1));
-					material.setCategoria(tipoMaterial.get(2));
+					material.setID(list.get(0));
+					material.setNome(list.get(1));
+					material.setCategoria(list.get(2));
 					materiais.add(material);
-					tipoMaterial.clear();
+					list.clear();
 				}
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//for(Material m :  materiais){
-			//System.out.println(m.getNome());
-		//}
+		/*for(Material m :  materiais){
+			System.out.println(m.getNome());
+		}*/
 	}
 
 	public void preencherComboBoxCategoria() {

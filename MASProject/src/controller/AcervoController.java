@@ -32,7 +32,7 @@ import persistence.ObraArquivoImpl;
 public class AcervoController implements ComponentListener {
 
 	private JLabel imagem, msgGravado, msgVazio;
-	private JTextField nomeArtista, nomeObra, dataAquisicao, textField_valor;
+	private JTextField idObra, nomeArtista, nomeObra, dataAquisicao, textField_valor;
 	private JEditorPane descricaoObra;
 	private JComboBox<String> cbMaterial;
 	private JComboBox<String> cbCategoria;
@@ -49,10 +49,11 @@ public class AcervoController implements ComponentListener {
 
 	private ArquivosController arqController;
 
-	public AcervoController(JLabel imagem, JComboBox<String> comboSetor, JComboBox<String> comboSetorT,
+	public AcervoController(JTextField idObra, JLabel imagem, JComboBox<String> comboSetor, JComboBox<String> comboSetorT,
 			JComboBox<String> comboStatus, JComboBox<String> comboStatusT, JComboBox<String> cbCategoria,
 			JComboBox<String> cbMaterial, JTextField nomeArtista, JTextField nomeObra, JTextField dataAquisicao,
 			JEditorPane descricaoObra, JLabel msgGravado, JLabel msgVazio, JTextField textField_valor) {
+		this.idObra = idObra;
 		this.imagem = imagem;
 		this.nomeArtista = nomeArtista;
 		this.nomeObra = nomeObra;
@@ -71,6 +72,12 @@ public class AcervoController implements ComponentListener {
 		this.textField_valor = textField_valor;
 
 		lerAcervo();
+	}
+	
+	public void gerarIdSetor() {
+		String indice = "ACV";
+		GeradordeID geraID = new GeradordeID(indice);
+		idObra.setText(geraID.geraID());
 	}
 
 	public void lerAcervo() {
@@ -114,9 +121,9 @@ public class AcervoController implements ComponentListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		for (Obra o : obras) {
+		/*for (Obra o : obras) {
 			System.out.println(o.getDataComposicao());
-		}
+		}*/
 	}
 
 	public void procuraAcervoNome(String palavraChave) {
