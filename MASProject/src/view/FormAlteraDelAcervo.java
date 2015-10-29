@@ -215,7 +215,7 @@ public class FormAlteraDelAcervo extends JFrame {
 		btnExcluir.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 
 		// btnExcluir.addActionListener(Acontroller.excluirObras);
-		Acontroller.preencherComboBoxAtista();
+		Acontroller.preencherComboBoxArtista();
 		Acontroller.preencherComboBoxObras();
 		
 		btnExcluir.setBounds(402, 594, 177, 34);

@@ -323,7 +323,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 		}
 	}
 
-	public void preencherComboBoxAtista() {
+	public void preencherComboBoxArtista() {
 
 		for (Obra o : obras) {
 			cbNomeArtistas.addItem(o.getArtista().getNome());
