@@ -27,7 +27,7 @@ public class FormAcervo extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField idObra;
 	private JTextField nome_artist;
 	private JTextField nome_obra;
 	private JFormattedTextField data_obra;
@@ -73,12 +73,12 @@ public class FormAcervo extends JFrame {
 		lblId.setBounds(103, 27, 62, 14);
 		contentPane.add(lblId);
 
-		textField = new JTextField();
-		textField.setEnabled(false);
-		textField.setBounds(166, 27, 86, 17);
-		textField.setEditable(false);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		idObra = new JTextField();
+		idObra.setEnabled(false);
+		idObra.setBounds(166, 27, 150, 17);
+		idObra.setEditable(false);
+		contentPane.add(idObra);
+		idObra.setColumns(10);
 
 		JLabel lblArtista = new JLabel("Artista");
 		lblArtista.setBounds(113, 56, 52, 14);
@@ -283,12 +283,13 @@ public class FormAcervo extends JFrame {
 			}
 		});
 		
-		AcervoController Acontroller = new AcervoController(lblSelecImagem, comboSetor, comboSetorT, comboStatus,
+		AcervoController Acontroller = new AcervoController(idObra, lblSelecImagem, comboSetor, comboSetorT, comboStatus,
 				comboStatusT, cbCategoria, cbMaterial, nome_artist, nome_obra, data_obra, editor_descricao, msgGravado,
 				msgVazio, textField_valor);
-		btnGravar.addActionListener(Acontroller.gravarAcervo);
 		
+		Acontroller.gerarIdSetor();
 		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
+		btnGravar.addActionListener(Acontroller.gravarAcervo);
 		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
 		Acontroller.preencherComboBoxCategoria();
 		Acontroller.preencherComboBoxMaterial();
