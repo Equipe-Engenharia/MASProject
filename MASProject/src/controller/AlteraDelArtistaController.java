@@ -19,7 +19,7 @@ import persistence.ArtistaArquivoImpl;
 
 public class AlteraDelArtistaController implements ComponentListener {
 
-	private JTextField nomeArtista, idMaterial;
+	private JTextField nomeArtista, idArtista;
 	private JButton btApagar, btGravar;
 	private JLabel msgGravar, msgVazio;
 	private List<Artista> artistas;
@@ -30,7 +30,7 @@ public class AlteraDelArtistaController implements ComponentListener {
 	public AlteraDelArtistaController(JTextField idArtista, JTextField nomeArtista,
 			JButton btnApagar, JButton btnGravar, JLabel msgGravar, JLabel msgVazio) {
 
-		this.idMaterial = idArtista;
+		this.idArtista = idArtista;
 		this.btApagar = btnApagar;
 		this.btGravar = btnGravar;
 		this.msgGravar = msgGravar;
@@ -74,7 +74,7 @@ public class AlteraDelArtistaController implements ComponentListener {
 		Artista artista = new Artista();
 		ArtistaArquivoImpl artistaImpl = new ArtistaArquivoImpl();
 
-		artista.setId(idMaterial.getText());
+		artista.setId(idArtista.getText());
 		artista.setNome(nomeArtista.getText());
 
 		if (!nomeArtista
@@ -95,8 +95,8 @@ public class AlteraDelArtistaController implements ComponentListener {
 
 	public void pesquisarArtista() {
 
-		if (!nomeArtista.getText().isEmpty() || !idMaterial.getText().isEmpty()) {
-			msgGravar.setText(nomeArtista.getText() + " Pesquisa realizada!");
+		if (!nomeArtista.getText().isEmpty() || !idArtista.getText().isEmpty()) {
+			msgGravar.setText(nomeArtista.getText() + " localizado com sucesso!");
 			msgGravar.setVisible(true);
 			nomeArtista.setText(null);
 		} else {
@@ -166,6 +166,7 @@ public class AlteraDelArtistaController implements ComponentListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (contador == 1) {
+				idArtista.setText(null);
 				nomeArtista.setText(null);
 				contador += 1;
 			}

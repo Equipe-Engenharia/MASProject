@@ -12,7 +12,7 @@ import model.Categoria;
 import model.Setor;
 import controller.IArquivosController;
 
-public class CategObraArquivoImpl implements IArquivosController {
+public class CategoriaArquivoImpl implements IArquivosController {
 	
 	private StringBuffer buffer;
 
@@ -48,7 +48,7 @@ public class CategObraArquivoImpl implements IArquivosController {
 			Object object) throws IOException {
 		
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID da Categoria : "+((Categoria) object).getIdentificacao());
+		buffer.append("ID da Categoria : "+((Categoria) object).getId());
 		buffer.append("\r\n");
 		buffer.append("Nome da Categoria : "+((Categoria) object).getNome());
 		buffer.append("\r\n");

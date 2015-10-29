@@ -1,27 +1,29 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-import java.awt.Color;
-
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import controller.AlteraDelCategoriaController;
 
 public class FormAlteraDelCategoria extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField tfPeqNomeCategoria;
-	private JTextField tfPesqIdCategoria;
+	private JTextField idCategoria;
+	private JTextField txtCategoria;
+	
 
 	/**
 	 * Launch the application.
@@ -45,69 +47,92 @@ public class FormAlteraDelCategoria extends JFrame {
 	public FormAlteraDelCategoria() {
 		setTitle("Editar/Excluir Categoria de Obra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 447, 216);
+		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Id Categoria");
-		lblNewLabel.setBounds(10, 59, 71, 14);
-		contentPane.add(lblNewLabel);
+		JLabel lblIdArtista = new JLabel("ID");
+		lblIdArtista.setBounds(146, 56, 22, 16);
+		contentPane.add(lblIdArtista);
 		
-		JLabel lblNewLabel_1 = new JLabel("Nome da Categoria");
-		lblNewLabel_1.setBounds(10, 96, 126, 14);
-		contentPane.add(lblNewLabel_1);
+		JLabel lblEditCategoria = new JLabel("Editar Categoria");
+		lblEditCategoria.setBounds(67, 93, 100, 16);
+		contentPane.add(lblEditCategoria);
 		
-		tfPeqNomeCategoria = new JTextField();
-		tfPeqNomeCategoria.setBounds(133, 93, 141, 20);
-		contentPane.add(tfPeqNomeCategoria);
-		tfPeqNomeCategoria.setColumns(10);
+		idCategoria = new JTextField();
+		idCategoria.setToolTipText("Digite o ID do Artista…");
+		idCategoria.setBounds(180, 54, 178, 20);
+		contentPane.add(idCategoria);
+		idCategoria.setColumns(10);
 		
-		tfPesqIdCategoria = new JTextField();
-		tfPesqIdCategoria.setBounds(90, 53, 95, 20);
-		contentPane.add(tfPesqIdCategoria);
-		tfPesqIdCategoria.setColumns(10);
+		txtCategoria = new JTextField();
+		txtCategoria.setToolTipText("Digite o nome do material");
+		txtCategoria.setBounds(178, 93, 178, 28);
+		contentPane.add(txtCategoria);
+		txtCategoria.setColumns(10);
+		
+		JLabel msgGravar = new JLabel("");
+		msgGravar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
+		msgGravar.setBounds(36, 141, 230, 23);
+		msgGravar.setVisible(false);
+		contentPane.add(msgGravar);
+
+		JLabel msgVazio = new JLabel("CAMPO VAZIO!");
+		msgVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
+		msgVazio.setBounds(36, 142, 322, 23);
+		msgVazio.setVisible(false);
+		contentPane.add(msgVazio);
 		
 		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setEnabled(false);
+		btnGravar.setBounds(159, 166, 117, 34);
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnGravar.setBounds(187, 144, 104, 23);
 		contentPane.add(btnGravar);
 		
-		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.setEnabled(false);
-		btnExcluir.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		btnExcluir.setBounds(301, 144, 106, 23);
-		contentPane.add(btnExcluir);
+		JButton btnApagar = new JButton("Apagar");
+		btnApagar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnApagar.setEnabled(false);
+		btnApagar.setBounds(288, 166, 97, 34);
+		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
+		contentPane.add(btnApagar);
 		
-		JLabel mensagemGravado = new JLabel("");
-		mensagemGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
-		mensagemGravado.setBounds(46, 144, 192, 23);
-		mensagemGravado.setVisible(false);
-		contentPane.add(mensagemGravado);
-
-		JLabel mensagemVazio = new JLabel("CAMPO VAZIO!");
-		mensagemVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		mensagemVazio.setBounds(10, 144, 192, 23);
-		mensagemVazio.setVisible(false);
-		contentPane.add(mensagemVazio);
+		JButton btnFechar = new JButton("Fechar");
+		btnFechar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnFechar.setBounds(397, 166, 97, 34);
+		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
+		contentPane.add(btnFechar);
 		
-		JButton btnPesqId = new JButton("");
-		btnPesqId.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		btnPesqId.setBounds(205, 50, 33, 23);
-		contentPane.add(btnPesqId);
+		JButton btnPesquisaId = new JButton(" Busca ID");
+		btnPesquisaId.setToolTipText("Use o campo e clique para realizar a busca por número ID");
+		btnPesquisaId.setBounds(377, 47, 117, 34);
+		btnPesquisaId.setIcon(new ImageIcon("../MASProject/icons/search.png"));
+		contentPane.add(btnPesquisaId);
 		
-		JButton btnPesqNome = new JButton("");
-		btnPesqNome.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		btnPesqNome.setBounds(284, 93, 33, 23);
-		contentPane.add(btnPesqNome);
+		JButton btnPesquisaCategoria = new JButton(" Busca Categoria");
+		btnPesquisaCategoria.setToolTipText("Use o campo e clique para realizar a busca por nome da Categoria");
+		btnPesquisaCategoria.setBounds(376, 90, 117, 34);
+		btnPesquisaCategoria.setIcon(new ImageIcon("../MASProject/icons/search.png"));
+		contentPane.add(btnPesquisaCategoria);
 		
-		JLabel lblDigiteUmDos = new JLabel("Digite em um dos campos e aperte o bot\u00E3o para pesquisar...");
-		lblDigiteUmDos.setForeground(Color.RED);
-		lblDigiteUmDos.setBounds(10, 11, 362, 14);
-		contentPane.add(lblDigiteUmDos);
+		AlteraDelCategoriaController ctrlADCategoria = new AlteraDelCategoriaController(idCategoria, txtCategoria, btnApagar, btnGravar, msgGravar, msgVazio);
+		
+		btnPesquisaId.addActionListener(ctrlADCategoria.pesquisarCategoria);
+		btnPesquisaCategoria.addActionListener(ctrlADCategoria.pesquisarCategoria);
+		btnApagar.addActionListener(ctrlADCategoria.apagarCategoria);
+		btnGravar.addActionListener(ctrlADCategoria.gravarCategoria);
+		idCategoria.addMouseListener(ctrlADCategoria.limpaCampo);
+		txtCategoria.addMouseListener(ctrlADCategoria.limpaCampo);
+		txtCategoria.addActionListener(ctrlADCategoria.gravarCategoria);
 	}
 }
 

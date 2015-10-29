@@ -95,7 +95,7 @@ public class AlteraDelMaterialController implements ComponentListener {
 	public void pesquisarMaterial() {
 
 		if (!nomeMaterial.getText().isEmpty() || !idMaterial.getText().isEmpty()) {
-			msgGravar.setText(nomeMaterial.getText() + " Pesquisa realizada!");
+			msgGravar.setText(nomeMaterial.getText() + " localizado com sucesso!");
 			msgGravar.setVisible(true);
 			nomeMaterial.setText(null);
 		} else {
@@ -165,6 +165,7 @@ public class AlteraDelMaterialController implements ComponentListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (contador == 1) {
+				idMaterial.setText(null);
 				nomeMaterial.setText(null);
 				contador += 1;
 			}

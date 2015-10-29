@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import persistence.CategObraArquivoImpl;
+import persistence.CategoriaArquivoImpl;
 import model.Categoria;
 
 public class RegisCategoriaController {
@@ -41,10 +41,10 @@ public class RegisCategoriaController {
 	
 	public void gravaCategoria() {
 		Categoria categoria = new Categoria();
-		CategObraArquivoImpl categImpl = new CategObraArquivoImpl();
+		CategoriaArquivoImpl categImpl = new CategoriaArquivoImpl();
 		
 		//LEMBRETE : Verificar como que vai ficar a parte do preenchimento automatico do tfidCategoria
-		categoria.setIdentificacao(tfidCategoria.getText());
+		categoria.setId(tfidCategoria.getText());
 		categoria.setNome(tfNomeCategoria.getText());
 
 		if (tfNomeCategoria.getText().isEmpty()) {
