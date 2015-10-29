@@ -90,7 +90,8 @@ public class FormRegisCategObra extends JFrame {
 		contentPane.add(lblMensagemVazio);
 		
 		RegisCategObraController rCatObra = new RegisCategObraController(lblMensagemGravada, lblMensagemVazio, btnGravar, tfIdCategoria, tfNomeCategoria); 
-		
+		//Essa linha abaixo será excluida quando o menu estiver pronto***
+        rCatObra.gerarIdSetor();
 		tfNomeCategoria.addMouseListener(rCatObra.limpaCampo);
 		tfNomeCategoria.addActionListener(rCatObra.gravarCategoria);
 		btnGravar.addActionListener(rCatObra.gravarCategoria);
