@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import controller.MaterialController;
 
-public class FormMaterial extends JFrame {
+public class FormRegisMaterial extends JFrame {
 
 	static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -29,7 +29,7 @@ public class FormMaterial extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormMaterial frame = new FormMaterial();
+					FormRegisMaterial frame = new FormRegisMaterial();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +41,7 @@ public class FormMaterial extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormMaterial() {
+	public FormRegisMaterial() {
 		setTitle("Registrar Material - MASP");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);

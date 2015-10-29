@@ -180,7 +180,7 @@ public class FormAcervo extends JFrame {
 		contentPane.add(btnNovoMaterial);
 		btnNovoMaterial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FormMaterial frame = new FormMaterial();
+				FormRegisMaterial frame = new FormRegisMaterial();
 				frame.setVisible(true);
 				frame.setLocationRelativeTo(null);
 			}
@@ -191,7 +191,7 @@ public class FormAcervo extends JFrame {
 		contentPane.add(btnEditarMaterial);
 		btnEditarMaterial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FormMaterialEdit frame = new FormMaterialEdit();
+				FormAlteraDelMaterial frame = new FormAlteraDelMaterial();
 				frame.setVisible(true);
 				frame.setLocationRelativeTo(null);
 			}

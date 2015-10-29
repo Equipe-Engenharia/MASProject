@@ -152,7 +152,7 @@ public class FormAlteraDelAcervo extends JFrame{
 		btnNovoMaterial.setToolTipText("NÃ£o encontrou o material?");
 		btnNovoMaterial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FormMaterial frame = new FormMaterial();
+				FormRegisMaterial frame = new FormRegisMaterial();
 				frame.setVisible(true);
 				frame.setLocationRelativeTo(null);
 			}
@@ -174,7 +174,7 @@ public class FormAlteraDelAcervo extends JFrame{
 		contentPane.add(textField_valor);
 
 
-		JButton btnGravar = new JButton("Gravar Alterações");
+		JButton btnGravar = new JButton("Gravar Alteraï¿½ï¿½es");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.setBounds(200, 594, 177, 34);
 		contentPane.add(btnGravar);

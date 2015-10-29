@@ -15,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.MaterialController;
 
-public class FormMaterialEdit extends JFrame {
+public class FormAlteraDelMaterial extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -30,7 +30,7 @@ public class FormMaterialEdit extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormMaterialEdit frame = new FormMaterialEdit();
+					FormAlteraDelMaterial frame = new FormAlteraDelMaterial();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +42,7 @@ public class FormMaterialEdit extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormMaterialEdit() {
+	public FormAlteraDelMaterial() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
