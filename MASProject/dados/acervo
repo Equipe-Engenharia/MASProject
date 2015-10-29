@@ -1,25 +1,13 @@
+ID Obra: ACV151029-005454
 Nome do Artista: Henrique
-Nome da obra: Teste Obra
-Descrição: Teste Descrição
+Nome da obra: Monalisa
+Descriï¿½ï¿½o: 
 Categoria:  Esculturas
-Data: 11/11/2015
+Data: 11/11/1111
 Imagem: ../MASProject/icons/painting.png
-Material:  Gesso
-Setor: Setor A
+Material:  Pedra
+Setor:  Setor A
 Valor: 
 Obra Propria: false
-Status: Manutenção
----------------------------
-
-Nome do Artista: John
-Nome da obra: Imagine
-Descriï¿½ï¿½o: asdkçjbflkjb
-Categoria:  Esculturas
-Data: 12/07/1969
-Imagem: ../MASProject/icons/painting.png
-Material: null
-Setor:  Setor A
-Valor: 1200000
-Obra Propria: true
-Status: Emprestada
+Status: Exposição
 ---------------------------

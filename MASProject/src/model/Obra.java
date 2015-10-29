@@ -3,6 +3,7 @@ package model;
 public class Obra {
 	private String nomeObra;
 	private String descricaoObra;
+	private String idObra;
 	private String imagem;
 	private String dataComposicao;
 	private boolean proprietario;
@@ -80,6 +81,12 @@ public class Obra {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getIdObra() {
+		return idObra;
+	}
+	public void setIdObra(String idObra) {
+		this.idObra = idObra;
 	}
 
 }

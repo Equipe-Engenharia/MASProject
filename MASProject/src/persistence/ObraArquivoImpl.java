@@ -45,6 +45,8 @@ public class ObraArquivoImpl implements IArquivosController{
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
+		buffer.append("ID Obra: "+((Obra) object).getIdObra());
+		buffer.append("\r\n");
 		buffer.append("Nome do Artista: "+((Obra) object).getArtista().getNome());
 		buffer.append("\r\n");
 		buffer.append("Nome da obra: "+((Obra) object).getNomeObra());
