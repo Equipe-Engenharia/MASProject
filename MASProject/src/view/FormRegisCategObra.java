@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import controller.RegisCategObraController;
 
 import java.awt.Font;
+import javax.swing.UIManager;
 
 public class FormRegisCategObra extends JFrame {
 
@@ -45,6 +46,7 @@ public class FormRegisCategObra extends JFrame {
 	 * Create the frame.
 	 */
 	public FormRegisCategObra(){
+		setResizable(false);
 		setTitle("Registro de Categoria de Obra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 425, 166);
@@ -68,8 +70,8 @@ public class FormRegisCategObra extends JFrame {
 		
 		tfIdCategoria = new JTextField();
 		tfIdCategoria.setEditable(false);
-		tfIdCategoria.setBackground(Color.LIGHT_GRAY);
-		tfIdCategoria.setBounds(89, 24, 89, 20);
+		tfIdCategoria.setBackground(UIManager.getColor("TextField.disabledBackground"));
+		tfIdCategoria.setBounds(89, 24, 134, 20);
 		contentPane.add(tfIdCategoria);
 		tfIdCategoria.setColumns(10);
 		

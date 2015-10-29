@@ -89,8 +89,10 @@ public class FormRegisSetor extends JFrame {
 		
 		
 		RegisSetorController RsContrl = new RegisSetorController(id_setor, txtDigitado, mensagemGravado, mensagemVazio, btnGravar);
-		//Essa linha abaixo será excluida quando o menu estiver pronto***
+		
+		//Essa linha abaixo será excluida quando o menu estiver pronto pois será um evento do botão que chama este Form***
         RsContrl.gerarIdSetor();
+        
 		txtDigitado.addMouseListener(RsContrl.limpaCampo);
 		txtDigitado.addActionListener(RsContrl.gravarSetor);
 		btnGravar.addActionListener(RsContrl.gravarSetor);
