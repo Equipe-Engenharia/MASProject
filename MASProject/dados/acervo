@@ -1,39 +1,13 @@
-ID Obra: ACV151029-005454
-Nome do Artista: Henrique
-Nome da obra: Monalisa
-Descriï¿½ï¿½o: 
-Categoria:  Esculturas
-Data: 11/11/1111
-Imagem: ../MASProject/icons/painting.png
-Material:  Pedra
-Setor:  Setor A
-Valor: 
-Obra Propria: false
-Status: Exposição
----------------------------
-ID Obra: ACV151029-021811
-Nome do Artista: Andrea Pisano
-Nome da obra: Winterfell
-Descriï¿½ï¿½o: 
-Categoria:  Esculturas
-Data: 20/08/2015
-Imagem: ../MASProject/icons/painting.png
-Material:  Pedra
-Setor:  Setor A
-Valor: 32.344,00
-Obra Propria: true
-Status: Emprestada
----------------------------
-ID Obra: ACV151029-114752
-Nome do Artista: Artista: Fernando
-Nome da obra: O romeno
-Descriï¿½ï¿½o: lá lá lá
-Categoria:  Escultura
-Data: 12/12/1996
-Imagem: C:\Users\Denys\Desktop\display.jpg
-Material:  Pedra
-Setor:  Setor Branco
-Valor: 121.122,00
-Obra Propria: true
-Status: Emprestada
+ID Obra :ACV151029-131138
+Nome do Artista :Diego
+Nome da obra :Monalisa
+Descriï¿½ï¿½o :asd
+Categoria :Monalisa
+Data :11/11/1111
+Imagem :../MASProject/icons/painting.png
+Material : Pedra
+Setor : Setor A
+Valor :15,00
+Obra Propria :true
+Status :ExposiÃ§Ã£o
 ---------------------------
