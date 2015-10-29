@@ -45,9 +45,8 @@ public class MaterialController implements ComponentListener {
 	}
 
 	public void gerarIdSetor() {
-		String indice = "MAT";
-		GeradordeID geraID = new GeradordeID(indice);
-		idMaterial.setText(geraID.geraID());
+		GeradordeID geraID = new GeradordeID();
+		idMaterial.setText("MAT"+geraID.getIndice());
 	}
 
 	public void lerMaterial() {

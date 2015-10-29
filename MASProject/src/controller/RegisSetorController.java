@@ -35,9 +35,9 @@ public class RegisSetorController {
 
 	public void gerarIdSetor() {
 		//Chamada deste metodo no gravaSetor e no FormRegisSetor
-		String indice = "SET";
-		GeradordeID geraID = new GeradordeID(indice);
-		idsetor.setText(geraID.geraID());
+		GeradordeID geraID = new GeradordeID();
+	
+		idsetor.setText("SET"+geraID.getIndice());
 	}
 
 	public void gravaSetor() {

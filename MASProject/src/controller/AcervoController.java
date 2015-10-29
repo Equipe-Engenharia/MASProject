@@ -75,9 +75,8 @@ public class AcervoController implements ComponentListener {
 	}
 	
 	public void gerarIdSetor() {
-		String indice = "ACV";
-		GeradordeID geraID = new GeradordeID(indice);
-		idObra.setText(geraID.geraID());
+		GeradordeID geraID = new GeradordeID();
+		idObra.setText("ACV"+geraID.getIndice());
 	}
 
 	public void lerAcervo() {
