@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.AlteraDelMaterialController;
@@ -43,15 +44,17 @@ public class FormAlteraDelMaterial extends JFrame {
 	 * Create the frame.
 	 */
 	public FormAlteraDelMaterial() {
+		setTitle("Editar/Excluir Material da Obra");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblIdMaterial = new JLabel("ID Material");
-		lblIdMaterial.setBounds(93, 35, 75, 16);
+		JLabel lblIdMaterial = new JLabel("ID");
+		lblIdMaterial.setBounds(146, 35, 22, 16);
 		contentPane.add(lblIdMaterial);
 		
 		JLabel lblEditCategoria = new JLabel("Categoria da Obra");

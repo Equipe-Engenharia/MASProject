@@ -15,11 +15,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 import javax.swing.ImageIcon;
 
 import controller.AcervoController;
 
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
@@ -40,6 +42,7 @@ public class FormAcervo extends JFrame {
 	private JTextField nome_obra;
 	private JFormattedTextField data_obra;
 	private MaskFormatter maskData;
+	private DecimalFormat maskValor;
 	private JComboBox<String> cbCategoria;
 	private JComboBox<String> cbMaterial;
 	private JComboBox<String> comboSetor;
@@ -86,6 +89,7 @@ public class FormAcervo extends JFrame {
 		idObra.setEnabled(false);
 		idObra.setBounds(166, 27, 150, 17);
 		idObra.setEditable(false);
+		idObra.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(idObra);
 		idObra.setColumns(10);
 
@@ -138,8 +142,7 @@ public class FormAcervo extends JFrame {
 		lblNewLabel.setBounds(28, 165, 139, 14);
 		contentPane.add(lblNewLabel);
 
-		maskData = new MaskFormatter("##/##/####");
-		
+		maskData = new MaskFormatter("##/##/####");	
 		data_obra = new JFormattedTextField(maskData);
 		data_obra.setBounds(168, 165, 98, 20);
 		contentPane.add(data_obra);
@@ -177,7 +180,7 @@ public class FormAcervo extends JFrame {
 		contentPane.add(btnNovaCategoria);
 		btnNovaCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FormRegisCategObra formCate = new FormRegisCategObra();
+				FormRegisCategoria formCate = new FormRegisCategoria();
 				formCate.setVisible(true);
 				formCate.setLocationRelativeTo(null);
 			}
@@ -186,6 +189,13 @@ public class FormAcervo extends JFrame {
 		JButton btnEditarCategoria = new JButton("Editar Categoria");
 		btnEditarCategoria.setBounds(29, 247, 133, 29);
 		contentPane.add(btnEditarCategoria);
+		btnEditarCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FormAlteraDelCategoria frame = new FormAlteraDelCategoria();
+				frame.setVisible(true);
+				frame.setLocationRelativeTo(null);
+			}
+		});
 
 		JButton btnNovoMaterial = new JButton("Novo Material");
 		btnNovoMaterial.setToolTipText("Não encontrou o material?");
@@ -219,15 +229,15 @@ public class FormAcervo extends JFrame {
 		panel_proprio.setLayout(null);
 
 		JLabel lblStatus = new JLabel("Status");
-		lblStatus.setBounds(131, 23, 46, 14);
+		lblStatus.setBounds(88, 23, 46, 14);
 		panel_proprio.add(lblStatus);
 
 		comboStatus = new JComboBox<String>();
-		comboStatus.setBounds(183, 21, 110, 20);
+		comboStatus.setBounds(133, 21, 128, 20);
 		panel_proprio.add(comboStatus);
 
 		JLabel Setor = new JLabel("Setor");
-		Setor.setBounds(317, 23, 46, 14);
+		Setor.setBounds(317, 23, 32, 14);
 		panel_proprio.add(Setor);
 
 		comboSetor = new JComboBox<String>();
@@ -235,11 +245,16 @@ public class FormAcervo extends JFrame {
 		panel_proprio.add(comboSetor);
 
 		JLabel lblValorDaAquisio = new JLabel("Valor da aquisi\u00E7\u00E3o (R$)");
-		lblValorDaAquisio.setBounds(34, 64, 143, 14);
+		lblValorDaAquisio.setBounds(206, 64, 143, 14);
 		panel_proprio.add(lblValorDaAquisio);
 
-		textField_valor = new JTextField();
-		textField_valor.setBounds(183, 61, 110, 20);
+		maskValor = new DecimalFormat("#,###,###.00") ;
+		NumberFormatter formatter = new NumberFormatter(maskValor) ;
+		formatter.setFormat(maskValor) ;
+        formatter.setAllowsInvalid(false) ; 	
+		textField_valor = new JFormattedTextField(maskValor);
+		textField_valor.setHorizontalAlignment(SwingConstants.RIGHT);
+		textField_valor.setBounds(357, 61, 110, 20);
 		panel_proprio.add(textField_valor);
 		textField_valor.setColumns(10);
 

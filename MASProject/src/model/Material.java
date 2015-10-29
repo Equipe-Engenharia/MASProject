@@ -6,11 +6,11 @@ public class Material {
 	private String categoria;
 	private String nome;
 	
-	public String getID(){
+	public String getId(){
 		return idMaterial;
 	}
 	
-	public void setID(String id){
+	public void setId(String id){
 		this.idMaterial = id;
 	}
 	

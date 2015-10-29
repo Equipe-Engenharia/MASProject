@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -42,16 +43,17 @@ public class FormRegisMaterial extends JFrame {
 	 * Create the frame.
 	 */
 	public FormRegisMaterial() {
-		setTitle("Registrar Material - MASP");
+		setTitle("Registro de Material da Obra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblIdMaterial = new JLabel("ID Material");
-		lblIdMaterial.setBounds(93, 35, 75, 16);
+		JLabel lblIdMaterial = new JLabel("ID");
+		lblIdMaterial.setBounds(148, 35, 20, 16);
 		contentPane.add(lblIdMaterial);
 
 		JLabel lblCategoria = new JLabel("Categoria da Obra");
@@ -65,6 +67,7 @@ public class FormRegisMaterial extends JFrame {
 		idMaterial = new JTextField();
 		idMaterial.setEditable(false);
 		idMaterial.setBounds(180, 33, 178, 20);
+		idMaterial.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(idMaterial);
 		idMaterial.setColumns(10);
 		

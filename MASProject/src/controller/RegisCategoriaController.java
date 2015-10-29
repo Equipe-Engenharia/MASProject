@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import persistence.CategObraArquivoImpl;
 import model.Categoria;
 
-public class RegisCategObraController {
+public class RegisCategoriaController {
 
 	private JLabel lblMensagemGravado, lblMensagemVazio;
 	private JTextField tfNomeCategoria, tfidCategoria;
@@ -25,7 +25,7 @@ public class RegisCategObraController {
 	private Categoria categoria = new Categoria();
 	private static int contador = 1;
 	
-	public RegisCategObraController( JLabel lblMensagemGravada, JLabel lblMensagemVazio, JButton btnGravar, JTextField tfIdCategoria, JTextField tfNomeCategoria){
+	public RegisCategoriaController( JLabel lblMensagemGravada, JLabel lblMensagemVazio, JButton btnGravar, JTextField tfIdCategoria, JTextField tfNomeCategoria){
 		this.lblMensagemGravado = lblMensagemGravada;
 		this.lblMensagemVazio = lblMensagemVazio;
 		this.tfidCategoria = tfIdCategoria;
@@ -107,7 +107,7 @@ public class RegisCategObraController {
 				tfNomeCategoria.setText(null);
 				contador += 1;
 			}
-			//para que a mensagem não fique visivel a todo momento
+			//para que a mensagem nï¿½o fique visivel a todo momento
 			btnGravar.setEnabled(true);
 			lblMensagemGravado.setVisible(false);
             lblMensagemVazio.setVisible(false);

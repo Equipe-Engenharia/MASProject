@@ -8,17 +8,18 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import java.awt.Color;
 
 import javax.swing.JButton;
 
-import controller.RegisCategObraController;
+import controller.RegisCategoriaController;
 
 import java.awt.Font;
 import javax.swing.UIManager;
 
-public class FormRegisCategObra extends JFrame {
+public class FormRegisCategoria extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField tfNomeCategoria;
@@ -33,7 +34,7 @@ public class FormRegisCategObra extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormRegisCategObra frame = new FormRegisCategObra();
+					FormRegisCategoria frame = new FormRegisCategoria();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,13 +46,14 @@ public class FormRegisCategObra extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormRegisCategObra(){
+	public FormRegisCategoria(){
 		setResizable(false);
 		setTitle("Registro de Categoria de Obra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 446, 160);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -72,6 +74,7 @@ public class FormRegisCategObra extends JFrame {
 		tfIdCategoria.setEditable(false);
 		tfIdCategoria.setBackground(UIManager.getColor("TextField.disabledBackground"));
 		tfIdCategoria.setBounds(142, 21, 134, 20);
+		tfIdCategoria.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(tfIdCategoria);
 		tfIdCategoria.setColumns(10);
 		
@@ -93,8 +96,8 @@ public class FormRegisCategObra extends JFrame {
 		lblMensagemVazio.setVisible(false);
 		contentPane.add(lblMensagemVazio);
 		
-		RegisCategObraController rCatObra = new RegisCategObraController(lblMensagemGravada, lblMensagemVazio, btnGravar, tfIdCategoria, tfNomeCategoria); 
-		//Essa linha abaixo será excluida quando o menu estiver pronto***
+		RegisCategoriaController rCatObra = new RegisCategoriaController(lblMensagemGravada, lblMensagemVazio, btnGravar, tfIdCategoria, tfNomeCategoria); 
+		//Essa linha abaixo serï¿½ excluida quando o menu estiver pronto***
         rCatObra.gerarIdCategoria();
 		tfNomeCategoria.addMouseListener(rCatObra.limpaCampo);
 		tfNomeCategoria.addActionListener(rCatObra.gravarCategoria);
