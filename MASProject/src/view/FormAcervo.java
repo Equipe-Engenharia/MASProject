@@ -39,6 +39,7 @@ public class FormAcervo extends JFrame {
 	private JComboBox<String> comboStatus;
 	private JComboBox<String> comboStatusT;
 	private JTextField textField_valor;
+	private JButton btnPesquisaArtist; //deixar os demais botoes private
 
 	/**
 	 * Launch the application.
@@ -101,17 +102,13 @@ public class FormAcervo extends JFrame {
 		contentPane.add(nome_artist);
 		nome_artist.setColumns(10);
 
-		JButton btnPesquisaArtist = new JButton("");
+		//Modificado a visibilidade do botão para privado - Vitor
+		//Ações transferido para o acervoController - Vitor
+		btnPesquisaArtist = new JButton("");
 		btnPesquisaArtist.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		btnPesquisaArtist.setBounds(522, 52, 29, 28);
 		contentPane.add(btnPesquisaArtist);
-		btnPesquisaArtist.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				FormPesqArtista frmPesqArt = new FormPesqArtista();
-				frmPesqArt.setVisible(true);
-				frmPesqArt.setLocationRelativeTo(null);
-			}
-		});
+		
 
 		JLabel lblNomeDaObra = new JLabel("Nome da Obra");
 		lblNomeDaObra.setBounds(67, 88, 98, 14);
@@ -283,12 +280,14 @@ public class FormAcervo extends JFrame {
 			}
 		});
 		
+		//botão de pesquisar artista e o Jpanel passados como parametro - Vitor
 		AcervoController Acontroller = new AcervoController(idObra, lblSelecImagem, comboSetor, comboSetorT, comboStatus,
 				comboStatusT, cbCategoria, cbMaterial, nome_artist, nome_obra, data_obra, editor_descricao, msgGravado,
-				msgVazio, textField_valor);
+				msgVazio, textField_valor, btnPesquisaArtist, contentPane);
 		
 		Acontroller.gerarIdSetor();
 		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
+		btnPesquisaArtist.addActionListener(Acontroller);
 		btnGravar.addActionListener(Acontroller.gravarAcervo);
 		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
 		Acontroller.preencherComboBoxCategoria();

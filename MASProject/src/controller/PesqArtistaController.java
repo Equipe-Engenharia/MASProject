@@ -1,49 +1,31 @@
 package controller;
 
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.io.IOException;
 
-import javax.swing.JComboBox;
-
-public class PesqArtistaController implements ComponentListener{
-
-	private JComboBox<String> cbArtista;
+public class PesqArtistaController{
+	 
 	private ArquivosController arqController;
+	private String[] artista;
 	
-	public PesqArtistaController(JComboBox<String> cbArtista){
-		this.cbArtista = cbArtista;
+	public PesqArtistaController(){
+		this.artista = preencherComboBoxArtista();
 	}
 	
-	private void preencherComboBoxArtista(){
+	public String[] getArtista(){
+		return artista;
+	}
+	
+	private String[] preencherComboBoxArtista(){
 		String linha = new String();
+		String nArtista[] = null; 
 		arqController = new ArquivosController();
 		try {
-			arqController.leArquivo("../MASProject/dados/", "artistas");
+			arqController.leArquivo("../MASProject/dados", "artistas");
 			linha = arqController.getBuffer();
-			String [] artista = linha.split(";");
-			for(String s : artista){
-				cbArtista.addItem(s);
-			}
+			nArtista = linha.split(";");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return nArtista;
 	}
-
-	@Override
-	public void componentHidden(ComponentEvent e) {
-		
-	}
-
-	@Override
-	public void componentMoved(ComponentEvent e) {
-		preencherComboBoxArtista();
-	}
-
-	@Override
-	public void componentResized(ComponentEvent e) {}
-
-	@Override
-	public void componentShown(ComponentEvent e) {}
-	
 }

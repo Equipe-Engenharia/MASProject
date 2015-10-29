@@ -14,10 +14,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -29,10 +32,10 @@ import model.Obra;
 import model.Setor;
 import persistence.ObraArquivoImpl;
 
-public class AcervoController implements ComponentListener {
+public class AcervoController implements ComponentListener, ActionListener {
 
 	private JLabel imagem, msgGravado, msgVazio;
-	private JTextField idObra, nomeArtista, nomeObra, dataAquisicao, textField_valor, txtNovaObra;
+	private JTextField idObra, tfNomeArtista, nomeObra, dataAquisicao, textField_valor, txtNovaObra;
 	private JEditorPane descricaoObra;
 	private JComboBox<String> cbMaterial, cbNomeArtistas, cbObras;
 	private JComboBox<String> cbCategoria;
@@ -47,16 +50,21 @@ public class AcervoController implements ComponentListener {
 	private JComboBox<String> comboStatus;
 	private JComboBox<String> comboStatusT;
 
+	private JButton btnPesqArtist; //passar o resto dos botoes
+	private JPanel frmAcervo;
 	private ArquivosController arqController;
+	private PesqArtistaController pAController;
+
+	
 
 	public AcervoController(JTextField idObra, JLabel imagem, JComboBox<String> comboSetor,
 			JComboBox<String> comboSetorT, JComboBox<String> comboStatus, JComboBox<String> comboStatusT,
 			JComboBox<String> cbCategoria, JComboBox<String> cbMaterial, JTextField nomeArtista, JTextField nomeObra,
 			JTextField dataAquisicao, JEditorPane descricaoObra, JLabel msgGravado, JLabel msgVazio,
-			JTextField textField_valor) {
+			JTextField textField_valor, JButton btnPesqArtist, JPanel frmAcervo) {
 		this.idObra = idObra;
 		this.imagem = imagem;
-		this.nomeArtista = nomeArtista;
+		this.tfNomeArtista = nomeArtista;
 		this.nomeObra = nomeObra;
 		this.dataAquisicao = dataAquisicao;
 		this.descricaoObra = descricaoObra;
@@ -71,7 +79,8 @@ public class AcervoController implements ComponentListener {
 		this.msgGravado = msgGravado;
 		this.msgVazio = msgVazio;
 		this.textField_valor = textField_valor;
-
+		this.btnPesqArtist = btnPesqArtist;
+		this.frmAcervo = frmAcervo;
 		lerAcervo();
 	}
 
@@ -211,7 +220,7 @@ public class AcervoController implements ComponentListener {
 		Material material = new Material();
 		Setor setor = new Setor();
 		obra.setProprietario(false);
-		if (nomeArtista.getText().isEmpty()) {
+		if (tfNomeArtista.getText().isEmpty()) {
 			msgVazio.setVisible(true);
 			msgVazio.setText("Campo Artista � obrigat�rio");
 
@@ -234,7 +243,7 @@ public class AcervoController implements ComponentListener {
 			msgVazio.setVisible(false);
 			material.setNome((String) cbMaterial.getSelectedItem());
 			categoria.setNome((String) cbCategoria.getSelectedItem());
-			artista.setNome(nomeArtista.getText());
+			artista.setNome(tfNomeArtista.getText());
 			obra.setNomeObra(nomeObra.getText());
 			obra.setIdObra(idObra.getText());
 			obra.setArtista(artista);
@@ -269,7 +278,7 @@ public class AcervoController implements ComponentListener {
 		imagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
 		imagem.setBackground(SystemColor.inactiveCaption);
 		imagem.setHorizontalAlignment(SwingConstants.CENTER);
-		nomeArtista.setText(null);
+		tfNomeArtista.setText(null);
 		nomeObra.setText(null);
 		textField_valor.setText(null);
 		dataAquisicao.setText(null);
@@ -440,6 +449,19 @@ public class AcervoController implements ComponentListener {
 			e.printStackTrace();
 		}
 	}
+	
+	//Abre um JOptionPane com uma comboBox - Vitor
+		private void pesquisarArtista(){
+			pAController = new PesqArtistaController();
+			Object[] possibilities = pAController.getArtista();
+			String s = (String)JOptionPane.showInputDialog(frmAcervo, "Escolha o artista:\n",
+					"Pesquisar o Artista", JOptionPane.INFORMATION_MESSAGE, null, possibilities,
+					possibilities[0]);
+			if(s != null && s.length() > 0){
+				tfNomeArtista.setText(s);
+				return;
+			}
+		}
 
 	// Controle de bot�es
 
@@ -496,5 +518,13 @@ public class AcervoController implements ComponentListener {
 	public void componentHidden(ComponentEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String action = e.getActionCommand(); //verifica qual botao foi pressionado na tela
+		if(action.equals(btnPesqArtist.getText())){ //compara com o texto do botao
+			pesquisarArtista();
+		}
 	}
 }
