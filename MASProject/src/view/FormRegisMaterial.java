@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import controller.MaterialController;
+import controller.RegisMaterialController;
 
 public class FormRegisMaterial extends JFrame {
 
@@ -106,7 +106,7 @@ public class FormRegisMaterial extends JFrame {
 		btnFechar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnFechar);
 		
-		MaterialController ctrlMaterial = new MaterialController(cbCategoria,idMaterial, txtMaterial, btnGravar, btnGravar, msgGravado, msgVazio);
+		RegisMaterialController ctrlMaterial = new RegisMaterialController(cbCategoria,idMaterial, txtMaterial, btnGravar, btnGravar, msgGravado, msgVazio);
 		
 		ctrlMaterial.gerarIdSetor();
 		ctrlMaterial.preencherComboBoxCategoria();

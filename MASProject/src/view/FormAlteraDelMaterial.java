@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import controller.MaterialController;
+import controller.RegisMaterialController;
 
 public class FormAlteraDelMaterial extends JFrame {
 
@@ -128,7 +128,7 @@ public class FormAlteraDelMaterial extends JFrame {
 		btnBuscaMaterial.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnBuscaMaterial);
 		
-		MaterialController ctrlMaterial = new MaterialController(cbCategoria,idMaterial, txtMaterial, btnApagar, btnGravar, msgGravado, msgVazio);
+		RegisMaterialController ctrlMaterial = new RegisMaterialController(cbCategoria,idMaterial, txtMaterial, btnApagar, btnGravar, msgGravado, msgVazio);
 		
 		ctrlMaterial.preencherComboBoxCategoria();
 		btnGravar.addActionListener(ctrlMaterial.gravarMaterial);

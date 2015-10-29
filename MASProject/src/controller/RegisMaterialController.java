@@ -18,7 +18,7 @@ import model.Categoria;
 import model.Material;
 import persistence.MaterialArquivoImpl;
 
-public class MaterialController implements ComponentListener {
+public class RegisMaterialController implements ComponentListener {
 
 	private JComboBox<String> cbCategoria;
 	private JTextField nomeMaterial, idMaterial;
@@ -29,7 +29,7 @@ public class MaterialController implements ComponentListener {
 	private static int contador = 1;
 	private ArquivosController ctrlArquivos;
 
-	public MaterialController(JComboBox<String> cbCategoria, JTextField txtID, JTextField txtMaterial,
+	public RegisMaterialController(JComboBox<String> cbCategoria, JTextField txtID, JTextField txtMaterial,
 			JButton btnApagar, JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
 
 		this.cbCategoria = cbCategoria;
