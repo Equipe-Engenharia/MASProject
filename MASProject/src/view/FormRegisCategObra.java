@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import controller.RegisCategObraController;
 
 import java.awt.Font;
+import javax.swing.UIManager;
 
 public class FormRegisCategObra extends JFrame {
 
@@ -45,41 +46,44 @@ public class FormRegisCategObra extends JFrame {
 	 * Create the frame.
 	 */
 	public FormRegisCategObra(){
+		setResizable(false);
 		setTitle("Registro de Categoria de Obra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 425, 166);
+		setBounds(100, 100, 446, 160);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Id Categoria");
-		lblNewLabel.setBounds(10, 30, 71, 14);
+		lblNewLabel.setBounds(42, 24, 71, 14);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Nome da Categoria");
-		lblNewLabel_1.setBounds(10, 68, 123, 14);
+		lblNewLabel_1.setBounds(10, 55, 123, 14);
 		contentPane.add(lblNewLabel_1);
 		
 		tfNomeCategoria = new JTextField("Digite o nome da categoria...");
-		tfNomeCategoria.setBounds(143, 65, 204, 20);
+		tfNomeCategoria.setBounds(143, 52, 204, 20);
 		contentPane.add(tfNomeCategoria);
 		tfNomeCategoria.setColumns(10);
 		
 		tfIdCategoria = new JTextField();
 		tfIdCategoria.setEditable(false);
-		tfIdCategoria.setBackground(Color.LIGHT_GRAY);
-		tfIdCategoria.setBounds(89, 24, 89, 20);
+		tfIdCategoria.setBackground(UIManager.getColor("TextField.disabledBackground"));
+		tfIdCategoria.setBounds(142, 21, 134, 20);
 		contentPane.add(tfIdCategoria);
 		tfIdCategoria.setColumns(10);
 		
 		JButton btnGravar = new JButton("Gravar");
-		btnGravar.setBounds(276, 96, 89, 23);
+		btnGravar.setBounds(341, 96, 89, 23);
 		contentPane.add(btnGravar);
+		btnGravar.setEnabled(false);
 		
-		JLabel lblMensagemGravada = new JLabel("");
+		JLabel lblMensagemGravada = new JLabel();
+		lblMensagemGravada.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
 		lblMensagemGravada.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblMensagemGravada.setBounds(53, 93, 213, 26);
+		lblMensagemGravada.setBounds(10, 93, 213, 26);
 		lblMensagemGravada.setVisible(false);
 		contentPane.add(lblMensagemGravada);
 		
@@ -91,7 +95,7 @@ public class FormRegisCategObra extends JFrame {
 		
 		RegisCategObraController rCatObra = new RegisCategObraController(lblMensagemGravada, lblMensagemVazio, btnGravar, tfIdCategoria, tfNomeCategoria); 
 		//Essa linha abaixo será excluida quando o menu estiver pronto***
-        rCatObra.gerarIdSetor();
+        rCatObra.gerarIdCategoria();
 		tfNomeCategoria.addMouseListener(rCatObra.limpaCampo);
 		tfNomeCategoria.addActionListener(rCatObra.gravarCategoria);
 		btnGravar.addActionListener(rCatObra.gravarCategoria);

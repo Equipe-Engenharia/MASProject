@@ -84,7 +84,7 @@ public class RegisSetorController {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			gravaSetor();
-			nomeset.setText("");
+			nomeset.setText(null);
 		}
 	};
 
@@ -128,7 +128,7 @@ public class RegisSetorController {
 			// se for clicado pela primeira vez o campo fica limpo para
 			// preencher com o nome do setor
 			if (contador == 1) {
-				nomeset.setText("");
+				nomeset.setText(null);
 				contador += 1;
 			}
 			// para que a mensagem n�o fique visivel a todo momento

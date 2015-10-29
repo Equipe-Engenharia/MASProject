@@ -1,4 +1,4 @@
-package Telas;
+package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -14,8 +14,8 @@ import javax.swing.border.EmptyBorder;
 
 
   
-public class Forma extends JFrame{  
-    public Forma(){  
+public class FormIntermediarioArtista extends JFrame{  
+    public FormIntermediarioArtista(){  
         Iniciar();  
         setLocationRelativeTo(null);  
     }  
@@ -24,10 +24,10 @@ public class Forma extends JFrame{
         panelPrincipal = new JPanel();  
         btnNovo = new JButton();  
         btnEdit = new JButton();  
+        
         btnEdit.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		
-        		 new EdEx(null, true).setVisible(true);  
+        		 new FormEditarArtista(null, true).setVisible(true);  
         	}
         });
         
@@ -43,7 +43,7 @@ public class Forma extends JFrame{
         btnNovo.addActionListener(new ActionListener() {  
             @Override  
             public void actionPerformed(ActionEvent arg0) {  
-                new NovoArtista(null, true).setVisible(true);  
+                new FormNovoArtista(null, true).setVisible(true);  
             }  
   
         });  
@@ -60,7 +60,7 @@ public class Forma extends JFrame{
         
     }  
     public static void main(String[] args) {  
-        new Forma().setVisible(true);  
+        new FormIntermediarioArtista().setVisible(true);  
     }  
     private JPanel panelPrincipal;  
     private JButton btnNovo;  
