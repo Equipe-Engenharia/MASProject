@@ -33,6 +33,12 @@ public class RegisCategObraController {
 		this.btnGravar = btnGravar;
 	}
 	
+	public void gerarIdSetor() {
+		GeradordeID geraId = new GeradordeID();
+	
+		tfidCategoria.setText("CTG"+ geraId.getIndice());
+	}
+	
 	public void gravaCategoria() {
 		Categoria categoria = new Categoria();
 		CategObraArquivoImpl categImpl = new CategObraArquivoImpl();
