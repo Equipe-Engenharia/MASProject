@@ -23,6 +23,13 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
+import javax.swing.JSeparator;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.MatteBorder;
+import java.awt.Color;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.TitledBorder;
 
 public class FormAcervo extends JFrame {
 
@@ -65,7 +72,7 @@ public class FormAcervo extends JFrame {
 		setResizable(false);
 		setTitle("Registro de Acervo");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //quando ela for chamada pelo menu trocar para
-		setBounds(100, 100, 615, 726);					//DISPOSE_ON_CLOSE
+		setBounds(100, 100, 625, 737);					//DISPOSE_ON_CLOSE
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -88,13 +95,13 @@ public class FormAcervo extends JFrame {
 
 		JLabel msgGravado = new JLabel("Dados Salvos com sucesso");
 		msgGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
-		msgGravado.setBounds(45, 658, 230, 23);
+		msgGravado.setBounds(50, 669, 230, 23);
 		msgGravado.setVisible(false);
 		contentPane.add(msgGravado);
 
 		JLabel msgVazio = new JLabel("");
 		msgVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		msgVazio.setBounds(45, 658, 192, 23);
+		msgVazio.setBounds(50, 669, 192, 23);
 		msgVazio.setVisible(false);
 		contentPane.add(msgVazio);
 
@@ -204,7 +211,7 @@ public class FormAcervo extends JFrame {
 		});
 
 		JTabbedPane abas = new JTabbedPane(JTabbedPane.TOP);
-		abas.setBounds(23, 496, 576, 144);
+		abas.setBounds(28, 507, 558, 144);
 		contentPane.add(abas);
 
 		JPanel panel_proprio = new JPanel();
@@ -258,30 +265,30 @@ public class FormAcervo extends JFrame {
 
 		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnGravar.setBounds(341, 653, 107, 34);
+		btnGravar.setBounds(338, 670, 107, 34);
 		contentPane.add(btnGravar);
 
 		JLabel lblSelecImagem = new JLabel("");
 		lblSelecImagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
 		lblSelecImagem.setBackground(SystemColor.inactiveCaption);
 		lblSelecImagem.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSelecImagem.setBounds(399, 196, 189, 147);
+		lblSelecImagem.setBounds(338, 188, 250, 155);
 		lblSelecImagem.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		contentPane.add(lblSelecImagem);
 
 		JButton btnPesquisarImagem = new JButton("");
 		btnPesquisarImagem.setIcon(new ImageIcon("../MASProject/icons/add.png"));
-		btnPesquisarImagem.setBounds(442, 358, 46, 35);
+		btnPesquisarImagem.setBounds(409, 354, 46, 23);
 		contentPane.add(btnPesquisarImagem);
 
 		JButton btnExcluirImagem = new JButton("");
 		btnExcluirImagem.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		btnExcluirImagem.setBounds(499, 358, 46, 35);
+		btnExcluirImagem.setBounds(465, 354, 46, 23);
 		contentPane.add(btnExcluirImagem);
 
-		JButton btnFechar = new JButton("Fechar");
+		JButton btnFechar = new JButton("Sair");
 		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
-		btnFechar.setBounds(474, 652, 117, 34);
+		btnFechar.setBounds(471, 669, 117, 34);
 		contentPane.add(btnFechar);
 		btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
