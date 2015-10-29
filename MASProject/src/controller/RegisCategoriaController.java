@@ -1,76 +1,106 @@
 package controller;
 
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import persistence.CategoriaArquivoImpl;
 import model.Categoria;
+import persistence.CategoriaArquivoImpl;
 
-public class RegisCategoriaController {
+public class RegisCategoriaController implements ComponentListener {
 
-	private JLabel lblMensagemGravado, lblMensagemVazio;
-	private JTextField tfNomeCategoria, tfidCategoria;
-	private JButton btnGravar;
-
-
-	private Categoria categoria = new Categoria();
+	private JTextField idCategoria, nomeCategoria;
+	private JButton btGravar;
+	private JLabel msgGravado, msgVazio;
+	private List<Categoria> categorias;
 	private static int contador = 1;
-	
-	public RegisCategoriaController( JLabel lblMensagemGravada, JLabel lblMensagemVazio, JButton btnGravar, JTextField tfIdCategoria, JTextField tfNomeCategoria){
-		this.lblMensagemGravado = lblMensagemGravada;
-		this.lblMensagemVazio = lblMensagemVazio;
-		this.tfidCategoria = tfIdCategoria;
-		this.tfNomeCategoria = tfNomeCategoria;
-		this.btnGravar = btnGravar;
-	}
-	
-	public void gerarIdCategoria() {
-		GeradordeID geraId = new GeradordeID();
-	
-		tfidCategoria.setText("CTG"+ geraId.getIndice());
-	}
-	
-	public void gravaCategoria() {
-		Categoria categoria = new Categoria();
-		CategoriaArquivoImpl categImpl = new CategoriaArquivoImpl();
-		
-		//LEMBRETE : Verificar como que vai ficar a parte do preenchimento automatico do tfidCategoria
-		categoria.setId(tfidCategoria.getText());
-		categoria.setNome(tfNomeCategoria.getText());
+	private ArquivosController ctrlArquivos;
 
-		if (tfNomeCategoria.getText().isEmpty()) {
-			lblMensagemGravado.setVisible(false);
-			lblMensagemVazio.setVisible(true);
-		}else{
+	public RegisCategoriaController(JTextField idCategoria, JTextField nomeCategoria,
+			JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
+
+		this.idCategoria = idCategoria;
+		this.btGravar = btnGravar;
+		this.msgGravado = msgGravado;
+		this.msgVazio = msgVazio;
+		this.nomeCategoria = nomeCategoria;
+		this.categorias = new ArrayList<Categoria>();
+		
+		lerCategoria();
+	}
+
+	public void gerarIdSetor() {
+		GeradordeID geraID = new GeradordeID();
+		idCategoria.setText("CTG"+geraID.getIndice());
+	}
+
+	public void lerCategoria() {
+		String linha = new String();
+		ArrayList<String> list = new ArrayList<>();
+
+		ctrlArquivos = new ArquivosController();
+		try {
+			ctrlArquivos.leArquivo("../MASProject/dados/", "categorias");
+			linha = ctrlArquivos.getBuffer();
+			String[] listaCategoria = linha.split(";");
+			for (String s : listaCategoria) {
+				String text = s.replaceAll(".*:", "");
+				list.add(text);
+				if (s.contains("---")) {
+					Categoria categoria = new Categoria();
+					categoria.setId(list.get(0));
+					categoria.setNome(list.get(1));
+					categorias.add(categoria);
+					list.clear();
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		/*for(Material a :  categorias){
+			System.out.println(a.getNome());
+		}*/
+	}
+
+	public void gravarCategoria() {
+		Categoria categoria = new Categoria();
+		CategoriaArquivoImpl categorialImpl = new CategoriaArquivoImpl();
+
+		categoria.setId(idCategoria.getText());
+		categoria.setNome(nomeCategoria.getText());
+
+		if (!nomeCategoria.getText().isEmpty()) {
 			try {
-				categImpl.escreveArquivo("../MASProject/dados/", "categorias", tfNomeCategoria.getText(), categoria);
+				categorialImpl.escreveArquivo("../MASProject/dados/", "categorias", nomeCategoria.getText(), categoria);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			lblMensagemGravado.setText(tfNomeCategoria.getText()+" salvo com sucesso!!!");
-			lblMensagemGravado.setVisible(true);
-			gerarIdCategoria();
+			msgGravado.setText(nomeCategoria.getText() + " salvo com sucesso!");
+			msgGravado.setVisible(true);
+			nomeCategoria.setText(null);
+			gerarIdSetor();
+		} else {
+			msgGravado.setVisible(false);
+			msgVazio.setVisible(true);
 		}
-		// implementar a acao de apagar o campo de nome e criar uma nova id
-		// quando clicar em gravar
 	}
 
 	public ActionListener gravarCategoria = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			gravaCategoria();
-			tfNomeCategoria.setText(null);
+			gravarCategoria();
 		}
 	};
 
@@ -78,40 +108,47 @@ public class RegisCategoriaController {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
 
 		}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			//se for clicado pela primeira vez o campo fica limpo para preencher com o nome do setor
 			if (contador == 1) {
-				tfNomeCategoria.setText(null);
+				nomeCategoria.setText(null);
 				contador += 1;
 			}
-			//para que a mensagem n�o fique visivel a todo momento
-			btnGravar.setEnabled(true);
-			lblMensagemGravado.setVisible(false);
-            lblMensagemVazio.setVisible(false);
+			
+			btGravar.setEnabled(true);
+			msgGravado.setVisible(false);
+			msgVazio.setVisible(false);
 		}
 	};
-	
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+	}
 }
