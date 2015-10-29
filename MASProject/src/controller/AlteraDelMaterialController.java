@@ -54,7 +54,7 @@ public class AlteraDelMaterialController implements ComponentListener {
 			for (String s : categorias) {
 				String text = s.replaceAll(".*:", "");
 				listString.add(text);
-				if (s.contains("-")) {
+				if (s.contains("---")) {
 					Categoria c = new Categoria();
 					c.setNome(listString.get(1));
 					listCategorias.add(c);
@@ -73,7 +73,7 @@ public class AlteraDelMaterialController implements ComponentListener {
 		Material material = new Material();
 		MaterialArquivoImpl materialImpl = new MaterialArquivoImpl();
 
-		material.setID(idMaterial.getText());
+		material.setId(idMaterial.getText());
 		material.setNome(nomeMaterial.getText());
 		material.setCategoria(cbCategoria.getSelectedItem().toString());
 

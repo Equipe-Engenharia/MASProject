@@ -82,6 +82,7 @@ public class FormAcervo extends JFrame {
 		idObra.setEnabled(false);
 		idObra.setBounds(166, 27, 150, 17);
 		idObra.setEditable(false);
+		idObra.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(idObra);
 		idObra.setColumns(10);
 

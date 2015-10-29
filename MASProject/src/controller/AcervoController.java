@@ -31,8 +31,8 @@ import model.Material;
 import model.Obra;
 import model.Setor;
 import persistence.ObraArquivoImpl;
-import view.FormEditarArtista;
-import view.FormNovoArtista;
+import view.FormAlteraDelArtista;
+import view.FormRegisArtista;
 
 public class AcervoController implements ComponentListener, ActionListener {
 
@@ -308,7 +308,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 				listString.add(text);
 				if (s.contains("---")) {
 					Material m = new Material();
-					m.setID(listString.get(0));
+					m.setId(listString.get(0));
 					m.setNome(listString.get(1));
 					m.setCategoria(listString.get(2));
 					listMateriais.add(m);
@@ -468,14 +468,14 @@ public class AcervoController implements ComponentListener, ActionListener {
 		}
 		
 		private void abrirTelaNovoArtista(){
-			FormNovoArtista newArtista = new FormNovoArtista(null, true);
+			FormRegisArtista newArtista = new FormRegisArtista(null, true);
 			newArtista.setVisible(true);
 			newArtista.setDefaultCloseOperation(newArtista.DISPOSE_ON_CLOSE);
 			newArtista.setResizable(false);
 		}
 		
 		private void abrirTelaEditarArtista(){
-			FormEditarArtista editArtista= new FormEditarArtista(null, true);
+			FormAlteraDelArtista editArtista= new FormAlteraDelArtista(null, true);
 			editArtista.setVisible(true);
 			editArtista.setDefaultCloseOperation(editArtista.DISPOSE_ON_CLOSE);
 			editArtista.setResizable(false);

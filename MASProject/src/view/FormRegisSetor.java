@@ -11,6 +11,7 @@ import controller.RegisSetorController;
 
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,10 +44,11 @@ public class FormRegisSetor extends JFrame {
 	public FormRegisSetor() {
 		setTitle("Cadastrar um novo setor");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 447, 158);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
@@ -67,6 +69,7 @@ public class FormRegisSetor extends JFrame {
 		id_setor = new JTextField();
 		id_setor.setEditable(false);
 		id_setor.setBounds(69, 20, 169, 20);
+		id_setor.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(id_setor);
 		id_setor.setColumns(10);
 		
@@ -90,7 +93,7 @@ public class FormRegisSetor extends JFrame {
 		
 		RegisSetorController RsContrl = new RegisSetorController(id_setor, txtDigitado, mensagemGravado, mensagemVazio, btnGravar);
 		
-		//Essa linha abaixo será excluida quando o menu estiver pronto pois será um evento do botão que chama este Form***
+		//Essa linha abaixo serï¿½ excluida quando o menu estiver pronto pois serï¿½ um evento do botï¿½o que chama este Form***
         RsContrl.gerarIdSetor();
         
 		txtDigitado.addMouseListener(RsContrl.limpaCampo);

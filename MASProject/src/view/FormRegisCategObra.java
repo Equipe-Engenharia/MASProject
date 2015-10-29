@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import java.awt.Color;
 
@@ -52,6 +53,7 @@ public class FormRegisCategObra extends JFrame {
 		setBounds(100, 100, 446, 160);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -72,6 +74,7 @@ public class FormRegisCategObra extends JFrame {
 		tfIdCategoria.setEditable(false);
 		tfIdCategoria.setBackground(UIManager.getColor("TextField.disabledBackground"));
 		tfIdCategoria.setBounds(142, 21, 134, 20);
+		tfIdCategoria.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(tfIdCategoria);
 		tfIdCategoria.setColumns(10);
 		
@@ -94,7 +97,7 @@ public class FormRegisCategObra extends JFrame {
 		contentPane.add(lblMensagemVazio);
 		
 		RegisCategObraController rCatObra = new RegisCategObraController(lblMensagemGravada, lblMensagemVazio, btnGravar, tfIdCategoria, tfNomeCategoria); 
-		//Essa linha abaixo será excluida quando o menu estiver pronto***
+		//Essa linha abaixo serï¿½ excluida quando o menu estiver pronto***
         rCatObra.gerarIdCategoria();
 		tfNomeCategoria.addMouseListener(rCatObra.limpaCampo);
 		tfNomeCategoria.addActionListener(rCatObra.gravarCategoria);

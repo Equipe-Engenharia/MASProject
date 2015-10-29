@@ -44,7 +44,7 @@ public class MaterialArquivoImpl implements IArquivosController {
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID: " + ((Material) object).getID());
+		buffer.append("ID: " + ((Material) object).getId());
 		buffer.append("\r\n");
 		buffer.append("Material: " + ((Material) object).getNome());
 		buffer.append("\r\n");
