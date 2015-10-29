@@ -129,7 +129,7 @@ public class FormAcervo extends JFrame {
 		maskData = new MaskFormatter("##/##/####");
 		
 		data_obra = new JFormattedTextField(maskData);
-		data_obra.setBounds(168, 120, 133, 20);
+		data_obra.setBounds(168, 120, 98, 20);
 		contentPane.add(data_obra);
 		data_obra.setColumns(10);
 		data_obra.setHorizontalAlignment(SwingConstants.CENTER);
