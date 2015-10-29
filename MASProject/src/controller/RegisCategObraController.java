@@ -33,7 +33,7 @@ public class RegisCategObraController {
 		this.btnGravar = btnGravar;
 	}
 	
-	public void gerarIdSetor() {
+	public void gerarIdCategoria() {
 		GeradordeID geraId = new GeradordeID();
 	
 		tfidCategoria.setText("CTG"+ geraId.getIndice());
@@ -44,9 +44,13 @@ public class RegisCategObraController {
 		CategObraArquivoImpl categImpl = new CategObraArquivoImpl();
 		
 		//LEMBRETE : Verificar como que vai ficar a parte do preenchimento automatico do tfidCategoria
+		categoria.setIdentificacao(tfidCategoria.getText());
 		categoria.setNome(tfNomeCategoria.getText());
 
-		if (!tfNomeCategoria.getText().isEmpty()) {
+		if (tfNomeCategoria.getText().isEmpty()) {
+			lblMensagemGravado.setVisible(false);
+			lblMensagemVazio.setVisible(true);
+		}else{
 			try {
 				categImpl.escreveArquivo("../MASProject/dados/", "categorias", tfNomeCategoria.getText(), categoria);
 			} catch (IOException e) {
@@ -55,9 +59,7 @@ public class RegisCategObraController {
 			}
 			lblMensagemGravado.setText(tfNomeCategoria.getText()+" salvo com sucesso!!!");
 			lblMensagemGravado.setVisible(true);
-		}else{
-			lblMensagemGravado.setVisible(false);
-			lblMensagemVazio.setVisible(true);
+			gerarIdCategoria();
 		}
 		// implementar a acao de apagar o campo de nome e criar uma nova id
 		// quando clicar em gravar
@@ -68,6 +70,7 @@ public class RegisCategObraController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			gravaCategoria();
+			tfNomeCategoria.setText(null);
 		}
 	};
 
@@ -101,10 +104,11 @@ public class RegisCategObraController {
 		public void mouseClicked(MouseEvent e) {
 			//se for clicado pela primeira vez o campo fica limpo para preencher com o nome do setor
 			if (contador == 1) {
-				tfNomeCategoria.setText("");
+				tfNomeCategoria.setText(null);
 				contador += 1;
 			}
 			//para que a mensagem não fique visivel a todo momento
+			btnGravar.setEnabled(true);
 			lblMensagemGravado.setVisible(false);
             lblMensagemVazio.setVisible(false);
 		}

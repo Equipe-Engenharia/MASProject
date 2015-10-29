@@ -22,6 +22,7 @@ import controller.AcervoController;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
+import javax.swing.UIManager;
 
 public class FormAcervo extends JFrame {
 
@@ -147,11 +148,12 @@ public class FormAcervo extends JFrame {
 		cbMaterial.setBounds(166, 288, 133, 20);
 		contentPane.add(cbMaterial);
 
-		JLabel lblNewLabel_1 = new JLabel("Descrição da Obra");
+		JLabel lblNewLabel_1 = new JLabel("Descri\u00E7\u00E3o da Obra");
 		lblNewLabel_1.setBounds(30, 388, 139, 14);
 		contentPane.add(lblNewLabel_1);
 
 		JEditorPane editor_descricao = new JEditorPane();
+		editor_descricao.setForeground(UIManager.getColor("TableHeader.foreground"));
 		editor_descricao.setBounds(30, 404, 558, 81);
 		contentPane.add(editor_descricao);
 
