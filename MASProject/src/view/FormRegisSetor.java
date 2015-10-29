@@ -42,7 +42,7 @@ public class FormRegisSetor extends JFrame {
 	 * Create the frame.
 	 */
 	public FormRegisSetor() {
-		setTitle("Cadastrar um novo setor");
+		setTitle("Registro de Setor");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 447, 158);

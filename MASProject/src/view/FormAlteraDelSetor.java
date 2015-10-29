@@ -42,7 +42,7 @@ public class FormAlteraDelSetor extends JFrame {
 	 * Create the frame.
 	 */
 	public FormAlteraDelSetor() {
-		setTitle("Editar ou Excluir Setor");
+		setTitle("Editar/Excluir Setor");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 447, 216);

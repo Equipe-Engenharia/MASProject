@@ -43,7 +43,7 @@ public class FormAlteraDelArtista extends JDialog{
 	 * Create the frame.
 	 */
 	public FormAlteraDelArtista(FormAcervo parent, boolean modal) {
-		setTitle("MASP - Artista");
+		setTitle("Editar/Excluir Artista");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();

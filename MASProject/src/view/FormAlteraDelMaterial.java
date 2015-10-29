@@ -44,7 +44,7 @@ public class FormAlteraDelMaterial extends JFrame {
 	 * Create the frame.
 	 */
 	public FormAlteraDelMaterial() {
-		setTitle("MASP - Material");
+		setTitle("Editar/Excluir Material da Obra");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();

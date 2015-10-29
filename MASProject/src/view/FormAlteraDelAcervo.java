@@ -46,7 +46,7 @@ public class FormAlteraDelAcervo extends JFrame {
 
 	public FormAlteraDelAcervo() {
 		setResizable(false);
-		setTitle("Excluir/Alterar Acervo");
+		setTitle("Editar/Excluir Acervo");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 615, 674);
 		contentPane = new JPanel();

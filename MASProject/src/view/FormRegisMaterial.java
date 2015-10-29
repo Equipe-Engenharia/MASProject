@@ -43,7 +43,7 @@ public class FormRegisMaterial extends JFrame {
 	 * Create the frame.
 	 */
 	public FormRegisMaterial() {
-		setTitle("MASP - Material");
+		setTitle("Registro de Material da Obra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
