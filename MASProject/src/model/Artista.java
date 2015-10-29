@@ -2,16 +2,15 @@ package model;
 
 public class Artista {
 	
-	private int identificacao;
+	private String id;
 	private String nome;
-	
-	
-	public int getIdentificacao() {
-		return identificacao;
+
+	public String getId() {
+		return id;
 	}
 
-	public void setIdentificacao(int identificacao) {
-		this.identificacao = identificacao;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -20,7 +19,5 @@ public class Artista {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-	
-	
+	}	
 }
