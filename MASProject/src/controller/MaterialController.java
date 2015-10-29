@@ -26,6 +26,7 @@ public class MaterialController implements ComponentListener {
 	private JButton btGravar;
 	private JLabel msgGravado, msgVazio;
 	private List<Material> materiais;
+	private static int contador = 1;
 	private ArquivosController ctrlArquivos;
 
 	// Material material = new Material();
@@ -162,7 +163,11 @@ public class MaterialController implements ComponentListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			nomeMaterial.setText(null);
+			if (contador == 1) {
+				nomeMaterial.setText(null);
+				contador += 1;
+			}
+			
 			btGravar.setEnabled(true);
 			msgGravado.setVisible(false);
 			msgVazio.setVisible(false);
