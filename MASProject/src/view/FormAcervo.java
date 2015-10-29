@@ -110,6 +110,7 @@ public class FormAcervo extends JFrame {
 		contentPane.add(msgVazio);
 
 		nome_artist = new JTextField();
+		nome_artist.setEditable(false);
 		nome_artist.setBounds(166, 56, 352, 20);
 		contentPane.add(nome_artist);
 		nome_artist.setColumns(10);

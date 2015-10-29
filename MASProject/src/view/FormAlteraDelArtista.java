@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.AlteraDelArtistaController; 
@@ -116,8 +115,8 @@ public class FormAlteraDelArtista extends JDialog{
 		btnPesquisaId.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnPesquisaId);
 		
-		JButton btnPesquisaArtista = new JButton(" Busca Aritsta");
-		btnPesquisaArtista.setToolTipText("Use o campo e clique para realizar a busca por número Material");
+		JButton btnPesquisaArtista = new JButton(" Busca Artista");
+		btnPesquisaArtista.setToolTipText("Use o campo e clique para realizar a busca por nome de Artista");
 		btnPesquisaArtista.setBounds(376, 90, 117, 34);
 		btnPesquisaArtista.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnPesquisaArtista);
@@ -128,6 +127,7 @@ public class FormAlteraDelArtista extends JDialog{
 		btnPesquisaArtista.addActionListener(ctrlADArtista.pesquisarArtista);
 		btnApagar.addActionListener(ctrlADArtista.apagarArtista);
 		btnGravar.addActionListener(ctrlADArtista.gravarArtista);
+		idArtista.addMouseListener(ctrlADArtista.limpaCampo);
 		txtArtista.addMouseListener(ctrlADArtista.limpaCampo);
 		txtArtista.addActionListener(ctrlADArtista.gravarArtista);
 	}

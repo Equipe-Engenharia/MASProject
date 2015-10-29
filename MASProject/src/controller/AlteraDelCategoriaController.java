@@ -8,96 +8,97 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import model.Categoria;
-import model.Material;
-import persistence.MaterialArquivoImpl;
+import persistence.CategoriaArquivoImpl;
 
-public class AlteraDelMaterialController implements ComponentListener {
+public class AlteraDelCategoriaController implements ComponentListener {
 
-	private JComboBox<String> cbCategoria;
-	private JTextField nomeMaterial, idMaterial;
+	private JTextField nomeCategoria, idCategoria;
 	private JButton btApagar, btGravar;
 	private JLabel msgGravar, msgVazio;
+	private List<Categoria> categorias;
 	private static int contador = 1;
 
 	private ArquivosController ctrlArquivos;
 
-	public AlteraDelMaterialController(JTextField idMaterial, JComboBox<String> cbCategoria, JTextField nomeMaterial,
+	public AlteraDelCategoriaController(JTextField idCartegoria, JTextField nomeCategoria,
 			JButton btnApagar, JButton btnGravar, JLabel msgGravar, JLabel msgVazio) {
 
-		this.cbCategoria = cbCategoria;
-		this.idMaterial = idMaterial;
+		this.idCategoria = idCartegoria;
 		this.btApagar = btnApagar;
 		this.btGravar = btnGravar;
 		this.msgGravar = msgGravar;
 		this.msgVazio = msgVazio;
-		this.nomeMaterial = nomeMaterial;
-
+		this.nomeCategoria = nomeCategoria;
+		this.categorias = new ArrayList<Categoria>();
+		
+		lerCategoria();
 	}
-
-	public void preencherComboBoxCategoria() {
+	
+	public void lerCategoria() {
 		String linha = new String();
-		ctrlArquivos = new ArquivosController();
-		ArrayList<String> listString = new ArrayList<>();
-		ArrayList<Categoria> listCategorias = new ArrayList<>();
+		ArrayList<String> list = new ArrayList<>();
 
+		ctrlArquivos = new ArquivosController();
 		try {
 			ctrlArquivos.leArquivo("../MASProject/dados/", "categorias");
 			linha = ctrlArquivos.getBuffer();
-			String[] categorias = linha.split(";");
-			for (String s : categorias) {
+			String[] listaCategoria = linha.split(";");
+			for (String s : listaCategoria) {
 				String text = s.replaceAll(".*:", "");
-				listString.add(text);
+				list.add(text);
 				if (s.contains("---")) {
-					Categoria c = new Categoria();
-					c.setNome(listString.get(1));
-					listCategorias.add(c);
-					listString.clear();
+					Categoria categoria = new Categoria();
+					categoria.setId(list.get(0));
+					categoria.setNome(list.get(1));
+					categorias.add(categoria);
+					list.clear();
 				}
 			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		for (Categoria c : listCategorias) {
-			cbCategoria.addItem(c.getNome());
-		}
+		/*for(Material a :  categorias){
+			System.out.println(a.getNome());
+		}*/
 	}
 
-	public void gravarMaterial() {
-		Material material = new Material();
-		MaterialArquivoImpl materialImpl = new MaterialArquivoImpl();
+	public void gravarCategoria() {
+		Categoria categoria = new Categoria();
+		CategoriaArquivoImpl categoriaImpl = new CategoriaArquivoImpl();
 
-		material.setId(idMaterial.getText());
-		material.setNome(nomeMaterial.getText());
-		material.setCategoria(cbCategoria.getSelectedItem().toString());
+		categoria.setId(idCategoria.getText());
+		categoria.setNome(nomeCategoria.getText());
 
-		if (!nomeMaterial.getText().isEmpty()) {
+		if (!nomeCategoria
+				.getText().isEmpty()) {
 			try {
-				materialImpl.escreveArquivo("../MASProject/dados/", "materiais", nomeMaterial.getText(), material);
+				categoriaImpl.escreveArquivo("../MASProject/dados/", "categorias", nomeCategoria.getText(), categoria);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			msgGravar.setText(nomeMaterial.getText() + " salvo com sucesso!");
+			msgGravar.setText(nomeCategoria.getText() + " salvo com sucesso!");
 			msgGravar.setVisible(true);
-			nomeMaterial.setText(null);
+			nomeCategoria.setText(null);
 		} else {
 			msgGravar.setVisible(false);
 			msgVazio.setVisible(true);
 		}
 	}
 
-	public void pesquisarMaterial() {
+	public void pesquisarCategoria() {
 
-		if (!nomeMaterial.getText().isEmpty() || !idMaterial.getText().isEmpty()) {
-			msgGravar.setText(nomeMaterial.getText() + " localizado com sucesso!");
+		if (!nomeCategoria.getText().isEmpty() || !idCategoria.getText().isEmpty()) {
+			msgGravar.setText(nomeCategoria.getText() + " localizado com sucesso!");
 			msgGravar.setVisible(true);
-			nomeMaterial.setText(null);
+			nomeCategoria.setText(null);
 		} else {
 			msgGravar.setVisible(false);
 			msgVazio.setText("Por favor, use um dos campos de Pesquisa!");
@@ -106,12 +107,12 @@ public class AlteraDelMaterialController implements ComponentListener {
 		
 	}
 
-	public void apagarMaterial() {
+	public void apagarCategoria() {
 		
-		if (!nomeMaterial.getText().isEmpty()) {
-			msgGravar.setText(nomeMaterial.getText() + " excluído com sucesso!");
+		if (!nomeCategoria.getText().isEmpty()) {
+			msgGravar.setText(nomeCategoria.getText() + " excluído com sucesso!");
 			msgGravar.setVisible(true);
-			nomeMaterial.setText(null);
+			nomeCategoria.setText(null);
 		} else {
 			msgGravar.setVisible(false);
 			msgVazio.setVisible(true);
@@ -119,27 +120,27 @@ public class AlteraDelMaterialController implements ComponentListener {
 
 	}
 
-	public ActionListener pesquisarMaterial = new ActionListener() {
+	public ActionListener pesquisarCategoria = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			pesquisarMaterial();
+			pesquisarCategoria();
 		}
 	};
 	
-	public ActionListener apagarMaterial = new ActionListener() {
+	public ActionListener apagarCategoria = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			apagarMaterial();
+			apagarCategoria();
 		}
 	};
 
-	public ActionListener gravarMaterial = new ActionListener() {
+	public ActionListener gravarCategoria = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			gravarMaterial();
+			gravarCategoria();
 		}
 	};
 
@@ -165,8 +166,8 @@ public class AlteraDelMaterialController implements ComponentListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (contador == 1) {
-				idMaterial.setText(null);
-				nomeMaterial.setText(null);
+				idCategoria.setText(null);
+				nomeCategoria.setText(null);
 				contador += 1;
 			}
 

@@ -138,6 +138,7 @@ public class FormAlteraDelMaterial extends JFrame {
 		btnPesquisaMaterial.addActionListener(ctrlADMaterial.pesquisarMaterial);
 		btnApagar.addActionListener(ctrlADMaterial.apagarMaterial);
 		btnGravar.addActionListener(ctrlADMaterial.gravarMaterial);
+		idMaterial.addMouseListener(ctrlADMaterial.limpaCampo);
 		txtMaterial.addMouseListener(ctrlADMaterial.limpaCampo);
 		txtMaterial.addActionListener(ctrlADMaterial.gravarMaterial);
 	}
