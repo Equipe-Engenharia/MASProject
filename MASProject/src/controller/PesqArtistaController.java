@@ -30,14 +30,11 @@ public class PesqArtistaController{
 			arqController.leArquivo("../MASProject/dados", "artistas");
 			linha = arqController.getBuffer();
 			nArtista = linha.split(";");
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return nArtista;
 	}
-	
-	
 	
 	
 }
