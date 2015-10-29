@@ -22,23 +22,21 @@ public class RegisMaterialController implements ComponentListener {
 
 	private JComboBox<String> cbCategoria;
 	private JTextField nomeMaterial, idMaterial;
-	private JButton btApagar;
 	private JButton btGravar;
 	private JLabel msgGravado, msgVazio;
 	private List<Material> materiais;
 	private static int contador = 1;
 	private ArquivosController ctrlArquivos;
 
-	public RegisMaterialController(JComboBox<String> cbCategoria, JTextField txtID, JTextField txtMaterial,
-			JButton btnApagar, JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
+	public RegisMaterialController(JTextField idMaterial, JComboBox<String> cbCategoria, JTextField nomeMaterial,
+			JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
 
 		this.cbCategoria = cbCategoria;
-		this.idMaterial = txtID;
-		this.btApagar = btnApagar;
+		this.idMaterial = idMaterial;
 		this.btGravar = btnGravar;
 		this.msgGravado = msgGravado;
 		this.msgVazio = msgVazio;
-		this.nomeMaterial = txtMaterial;
+		this.nomeMaterial = nomeMaterial;
 		this.materiais = new ArrayList<Material>();
 		
 		lerMaterial();
@@ -107,7 +105,7 @@ public class RegisMaterialController implements ComponentListener {
 		}
 	}
 
-	public void gravaMaterial() {
+	public void gravarMaterial() {
 		Material material = new Material();
 		MaterialArquivoImpl materialImpl = new MaterialArquivoImpl();
 
@@ -121,7 +119,7 @@ public class RegisMaterialController implements ComponentListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			msgGravado.setText(nomeMaterial.getText() + " salvo com sucesso!!!");
+			msgGravado.setText(nomeMaterial.getText() + " salvo com sucesso!");
 			msgGravado.setVisible(true);
 			nomeMaterial.setText(null);
 			gerarIdSetor();
@@ -135,7 +133,7 @@ public class RegisMaterialController implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			gravaMaterial();
+			gravarMaterial();
 		}
 	};
 

@@ -106,7 +106,7 @@ public class FormRegisMaterial extends JFrame {
 		btnFechar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnFechar);
 		
-		RegisMaterialController ctrlMaterial = new RegisMaterialController(cbCategoria,idMaterial, txtMaterial, btnGravar, btnGravar, msgGravado, msgVazio);
+		RegisMaterialController ctrlMaterial = new RegisMaterialController(idMaterial, cbCategoria, txtMaterial, btnGravar, msgGravado, msgVazio);
 		
 		ctrlMaterial.gerarIdSetor();
 		ctrlMaterial.preencherComboBoxCategoria();
