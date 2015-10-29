@@ -1,4 +1,4 @@
-package Telas;
+package view;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -11,9 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;  
   
-public class EdEx extends JDialog{  
+public class FormEditarArtista extends JDialog{  
   
-    public EdEx(Forma parent, boolean modal){  
+    public FormEditarArtista(FormIntermediarioArtista parent, boolean modal){  
         Edit();  
         this.setLocationRelativeTo(parent);  
     }

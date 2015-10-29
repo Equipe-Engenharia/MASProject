@@ -39,7 +39,7 @@ public class FormAcervo extends JFrame {
 	private JComboBox<String> comboStatus;
 	private JComboBox<String> comboStatusT;
 	private JTextField textField_valor;
-	private JButton btnPesquisaArtist; //deixar os demais botoes private
+	private JButton btnPesquisaArtist, btnNovoArtista, btnEditarArtista; //deixar os demais botoes private
 
 	/**
 	 * Launch the application.
@@ -63,8 +63,8 @@ public class FormAcervo extends JFrame {
 	public FormAcervo() throws ParseException{
 		setResizable(false);
 		setTitle("Registro de Acervo");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 615, 726);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //quando ela for chamada pelo menu trocar para
+		setBounds(100, 100, 615, 726);					//DISPOSE_ON_CLOSE
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -109,7 +109,14 @@ public class FormAcervo extends JFrame {
 		btnPesquisaArtist.setBounds(522, 52, 29, 28);
 		contentPane.add(btnPesquisaArtist);
 		
-
+		btnNovoArtista = new JButton("Novo Artista");
+		btnNovoArtista.setBounds(303, 81, 133, 29);
+		contentPane.add(btnNovoArtista);
+		
+		btnEditarArtista = new JButton("Editar Artista");
+		btnEditarArtista.setBounds(166, 81, 133, 29);
+		contentPane.add(btnEditarArtista);
+		
 		JLabel lblNomeDaObra = new JLabel("Nome da Obra");
 		lblNomeDaObra.setBounds(67, 133, 98, 14);
 		contentPane.add(lblNomeDaObra);
@@ -283,19 +290,14 @@ public class FormAcervo extends JFrame {
 		//botão de pesquisar artista e o Jpanel passados como parametro - Vitor
 		AcervoController Acontroller = new AcervoController(idObra, lblSelecImagem, comboSetor, comboSetorT, comboStatus,
 				comboStatusT, cbCategoria, cbMaterial, nome_artist, nome_obra, data_obra, editor_descricao, msgGravado,
-				msgVazio, textField_valor, btnPesquisaArtist, contentPane);
+				msgVazio, textField_valor, btnPesquisaArtist, contentPane, btnNovoArtista, btnEditarArtista);
 		
-		JButton btnNovoArtista = new JButton("Novo Artista");
-		btnNovoArtista.setBounds(303, 81, 133, 29);
-		contentPane.add(btnNovoArtista);
-		
-		JButton btnEditarArtista_1 = new JButton("Editar Artista");
-		btnEditarArtista_1.setBounds(166, 81, 133, 29);
-		contentPane.add(btnEditarArtista_1);
+		btnPesquisaArtist.addActionListener(Acontroller);
+		btnNovoArtista.addActionListener(Acontroller);
+		btnEditarArtista.addActionListener(Acontroller);
 		
 		Acontroller.gerarIdSetor();
 		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
-		btnPesquisaArtist.addActionListener(Acontroller);
 		btnGravar.addActionListener(Acontroller.gravarAcervo);
 		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
 		Acontroller.preencherComboBoxCategoria();

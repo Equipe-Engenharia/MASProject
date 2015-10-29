@@ -2,6 +2,9 @@ package controller;
 
 import java.io.IOException;
 
+import javax.swing.JButton;
+import javax.swing.JTextField;
+
 public class PesqArtistaController{
 	 
 	private ArquivosController arqController;
@@ -9,6 +12,10 @@ public class PesqArtistaController{
 	
 	public PesqArtistaController(){
 		this.artista = preencherComboBoxArtista();
+	}
+	
+	public PesqArtistaController(JButton btnGravar, JTextField tfNomeArtista){
+		
 	}
 	
 	public String[] getArtista(){
@@ -28,4 +35,6 @@ public class PesqArtistaController{
 		}
 		return nArtista;
 	}
+	
+	
 }

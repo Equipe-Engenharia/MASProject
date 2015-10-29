@@ -31,6 +31,8 @@ import model.Material;
 import model.Obra;
 import model.Setor;
 import persistence.ObraArquivoImpl;
+import view.FormEditarArtista;
+import view.FormNovoArtista;
 
 public class AcervoController implements ComponentListener, ActionListener {
 
@@ -50,7 +52,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 	private JComboBox<String> comboStatus;
 	private JComboBox<String> comboStatusT;
 
-	private JButton btnPesqArtist; //passar o resto dos botoes
+	private JButton btnPesqArtist, btnNovoArtista, btnEditarArtista; //passar o resto dos botoes
 	private JPanel frmAcervo;
 	private ArquivosController arqController;
 	private PesqArtistaController pAController;
@@ -61,7 +63,8 @@ public class AcervoController implements ComponentListener, ActionListener {
 			JComboBox<String> comboSetorT, JComboBox<String> comboStatus, JComboBox<String> comboStatusT,
 			JComboBox<String> cbCategoria, JComboBox<String> cbMaterial, JTextField nomeArtista, JTextField nomeObra,
 			JTextField dataAquisicao, JEditorPane descricaoObra, JLabel msgGravado, JLabel msgVazio,
-			JTextField textField_valor, JButton btnPesqArtist, JPanel frmAcervo) {
+			JTextField textField_valor, JButton btnPesqArtist, JPanel frmAcervo, JButton btnNovoArtista,
+			JButton btnEditarArtista) {
 		this.idObra = idObra;
 		this.imagem = imagem;
 		this.tfNomeArtista = nomeArtista;
@@ -81,6 +84,8 @@ public class AcervoController implements ComponentListener, ActionListener {
 		this.textField_valor = textField_valor;
 		this.btnPesqArtist = btnPesqArtist;
 		this.frmAcervo = frmAcervo;
+		this.btnNovoArtista = btnNovoArtista;
+		this.btnEditarArtista = btnEditarArtista;
 		lerAcervo();
 	}
 
@@ -462,69 +467,69 @@ public class AcervoController implements ComponentListener, ActionListener {
 				return;
 			}
 		}
+		
+		private void abrirTelaNovoArtista(){
+			FormNovoArtista newArtista = new FormNovoArtista(null, true);
+			newArtista.setVisible(true);
+			newArtista.setDefaultCloseOperation(newArtista.DISPOSE_ON_CLOSE);
+			newArtista.setResizable(false);
+		}
+		
+		private void abrirTelaEditarArtista(){
+			FormEditarArtista editArtista= new FormEditarArtista(null, true);
+			editArtista.setVisible(true);
+			editArtista.setDefaultCloseOperation(editArtista.DISPOSE_ON_CLOSE);
+			editArtista.setResizable(false);
+		}
 
 	// Controle de bot�es
 
 	public ActionListener inserir_imagem = new ActionListener() {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			procuraImagem();
 		}
-
 	};
 
 	public ActionListener gravarAcervo = new ActionListener() {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			gravarAcervo();
 		}
-
 	};
+	
 	public ActionListener remover_imagem = new ActionListener() {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			imagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
-
 		}
-
 	};
-
+	
 	// Eventos de comboBox
-
 	@Override
-	public void componentResized(ComponentEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void componentResized(ComponentEvent e) {}
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
-		// TODO Auto-generated method stub
 		preencherComboBoxMaterial();
 		preencherComboBoxSetores();
-
 	}
 
 	@Override
-	public void componentShown(ComponentEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void componentShown(ComponentEvent e) {}
 
 	@Override
-	public void componentHidden(ComponentEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void componentHidden(ComponentEvent e) {}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand(); //verifica qual botao foi pressionado na tela
 		if(action.equals(btnPesqArtist.getText())){ //compara com o texto do botao
 			pesquisarArtista();
+		}else if(action.equals(btnNovoArtista.getText())){
+			abrirTelaNovoArtista();
+		}else if(action.equals(btnEditarArtista.getText())){
+			abrirTelaEditarArtista();
 		}
 	}
 }
