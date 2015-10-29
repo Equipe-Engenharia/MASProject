@@ -1,11 +1,14 @@
 package controller;
 
 import java.awt.Image;
+import java.awt.Label;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +34,6 @@ import model.Material;
 import model.Obra;
 import model.Setor;
 import persistence.ObraArquivoImpl;
-import view.FormAcervo;
 import view.FormAlteraDelArtista;
 import view.FormAlteraDelCategoria;
 import view.FormAlteraDelMaterial;
@@ -41,28 +43,32 @@ import view.FormRegisMaterial;
 
 public class AcervoController implements ComponentListener, ActionListener {
 
-	private JLabel imagem, msgGravado, msgVazio;
+	private JLabel imagem, msgGravado, msgVazio, lblStatus;
 	private JTextField idObra, tfNomeArtista, nomeObra, dataAquisicao, textField_valor, txtNovaObra;
 	private JEditorPane descricaoObra;
-	private JComboBox<String> cbMaterial, cbNomeArtistas, cbObras;
+	private JComboBox<String> cbMaterial, cbObras;
 	private JComboBox<String> cbCategoria;
+	private String nomeArtista;
+
 	// Variavel caminho imagem criada para gravar e carregar na hora de procurar
 	// obra
 	private List<Obra> obras;
 
 	private String caminhoImagem;
 	private JComboBox<String> cbSetor;
+	private static int contador = 1;
 
 	private JComboBox<String> comboSetorT;
 	private JComboBox<String> comboStatus;
 	private JComboBox<String> comboStatusT;
 
-	private JButton btnPesqArtist, btnNovoArtista, btnEditarArtista; //passar o resto dos botoes
+	private JButton btnPesqArtist, btnNovoArtista, btnEditarArtista; // passar o
+																		// resto
+																		// dos
+	// botoes
 	private JPanel frmAcervo;
 	private ArquivosController arqController;
 	private PesqArtistaController pAController;
-
-	
 
 	public AcervoController(JTextField idObra, JLabel imagem, JComboBox<String> comboSetor,
 			JComboBox<String> comboSetorT, JComboBox<String> comboStatus, JComboBox<String> comboStatusT,
@@ -94,12 +100,13 @@ public class AcervoController implements ComponentListener, ActionListener {
 		lerAcervo();
 	}
 
-	public AcervoController(JComboBox cbNomeArtistas, JComboBox cbObras, JTextField txtNovaObra,
+	public AcervoController(JTextField nomeArtista, JLabel imagem, JComboBox cbObras, JTextField txtNovaObra,
 			JComboBox<String> cbSetor2, JComboBox<String> cbMaterial2, JComboBox<String> cbCategoria2,
 			JComboBox<String> comboStatus2, JTextField data_obra, JEditorPane editor_descricao, JLabel msgGravado2,
-			JLabel msgVazio2, JTextField textField_valor2) {
+			JLabel msgVazio2, JTextField textField_valor2, JButton btnPesqArtist, JLabel status) {
 
-		this.cbNomeArtistas = cbNomeArtistas;
+		this.imagem = imagem;
+		this.tfNomeArtista = nomeArtista;
 		this.cbObras = cbObras;
 		this.txtNovaObra = txtNovaObra;
 		this.cbSetor = cbSetor2;
@@ -110,10 +117,12 @@ public class AcervoController implements ComponentListener, ActionListener {
 		this.descricaoObra = editor_descricao;
 		this.msgGravado = msgGravado2;
 		this.msgVazio = msgVazio2;
+		this.btnPesqArtist = btnPesqArtist;
+
 		this.textField_valor = textField_valor2;
 		this.obras = new ArrayList<Obra>();
+		this.lblStatus = status;
 
-		lerAcervo();
 	}
 
 	public void gerarIdSetor() {
@@ -163,38 +172,10 @@ public class AcervoController implements ComponentListener, ActionListener {
 			e.printStackTrace();
 		}
 
-		/*for (Obra o : obras) {
-			System.out.println(o.getNomeObra());
-		}*/
+		/*
+		 * for (Obra o : obras) { System.out.println(o.getNomeObra()); }
+		 */
 
-	}
-
-	public void procuraAcervoNome(String palavraChave) {
-		String linha = new String();
-
-		arqController = new ArquivosController();
-		try {
-			arqController.leArquivo("../MASProject/dados/", "acervo");
-			linha = arqController.getBuffer();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		String[] categoria = linha.split(";");
-		ArrayList<String> acervo = new ArrayList<>();
-		for (String s : categoria) {
-			if (!(s.contains("-"))) {
-				String text = s.replaceAll(".*:", "");
-				acervo.add(text);
-			}
-		}
-		for (String s : acervo) {
-			if (s.equalsIgnoreCase(palavraChave)) {
-				System.out.println("Achou");
-			} else {
-				System.out.println("n�o Achou");
-			}
-		}
 	}
 
 	public void procuraImagem() {
@@ -293,7 +274,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 		dataAquisicao.setText(null);
 		descricaoObra.setText(null);
 		cbMaterial.setSelectedIndex(0);
-		// cbCategoria.setSelectedIndex(0);
+		cbCategoria.setSelectedIndex(0);
 		cbSetor.setSelectedIndex(0);
 
 	}
@@ -328,49 +309,6 @@ public class AcervoController implements ComponentListener, ActionListener {
 		}
 	}
 
-	public void preencherComboBoxArtista() {
-
-		for (Obra o : obras) {
-			cbNomeArtistas.addItem(o.getArtista().getNome());
-		}
-
-	}
-
-	public void preencherComboBoxObras() {
-
-		for (Obra o : obras) {
-			cbObras.addItem(o.getNomeObra());
-		}
-
-	}
-
-	public void atualizaDados(List<Obra> listObras) {
-		File f = new File("../MASProject/dados/acervo");
-		f.delete();
-		ObraArquivoImpl obraImpl = new ObraArquivoImpl();
-		for (Obra obra : obras) {
-			try {
-				obraImpl.escreveArquivo("../MASProject/dados/", "acervo", "", obra);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
-
-	public void pesquisaArtista(String nomeArtista) {
-		File f = new File("../MASProject/dados/acervo");
-		f.delete();
-		ObraArquivoImpl obraImpl = new ObraArquivoImpl();
-		for (Obra obra : obras) {
-			try {
-				obraImpl.escreveArquivo("../MASProject/dados/", "acervo", "", obra);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
 
 	public void preencherComboBoxCategoria() {
 		String linha = new String();
@@ -385,7 +323,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 			for (String s : materias) {
 				String text = s.replaceAll(".*:", "");
 				listString.add(text);
-				if (s.contains("---")) {
+				if (s.contains("------")) {
 					Categoria c = new Categoria();
 					c.setNome(listString.get(1));
 					listCategorias.add(c);
@@ -429,6 +367,35 @@ public class AcervoController implements ComponentListener, ActionListener {
 		}
 	}
 
+	public void preencherComboBoxSetoresAlteraDel() {
+		String linha = new String();
+		arqController = new ArquivosController();
+		ArrayList<String> listString = new ArrayList<>();
+		ArrayList<Setor> listSetores = new ArrayList<>();
+
+		try {
+			arqController.leArquivo("../MASProject/dados/", "setores");
+			linha = arqController.getBuffer();
+			String[] setores = linha.split(";");
+			for (String s : setores) {
+				String text = s.replaceAll(".*:", "");
+				listString.add(text);
+				if (s.contains("---")) {
+					Setor setor = new Setor();
+					setor.setNome(listString.get(1));
+					listSetores.add(setor);
+					listString.clear();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		for (Setor s : listSetores) {
+			cbSetor.addItem(s.getNome());
+			cbSetor.addItem(s.getNome());
+		}
+	}
+
 	public void preencherComboStatusProprio() {
 		String linha = new String();
 		arqController = new ArquivosController();
@@ -458,99 +425,121 @@ public class AcervoController implements ComponentListener, ActionListener {
 			e.printStackTrace();
 		}
 	}
-	
-	//Abre um JOptionPane com uma comboBox - Vitor
-		private void pesquisarArtista(){
-			pAController = new PesqArtistaController();
-			Object[] possibilities = pAController.getArtista();
-			String s = (String)JOptionPane.showInputDialog(frmAcervo, "Escolha o artista:\n",
-					"Pesquisar o Artista", JOptionPane.INFORMATION_MESSAGE, null, possibilities,
-					possibilities[0]);
-			if(s != null && s.length() > 0){
-				tfNomeArtista.setText(s);
-				return;
+
+	// Abre um JOptionPane com uma comboBox - Vitor
+	public void pesquisarArtista() {
+		pAController = new PesqArtistaController();
+		ArrayList<String> listString = new ArrayList<>();
+		ArrayList<Artista> listArtista = new ArrayList<>();
+
+		String[] possibilities = pAController.getArtista();
+
+		for (String s : possibilities) {
+			String text = s.replaceAll(".*:", "");
+			listString.add(text);
+			if (s.contains("---")) {
+				Artista artista = new Artista();
+				artista.setNome(listString.get(1));
+				listArtista.add(artista);
+				listString.clear();
 			}
 		}
-		
-		private void abrirTelaNovoArtista(){
-			FormRegisArtista newArtista = new FormRegisArtista(null, true);
-			newArtista.setVisible(true);
-			newArtista.setDefaultCloseOperation(newArtista.DISPOSE_ON_CLOSE);
-			newArtista.setResizable(false);
+		String[] possibilities2 = new String[listArtista.size()];
+
+		for (int i = 0; i < listArtista.size(); i++) {
+			possibilities2[i] = listArtista.get(i).getNome();
 		}
-		
-		private void abrirTelaEditarArtista(){
-			FormAlteraDelArtista editArtista= new FormAlteraDelArtista(null, true);
-			editArtista.setVisible(true);
-			editArtista.setDefaultCloseOperation(editArtista.DISPOSE_ON_CLOSE);
-			editArtista.setResizable(false);
+
+		String s = (String) JOptionPane.showInputDialog(frmAcervo, "Escolha o artista:\n", "Pesquisar o Artista",
+				JOptionPane.INFORMATION_MESSAGE, null, possibilities2, possibilities2[0]);
+		if (s != null && s.length() > 0) {
+			tfNomeArtista.setText(s);
+			nomeArtista = s;
+			return;
 		}
+	}
+
+
+	private void abrirTelaNovoArtista() {
+		FormRegisArtista newArtista = new FormRegisArtista(null, true);
+		newArtista.setVisible(true);
+		newArtista.setDefaultCloseOperation(newArtista.DISPOSE_ON_CLOSE);
+		newArtista.setResizable(false);
+	}
+
+	private void abrirTelaEditarArtista() {
+		FormAlteraDelArtista editArtista = new FormAlteraDelArtista(null, true);
+		editArtista.setVisible(true);
+		editArtista.setDefaultCloseOperation(editArtista.DISPOSE_ON_CLOSE);
+		editArtista.setResizable(false);
+	}
 
 	// Controle de bot�es
+	
+	public ActionListener novaCategoria = new ActionListener() {
 		
-		public ActionListener novaCategoria = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				FormRegisCategoria formCate = new FormRegisCategoria();
-				formCate.setVisible(true);
-				formCate.setLocationRelativeTo(null);
-			}
-		};
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			FormRegisCategoria formCate = new FormRegisCategoria();
+			formCate.setVisible(true);
+			formCate.setLocationRelativeTo(null);
+		}
+	};
+	
+	
+	
+	public ActionListener novoMaterial = new ActionListener() {
 		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			FormRegisMaterial frame = new FormRegisMaterial();
+			frame.setVisible(true);
+			frame.setLocationRelativeTo(null);
+		}
+	};
+	
+	
+	
+	public ActionListener editarMaterial = new ActionListener() {
 		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			FormAlteraDelMaterial frame = new FormAlteraDelMaterial();
+			frame.setVisible(true);
+			frame.setLocationRelativeTo(null);
+		}
+	};
+	
+	
+	
+	public ActionListener fecharTela = new ActionListener() {
 		
-		public ActionListener novoMaterial = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				FormRegisMaterial frame = new FormRegisMaterial();
-				frame.setVisible(true);
-				frame.setLocationRelativeTo(null);
-			}
-		};
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			System.exit(0);
+		}
+	};
+	
+	
+	
+	public ActionListener editarCategoria = new ActionListener() {
 		
-		
-		
-		public ActionListener editarMaterial = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				FormAlteraDelMaterial frame = new FormAlteraDelMaterial();
-				frame.setVisible(true);
-				frame.setLocationRelativeTo(null);
-			}
-		};
-		
-		
-		
-		public ActionListener fecharTela = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				System.exit(0);
-			}
-		};
-		
-		
-		
-		public ActionListener editarCategoria = new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				FormAlteraDelCategoria frame = new FormAlteraDelCategoria();
-				frame.setVisible(true);
-				frame.setLocationRelativeTo(null);
-			}
-		};
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			FormAlteraDelCategoria frame = new FormAlteraDelCategoria();
+			frame.setVisible(true);
+			frame.setLocationRelativeTo(null);
+		}
+	};
 
-		
-		
+	
+
+
 	public ActionListener inserir_imagem = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -558,34 +547,26 @@ public class AcervoController implements ComponentListener, ActionListener {
 		}
 	};
 
-	
-	
+
 	public ActionListener gravarAcervo = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			gravarAcervo();
 		}
 	};
-	
-	
-	
+
 	public ActionListener remover_imagem = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			imagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
 		}
 	};
-	
-	
-	
-	// Eventos de comboBox
-	
-	
-	@Override
-	public void componentResized(ComponentEvent e) {}
 
-	
-	
+	// Eventos de comboBox
+	@Override
+	public void componentResized(ComponentEvent e) {
+	}
+
 	@Override
 	public void componentMoved(ComponentEvent e) {
 		preencherComboBoxMaterial();
@@ -593,24 +574,25 @@ public class AcervoController implements ComponentListener, ActionListener {
 	}
 
 	@Override
-	public void componentShown(ComponentEvent e) {}
+	public void componentShown(ComponentEvent e) {
+	}
 
-	
-	
 	@Override
-	public void componentHidden(ComponentEvent e) {}
+	public void componentHidden(ComponentEvent e) {
+	}
 
-	
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String action = e.getActionCommand(); //verifica qual botao foi pressionado na tela
-		if(action.equals(btnPesqArtist.getText())){ //compara com o texto do botao
+		String action = e.getActionCommand(); // verifica qual botao foi
+												// pressionado na tela
+		if (action.equals(btnPesqArtist.getText())) { // compara com o texto do
+														// botao
 			pesquisarArtista();
-		}else if(action.equals(btnNovoArtista.getText())){
+		} else if (action.equals(btnNovoArtista.getText())) {
 			abrirTelaNovoArtista();
-		}else if(action.equals(btnEditarArtista.getText())){
+		} else if (action.equals(btnEditarArtista.getText())) {
 			abrirTelaEditarArtista();
 		}
 	}
+	
 }

@@ -2,8 +2,6 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.SystemColor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,12 +10,12 @@ import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 import controller.AcervoController;
+import controller.AlteraDelAcervoController;
 
 public class FormAlteraDelAcervo extends JFrame {
 	private JPanel contentPane;
@@ -46,7 +44,7 @@ public class FormAlteraDelAcervo extends JFrame {
 
 	public FormAlteraDelAcervo() {
 		setResizable(false);
-		setTitle("Editar/Excluir Acervo");
+		setTitle("Excluir/Alterar Acervo");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 615, 674);
 		contentPane = new JPanel();
@@ -69,26 +67,23 @@ public class FormAlteraDelAcervo extends JFrame {
 		lblArtista.setBounds(113, 26, 52, 14);
 		contentPane.add(lblArtista);
 
-		JLabel msgGravado = new JLabel("Dados Salvos com sucesso");
+		JLabel msgGravado = new JLabel("Dados Alterados com sucesso");
 		msgGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
-		msgGravado.setBounds(43, 600, 230, 23);
+		msgGravado.setBounds(43, 500, 230, 23);
 		msgGravado.setVisible(false);
 		contentPane.add(msgGravado);
 
 		JLabel msgVazio = new JLabel("");
 		msgVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		msgVazio.setBounds(43, 600, 192, 23);
+		msgVazio.setBounds(43, 500, 192, 23);
 		msgVazio.setVisible(false);
 		contentPane.add(msgVazio);
 
-		// nome_artist = new JTextField();
-		// nome_artist.setBounds(166, 56, 352, 20);
-		// contentPane.add(nome_artist);
-		// nome_artist.setColumns(10);
-
-		JComboBox cbNomeArtistas = new JComboBox<String>();
-		cbNomeArtistas.setBounds(166, 26, 352, 20);
-		contentPane.add(cbNomeArtistas);
+		nome_artist = new JTextField();
+		nome_artist.setBounds(166, 26, 352, 20);
+		nome_artist.setEditable(false);
+		contentPane.add(nome_artist);
+		nome_artist.setColumns(10);
 
 		JButton btnPesquisaArtist = new JButton("");
 		btnPesquisaArtist.setIcon(new ImageIcon("../MASProject/icons/search.png"));
@@ -101,10 +96,10 @@ public class FormAlteraDelAcervo extends JFrame {
 		// btnPesquisaId.setBounds(255, 18, 29, 28);
 		// contentPane.add(btnPesquisaId);
 
-		JButton btnPesquisaNome = new JButton("");
-		btnPesquisaNome.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		btnPesquisaNome.setBounds(522, 55, 29, 28);
-		contentPane.add(btnPesquisaNome);
+		JButton btnPesquisaObra = new JButton("");
+		btnPesquisaObra.setIcon(new ImageIcon("../MASProject/icons/search.png"));
+		btnPesquisaObra.setBounds(522, 55, 29, 28);
+		contentPane.add(btnPesquisaObra);
 
 		JLabel lblNomeDaObra = new JLabel("Nome da Obra");
 		lblNomeDaObra.setBounds(67, 58, 98, 14);
@@ -120,6 +115,7 @@ public class FormAlteraDelAcervo extends JFrame {
 		// nome_obra.setColumns(10);
 
 		JComboBox cbObras = new JComboBox<String>();
+		
 		cbObras.setBounds(166, 58, 352, 20);
 		contentPane.add(cbObras);
 
@@ -203,22 +199,31 @@ public class FormAlteraDelAcervo extends JFrame {
 		btnExcluirImagem.setBounds(497, 299, 46, 35);
 		contentPane.add(btnExcluirImagem);
 
-		AcervoController Acontroller = new AcervoController(cbNomeArtistas, cbObras, txtNovaObra, cbSetor, cbMaterial,
-				cbCategoria, comboStatus, data_obra, editor_descricao, msgGravado, msgVazio, textField_valor);
+		AcervoController Acontroller = new AcervoController(nome_artist,lblSelecImagem, cbObras, txtNovaObra, cbSetor, cbMaterial,
+				cbCategoria, comboStatus, data_obra, editor_descricao, msgGravado, msgVazio, textField_valor,btnPesquisaArtist,lblStatus);
 
-		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
+		AlteraDelAcervoController delAlteraAcervo = new AlteraDelAcervoController(nome_artist,lblSelecImagem, cbObras, txtNovaObra, cbSetor, cbMaterial,
+				cbCategoria, comboStatus, data_obra, editor_descricao, msgGravado, msgVazio, textField_valor,btnPesquisaArtist,lblStatus);
 
-		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
-		// btnGravar.addActionListener(Acontroller.gravarAcervo);
+		btnPesquisarImagem.addActionListener(delAlteraAcervo.inserir_imagem);
+
+		btnExcluirImagem.addActionListener(delAlteraAcervo.remover_imagem);
+		btnGravar.addActionListener(delAlteraAcervo.editar_acervo);
 
 		JButton btnExcluir = new JButton("Excluir Obra");
 		btnExcluir.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 
-		// btnExcluir.addActionListener(Acontroller.excluirObras);
-		Acontroller.preencherComboBoxArtista();
-		Acontroller.preencherComboBoxObras();
-		
+		btnExcluir.addActionListener(delAlteraAcervo.excluir_obraAcervo);
+		delAlteraAcervo.preencherComboBoxObras();
+		btnPesquisaArtist.addActionListener(delAlteraAcervo.pesquisaArtistaEditar);
+		btnPesquisaObra.addActionListener(delAlteraAcervo.pesquisarObra);
+
 		btnExcluir.setBounds(402, 594, 177, 34);
+		txtNovaObra.addMouseListener(delAlteraAcervo.limpaCampo);
+		Acontroller.preencherComboBoxCategoria();
+		Acontroller.preencherComboBoxMaterial();
+		delAlteraAcervo.preencherComboBoxSetoresAlteraDel();
+		Acontroller.preencherComboStatusProprio();
 		contentPane.add(btnExcluir);
 
 	}
