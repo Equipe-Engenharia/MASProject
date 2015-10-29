@@ -1,32 +1,29 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
-import java.awt.Color;
-
-import javax.swing.JButton;
+import javax.swing.border.EmptyBorder;
 
 import controller.RegisCategoriaController;
 
-import java.awt.Font;
-import javax.swing.UIManager;
-
 public class FormRegisCategoria extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField tfNomeCategoria;
-	private JTextField tfIdCategoria;
-	private JLabel lblMensagemGravada;
-	private JLabel lblMensagemVazio;
-
+	private JTextField txtCategoria;
+	private JTextField idCategoria;
 	/**
 	 * Launch the application.
 	 */
@@ -50,58 +47,67 @@ public class FormRegisCategoria extends JFrame {
 		setResizable(false);
 		setTitle("Registro de Categoria de Obra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 446, 160);
+		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Id Categoria");
-		lblNewLabel.setBounds(42, 24, 71, 14);
-		contentPane.add(lblNewLabel);
+		JLabel lblIdCategoria = new JLabel("ID");
+		lblIdCategoria.setBounds(148, 51, 21, 16);
+		contentPane.add(lblIdCategoria);
 		
-		JLabel lblNewLabel_1 = new JLabel("Nome da Categoria");
-		lblNewLabel_1.setBounds(10, 55, 123, 14);
-		contentPane.add(lblNewLabel_1);
+		JLabel lblNovaCategoria = new JLabel("Nova Categoria");
+		lblNovaCategoria.setBounds(74, 87, 107, 16);
+		contentPane.add(lblNovaCategoria);
 		
-		tfNomeCategoria = new JTextField("Digite o nome da categoria...");
-		tfNomeCategoria.setBounds(143, 52, 204, 20);
-		contentPane.add(tfNomeCategoria);
-		tfNomeCategoria.setColumns(10);
+		idCategoria = new JTextField();
+		idCategoria.setEditable(false);
+		idCategoria.setBounds(181, 49, 178, 20);
+		idCategoria.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(idCategoria);
+		idCategoria.setColumns(10);
 		
-		tfIdCategoria = new JTextField();
-		tfIdCategoria.setEditable(false);
-		tfIdCategoria.setBackground(UIManager.getColor("TextField.disabledBackground"));
-		tfIdCategoria.setBounds(142, 21, 134, 20);
-		tfIdCategoria.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(tfIdCategoria);
-		tfIdCategoria.setColumns(10);
+		txtCategoria = new JTextField();
+		txtCategoria.setToolTipText("Digite o novo Artista…");
+		txtCategoria.setBounds(180, 81, 178, 28);
+		contentPane.add(txtCategoria);
+		txtCategoria.setColumns(10);
 		
+		JLabel msgGravado = new JLabel("");
+		msgGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
+		msgGravado.setBounds(43, 177, 230, 23);
+		msgGravado.setVisible(false);
+		contentPane.add(msgGravado);
+
+		JLabel msgVazio = new JLabel("CAMPO VAZIO!");
+		msgVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
+		msgVazio.setBounds(43, 177, 192, 23);
+		msgVazio.setVisible(false);
+		contentPane.add(msgVazio);
+
 		JButton btnGravar = new JButton("Gravar");
-		btnGravar.setBounds(341, 96, 89, 23);
-		contentPane.add(btnGravar);
 		btnGravar.setEnabled(false);
+		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
+		btnGravar.setBounds(288, 166, 97, 34);
+		contentPane.add(btnGravar);
 		
-		JLabel lblMensagemGravada = new JLabel();
-		lblMensagemGravada.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
-		lblMensagemGravada.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblMensagemGravada.setBounds(10, 93, 213, 26);
-		lblMensagemGravada.setVisible(false);
-		contentPane.add(lblMensagemGravada);
+		JButton btnFechar = new JButton("Fechar");
+		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
+		btnFechar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});				
+		btnFechar.setBounds(397, 166, 97, 34);
+		contentPane.add(btnFechar);
 		
-		JLabel lblMensagemVazio = new JLabel("CAMPO VAZIO!");
-		lblMensagemVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		lblMensagemVazio.setBounds(10, 93, 213, 26);
-		lblMensagemVazio.setVisible(false);
-		contentPane.add(lblMensagemVazio);
+		RegisCategoriaController ctrlCategoria = new RegisCategoriaController(idCategoria, txtCategoria, btnGravar, msgGravado, msgVazio);
 		
-		RegisCategoriaController rCatObra = new RegisCategoriaController(lblMensagemGravada, lblMensagemVazio, btnGravar, tfIdCategoria, tfNomeCategoria); 
-		//Essa linha abaixo ser� excluida quando o menu estiver pronto***
-        rCatObra.gerarIdCategoria();
-		tfNomeCategoria.addMouseListener(rCatObra.limpaCampo);
-		tfNomeCategoria.addActionListener(rCatObra.gravarCategoria);
-		btnGravar.addActionListener(rCatObra.gravarCategoria);
+		ctrlCategoria.gerarIdSetor();
+		btnGravar.addActionListener(ctrlCategoria.gravarCategoria);
+		txtCategoria.addMouseListener(ctrlCategoria.limpaCampo);
+		txtCategoria.addActionListener(ctrlCategoria.gravarCategoria);
 	}
 }
-

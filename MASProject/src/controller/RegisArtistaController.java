@@ -18,7 +18,7 @@ import persistence.ArtistaArquivoImpl;
 
 public class RegisArtistaController implements ComponentListener {
 
-	private JTextField nomeArtista, idArtista;
+	private JTextField idArtista, nomeArtista;
 	private JButton btGravar;
 	private JLabel msgGravado, msgVazio;
 	private List<Artista> artistas;
@@ -27,7 +27,7 @@ public class RegisArtistaController implements ComponentListener {
 
 	public RegisArtistaController(JTextField idArtista, JTextField nomeArtista,
 			JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
-;
+
 		this.idArtista = idArtista;
 		this.btGravar = btnGravar;
 		this.msgGravado = msgGravado;
