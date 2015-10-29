@@ -17,7 +17,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class FormAlteraDelCateg extends JFrame {
+public class FormAlteraDelCategoria extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField tfPeqNomeCategoria;
@@ -30,7 +30,7 @@ public class FormAlteraDelCateg extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormAlteraDelCateg frame = new FormAlteraDelCateg();
+					FormAlteraDelCategoria frame = new FormAlteraDelCategoria();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,8 +42,8 @@ public class FormAlteraDelCateg extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormAlteraDelCateg() {
-		setTitle("Pesquisa da categoria de obra");
+	public FormAlteraDelCategoria() {
+		setTitle("Editar/Excluir Categoria de Obra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 447, 216);
 		contentPane = new JPanel();

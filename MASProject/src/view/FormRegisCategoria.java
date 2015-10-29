@@ -14,12 +14,12 @@ import java.awt.Color;
 
 import javax.swing.JButton;
 
-import controller.RegisCategObraController;
+import controller.RegisCategoriaController;
 
 import java.awt.Font;
 import javax.swing.UIManager;
 
-public class FormRegisCategObra extends JFrame {
+public class FormRegisCategoria extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField tfNomeCategoria;
@@ -34,7 +34,7 @@ public class FormRegisCategObra extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormRegisCategObra frame = new FormRegisCategObra();
+					FormRegisCategoria frame = new FormRegisCategoria();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,7 +46,7 @@ public class FormRegisCategObra extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormRegisCategObra(){
+	public FormRegisCategoria(){
 		setResizable(false);
 		setTitle("Registro de Categoria de Obra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -96,7 +96,7 @@ public class FormRegisCategObra extends JFrame {
 		lblMensagemVazio.setVisible(false);
 		contentPane.add(lblMensagemVazio);
 		
-		RegisCategObraController rCatObra = new RegisCategObraController(lblMensagemGravada, lblMensagemVazio, btnGravar, tfIdCategoria, tfNomeCategoria); 
+		RegisCategoriaController rCatObra = new RegisCategoriaController(lblMensagemGravada, lblMensagemVazio, btnGravar, tfIdCategoria, tfNomeCategoria); 
 		//Essa linha abaixo ser� excluida quando o menu estiver pronto***
         rCatObra.gerarIdCategoria();
 		tfNomeCategoria.addMouseListener(rCatObra.limpaCampo);
