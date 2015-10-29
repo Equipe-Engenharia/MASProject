@@ -141,7 +141,6 @@ public class AcervoController implements ComponentListener, ActionListener {
 					obra.setPreco(acervo.get(9));
 					obra.setProprietario(Boolean.parseBoolean(acervo.get(10)));
 					obra.setStatus(acervo.get(11));
-
 					obra.setArtista(artista);
 					obra.setMaterial(material);
 					obra.setCategoria(c);
@@ -154,9 +153,9 @@ public class AcervoController implements ComponentListener, ActionListener {
 			e.printStackTrace();
 		}
 
-		for (Obra o : obras) {
+		/*for (Obra o : obras) {
 			System.out.println(o.getNomeObra());
-		}
+		}*/
 
 	}
 
