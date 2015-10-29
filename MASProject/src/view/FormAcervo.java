@@ -173,7 +173,7 @@ public class FormAcervo extends JFrame {
 		contentPane.add(btnNovaCategoria);
 		btnNovaCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FormRegisCategObra formCate = new FormRegisCategObra();
+				FormRegisCategoria formCate = new FormRegisCategoria();
 				formCate.setVisible(true);
 				formCate.setLocationRelativeTo(null);
 			}
@@ -184,7 +184,7 @@ public class FormAcervo extends JFrame {
 		contentPane.add(btnEditarCategoria);
 		btnEditarCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FormAlteraDelCateg frame = new FormAlteraDelCateg();
+				FormAlteraDelCategoria frame = new FormAlteraDelCategoria();
 				frame.setVisible(true);
 				frame.setLocationRelativeTo(null);
 			}
@@ -222,15 +222,15 @@ public class FormAcervo extends JFrame {
 		panel_proprio.setLayout(null);
 
 		JLabel lblStatus = new JLabel("Status");
-		lblStatus.setBounds(131, 23, 46, 14);
+		lblStatus.setBounds(88, 23, 46, 14);
 		panel_proprio.add(lblStatus);
 
 		comboStatus = new JComboBox<String>();
-		comboStatus.setBounds(183, 21, 110, 20);
+		comboStatus.setBounds(133, 21, 128, 20);
 		panel_proprio.add(comboStatus);
 
 		JLabel Setor = new JLabel("Setor");
-		Setor.setBounds(317, 23, 46, 14);
+		Setor.setBounds(317, 23, 32, 14);
 		panel_proprio.add(Setor);
 
 		comboSetor = new JComboBox<String>();
@@ -238,7 +238,7 @@ public class FormAcervo extends JFrame {
 		panel_proprio.add(comboSetor);
 
 		JLabel lblValorDaAquisio = new JLabel("Valor da aquisi\u00E7\u00E3o (R$)");
-		lblValorDaAquisio.setBounds(34, 64, 143, 14);
+		lblValorDaAquisio.setBounds(206, 64, 143, 14);
 		panel_proprio.add(lblValorDaAquisio);
 
 		maskValor = new DecimalFormat("#,###,###.00") ;
@@ -247,7 +247,7 @@ public class FormAcervo extends JFrame {
         formatter.setAllowsInvalid(false) ; 	
 		textField_valor = new JFormattedTextField(maskValor);
 		textField_valor.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_valor.setBounds(183, 61, 110, 20);
+		textField_valor.setBounds(357, 61, 110, 20);
 		panel_proprio.add(textField_valor);
 		textField_valor.setColumns(10);
 
