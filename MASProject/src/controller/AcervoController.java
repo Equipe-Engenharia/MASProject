@@ -31,8 +31,13 @@ import model.Material;
 import model.Obra;
 import model.Setor;
 import persistence.ObraArquivoImpl;
+import view.FormAcervo;
 import view.FormAlteraDelArtista;
+import view.FormAlteraDelCategoria;
+import view.FormAlteraDelMaterial;
 import view.FormRegisArtista;
+import view.FormRegisCategoria;
+import view.FormRegisMaterial;
 
 public class AcervoController implements ComponentListener, ActionListener {
 
@@ -482,7 +487,70 @@ public class AcervoController implements ComponentListener, ActionListener {
 		}
 
 	// Controle de bot�es
+		
+		public ActionListener novaCategoria = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				FormRegisCategoria formCate = new FormRegisCategoria();
+				formCate.setVisible(true);
+				formCate.setLocationRelativeTo(null);
+			}
+		};
+		
+		
+		
+		public ActionListener novoMaterial = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				FormRegisMaterial frame = new FormRegisMaterial();
+				frame.setVisible(true);
+				frame.setLocationRelativeTo(null);
+			}
+		};
+		
+		
+		
+		public ActionListener editarMaterial = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				FormAlteraDelMaterial frame = new FormAlteraDelMaterial();
+				frame.setVisible(true);
+				frame.setLocationRelativeTo(null);
+			}
+		};
+		
+		
+		
+		public ActionListener fecharTela = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				System.exit(0);
+			}
+		};
+		
+		
+		
+		public ActionListener editarCategoria = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				FormAlteraDelCategoria frame = new FormAlteraDelCategoria();
+				frame.setVisible(true);
+				frame.setLocationRelativeTo(null);
+			}
+		};
 
+		
+		
 	public ActionListener inserir_imagem = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -490,12 +558,16 @@ public class AcervoController implements ComponentListener, ActionListener {
 		}
 	};
 
+	
+	
 	public ActionListener gravarAcervo = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			gravarAcervo();
 		}
 	};
+	
+	
 	
 	public ActionListener remover_imagem = new ActionListener() {
 		@Override
@@ -504,10 +576,16 @@ public class AcervoController implements ComponentListener, ActionListener {
 		}
 	};
 	
+	
+	
 	// Eventos de comboBox
+	
+	
 	@Override
 	public void componentResized(ComponentEvent e) {}
 
+	
+	
 	@Override
 	public void componentMoved(ComponentEvent e) {
 		preencherComboBoxMaterial();
@@ -517,9 +595,13 @@ public class AcervoController implements ComponentListener, ActionListener {
 	@Override
 	public void componentShown(ComponentEvent e) {}
 
+	
+	
 	@Override
 	public void componentHidden(ComponentEvent e) {}
 
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand(); //verifica qual botao foi pressionado na tela
