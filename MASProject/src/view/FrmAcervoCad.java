@@ -23,25 +23,20 @@ import controller.AcervoCtrl;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import javax.swing.UIManager;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FrmAcervoCad extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField idObra;
-	private JTextField nome_artist;
-	private JTextField nome_obra;
+	private JTextField idObra, nome_artist, nome_obra, textField_valor;
 	private JFormattedTextField data_obra;
 	private MaskFormatter maskData;
 	private DecimalFormat maskValor;
-	private JComboBox<String> cbCategoria;
-	private JComboBox<String> cbMaterial;
-	private JComboBox<String> comboSetor;
-	private JComboBox<String> comboSetorT;
-	private JComboBox<String> comboStatus;
-	private JComboBox<String> comboStatusT;
-	private JTextField textField_valor;
-	private JButton btnPesquisaArtist, btnNovoArtista, btnEditarArtista; // deixar os demais botoes private
+	private JComboBox<String> cbCategoria, cbMaterial, comboSetor, comboSetorT, comboStatus, comboStatusT;
+	private JButton btnPesquisarImagem, btnExcluirImagem, btnPesquisaArtist, btnNovoArtista, btnEditarArtista, btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, 
+	btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT, btnGravar, btnFechar; // deixar os demais botoes private
 
 	/**
 	 * Launch the application.
@@ -166,21 +161,21 @@ public class FrmAcervoCad extends JFrame {
 		editor_descricao.setBounds(30, 404, 558, 81);
 		contentPane.add(editor_descricao);
 
-		JButton btnNovaCategoria = new JButton("Nova Categoria");
+		btnNovaCategoria = new JButton("Nova Categoria");
 		btnNovaCategoria.setToolTipText("Não encontrou a categoria?");
 		btnNovaCategoria.setBounds(167, 247, 133, 29);
 		contentPane.add(btnNovaCategoria);
 
-		JButton btnEditarCategoria = new JButton("Editar Categoria");
+		btnEditarCategoria = new JButton("Editar Categoria");
 		btnEditarCategoria.setBounds(29, 247, 133, 29);
 		contentPane.add(btnEditarCategoria);
 
-		JButton btnNovoMaterial = new JButton("Novo Material");
+		btnNovoMaterial = new JButton("Novo Material");
 		btnNovoMaterial.setToolTipText("Não encontrou o material?");
 		btnNovoMaterial.setBounds(166, 314, 133, 29);
 		contentPane.add(btnNovoMaterial);
 
-		JButton btnEditarMaterial = new JButton("Editar Material");
+		btnEditarMaterial = new JButton("Editar Material");
 		btnEditarMaterial.setBounds(28, 314, 133, 29);
 		contentPane.add(btnEditarMaterial);
 
@@ -193,23 +188,23 @@ public class FrmAcervoCad extends JFrame {
 		panel_proprio.setLayout(null);
 
 		JLabel lblStatus = new JLabel("Status");
-		lblStatus.setBounds(88, 23, 46, 14);
+		lblStatus.setBounds(299, 23, 46, 14);
 		panel_proprio.add(lblStatus);
 
 		comboStatus = new JComboBox<String>();
-		comboStatus.setBounds(133, 21, 128, 20);
+		comboStatus.setBounds(344, 20, 179, 20);
 		panel_proprio.add(comboStatus);
 
 		JLabel Setor = new JLabel("Setor");
-		Setor.setBounds(317, 23, 32, 14);
+		Setor.setBounds(29, 23, 46, 14);
 		panel_proprio.add(Setor);
 
 		comboSetor = new JComboBox<String>();
-		comboSetor.setBounds(357, 20, 110, 20);
+		comboSetor.setBounds(71, 20, 179, 20);
 		panel_proprio.add(comboSetor);
 
 		JLabel lblValorDaAquisio = new JLabel("Valor da aquisi\u00E7\u00E3o (R$)");
-		lblValorDaAquisio.setBounds(206, 64, 143, 14);
+		lblValorDaAquisio.setBounds(262, 56, 143, 14);
 		panel_proprio.add(lblValorDaAquisio);
 
 		maskValor = new DecimalFormat("#,###,###.00");
@@ -218,7 +213,7 @@ public class FrmAcervoCad extends JFrame {
 		formatter.setAllowsInvalid(false);
 		textField_valor = new JFormattedTextField(maskValor);
 		textField_valor.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_valor.setBounds(357, 61, 110, 20);
+		textField_valor.setBounds(413, 53, 110, 20);
 		panel_proprio.add(textField_valor);
 		textField_valor.setColumns(10);
 
@@ -227,25 +222,20 @@ public class FrmAcervoCad extends JFrame {
 		panel_terceiros.setLayout(null);
 
 		JLabel lblStatus_1 = new JLabel("Status");
-		lblStatus_1.setBounds(88, 23, 46, 14);
+		lblStatus_1.setBounds(299, 23, 46, 14);
 		panel_terceiros.add(lblStatus_1);
 
 		comboStatusT = new JComboBox<String>();
-		comboStatusT.setBounds(133, 21, 128, 20);
+		comboStatusT.setBounds(344, 20, 179, 20);
 		panel_terceiros.add(comboStatusT);
 
 		JLabel lblSetor = new JLabel("Setor");
-		lblSetor.setBounds(317, 23, 46, 14);
+		lblSetor.setBounds(29, 23, 46, 14);
 		panel_terceiros.add(lblSetor);
 
 		comboSetorT = new JComboBox<String>();
-		comboSetorT.setBounds(357, 20, 110, 20);
+		comboSetorT.setBounds(71, 20, 179, 20);
 		panel_terceiros.add(comboSetorT);
-
-		JButton btnGravar = new JButton("Gravar");
-		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnGravar.setBounds(338, 670, 107, 34);
-		contentPane.add(btnGravar);
 
 		JLabel lblSelecImagem = new JLabel("");
 		lblSelecImagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
@@ -255,40 +245,66 @@ public class FrmAcervoCad extends JFrame {
 		lblSelecImagem.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		contentPane.add(lblSelecImagem);
 
-		JButton btnPesquisarImagem = new JButton("");
+		btnPesquisarImagem = new JButton("");
 		btnPesquisarImagem.setIcon(new ImageIcon("../MASProject/icons/add.png"));
 		btnPesquisarImagem.setBounds(409, 354, 46, 23);
 		contentPane.add(btnPesquisarImagem);
 
-		JButton btnExcluirImagem = new JButton("");
+		btnExcluirImagem = new JButton("");
 		btnExcluirImagem.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		btnExcluirImagem.setBounds(465, 354, 46, 23);
 		contentPane.add(btnExcluirImagem);
+		
+		btnNovoSetorT = new JButton("Novo Setor");
+		btnNovoSetorT.setBounds(133, 49, 117, 29);
+		panel_terceiros.add(btnNovoSetorT);
+		
+		btnEditarSetorT = new JButton("Editar Setor");
+		btnEditarSetorT.setBounds(17, 49, 117, 29);
+		panel_terceiros.add(btnEditarSetorT);
+		
+		btnEditarSetor = new JButton("Editar Setor");
+		btnEditarSetor.setBounds(17, 49, 117, 29);
+		panel_proprio.add(btnEditarSetor);
+		
+		btnNovoSetor = new JButton("Novo Setor");
+		btnNovoSetor.setBounds(133, 49, 117, 29);
+		panel_proprio.add(btnNovoSetor);
+		
+		btnGravar = new JButton("Gravar");
+		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
+		btnGravar.setBounds(338, 670, 107, 34);
+		contentPane.add(btnGravar);
 
-		JButton btnFechar = new JButton("Sair");
+		btnFechar = new JButton("Sair");
 		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
 		btnFechar.setBounds(471, 669, 117, 34);
 		contentPane.add(btnFechar);
-
+		
 		// botão de pesquisar artista e o Jpanel passados como parametro - Vitor
 		AcervoCtrl ctrlAcervo = new AcervoCtrl(idObra, lblSelecImagem, comboSetor, comboSetorT,
 				comboStatus, comboStatusT, cbCategoria, cbMaterial, nome_artist, nome_obra, data_obra, editor_descricao,
 				msgGravado, msgVazio, textField_valor, btnPesquisaArtist, contentPane, btnNovoArtista,
-				btnEditarArtista);
+				btnEditarArtista, btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, 
+				btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT);
 
+		btnPesquisarImagem.addActionListener(ctrlAcervo.inserir_imagem);
+		btnExcluirImagem.addActionListener(ctrlAcervo.remover_imagem);
 		btnPesquisaArtist.addActionListener(ctrlAcervo);
 		btnNovoArtista.addActionListener(ctrlAcervo);
 		btnEditarArtista.addActionListener(ctrlAcervo);
-
-		ctrlAcervo.gerarId();
-		btnPesquisarImagem.addActionListener(ctrlAcervo.inserir_imagem);
-		btnGravar.addActionListener(ctrlAcervo.gravarAcervo);
-		btnExcluirImagem.addActionListener(ctrlAcervo.remover_imagem);
 		btnNovaCategoria.addActionListener(ctrlAcervo.novaCategoria);
 		btnEditarCategoria.addActionListener(ctrlAcervo.editarCategoria);
-		btnNovoMaterial.addActionListener(ctrlAcervo.novoMaterial);
-		btnEditarMaterial.addActionListener(ctrlAcervo.editarMaterial);
+		btnNovoMaterial.addActionListener(ctrlAcervo);
+		btnEditarMaterial.addActionListener(ctrlAcervo);
+		btnNovoSetor.addActionListener(ctrlAcervo);
+		btnEditarSetor.addActionListener(ctrlAcervo);
+		btnNovoSetorT.addActionListener(ctrlAcervo);
+		btnEditarSetorT.addActionListener(ctrlAcervo);
+		btnGravar.addActionListener(ctrlAcervo.gravarAcervo);
 		btnFechar.addActionListener(ctrlAcervo.fecharTela);
+
+		ctrlAcervo.gerarId();
 		ctrlAcervo.preencherComboBoxCategoria();
 		ctrlAcervo.preencherComboBoxMaterial();
 		ctrlAcervo.preencherComboBoxSetores();
