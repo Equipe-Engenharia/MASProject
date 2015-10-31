@@ -63,6 +63,8 @@ public class FrmCategoriaCad extends JFrame {
 		contentPane.add(lblNovaCategoria);
 		
 		idCategoria = new JTextField();
+		idCategoria.setEditable(false);
+		idCategoria.setEnabled(false);
 		idCategoria.setBounds(181, 49, 178, 20);
 		idCategoria.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(idCategoria);
