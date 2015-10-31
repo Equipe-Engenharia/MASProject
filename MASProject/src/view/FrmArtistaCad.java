@@ -59,6 +59,7 @@ public class FrmArtistaCad extends JFrame {
 		contentPane.add(lblNovoArtista);
 		
 		idArtista = new JTextField();
+		idArtista.setEnabled(false);
 		idArtista.setEditable(false);
 		idArtista.setBounds(181, 49, 178, 20);
 		idArtista.setHorizontalAlignment(SwingConstants.CENTER);

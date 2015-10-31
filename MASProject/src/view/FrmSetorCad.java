@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -46,55 +48,66 @@ public class FrmSetorCad extends JFrame {
 		setTitle("Registro de Setor");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 447, 158);
+		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblIdDoSetor = new JLabel("ID. Setor:");
-		lblIdDoSetor.setBounds(10, 23, 67, 14);
+		JLabel lblIdDoSetor = new JLabel("ID");
+		lblIdDoSetor.setBounds(148, 35, 20, 16);
 		contentPane.add(lblIdDoSetor);
 
-		JLabel lblNomeDoSetor = new JLabel("Setor:");
-		lblNomeDoSetor.setBounds(10, 51, 76, 14);
+		JLabel lblNomeDoSetor = new JLabel("Novo Setor");
+		lblNomeDoSetor.setBounds(92, 87, 89, 16);
 		contentPane.add(lblNomeDoSetor);
 
 		txtDigitado = new JTextField();
-		txtDigitado.setText("Digite o nome do setor...");
-		txtDigitado.setBounds(69, 48, 169, 20);
+		txtDigitado.setToolTipText("Digite aqui o novo setor!");
+		txtDigitado.setBounds(180, 81, 178, 28);
 		contentPane.add(txtDigitado);
 		txtDigitado.setColumns(10);
 		
 		id_setor = new JTextField();
+		id_setor.setEnabled(false);
 		id_setor.setEditable(false);
-		id_setor.setBounds(69, 20, 169, 20);
+		id_setor.setBounds(180, 33, 178, 20);
 		id_setor.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(id_setor);
 		id_setor.setColumns(10);
 		
 		JButton btnGravar = new JButton("Gravar");
-		btnGravar.setBounds(342, 96, 89, 23);
+		btnGravar.setBounds(288, 166, 97, 34);
 		contentPane.add(btnGravar);
 		btnGravar.setEnabled(false);
 
 		JLabel mensagemGravado = new JLabel("");
 		mensagemGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
-		mensagemGravado.setBounds(10, 96, 228, 23);
+		mensagemGravado.setBounds(43, 177, 230, 23);
 		mensagemGravado.setVisible(false);
 		contentPane.add(mensagemGravado);
 
 		JLabel mensagemVazio = new JLabel("CAMPO VAZIO!");
 		mensagemVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		mensagemVazio.setBounds(10, 96, 192, 23);
+		mensagemVazio.setBounds(43, 177, 230, 23);
 		mensagemVazio.setVisible(false);
 		contentPane.add(mensagemVazio);
+		
+		JButton btnFechar = new JButton("Fechar");
+		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
+		btnFechar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});				
+		btnFechar.setBounds(397, 166, 97, 34);
+		contentPane.add(btnFechar);
 		
 		
 		SetorCtrl RsContrl = new SetorCtrl(id_setor, txtDigitado, mensagemGravado, mensagemVazio, btnGravar);
 		
-		//Essa linha abaixo ser� excluida quando o menu estiver pronto pois ser� um evento do bot�o que chama este Form***
+		//Essa linha abaixo será excluida quando o menu estiver pronto pois será um evento do botão que chama este Form***
         RsContrl.gerarIdSetor();
         
 		txtDigitado.addMouseListener(RsContrl.limpaCampo);
