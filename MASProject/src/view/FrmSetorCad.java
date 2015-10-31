@@ -1,9 +1,6 @@
 package view;
 
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,6 +21,8 @@ public class FrmSetorCad extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtDigitado;
 	private JTextField id_setor;
+	private JLabel lblIdDoSetor, lblNomeDoSetor, mensagemGravado, mensagemVazio;
+	private JButton btnGravar, btnFechar;
 
 	/**
 	 * Launch the application.
@@ -55,11 +54,11 @@ public class FrmSetorCad extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblIdDoSetor = new JLabel("ID");
+		lblIdDoSetor = new JLabel("ID");
 		lblIdDoSetor.setBounds(148, 35, 20, 16);
 		contentPane.add(lblIdDoSetor);
 
-		JLabel lblNomeDoSetor = new JLabel("Novo Setor");
+		lblNomeDoSetor = new JLabel("Novo Setor");
 		lblNomeDoSetor.setBounds(92, 87, 89, 16);
 		contentPane.add(lblNomeDoSetor);
 
@@ -68,7 +67,7 @@ public class FrmSetorCad extends JFrame {
 		txtDigitado.setBounds(180, 81, 178, 28);
 		contentPane.add(txtDigitado);
 		txtDigitado.setColumns(10);
-		
+
 		id_setor = new JTextField();
 		id_setor.setEnabled(false);
 		id_setor.setEditable(false);
@@ -76,35 +75,35 @@ public class FrmSetorCad extends JFrame {
 		id_setor.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(id_setor);
 		id_setor.setColumns(10);
-		
-		JButton btnGravar = new JButton("Gravar");
-		btnGravar.setBounds(288, 166, 97, 34);
-		contentPane.add(btnGravar);
-		btnGravar.setEnabled(false);
 
-		JLabel mensagemGravado = new JLabel("");
+		mensagemGravado = new JLabel("");
 		mensagemGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
 		mensagemGravado.setBounds(43, 177, 230, 23);
 		mensagemGravado.setVisible(false);
 		contentPane.add(mensagemGravado);
 
-		JLabel mensagemVazio = new JLabel("CAMPO VAZIO!");
+		mensagemVazio = new JLabel("CAMPO VAZIO!");
 		mensagemVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		mensagemVazio.setBounds(43, 177, 230, 23);
 		mensagemVazio.setVisible(false);
 		contentPane.add(mensagemVazio);
-		
-		JButton btnFechar = new JButton("Fechar");
+
+		btnGravar = new JButton("Gravar");
+		btnGravar.setBounds(288, 166, 97, 34);
+		contentPane.add(btnGravar);
+		btnGravar.setEnabled(false);
+
+		btnFechar = new JButton("Fechar");
 		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
 		btnFechar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnFechar);
-		
-		
+
 		SetorCtrl RsContrl = new SetorCtrl(id_setor, txtDigitado, mensagemGravado, mensagemVazio, btnGravar);
-		
-		//Essa linha abaixo será excluida quando o menu estiver pronto pois será um evento do botão que chama este Form***
-        RsContrl.gerarIdSetor();
-        
+
+		// Essa linha abaixo será excluida quando o menu estiver pronto pois
+		// será um evento do botão que chama este Form***
+		RsContrl.gerarIdSetor();
+
 		txtDigitado.addMouseListener(RsContrl.limpaCampo);
 		txtDigitado.addActionListener(RsContrl.gravarSetor);
 		txtDigitado.addKeyListener(RsContrl.ativaGravar);
