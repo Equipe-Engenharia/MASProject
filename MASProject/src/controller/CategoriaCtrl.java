@@ -20,7 +20,7 @@ import persistence.CategoriaArquivo;
 public class CategoriaCtrl implements ComponentListener {
 
 	private JTextField idCategoria, nomeCategoria;
-	private JButton btGravar;
+	private JButton btGravar, btnApagar, btnIdPesquisa, btnCategoriaPesquisa;
 	private JLabel msgGravado, msgVazio;
 	private List<Categoria> categorias;
 	private static int contador = 1;
@@ -37,6 +37,21 @@ public class CategoriaCtrl implements ComponentListener {
 		this.categorias = new ArrayList<Categoria>();
 		
 		lerCategoria();
+	}
+	
+	public CategoriaCtrl(JTextField tfIdCategoria, JTextField tfNomeCategoria,
+			JButton btnApagar, JButton btnGravarEdit, JLabel msgGravar,
+			JLabel msgVazio, JButton btnIdPesquisa,
+			JButton btnCategoriaPesquisa) {
+		
+		this.idCategoria = tfIdCategoria;
+		this.btGravar = btnGravarEdit;
+		this.btnApagar = btnApagar;
+		this.btnCategoriaPesquisa = btnCategoriaPesquisa;
+		this.btnIdPesquisa = btnIdPesquisa;
+		this.nomeCategoria = tfNomeCategoria;
+		this.msgGravado = msgGravar;
+		this.msgVazio = msgVazio;
 	}
 
 	public void gerarIdSetor() {
@@ -103,6 +118,14 @@ public class CategoriaCtrl implements ComponentListener {
 			gravarCategoria();
 		}
 	};
+	
+	public ActionListener fecharCategoria = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
+	};
 
 	public MouseListener limpaCampo = new MouseListener() {
 
@@ -135,20 +158,98 @@ public class CategoriaCtrl implements ComponentListener {
 			msgVazio.setVisible(false);
 		}
 	};
+	
+	//Manipulaçao da Tela de CategoriaEdit
+	
+	public void pesquisaIdCat(){
+		
+		/*
+		 	if (!nomeCategoria.getText().isEmpty() || !idCategoria.getText().isEmpty()) {
+			msgGravado.setText(nomeCategoria.getText() + " localizado com sucesso!");
+			msgGravado.setVisible(true);
+			nomeCategoria.setText(null);
+		} else {
+			msgGravado.setVisible(false);
+			msgVazio.setText("Por favor, use um dos campos de Pesquisa!");
+			msgVazio.setVisible(true);
+		}
+		*/
+	}
+	
+	public void pesquisarNomeCat(){
+		
+	}
+	
+	public void apagarCategoria(){
+		/*
+		 	if (!nomeCategoria.getText().isEmpty()) {
+			msgGravado.setText(nomeCategoria.getText() + " excluÃ­do com sucesso!");
+			msgGravado.setVisible(true);
+			nomeCategoria.setText(null);
+		} else {
+			msgGravado.setVisible(false);
+			msgVazio.setVisible(true);
+		}
+		
+		*/
+
+	}
+	
+	public void gravarCategoriaEdit(){
+		
+	}
+	
+	public ActionListener pesquisaIdCat = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			pesquisaIdCat();
+		}
+	};
+	
+	public ActionListener pesquisarNomeCat = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			pesquisarNomeCat();
+		}
+	};
+	
+	public ActionListener apagarCategoria = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			apagarCategoria();
+		}
+	};
+	
+	public ActionListener gravarCategoriaEdit = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			gravarCategoriaEdit();
+		}
+	};
+
 
 	@Override
 	public void componentHidden(ComponentEvent e) {
+		
 	}
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
+		
 	}
 
 	@Override
 	public void componentResized(ComponentEvent e) {
+		
 	}
 
 	@Override
 	public void componentShown(ComponentEvent e) {
+		
 	}
+
 }

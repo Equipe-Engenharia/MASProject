@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import controller.CategoriaEditCtrl;
+import controller.CategoriaCtrl;
 
 public class FrmCategoriaEdit extends JFrame {
 
@@ -21,8 +21,10 @@ public class FrmCategoriaEdit extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField idCategoria;
-	private JTextField txtCategoria;
+	private JTextField tfIdCategoria;
+	private JTextField tfNomeCategoria;
+	private JButton btnApagar, btnGravarEdit, btnFechar, btnIdPesquisa, btnCategoriaPesquisa;
+	private JLabel msgGravar, msgVazio; 
 	
 
 	/**
@@ -62,37 +64,37 @@ public class FrmCategoriaEdit extends JFrame {
 		lblEditCategoria.setBounds(67, 93, 100, 16);
 		contentPane.add(lblEditCategoria);
 		
-		idCategoria = new JTextField();
-		idCategoria.setToolTipText("Digite o ID do Artista…");
-		idCategoria.setBounds(180, 54, 178, 20);
-		contentPane.add(idCategoria);
-		idCategoria.setColumns(10);
+		tfIdCategoria = new JTextField();
+		tfIdCategoria.setToolTipText("Digite o ID do Artista…");
+		tfIdCategoria.setBounds(180, 54, 178, 20);
+		contentPane.add(tfIdCategoria);
+		tfIdCategoria.setColumns(10);
 		
-		txtCategoria = new JTextField();
-		txtCategoria.setToolTipText("Digite o nome do material");
-		txtCategoria.setBounds(178, 93, 178, 28);
-		contentPane.add(txtCategoria);
-		txtCategoria.setColumns(10);
+		tfNomeCategoria = new JTextField();
+		tfNomeCategoria.setToolTipText("Digite o nome do material");
+		tfNomeCategoria.setBounds(178, 93, 178, 28);
+		contentPane.add(tfNomeCategoria);
+		tfNomeCategoria.setColumns(10);
 		
-		JLabel msgGravar = new JLabel("");
+		msgGravar = new JLabel("");
 		msgGravar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
 		msgGravar.setBounds(36, 141, 230, 23);
 		msgGravar.setVisible(false);
 		contentPane.add(msgGravar);
 
-		JLabel msgVazio = new JLabel("CAMPO VAZIO!");
+		msgVazio = new JLabel("CAMPO VAZIO!");
 		msgVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		msgVazio.setBounds(36, 142, 322, 23);
 		msgVazio.setVisible(false);
 		contentPane.add(msgVazio);
 		
-		JButton btnGravar = new JButton("Gravar");
-		btnGravar.setEnabled(false);
-		btnGravar.setBounds(159, 166, 117, 34);
-		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		contentPane.add(btnGravar);
+		btnGravarEdit = new JButton("Gravar");
+		btnGravarEdit.setEnabled(false);
+		btnGravarEdit.setBounds(159, 166, 117, 34);
+		btnGravarEdit.setIcon(new ImageIcon("../MASProject/icons/save.png"));
+		contentPane.add(btnGravarEdit);
 		
-		JButton btnApagar = new JButton("Apagar");
+		btnApagar = new JButton("Apagar");
 		btnApagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -102,37 +104,31 @@ public class FrmCategoriaEdit extends JFrame {
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
 		
-		JButton btnFechar = new JButton("Fechar");
-		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
+		btnFechar = new JButton("Fechar");
 		btnFechar.setBounds(397, 166, 97, 34);
 		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
 		contentPane.add(btnFechar);
 		
-		JButton btnPesquisaId = new JButton(" Busca ID");
-		btnPesquisaId.setToolTipText("Use o campo e clique para realizar a busca por número ID");
-		btnPesquisaId.setBounds(377, 47, 117, 34);
-		btnPesquisaId.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		contentPane.add(btnPesquisaId);
+		btnIdPesquisa = new JButton(" Busca ID");
+		btnIdPesquisa.setToolTipText("Use o campo e clique para realizar a busca por número ID");
+		btnIdPesquisa.setBounds(377, 47, 117, 34);
+		btnIdPesquisa.setIcon(new ImageIcon("../MASProject/icons/search.png"));
+		contentPane.add(btnIdPesquisa);
 		
-		JButton btnPesquisaCategoria = new JButton(" Busca Categoria");
-		btnPesquisaCategoria.setToolTipText("Use o campo e clique para realizar a busca por nome da Categoria");
-		btnPesquisaCategoria.setBounds(376, 90, 117, 34);
-		btnPesquisaCategoria.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		contentPane.add(btnPesquisaCategoria);
+		btnCategoriaPesquisa = new JButton(" Busca Categoria");
+		btnCategoriaPesquisa.setToolTipText("Use o campo e clique para realizar a busca por nome da Categoria");
+		btnCategoriaPesquisa.setBounds(376, 90, 117, 34);
+		btnCategoriaPesquisa.setIcon(new ImageIcon("../MASProject/icons/search.png"));
+		contentPane.add(btnCategoriaPesquisa);
 		
-		CategoriaEditCtrl ctrlADCategoria = new CategoriaEditCtrl(idCategoria, txtCategoria, btnApagar, btnGravar, msgGravar, msgVazio);
+		CategoriaCtrl ctrlCategoria = new CategoriaCtrl(tfIdCategoria, tfNomeCategoria, btnApagar, btnGravarEdit, msgGravar, msgVazio, btnIdPesquisa, btnCategoriaPesquisa);
 		
-		btnPesquisaId.addActionListener(ctrlADCategoria.pesquisarCategoria);
-		btnPesquisaCategoria.addActionListener(ctrlADCategoria.pesquisarCategoria);
-		btnApagar.addActionListener(ctrlADCategoria.apagarCategoria);
-		btnGravar.addActionListener(ctrlADCategoria.gravarCategoria);
-		idCategoria.addMouseListener(ctrlADCategoria.limpaCampo);
-		txtCategoria.addMouseListener(ctrlADCategoria.limpaCampo);
-		txtCategoria.addActionListener(ctrlADCategoria.gravarCategoria);
+		btnIdPesquisa.addActionListener(ctrlCategoria.pesquisaIdCat);
+		btnCategoriaPesquisa.addActionListener(ctrlCategoria.pesquisarNomeCat);
+		btnApagar.addActionListener(ctrlCategoria.apagarCategoria);
+		btnGravarEdit.addActionListener(ctrlCategoria.gravarCategoriaEdit);
+		btnFechar.addActionListener(ctrlCategoria.fecharCategoria);
+
 	}
 }
 
