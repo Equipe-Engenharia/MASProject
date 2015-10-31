@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import controller.MaterialEditCtrl;
+import controller.MaterialCtrl;
 
 public class FrmMaterialEdit extends JFrame {
 
@@ -130,7 +130,7 @@ public class FrmMaterialEdit extends JFrame {
 		btnPesquisaMaterial.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnPesquisaMaterial);
 		
-		MaterialEditCtrl ctrlADMaterial = new MaterialEditCtrl(idMaterial, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravar, msgVazio);
+		MaterialCtrl ctrlADMaterial = new MaterialCtrl(idMaterial, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravar, msgVazio);
 		
 		ctrlADMaterial.preencherComboBoxCategoria();
 		btnPesquisaId.addActionListener(ctrlADMaterial.pesquisarMaterial);

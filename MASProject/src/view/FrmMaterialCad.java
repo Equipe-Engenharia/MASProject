@@ -109,7 +109,9 @@ public class FrmMaterialCad extends JFrame {
 		btnFechar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnFechar);
 		
-		MaterialCtrl ctrlMaterial = new MaterialCtrl(idMaterial, cbCategoria, txtMaterial, btnGravar, msgGravado, msgVazio);
+		JButton btnApagar = new JButton("Apagar");
+		
+		MaterialCtrl ctrlMaterial = new MaterialCtrl(idMaterial, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravado, msgVazio);
 		
 		ctrlMaterial.gerarIdSetor();
 		ctrlMaterial.preencherComboBoxCategoria();
