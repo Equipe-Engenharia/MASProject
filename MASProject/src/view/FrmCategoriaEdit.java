@@ -23,7 +23,7 @@ public class FrmCategoriaEdit extends JFrame {
 	private JPanel contentPane;
 	private JTextField tfIdCategoria;
 	private JTextField tfNomeCategoria;
-	private JButton btnApagar, btnGravarEdit, btnFechar, btnIdPesquisa, btnCategoriaPesquisa;
+	private JButton btnApagar, btnGravarEdit, btnIdPesquisa, btnCategoriaPesquisa;
 	private JLabel msgGravar, msgVazio; 
 	
 
@@ -90,7 +90,7 @@ public class FrmCategoriaEdit extends JFrame {
 		
 		btnGravarEdit = new JButton("Gravar");
 		btnGravarEdit.setEnabled(false);
-		btnGravarEdit.setBounds(159, 166, 117, 34);
+		btnGravarEdit.setBounds(288, 166, 97, 34);
 		btnGravarEdit.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		contentPane.add(btnGravarEdit);
 		
@@ -100,14 +100,9 @@ public class FrmCategoriaEdit extends JFrame {
 			}
 		});
 		btnApagar.setEnabled(false);
-		btnApagar.setBounds(288, 166, 97, 34);
+		btnApagar.setBounds(397, 166, 97, 34);
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
-		
-		btnFechar = new JButton("Fechar");
-		btnFechar.setBounds(397, 166, 97, 34);
-		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
-		contentPane.add(btnFechar);
 		
 		btnIdPesquisa = new JButton(" Busca ID");
 		btnIdPesquisa.setToolTipText("Use o campo e clique para realizar a busca por número ID");
@@ -127,7 +122,6 @@ public class FrmCategoriaEdit extends JFrame {
 		btnCategoriaPesquisa.addActionListener(ctrlCategoria.pesquisarNomeCat);
 		btnApagar.addActionListener(ctrlCategoria.apagarCategoria);
 		btnGravarEdit.addActionListener(ctrlCategoria.gravarCategoriaEdit);
-		btnFechar.addActionListener(ctrlCategoria.fecharCategoria);
 
 	}
 }

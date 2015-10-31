@@ -19,7 +19,7 @@ public class FrmSetorEdit extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtDigitadoN, txtDigiteId;
-	private JButton btnGravar,  btnPesqIdSet, btnPesqNomSet, btnApagar, btnFechar;
+	private JButton btnGravar,  btnPesqIdSet, btnPesqNomSet, btnApagar;
 	private JLabel lblDigiteUmDos, lblIdDoSetor, lblNomeDoSetor, mensagemGravado, mensagemVazio  ;
 
 	/**
@@ -79,7 +79,7 @@ public class FrmSetorEdit extends JFrame {
 		txtDigitadoN.setColumns(10);
 		
 		btnGravar = new JButton("Gravar");
-		btnGravar.setBounds(159, 166, 117, 34);
+		btnGravar.setBounds(288, 166, 97, 34);
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		contentPane.add(btnGravar);
 		btnGravar.setEnabled(false);
@@ -96,14 +96,9 @@ public class FrmSetorEdit extends JFrame {
 
 		btnApagar = new JButton("Apagar");
 		btnApagar.setEnabled(false);
-		btnApagar.setBounds(288, 166, 97, 34);
+		btnApagar.setBounds(397, 166, 97, 34);
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
-
-		btnFechar = new JButton("Fechar");
-		btnFechar.setBounds(397, 166, 97, 34);
-		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
-		contentPane.add(btnFechar);
 
 		txtDigiteId = new JTextField();
 		txtDigiteId.setToolTipText("Digite o ID do setor...");
@@ -122,7 +117,6 @@ public class FrmSetorEdit extends JFrame {
 		btnPesqNomSet.addActionListener(RsCtrl.pesquisaNomeSetor);
 		btnGravar.addActionListener(RsCtrl.gravarAlteracoesSetor);
 		btnApagar.addActionListener(RsCtrl.excluirSetor);
-		btnFechar.addActionListener(RsCtrl.fecharTela);
 
 	}
 

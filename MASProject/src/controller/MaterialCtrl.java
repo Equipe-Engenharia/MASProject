@@ -177,15 +177,6 @@ public class MaterialCtrl implements ComponentListener {
 		}
 	};
 	
-public ActionListener fecharTela = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			FrmMaterialCad frame = new FrmMaterialCad();
-			frame.setVisible(false);
-		}
-	};
-	
 	public ActionListener gravarMaterial = new ActionListener() {
 
 		@Override

@@ -87,18 +87,8 @@ public class FrmArtistaCad extends JFrame {
 		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setEnabled(false);
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnGravar.setBounds(288, 166, 97, 34);
+		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
-		
-		JButton btnFechar = new JButton("Fechar");
-		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
-		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});				
-		btnFechar.setBounds(397, 166, 97, 34);
-		contentPane.add(btnFechar);
 		
 		ArtistaCtrl ctrlArtista = new ArtistaCtrl(idArtista, txtArtista, btnGravar, msgGravado, msgVazio);
 		

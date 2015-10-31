@@ -24,7 +24,7 @@ public class FrmCategoriaCad extends JFrame {
 	private JPanel contentPane;
 	private JTextField tfNomeCategoria;
 	private JTextField tfIdCategoria;
-	private JButton btnGravar, btnFechar;
+	private JButton btnGravar;
 	private JLabel msgGravado, msgVazio;
 	/**
 	 * Launch the application.
@@ -93,26 +93,14 @@ public class FrmCategoriaCad extends JFrame {
 		btnGravar = new JButton("Gravar");
 		btnGravar.setEnabled(false);
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnGravar.setBounds(288, 166, 97, 34);
+		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
-		
-		btnFechar = new JButton("Fechar");
-		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
-/*		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-*/				
-		btnFechar.setBounds(397, 166, 97, 34);
-		contentPane.add(btnFechar);
 		
 		CategoriaCtrl ctrlCategoria = new CategoriaCtrl(tfIdCategoria, tfNomeCategoria, btnGravar, msgGravado, msgVazio);
 		
-		ctrlCategoria.gerarIdSetor(); //LEMBRAR DE APAGAR ESSA LINHA APOS A CRIAÇAO DO MENU
+		ctrlCategoria.gerarIdSetor(); //LEMBRAR DE APAGAR ESSA LINHA APOS A CRIAï¿½AO DO MENU
 		
 		btnGravar.addActionListener(ctrlCategoria.gravarCategoria);
-		btnFechar.addActionListener(ctrlCategoria.fecharCategoria);
 		tfNomeCategoria.addMouseListener(ctrlCategoria.limpaCampo);
 		tfNomeCategoria.addActionListener(ctrlCategoria.gravarCategoria);
 

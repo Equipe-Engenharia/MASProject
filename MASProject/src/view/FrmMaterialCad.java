@@ -1,9 +1,6 @@
 package view;
 
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -99,19 +96,14 @@ public class FrmMaterialCad extends JFrame {
 		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setEnabled(false);
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnGravar.setBounds(288, 166, 97, 34);
+		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
 		
-		JButton btnFechar = new JButton("Fechar");
-		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));		
-		btnFechar.setBounds(397, 166, 97, 34);
-		contentPane.add(btnFechar);
-		
-		btnFechar.addActionListener(new ActionListener() {
+		/*btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
-		});
+		});*/
 		
 		JButton btnApagar = new JButton("Apagar");
 		
@@ -120,7 +112,6 @@ public class FrmMaterialCad extends JFrame {
 		ctrlMaterial.gerarId();
 		ctrlMaterial.preencherComboBoxCategoria();
 		btnGravar.addActionListener(ctrlMaterial.gravarMaterial);
-		btnFechar.addActionListener(ctrlMaterial.fecharTela);
 		txtMaterial.addMouseListener(ctrlMaterial.limpaCampo);
 		txtMaterial.addActionListener(ctrlMaterial.gravarMaterial);
 	}

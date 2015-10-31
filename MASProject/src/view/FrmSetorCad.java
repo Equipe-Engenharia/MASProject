@@ -22,7 +22,7 @@ public class FrmSetorCad extends JFrame {
 	private JTextField txtDigitado;
 	private JTextField id_setor;
 	private JLabel lblIdDoSetor, lblNomeDoSetor, mensagemGravado, mensagemVazio;
-	private JButton btnGravar, btnFechar;
+	private JButton btnGravar;
 
 	/**
 	 * Launch the application.
@@ -89,14 +89,9 @@ public class FrmSetorCad extends JFrame {
 		contentPane.add(mensagemVazio);
 
 		btnGravar = new JButton("Gravar");
-		btnGravar.setBounds(288, 166, 97, 34);
+		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
 		btnGravar.setEnabled(false);
-
-		btnFechar = new JButton("Fechar");
-		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
-		btnFechar.setBounds(397, 166, 97, 34);
-		contentPane.add(btnFechar);
 
 		SetorCtrl RsContrl = new SetorCtrl(id_setor, txtDigitado, mensagemGravado, mensagemVazio, btnGravar);
 
@@ -108,7 +103,6 @@ public class FrmSetorCad extends JFrame {
 		txtDigitado.addActionListener(RsContrl.gravarSetor);
 		txtDigitado.addKeyListener(RsContrl.ativaGravar);
 		btnGravar.addActionListener(RsContrl.gravarSetor);
-		btnFechar.addActionListener(RsContrl.fecharTela);
 
 	}
 }

@@ -106,7 +106,7 @@ public class FrmMaterialEdit extends JFrame {
 		
 		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setEnabled(false);
-		btnGravar.setBounds(159, 166, 117, 34);
+		btnGravar.setBounds(288, 166, 97, 34);
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		contentPane.add(btnGravar);
 		
@@ -116,19 +116,9 @@ public class FrmMaterialEdit extends JFrame {
 			}
 		});
 		btnApagar.setEnabled(false);
-		btnApagar.setBounds(288, 166, 97, 34);
+		btnApagar.setBounds(397, 166, 97, 34);
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
-		
-		JButton btnFechar = new JButton("Fechar");
-		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		btnFechar.setBounds(397, 166, 97, 34);
-		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
-		contentPane.add(btnFechar);
 		
 		MaterialCtrl ctrlMaterial = new MaterialCtrl(idMaterial, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravar, msgVazio);
 		

@@ -85,7 +85,7 @@ public class FrmArtistaEdit extends JDialog{
 		
 		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setEnabled(false);
-		btnGravar.setBounds(159, 166, 117, 34);
+		btnGravar.setBounds(288, 166, 97, 34);
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		contentPane.add(btnGravar);
 		
@@ -95,19 +95,9 @@ public class FrmArtistaEdit extends JDialog{
 			}
 		});
 		btnApagar.setEnabled(false);
-		btnApagar.setBounds(288, 166, 97, 34);
+		btnApagar.setBounds(397, 166, 97, 34);
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
-		
-		JButton btnFechar = new JButton("Fechar");
-		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});
-		btnFechar.setBounds(397, 166, 97, 34);
-		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
-		contentPane.add(btnFechar);
 		
 		JButton btnPesquisaId = new JButton(" Busca ID");
 		btnPesquisaId.setToolTipText("Use o campo e clique para realizar a busca por número ID");
