@@ -2,9 +2,14 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,11 +21,9 @@ import persistence.SetorArquivo;
 public class SetorCtrl {
 
 	private JLabel mensagemGravado, mensagemVazio;
-	private JTextField nomeset, idsetor;
-	private JButton btnGravar;
+	private JTextField nomeset, idsetor, txtDigiteId, txtDigitadoN;
+	private JButton btnGravar,btnGravarEdit, btnPesqIdSet, btnPesqNomSet, btnApagar;
 	private Setor setor = new Setor();
-	private static int contador = 1;
-	private String registro_set[] = new String[2];
 	private ArquivosCtrl arqController = new ArquivosCtrl();
 
 	public SetorCtrl(JTextField id_setor, JTextField nomeDigit, JLabel mensagemGravado, JLabel mensagemVazio,
@@ -31,12 +34,23 @@ public class SetorCtrl {
 		this.nomeset = nomeDigit;
 		this.btnGravar = btnGravar;
 	}
+	
+	public SetorCtrl(JTextField txtDigiteId, JTextField txtDigitadoN, JButton btnPesqIdSet, JButton btnPesqNomSet,
+			JButton btnApagar, JButton btnGravarEdit){
+		this.txtDigiteId = txtDigiteId;
+		this.txtDigitadoN = txtDigitadoN;
+		this.btnPesqIdSet = btnPesqIdSet;
+		this.btnPesqNomSet = btnPesqNomSet;
+		this.btnApagar = btnApagar;
+		this.btnGravarEdit = btnGravarEdit;
+	}
 
 	public void gerarIdSetor() {
-		//Chamada deste metodo no gravaSetor e no FormRegisSetor
-		GeradordeID geraID = new GeradordeID();
-	
-		idsetor.setText("SET"+geraID.getIndice());
+		// Chamada deste metodo no gravaSetor e no FormRegisSetor
+		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
+		Date date = new Date();
+		String id = (dateFormat.format(date));
+		idsetor.setText("SET" + id);
 	}
 
 	public void gravaSetor() {
@@ -65,16 +79,14 @@ public class SetorCtrl {
 	}
 
 	public void excluiSetor() {
-		// teste
-		registro_set[1] = setor.getNome();
-		registro_set[0] = setor.getIdentificacao();
 
-		try {
-			arqController.excluiDadosArquivo("../MASProject/dados", "setores", registro_set);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// try {
+		// arqController.excluiDadosArquivo("../MASProject/dados", "setores",
+		// registro_set);
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 	}
 
 	public ActionListener gravarSetor = new ActionListener() {
@@ -82,6 +94,7 @@ public class SetorCtrl {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
+
 			gravaSetor();
 			nomeset.setText(null);
 		}
@@ -93,6 +106,40 @@ public class SetorCtrl {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			excluiSetor();
+		}
+	};
+
+	public ActionListener fecharTela = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			System.exit(0);
+		}
+	};
+
+	public KeyListener ativaGravar = new KeyListener() {
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if (!nomeset.getText().isEmpty()) {
+				btnGravar.setEnabled(true);
+			} else {
+				btnGravar.setEnabled(false);
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+
 		}
 	};
 
@@ -126,15 +173,69 @@ public class SetorCtrl {
 		public void mouseClicked(MouseEvent e) {
 			// se for clicado pela primeira vez o campo fica limpo para
 			// preencher com o nome do setor
-			if (contador == 1) {
-				nomeset.setText(null);
-				contador += 1;
-			}
+
 			// para que a mensagem nï¿½o fique visivel a todo momento
 			btnGravar.setEnabled(true);
 			mensagemGravado.setVisible(false);
 			mensagemVazio.setVisible(false);
 		}
 	};
+	
+	
+	//Tela de edição
+	
+	
+	public void pesquisaIDSetor(){
+		 
+	 }
+	 
+	 public void pesquisaNomeSetor(){
+		 
+	 }
+	 
+	 public void gravarAlteracoesSetor(){
+		 
+	 }
+	 
+	 public void excluirSetor(){
+		 
+	 }
+	 
+	 public ActionListener pesquisaIDSetor = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			pesquisaIDSetor();
+		}
+	};
+
+	public ActionListener pesquisaNomeSetor = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			pesquisaNomeSetor();
+		}
+	};
+
+	public ActionListener gravarAlteracoesSetor = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			gravarAlteracoesSetor();
+		}
+	};
+
+	public ActionListener excluirSetor = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			excluirSetor();
+		}
+	};
+	 
 
 }

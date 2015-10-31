@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controller.SetorCtrl;
 import controller.SetorEditCtrl;
 
 public class FrmSetorEdit extends JFrame {
@@ -23,7 +24,7 @@ public class FrmSetorEdit extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtDigitadoN;
-	private JTextField txtDigiteOId;
+	private JTextField txtDigiteId;
 
 	/**
 	 * Launch the application.
@@ -113,23 +114,23 @@ public class FrmSetorEdit extends JFrame {
 		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
 		contentPane.add(btnFechar);
 		
-		txtDigiteOId = new JTextField();
-		txtDigiteOId.setToolTipText("Digite o ID do setor...");
-		txtDigiteOId.setBounds(180, 54, 178, 20);
-		contentPane.add(txtDigiteOId);
-		txtDigiteOId.setColumns(10);
+		txtDigiteId = new JTextField();
+		txtDigiteId.setToolTipText("Digite o ID do setor...");
+		txtDigiteId.setBounds(180, 54, 178, 20);
+		contentPane.add(txtDigiteId);
+		txtDigiteId.setColumns(10);
 		
 		JLabel lblDigiteUmDos = new JLabel("Digite em um dos campos e aperte o bot\u00E3o para pesquisar...");
 		lblDigiteUmDos.setForeground(Color.RED);
 		lblDigiteUmDos.setBounds(10, 11, 362, 14);
 		contentPane.add(lblDigiteUmDos);
 		
-		SetorEditCtrl ADSetor = new SetorEditCtrl(txtDigiteOId,txtDigitadoN,btnPesqIdSet,btnPesqNomSet, btnApagar,btnGravar);
+		SetorCtrl RsCtrl = new SetorCtrl(txtDigiteId, txtDigitadoN, btnPesqIdSet, btnPesqNomSet, btnApagar, btnGravar);
 	
-		btnPesqIdSet.addActionListener(ADSetor.pesquisaIDSetor);
-		btnPesqNomSet.addActionListener(ADSetor.pesquisaNomeSetor);
-		btnGravar.addActionListener(ADSetor.gravarAlteracoesSetor);
-		btnApagar.addActionListener(ADSetor.excluirSetor);
+		btnPesqIdSet.addActionListener(RsCtrl.pesquisaIDSetor);
+		btnPesqNomSet.addActionListener(RsCtrl.pesquisaNomeSetor);
+		btnGravar.addActionListener(RsCtrl.gravarAlteracoesSetor);
+		btnApagar.addActionListener(RsCtrl.excluirSetor);
 		
 	}
 	

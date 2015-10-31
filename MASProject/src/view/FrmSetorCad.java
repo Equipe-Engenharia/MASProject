@@ -96,11 +96,6 @@ public class FrmSetorCad extends JFrame {
 		
 		JButton btnFechar = new JButton("Fechar");
 		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
-		btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});				
 		btnFechar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnFechar);
 		
@@ -112,7 +107,9 @@ public class FrmSetorCad extends JFrame {
         
 		txtDigitado.addMouseListener(RsContrl.limpaCampo);
 		txtDigitado.addActionListener(RsContrl.gravarSetor);
+		txtDigitado.addKeyListener(RsContrl.ativaGravar);
 		btnGravar.addActionListener(RsContrl.gravarSetor);
+		btnFechar.addActionListener(RsContrl.fecharTela);
 
 	}
 }
