@@ -22,8 +22,10 @@ public class FrmCategoriaCad extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtCategoria;
-	private JTextField idCategoria;
+	private JTextField tfNomeCategoria;
+	private JTextField tfIdCategoria;
+	private JButton btnGravar, btnFechar;
+	private JLabel msgGravado, msgVazio;
 	/**
 	 * Launch the application.
 	 */
@@ -62,53 +64,57 @@ public class FrmCategoriaCad extends JFrame {
 		lblNovaCategoria.setBounds(74, 87, 107, 16);
 		contentPane.add(lblNovaCategoria);
 		
-		idCategoria = new JTextField();
-		idCategoria.setEditable(false);
-		idCategoria.setEnabled(false);
-		idCategoria.setBounds(181, 49, 178, 20);
-		idCategoria.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(idCategoria);
-		idCategoria.setColumns(10);
+		tfIdCategoria = new JTextField();
+		tfIdCategoria.setEditable(false);
+		tfIdCategoria.setEnabled(false);
+		tfIdCategoria.setBounds(181, 49, 178, 20);
+		tfIdCategoria.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(tfIdCategoria);
+		tfIdCategoria.setColumns(10);
 		
-		txtCategoria = new JTextField();
-		txtCategoria.setToolTipText("Digite o novo Artista…");
-		txtCategoria.setBounds(180, 81, 178, 28);
-		contentPane.add(txtCategoria);
-		txtCategoria.setColumns(10);
+		tfNomeCategoria = new JTextField();
+		tfNomeCategoria.setToolTipText("Digite o novo Artista…");
+		tfNomeCategoria.setBounds(180, 81, 178, 28);
+		contentPane.add(tfNomeCategoria);
+		tfNomeCategoria.setColumns(10);
 		
-		JLabel msgGravado = new JLabel("");
+		msgGravado = new JLabel("");
 		msgGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
 		msgGravado.setBounds(43, 177, 230, 23);
 		msgGravado.setVisible(false);
 		contentPane.add(msgGravado);
 
-		JLabel msgVazio = new JLabel("CAMPO VAZIO!");
+		msgVazio = new JLabel("CAMPO VAZIO!");
 		msgVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		msgVazio.setBounds(43, 177, 192, 23);
 		msgVazio.setVisible(false);
 		contentPane.add(msgVazio);
 
-		JButton btnGravar = new JButton("Gravar");
+		btnGravar = new JButton("Gravar");
 		btnGravar.setEnabled(false);
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.setBounds(288, 166, 97, 34);
 		contentPane.add(btnGravar);
 		
-		JButton btnFechar = new JButton("Fechar");
+		btnFechar = new JButton("Fechar");
 		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
-		btnFechar.addActionListener(new ActionListener() {
+/*		btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
-		});				
+		});
+*/				
 		btnFechar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnFechar);
 		
-		CategoriaCtrl ctrlCategoria = new CategoriaCtrl(idCategoria, txtCategoria, btnGravar, msgGravado, msgVazio);
+		CategoriaCtrl ctrlCategoria = new CategoriaCtrl(tfIdCategoria, tfNomeCategoria, btnGravar, msgGravado, msgVazio);
 		
-		ctrlCategoria.gerarIdSetor();
+		ctrlCategoria.gerarIdSetor(); //LEMBRAR DE APAGAR ESSA LINHA APOS A CRIA�AO DO MENU
+		
 		btnGravar.addActionListener(ctrlCategoria.gravarCategoria);
-		txtCategoria.addMouseListener(ctrlCategoria.limpaCampo);
-		txtCategoria.addActionListener(ctrlCategoria.gravarCategoria);
+		btnFechar.addActionListener(ctrlCategoria.fecharCategoria);
+		tfNomeCategoria.addMouseListener(ctrlCategoria.limpaCampo);
+		tfNomeCategoria.addActionListener(ctrlCategoria.gravarCategoria);
+
 	}
 }
