@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -16,34 +16,70 @@ import javax.swing.JTextField;
 
 import model.Categoria;
 import model.Material;
-import persistence.MaterialArquivoImpl;
+import persistence.MaterialArquivo;
 
-public class AlteraDelMaterialController implements ComponentListener {
+public class MaterialCtrl implements ComponentListener {
 
+	private JTextField idMaterial, nomeMaterial;
 	private JComboBox<String> cbCategoria;
-	private JTextField nomeMaterial, idMaterial;
-	private JButton btApagar, btGravar;
-	private JLabel msgGravar, msgVazio;
+	private JButton btGravar;
+	private JLabel msgGravado, msgVazio;
+	private List<Material> materiais;
 	private static int contador = 1;
+	private ArquivosCtrl ctrlArquivos;
 
-	private ArquivosController ctrlArquivos;
-
-	public AlteraDelMaterialController(JTextField idMaterial, JComboBox<String> cbCategoria, JTextField nomeMaterial,
-			JButton btnApagar, JButton btnGravar, JLabel msgGravar, JLabel msgVazio) {
+	public MaterialCtrl(JTextField idMaterial, JComboBox<String> cbCategoria, JTextField nomeMaterial,
+			JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
 
 		this.cbCategoria = cbCategoria;
 		this.idMaterial = idMaterial;
-		this.btApagar = btnApagar;
 		this.btGravar = btnGravar;
-		this.msgGravar = msgGravar;
+		this.msgGravado = msgGravado;
 		this.msgVazio = msgVazio;
 		this.nomeMaterial = nomeMaterial;
+		this.materiais = new ArrayList<Material>();
+		
+		lerMaterial();
+	}
 
+	public void gerarIdSetor() {
+		GeradordeID geraID = new GeradordeID();
+		idMaterial.setText("MAT"+geraID.getIndice());
+	}
+
+	public void lerMaterial() {
+		String linha = new String();
+		ArrayList<String> list = new ArrayList<>();
+
+		ctrlArquivos = new ArquivosCtrl();
+		try {
+			ctrlArquivos.leArquivo("../MASProject/dados/", "materiais");
+			linha = ctrlArquivos.getBuffer();
+			String[] listaMaterial = linha.split(";");
+			for (String s : listaMaterial) {
+				String text = s.replaceAll(".*:", "");
+				list.add(text);
+				if (s.contains("---")) {
+					Material material = new Material();
+					material.setId(list.get(0));
+					material.setNome(list.get(1));
+					material.setCategoria(list.get(2));
+					materiais.add(material);
+					list.clear();
+				}
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		/*for(Material m :  materiais){
+			System.out.println(m.getNome());
+		}*/
 	}
 
 	public void preencherComboBoxCategoria() {
 		String linha = new String();
-		ctrlArquivos = new ArquivosController();
+		ctrlArquivos = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<Categoria> listCategorias = new ArrayList<>();
 
@@ -71,7 +107,7 @@ public class AlteraDelMaterialController implements ComponentListener {
 
 	public void gravarMaterial() {
 		Material material = new Material();
-		MaterialArquivoImpl materialImpl = new MaterialArquivoImpl();
+		MaterialArquivo materialImpl = new MaterialArquivo();
 
 		material.setId(idMaterial.getText());
 		material.setNome(nomeMaterial.getText());
@@ -83,57 +119,15 @@ public class AlteraDelMaterialController implements ComponentListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			msgGravar.setText(nomeMaterial.getText() + " salvo com sucesso!");
-			msgGravar.setVisible(true);
+			msgGravado.setText(nomeMaterial.getText() + " salvo com sucesso!");
+			msgGravado.setVisible(true);
 			nomeMaterial.setText(null);
+			gerarIdSetor();
 		} else {
-			msgGravar.setVisible(false);
+			msgGravado.setVisible(false);
 			msgVazio.setVisible(true);
 		}
 	}
-
-	public void pesquisarMaterial() {
-
-		if (!nomeMaterial.getText().isEmpty() || !idMaterial.getText().isEmpty()) {
-			msgGravar.setText(nomeMaterial.getText() + " localizado com sucesso!");
-			msgGravar.setVisible(true);
-			nomeMaterial.setText(null);
-		} else {
-			msgGravar.setVisible(false);
-			msgVazio.setText("Por favor, use um dos campos de Pesquisa!");
-			msgVazio.setVisible(true);
-		}
-		
-	}
-
-	public void apagarMaterial() {
-		
-		if (!nomeMaterial.getText().isEmpty()) {
-			msgGravar.setText(nomeMaterial.getText() + " excluído com sucesso!");
-			msgGravar.setVisible(true);
-			nomeMaterial.setText(null);
-		} else {
-			msgGravar.setVisible(false);
-			msgVazio.setVisible(true);
-		}
-
-	}
-
-	public ActionListener pesquisarMaterial = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			pesquisarMaterial();
-		}
-	};
-	
-	public ActionListener apagarMaterial = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			apagarMaterial();
-		}
-	};
 
 	public ActionListener gravarMaterial = new ActionListener() {
 
@@ -165,14 +159,12 @@ public class AlteraDelMaterialController implements ComponentListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (contador == 1) {
-				idMaterial.setText(null);
 				nomeMaterial.setText(null);
 				contador += 1;
 			}
-
-			btApagar.setEnabled(true);
+			
 			btGravar.setEnabled(true);
-			msgGravar.setVisible(false);
+			msgGravado.setVisible(false);
 			msgVazio.setVisible(false);
 		}
 	};
@@ -192,4 +184,5 @@ public class AlteraDelMaterialController implements ComponentListener {
 	@Override
 	public void componentShown(ComponentEvent e) {
 	}
+
 }

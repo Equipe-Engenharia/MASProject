@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class ArquivosController implements IArquivosController {
+public class ArquivosCtrl implements ArquivosICtrl {
 
 	private StringBuffer buffer;
 

@@ -6,21 +6,24 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import controller.AlteraDelArtistaController; 
-  
-public class FormAlteraDelArtista extends JDialog{  
-  
+import controller.CategoriaEditCtrl;
+
+public class FrmCategoriaEdit extends JFrame {
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField idArtista;
-	private JTextField txtArtista;
+	private JTextField idCategoria;
+	private JTextField txtCategoria;
+	
 
 	/**
 	 * Launch the application.
@@ -29,7 +32,7 @@ public class FormAlteraDelArtista extends JDialog{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormAlteraDelMaterial frame = new FormAlteraDelMaterial();
+					FrmCategoriaEdit frame = new FrmCategoriaEdit();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,8 +44,8 @@ public class FormAlteraDelArtista extends JDialog{
 	/**
 	 * Create the frame.
 	 */
-	public FormAlteraDelArtista(FormAcervo parent, boolean modal) {
-		setTitle("Editar/Excluir Artista");
+	public FrmCategoriaEdit() {
+		setTitle("Editar/Excluir Categoria de Obra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
@@ -55,21 +58,21 @@ public class FormAlteraDelArtista extends JDialog{
 		lblIdArtista.setBounds(146, 56, 22, 16);
 		contentPane.add(lblIdArtista);
 		
-		JLabel lblEditArtista = new JLabel("Editar Artista");
-		lblEditArtista.setBounds(70, 93, 97, 16);
-		contentPane.add(lblEditArtista);
+		JLabel lblEditCategoria = new JLabel("Editar Categoria");
+		lblEditCategoria.setBounds(67, 93, 100, 16);
+		contentPane.add(lblEditCategoria);
 		
-		idArtista = new JTextField();
-		idArtista.setToolTipText("Digite o ID do Artista…");
-		idArtista.setBounds(180, 54, 178, 20);
-		contentPane.add(idArtista);
-		idArtista.setColumns(10);
+		idCategoria = new JTextField();
+		idCategoria.setToolTipText("Digite o ID do Artista…");
+		idCategoria.setBounds(180, 54, 178, 20);
+		contentPane.add(idCategoria);
+		idCategoria.setColumns(10);
 		
-		txtArtista = new JTextField();
-		txtArtista.setToolTipText("Digite o nome do material");
-		txtArtista.setBounds(178, 93, 178, 28);
-		contentPane.add(txtArtista);
-		txtArtista.setColumns(10);
+		txtCategoria = new JTextField();
+		txtCategoria.setToolTipText("Digite o nome do material");
+		txtCategoria.setBounds(178, 93, 178, 28);
+		contentPane.add(txtCategoria);
+		txtCategoria.setColumns(10);
 		
 		JLabel msgGravar = new JLabel("");
 		msgGravar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
@@ -115,21 +118,21 @@ public class FormAlteraDelArtista extends JDialog{
 		btnPesquisaId.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnPesquisaId);
 		
-		JButton btnPesquisaArtista = new JButton(" Busca Artista");
-		btnPesquisaArtista.setToolTipText("Use o campo e clique para realizar a busca por nome de Artista");
-		btnPesquisaArtista.setBounds(376, 90, 117, 34);
-		btnPesquisaArtista.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		contentPane.add(btnPesquisaArtista);
+		JButton btnPesquisaCategoria = new JButton(" Busca Categoria");
+		btnPesquisaCategoria.setToolTipText("Use o campo e clique para realizar a busca por nome da Categoria");
+		btnPesquisaCategoria.setBounds(376, 90, 117, 34);
+		btnPesquisaCategoria.setIcon(new ImageIcon("../MASProject/icons/search.png"));
+		contentPane.add(btnPesquisaCategoria);
 		
-		AlteraDelArtistaController ctrlADArtista = new AlteraDelArtistaController(idArtista, txtArtista, btnApagar, btnGravar, msgGravar, msgVazio);
+		CategoriaEditCtrl ctrlADCategoria = new CategoriaEditCtrl(idCategoria, txtCategoria, btnApagar, btnGravar, msgGravar, msgVazio);
 		
-		btnPesquisaId.addActionListener(ctrlADArtista.pesquisarArtista);
-		btnPesquisaArtista.addActionListener(ctrlADArtista.pesquisarArtista);
-		btnApagar.addActionListener(ctrlADArtista.apagarArtista);
-		btnGravar.addActionListener(ctrlADArtista.gravarArtista);
-		idArtista.addMouseListener(ctrlADArtista.limpaCampo);
-		txtArtista.addMouseListener(ctrlADArtista.limpaCampo);
-		txtArtista.addActionListener(ctrlADArtista.gravarArtista);
+		btnPesquisaId.addActionListener(ctrlADCategoria.pesquisarCategoria);
+		btnPesquisaCategoria.addActionListener(ctrlADCategoria.pesquisarCategoria);
+		btnApagar.addActionListener(ctrlADCategoria.apagarCategoria);
+		btnGravar.addActionListener(ctrlADCategoria.gravarCategoria);
+		idCategoria.addMouseListener(ctrlADCategoria.limpaCampo);
+		txtCategoria.addMouseListener(ctrlADCategoria.limpaCampo);
+		txtCategoria.addActionListener(ctrlADCategoria.gravarCategoria);
 	}
 }
-       
+

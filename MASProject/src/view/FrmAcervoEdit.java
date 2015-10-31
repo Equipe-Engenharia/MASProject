@@ -14,14 +14,18 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
-import controller.AcervoController;
-import controller.AlteraDelAcervoController;
+import controller.AcervoCtrl;
+import controller.AcervoEditCtrl;
 
-public class FormAlteraDelAcervo extends JFrame {
+public class FrmAcervoEdit extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
+	//private JTextField textField;
 	private JTextField nome_artist;
-	private JTextField nome_obra;
+	//private JTextField nome_obra;
 	private JTextField data_obra;
 	private JComboBox<String> cbCategoria;
 	private JComboBox<String> cbMaterial;
@@ -33,7 +37,7 @@ public class FormAlteraDelAcervo extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormAlteraDelAcervo frame = new FormAlteraDelAcervo();
+					FrmAcervoEdit frame = new FrmAcervoEdit();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +46,7 @@ public class FormAlteraDelAcervo extends JFrame {
 		});
 	}
 
-	public FormAlteraDelAcervo() {
+	public FrmAcervoEdit() {
 		setResizable(false);
 		setTitle("Excluir/Alterar Acervo");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -114,7 +118,7 @@ public class FormAlteraDelAcervo extends JFrame {
 		// contentPane.add(nome_obra);
 		// nome_obra.setColumns(10);
 
-		JComboBox cbObras = new JComboBox<String>();
+		JComboBox<String> cbObras = new JComboBox<String>();
 		
 		cbObras.setBounds(166, 58, 352, 20);
 		contentPane.add(cbObras);
@@ -199,10 +203,10 @@ public class FormAlteraDelAcervo extends JFrame {
 		btnExcluirImagem.setBounds(497, 299, 46, 35);
 		contentPane.add(btnExcluirImagem);
 
-		AcervoController Acontroller = new AcervoController(nome_artist,lblSelecImagem, cbObras, txtNovaObra, cbSetor, cbMaterial,
+		AcervoCtrl Acontroller = new AcervoCtrl(nome_artist,lblSelecImagem, cbObras, txtNovaObra, cbSetor, cbMaterial,
 				cbCategoria, comboStatus, data_obra, editor_descricao, msgGravado, msgVazio, textField_valor,btnPesquisaArtist,lblStatus);
 
-		AlteraDelAcervoController delAlteraAcervo = new AlteraDelAcervoController(nome_artist,lblSelecImagem, cbObras, txtNovaObra, cbSetor, cbMaterial,
+		AcervoEditCtrl delAlteraAcervo = new AcervoEditCtrl(nome_artist,lblSelecImagem, cbObras, txtNovaObra, cbSetor, cbMaterial,
 				cbCategoria, comboStatus, data_obra, editor_descricao, msgGravado, msgVazio, textField_valor,btnPesquisaArtist,lblStatus);
 
 		btnPesquisarImagem.addActionListener(delAlteraAcervo.inserir_imagem);

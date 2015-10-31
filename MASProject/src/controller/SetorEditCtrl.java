@@ -6,11 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-public class AlteraDelSetorController {
+public class SetorEditCtrl {
 	private JTextField txtDigiteOId, txtDigitadoN;
 	private JButton btnPesqIdSet, btnPesqNomSet, btnGravar, btnExcluir;
 
-	public AlteraDelSetorController(JTextField txtDigiteOId, JTextField txtDigitadoN, JButton btnPesqIdSet,
+	public SetorEditCtrl(JTextField txtDigiteOId, JTextField txtDigitadoN, JButton btnPesqIdSet,
 			JButton btnPesqNomSet, JButton btnGravar, JButton btnExcluir) {
 		this.txtDigiteOId = txtDigiteOId;
 		this.txtDigitadoN = txtDigitadoN;

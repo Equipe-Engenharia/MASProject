@@ -1,32 +1,55 @@
 package model;
 
 public class Obra {
-	private String nomeObra;
-	private String descricaoObra;
-	private String idObra;
+	private String id;
+	private Artista artista;
+	private String nome;
+	private Categoria categoria;
+	private Material material;
+	private String descricao;
 	private String imagem;
 	private String dataComposicao;
 	private boolean proprietario;
-	private Categoria categoria;
 	private String status;
-
-	private Material material;
-	private Artista artista;
 	private Setor setor;
 	private String preco;
 
 	
-	public String getNomeObra() {
-		return nomeObra;
+	public String getId() {
+		return id;
 	}
-	public void setNomeObra(String nomeObra) {
-		this.nomeObra = nomeObra;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getDescricaoObra() {
-		return descricaoObra;
+	public Artista getArtista() {
+		return artista;
 	}
-	public void setDescricaoObra(String descricaoObra) {
-		this.descricaoObra = descricaoObra;
+	public void setArtista(Artista artista) {
+		this.artista = artista;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNomeObra(String nome) {
+		this.nome = nome;
+	}
+	public Categoria getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+	public Material getMaterial() {
+		return material;
+	}
+	public void setMaterial(Material material) {
+		this.material = material;
+	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricaoObra(String descricao) {
+		this.descricao = descricao;
 	}
 	public String getImagem() {
 		return imagem;
@@ -46,23 +69,11 @@ public class Obra {
 	public void setProprietario(boolean proprietario) {
 		this.proprietario = proprietario;
 	}
-	public Categoria getCategoria() {
-		return categoria;
+	public String getStatus() {
+		return status;
 	}
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-	public Material getMaterial() {
-		return material;
-	}
-	public void setMaterial(Material material) {
-		this.material = material;
-	}
-	public Artista getArtista() {
-		return artista;
-	}
-	public void setArtista(Artista artista) {
-		this.artista = artista;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public Setor getSetor() {
 		return setor;
@@ -76,17 +87,4 @@ public class Obra {
 	public void setPreco(String preco) {
 		this.preco = preco;
 	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public String getIdObra() {
-		return idObra;
-	}
-	public void setIdObra(String idObra) {
-		this.idObra = idObra;
-	}
-
 }

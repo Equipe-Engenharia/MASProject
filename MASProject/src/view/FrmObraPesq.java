@@ -1,17 +1,20 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JButton;
 
-public class FormPesqObra extends JFrame {
+public class FrmObraPesq extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JComboBox<String> cbProprietario;
 	private JComboBox<String> cbArtista;
@@ -25,7 +28,7 @@ public class FormPesqObra extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormPesqObra frame = new FormPesqObra();
+					FrmObraPesq frame = new FrmObraPesq();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,7 +40,7 @@ public class FormPesqObra extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormPesqObra() {
+	public FrmObraPesq() {
 		setTitle("Pesquisar Obra de Arte - MASP");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

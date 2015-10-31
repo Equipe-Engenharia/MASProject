@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.ImageIcon;
@@ -9,15 +9,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import controller.AlteraDelSetorController;
+import controller.SetorEditCtrl;
 
-import java.awt.Color;
+public class FrmSetorEdit extends JFrame {
 
-public class FormAlteraDelSetor extends JFrame {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtDigitadoN;
 	private JTextField txtDigiteOId;
@@ -29,7 +30,7 @@ public class FormAlteraDelSetor extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormAlteraDelSetor frame = new FormAlteraDelSetor();
+					FrmSetorEdit frame = new FrmSetorEdit();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +42,7 @@ public class FormAlteraDelSetor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormAlteraDelSetor() {
+	public FrmSetorEdit() {
 		setTitle("Editar/Excluir Setor");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,7 +112,7 @@ public class FormAlteraDelSetor extends JFrame {
 		lblDigiteUmDos.setBounds(10, 11, 362, 14);
 		contentPane.add(lblDigiteUmDos);
 		
-		AlteraDelSetorController ADSetor = new AlteraDelSetorController(txtDigiteOId,txtDigitadoN,btnPesqIdSet,btnPesqNomSet,btnGravar,btnExcluir);
+		SetorEditCtrl ADSetor = new SetorEditCtrl(txtDigiteOId,txtDigitadoN,btnPesqIdSet,btnPesqNomSet,btnGravar,btnExcluir);
 	
 		btnPesqIdSet.addActionListener(ADSetor.pesquisaIDSetor);
 		btnPesqNomSet.addActionListener(ADSetor.pesquisaNomeSetor);

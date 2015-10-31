@@ -8,7 +8,7 @@ import java.awt.event.ComponentListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-public class PesqObraController implements ComponentListener, ActionListener{
+public class ObraPesqCtrl implements ComponentListener, ActionListener{
 
 	private JComboBox<String> cbProprietario;
 	private JComboBox<String> cbArtista;
@@ -16,7 +16,7 @@ public class PesqObraController implements ComponentListener, ActionListener{
 	private JComboBox<String> cbNomeObra;
 	private JButton btnEncontreiObra;
 	
-	public PesqObraController(JComboBox<String> cbProprietario,
+	public ObraPesqCtrl(JComboBox<String> cbProprietario,
 			JComboBox<String> cbArtista, JComboBox<String> cbIdObra,
 			JComboBox<String> cbNomeObra, JButton btnEncontreiObra){
 

@@ -14,18 +14,18 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import model.Artista;
-import persistence.ArtistaArquivoImpl;
+import persistence.ArtistaArquivo;
 
-public class RegisArtistaController implements ComponentListener {
+public class ArtistaCtrl implements ComponentListener {
 
 	private JTextField idArtista, nomeArtista;
 	private JButton btGravar;
 	private JLabel msgGravado, msgVazio;
 	private List<Artista> artistas;
 	private static int contador = 1;
-	private ArquivosController ctrlArquivos;
+	private ArquivosCtrl ctrlArquivos;
 
-	public RegisArtistaController(JTextField idArtista, JTextField nomeArtista,
+	public ArtistaCtrl(JTextField idArtista, JTextField nomeArtista,
 			JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
 
 		this.idArtista = idArtista;
@@ -47,7 +47,7 @@ public class RegisArtistaController implements ComponentListener {
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 
-		ctrlArquivos = new ArquivosController();
+		ctrlArquivos = new ArquivosCtrl();
 		try {
 			ctrlArquivos.leArquivo("../MASProject/dados/", "artistas");
 			linha = ctrlArquivos.getBuffer();
@@ -74,7 +74,7 @@ public class RegisArtistaController implements ComponentListener {
 
 	public void gravarArtista() {
 		Artista artista = new Artista();
-		ArtistaArquivoImpl artistalImpl = new ArtistaArquivoImpl();
+		ArtistaArquivo artistalImpl = new ArtistaArquivo();
 
 		artista.setId(idArtista.getText());
 		artista.setNome(nomeArtista.getText());

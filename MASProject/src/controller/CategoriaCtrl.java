@@ -15,18 +15,18 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import model.Categoria;
-import persistence.CategoriaArquivoImpl;
+import persistence.CategoriaArquivo;
 
-public class RegisCategoriaController implements ComponentListener {
+public class CategoriaCtrl implements ComponentListener {
 
 	private JTextField idCategoria, nomeCategoria;
 	private JButton btGravar;
 	private JLabel msgGravado, msgVazio;
 	private List<Categoria> categorias;
 	private static int contador = 1;
-	private ArquivosController ctrlArquivos;
+	private ArquivosCtrl ctrlArquivos;
 
-	public RegisCategoriaController(JTextField idCategoria, JTextField nomeCategoria,
+	public CategoriaCtrl(JTextField idCategoria, JTextField nomeCategoria,
 			JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
 
 		this.idCategoria = idCategoria;
@@ -48,7 +48,7 @@ public class RegisCategoriaController implements ComponentListener {
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 
-		ctrlArquivos = new ArquivosController();
+		ctrlArquivos = new ArquivosCtrl();
 		try {
 			ctrlArquivos.leArquivo("../MASProject/dados/", "categorias");
 			linha = ctrlArquivos.getBuffer();
@@ -75,7 +75,7 @@ public class RegisCategoriaController implements ComponentListener {
 
 	public void gravarCategoria() {
 		Categoria categoria = new Categoria();
-		CategoriaArquivoImpl categorialImpl = new CategoriaArquivoImpl();
+		CategoriaArquivo categorialImpl = new CategoriaArquivo();
 
 		categoria.setId(idCategoria.getText());
 		categoria.setNome(nomeCategoria.getText());

@@ -5,16 +5,16 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-public class PesqArtistaController{
+public class ArtistaPesqCtrl{
 	 
-	private ArquivosController arqController;
+	private ArquivosCtrl arqController;
 	private String[] artista;
 	
-	public PesqArtistaController(){
+	public ArtistaPesqCtrl(){
 		this.artista = preencherComboBoxArtista();
 	}
 	
-	public PesqArtistaController(JButton btnGravar, JTextField tfNomeArtista){
+	public ArtistaPesqCtrl(JButton btnGravar, JTextField tfNomeArtista){
 		
 	}
 	
@@ -25,7 +25,7 @@ public class PesqArtistaController{
 	private String[] preencherComboBoxArtista(){
 		String linha = new String();
 		String nArtista[] = null; 
-		arqController = new ArquivosController();
+		arqController = new ArquivosCtrl();
 		try {
 			arqController.leArquivo("../MASProject/dados", "artistas");
 			linha = arqController.getBuffer();

@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-import controller.IArquivosController;
+import controller.ArquivosICtrl;
 import model.Setor;
 
-public class SetorArquivoImpl implements IArquivosController{
+public class SetorArquivo implements ArquivosICtrl{
 	private StringBuffer buffer;
 
 	public String getBuffer() {

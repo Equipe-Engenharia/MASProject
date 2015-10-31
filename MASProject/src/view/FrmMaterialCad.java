@@ -12,9 +12,9 @@ import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import controller.RegisMaterialController;
+import controller.MaterialCtrl;
 
-public class FormRegisMaterial extends JFrame {
+public class FrmMaterialCad extends JFrame {
 
 	static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -30,7 +30,7 @@ public class FormRegisMaterial extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormRegisMaterial frame = new FormRegisMaterial();
+					FrmMaterialCad frame = new FrmMaterialCad();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +42,7 @@ public class FormRegisMaterial extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormRegisMaterial() {
+	public FrmMaterialCad() {
 		setTitle("Registro de Material da Obra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
@@ -109,7 +109,7 @@ public class FormRegisMaterial extends JFrame {
 		btnFechar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnFechar);
 		
-		RegisMaterialController ctrlMaterial = new RegisMaterialController(idMaterial, cbCategoria, txtMaterial, btnGravar, msgGravado, msgVazio);
+		MaterialCtrl ctrlMaterial = new MaterialCtrl(idMaterial, cbCategoria, txtMaterial, btnGravar, msgGravado, msgVazio);
 		
 		ctrlMaterial.gerarIdSetor();
 		ctrlMaterial.preencherComboBoxCategoria();

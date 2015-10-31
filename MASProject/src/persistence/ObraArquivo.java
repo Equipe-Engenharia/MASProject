@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-import controller.IArquivosController;
+import controller.ArquivosICtrl;
 import model.Obra;
 
-public class ObraArquivoImpl implements IArquivosController{
+public class ObraArquivo implements ArquivosICtrl{
 	private StringBuffer buffer;
 
 	public String getBuffer() {
@@ -45,13 +45,13 @@ public class ObraArquivoImpl implements IArquivosController{
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID Obra :"+((Obra) object).getIdObra());
+		buffer.append("ID Obra :"+((Obra) object).getId());
 		buffer.append("\r\n");
 		buffer.append("Nome do Artista :"+((Obra) object).getArtista().getNome());
 		buffer.append("\r\n");
-		buffer.append("Nome da obra :"+((Obra) object).getNomeObra());
+		buffer.append("Nome da obra :"+((Obra) object).getNome());
 		buffer.append("\r\n");
-		buffer.append("Descri��o :"+((Obra) object).getDescricaoObra());
+		buffer.append("Descrição :"+((Obra) object).getDescricao());
 		buffer.append("\r\n");
 		buffer.append("Categoria :"+((Obra) object).getCategoria().getNome());
 		buffer.append("\r\n");

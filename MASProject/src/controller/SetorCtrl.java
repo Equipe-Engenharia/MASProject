@@ -8,13 +8,12 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import model.Setor;
-import persistence.SetorArquivoImpl;
+import persistence.SetorArquivo;
 
-public class RegisSetorController {
+public class SetorCtrl {
 
 	private JLabel mensagemGravado, mensagemVazio;
 	private JTextField nomeset, idsetor;
@@ -22,9 +21,9 @@ public class RegisSetorController {
 	private Setor setor = new Setor();
 	private static int contador = 1;
 	private String registro_set[] = new String[2];
-	private ArquivosController arqController = new ArquivosController();
+	private ArquivosCtrl arqController = new ArquivosCtrl();
 
-	public RegisSetorController(JTextField id_setor, JTextField nomeDigit, JLabel mensagemGravado, JLabel mensagemVazio,
+	public SetorCtrl(JTextField id_setor, JTextField nomeDigit, JLabel mensagemGravado, JLabel mensagemVazio,
 			JButton btnGravar) {
 		this.idsetor = id_setor;
 		this.mensagemGravado = mensagemGravado;
@@ -42,7 +41,7 @@ public class RegisSetorController {
 
 	public void gravaSetor() {
 		Setor setor = new Setor();
-		SetorArquivoImpl setorImpl = new SetorArquivoImpl();
+		SetorArquivo setorImpl = new SetorArquivo();
 
 		setor.setIdentificacao(idsetor.getText());
 		setor.setNome(nomeset.getText());

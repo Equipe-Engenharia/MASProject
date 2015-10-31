@@ -3,6 +3,7 @@ package view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,15 +13,17 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import controller.RegisArtistaController;  
-  
-public class FormRegisArtista extends JFrame {  
+import controller.CategoriaCtrl;
 
-	static final long serialVersionUID = 1L;
+public class FrmCategoriaCad extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtArtista;
-	private JTextField idArtista;
-	
+	private JTextField txtCategoria;
+	private JTextField idCategoria;
 	/**
 	 * Launch the application.
 	 */
@@ -28,7 +31,7 @@ public class FormRegisArtista extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormAlteraDelMaterial frame = new FormAlteraDelMaterial();
+					FrmCategoriaCad frame = new FrmCategoriaCad();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,8 +43,9 @@ public class FormRegisArtista extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormRegisArtista(FormAcervo parent, boolean modal) {  
-		setTitle("Registro de Artista");
+	public FrmCategoriaCad(){
+		setResizable(false);
+		setTitle("Registro de Categoria de Obra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
@@ -50,26 +54,26 @@ public class FormRegisArtista extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblIdArtista = new JLabel("ID");
-		lblIdArtista.setBounds(148, 51, 21, 16);
-		contentPane.add(lblIdArtista);
+		JLabel lblIdCategoria = new JLabel("ID");
+		lblIdCategoria.setBounds(148, 51, 21, 16);
+		contentPane.add(lblIdCategoria);
 		
-		JLabel lblNovoArtista = new JLabel("Novo Artista");
-		lblNovoArtista.setBounds(84, 87, 97, 16);
-		contentPane.add(lblNovoArtista);
+		JLabel lblNovaCategoria = new JLabel("Nova Categoria");
+		lblNovaCategoria.setBounds(74, 87, 107, 16);
+		contentPane.add(lblNovaCategoria);
 		
-		idArtista = new JTextField();
-		idArtista.setEditable(false);
-		idArtista.setBounds(181, 49, 178, 20);
-		idArtista.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(idArtista);
-		idArtista.setColumns(10);
+		idCategoria = new JTextField();
+		idCategoria.setEditable(false);
+		idCategoria.setBounds(181, 49, 178, 20);
+		idCategoria.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(idCategoria);
+		idCategoria.setColumns(10);
 		
-		txtArtista = new JTextField();
-		txtArtista.setToolTipText("Digite o novo Artista…");
-		txtArtista.setBounds(180, 81, 178, 28);
-		contentPane.add(txtArtista);
-		txtArtista.setColumns(10);
+		txtCategoria = new JTextField();
+		txtCategoria.setToolTipText("Digite o novo Artista…");
+		txtCategoria.setBounds(180, 81, 178, 28);
+		contentPane.add(txtCategoria);
+		txtCategoria.setColumns(10);
 		
 		JLabel msgGravado = new JLabel("");
 		msgGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
@@ -99,12 +103,11 @@ public class FormRegisArtista extends JFrame {
 		btnFechar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnFechar);
 		
-		RegisArtistaController ctrlArtista = new RegisArtistaController(idArtista, txtArtista, btnGravar, msgGravado, msgVazio);
+		CategoriaCtrl ctrlCategoria = new CategoriaCtrl(idCategoria, txtCategoria, btnGravar, msgGravado, msgVazio);
 		
-		ctrlArtista.gerarIdSetor();
-		btnGravar.addActionListener(ctrlArtista.gravarArtista);
-		txtArtista.addMouseListener(ctrlArtista.limpaCampo);
-		txtArtista.addActionListener(ctrlArtista.gravarArtista);
-    }  
-}  
-
+		ctrlCategoria.gerarIdSetor();
+		btnGravar.addActionListener(ctrlCategoria.gravarCategoria);
+		txtCategoria.addMouseListener(ctrlCategoria.limpaCampo);
+		txtCategoria.addActionListener(ctrlCategoria.gravarCategoria);
+	}
+}

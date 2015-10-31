@@ -2,7 +2,7 @@ package controller;
 
 import java.io.IOException;
 
-public interface IArquivosController {
+public interface ArquivosICtrl {
 
 	public void leArquivo(String diretorio, String arquivo) throws IOException;
 	public void escreveArquivo(String diretorio, String arquivo, String texto,  Object object) throws IOException;

@@ -30,9 +30,9 @@ import model.Categoria;
 import model.Material;
 import model.Obra;
 import model.Setor;
-import persistence.ObraArquivoImpl;
+import persistence.ObraArquivo;
 
-public class AlteraDelAcervoController {
+public class AcervoEditCtrl {
 	private JLabel imagem, msgGravado, msgVazio, lblStatus;
 	private JTextField idObra, tfNomeArtista, nomeObra, dataAquisicao, textField_valor, txtNovaObra;
 	private JEditorPane descricaoObra;
@@ -46,11 +46,11 @@ public class AlteraDelAcervoController {
 	private JComboBox<String> comboStatus;
 	private JButton btnPesqArtist;
 	private JPanel frmAcervo;
-	private ArquivosController arqController;
-	private PesqArtistaController pAController;
+	private ArquivosCtrl arqController;
+	private ArtistaPesqCtrl pAController;
 	
 	
-	public AlteraDelAcervoController(JTextField nomeArtista, JLabel imagem, JComboBox cbObras, JTextField txtNovaObra,
+	public AcervoEditCtrl(JTextField nomeArtista, JLabel imagem, JComboBox cbObras, JTextField txtNovaObra,
 			JComboBox<String> cbSetor2, JComboBox<String> cbMaterial2, JComboBox<String> cbCategoria2,
 			JComboBox<String> comboStatus2, JTextField data_obra, JEditorPane editor_descricao, JLabel msgGravado2,
 			JLabel msgVazio2, JTextField textField_valor2, JButton btnPesqArtist, JLabel status) {
@@ -102,7 +102,7 @@ public class AlteraDelAcervoController {
 		String linha = new String();
 		ArrayList<String> acervo = new ArrayList<>();
 
-		arqController = new ArquivosController();
+		arqController = new ArquivosCtrl();
 		try {
 			arqController.leArquivo("../MASProject/dados/", "acervo");
 			linha = arqController.getBuffer();
@@ -114,7 +114,7 @@ public class AlteraDelAcervoController {
 					Artista artista = new Artista();
 					artista.setNome(acervo.get(1));
 					Obra obra = new Obra();
-					obra.setIdObra(acervo.get(0));
+					obra.setId(acervo.get(0));
 					obra.setNomeObra(acervo.get(2));
 					obra.setDescricaoObra(acervo.get(3));
 					Categoria c = new Categoria();
@@ -144,14 +144,14 @@ public class AlteraDelAcervoController {
 		obras.clear();
 		lerAcervo();
 		for (Obra o : obras) {
-			cbObras.addItem(o.getNomeObra());
+			cbObras.addItem(o.getNome());
 		}
 	}
 	public void preencherComboBoxObrasNovo() {
 		obras.clear();
 		lerAcervo();
 		for (Obra o : obras) {
-			cbObras.addItem(o.getNomeObra());
+			cbObras.addItem(o.getNome());
 		}
 	}
 	
@@ -159,7 +159,7 @@ public class AlteraDelAcervoController {
 	public void atualizaDados(List<Obra> listObras) {
 		File f = new File("../MASProject/dados/acervo");
 		f.delete();
-		ObraArquivoImpl obraImpl = new ObraArquivoImpl();
+		ObraArquivo obraImpl = new ObraArquivo();
 		for (Obra obra : listObras) {
 			try {
 				obraImpl.escreveArquivo("../MASProject/dados/", "acervo", "", obra);
@@ -170,7 +170,7 @@ public class AlteraDelAcervoController {
 	}
 	public void preencherComboBoxSetoresAlteraDel() {
 		String linha = new String();
-		arqController = new ArquivosController();
+		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<Setor> listSetores = new ArrayList<>();
 
@@ -204,12 +204,12 @@ public class AlteraDelAcervoController {
 		Setor setor = new Setor();
 		Obra obra = new Obra();
 		for (Obra ob : obras) {
-			if (nomeObra.equalsIgnoreCase(ob.getNomeObra())) {
+			if (nomeObra.equalsIgnoreCase(ob.getNome())) {
 				obra = ob;
 			}
 		}
 		for (int i = 0; i < obras.size(); i++) {
-			if (obras.get(i).getNomeObra().equalsIgnoreCase(obra.getNomeObra())) {
+			if (obras.get(i).getNome().equalsIgnoreCase(obra.getNome())) {
 				if (txtNovaObra.getText().isEmpty()
 						|| txtNovaObra.getText().equalsIgnoreCase("Nome da Obra Atualizada")) {
 					artista.setNome(tfNomeArtista.getText());
@@ -239,14 +239,14 @@ public class AlteraDelAcervoController {
 				obras.get(i).setCategoria(categoria);
 				obras.get(i).setSetor(setor);
 				obras.get(i).setMaterial(material);
-				obras.get(i).setNomeObra(o.getNomeObra());
+				obras.get(i).setNomeObra(o.getNome());
 				if (!(textField_valor.getText().isEmpty())) {
 					obras.get(i).setPreco(o.getPreco());
 				}
 				if (!(caminhoImagem.isEmpty()||caminhoImagem == null)) {
 					obras.get(i).setImagem(caminhoImagem);
 				}
-				obras.get(i).setDescricaoObra(o.getDescricaoObra());
+				obras.get(i).setDescricaoObra(o.getDescricao());
 				obras.get(i).setStatus(o.getStatus());
 				obras.get(i).setDataComposicao(o.getDataComposicao());
 			}
@@ -268,7 +268,7 @@ public class AlteraDelAcervoController {
 	}
 	public void excluirObraAcervo(String nomeObra){
 		for(int i = 0; i<obras.size(); i++){
-			if (nomeObra.equalsIgnoreCase(obras.get(i).getNomeObra())) {
+			if (nomeObra.equalsIgnoreCase(obras.get(i).getNome())) {
 				obras.remove(i);
 			}
 		}
@@ -299,7 +299,7 @@ public class AlteraDelAcervoController {
 		imagem.setHorizontalAlignment(SwingConstants.CENTER);
 	}
 	public void pesquisarArtistaEditar() {
-		pAController = new PesqArtistaController();
+		pAController = new ArtistaPesqCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<Artista> listArtista = new ArrayList<>();
 
@@ -375,9 +375,9 @@ public class AlteraDelAcervoController {
 		lerAcervo();
 		cbObras.removeAllItems();
 		for (Obra o : obras) {
-			System.out.println(o.getNomeObra());
+			System.out.println(o.getNome());
 			if (nomeArtista.equalsIgnoreCase(o.getArtista().getNome())) {
-				cbObras.addItem(o.getNomeObra());
+				cbObras.addItem(o.getNome());
 			}
 		}
 	}
@@ -385,7 +385,7 @@ public class AlteraDelAcervoController {
 	public void procurarObra(String nomeObra) {
 		Obra obra = new Obra();
 		for (Obra o : obras) {
-			if (o.getNomeObra().equalsIgnoreCase(nomeObra)) {
+			if (o.getNome().equalsIgnoreCase(nomeObra)) {
 				obra = o;
 			}
 		}
@@ -397,7 +397,7 @@ public class AlteraDelAcervoController {
 		dataAquisicao.setText(obra.getDataComposicao());
 		tfNomeArtista.setText(obra.getArtista().getNome());
 
-		descricaoObra.setText(obra.getDescricaoObra());
+		descricaoObra.setText(obra.getDescricao());
 		ImageIcon img = new ImageIcon(obra.getImagem());
 		Image newImg = img.getImage().getScaledInstance(imagem.getWidth(), imagem.getHeight(), Image.SCALE_DEFAULT);
 		imagem.setIcon(new ImageIcon(newImg));

@@ -1,23 +1,24 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import controller.RegisSetorController;
-
-import javax.swing.JLabel;
-import javax.swing.JTextPane;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
-public class FormRegisSetor extends JFrame {
+import controller.SetorCtrl;
 
+public class FrmSetorCad extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtDigitado;
 	private JTextField id_setor;
@@ -29,7 +30,7 @@ public class FormRegisSetor extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormRegisSetor frame = new FormRegisSetor();
+					FrmSetorCad frame = new FrmSetorCad();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +42,7 @@ public class FormRegisSetor extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormRegisSetor() {
+	public FrmSetorCad() {
 		setTitle("Registro de Setor");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -91,7 +92,7 @@ public class FormRegisSetor extends JFrame {
 		contentPane.add(mensagemVazio);
 		
 		
-		RegisSetorController RsContrl = new RegisSetorController(id_setor, txtDigitado, mensagemGravado, mensagemVazio, btnGravar);
+		SetorCtrl RsContrl = new SetorCtrl(id_setor, txtDigitado, mensagemGravado, mensagemVazio, btnGravar);
 		
 		//Essa linha abaixo ser� excluida quando o menu estiver pronto pois ser� um evento do bot�o que chama este Form***
         RsContrl.gerarIdSetor();

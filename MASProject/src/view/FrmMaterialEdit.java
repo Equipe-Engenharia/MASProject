@@ -11,12 +11,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import controller.AlteraDelMaterialController;
+import controller.MaterialEditCtrl;
 
-public class FormAlteraDelMaterial extends JFrame {
+public class FrmMaterialEdit extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -31,7 +30,7 @@ public class FormAlteraDelMaterial extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormAlteraDelMaterial frame = new FormAlteraDelMaterial();
+					FrmMaterialEdit frame = new FrmMaterialEdit();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +42,7 @@ public class FormAlteraDelMaterial extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormAlteraDelMaterial() {
+	public FrmMaterialEdit() {
 		setTitle("Editar/Excluir Material da Obra");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
@@ -131,7 +130,7 @@ public class FormAlteraDelMaterial extends JFrame {
 		btnPesquisaMaterial.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnPesquisaMaterial);
 		
-		AlteraDelMaterialController ctrlADMaterial = new AlteraDelMaterialController(idMaterial, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravar, msgVazio);
+		MaterialEditCtrl ctrlADMaterial = new MaterialEditCtrl(idMaterial, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravar, msgVazio);
 		
 		ctrlADMaterial.preencherComboBoxCategoria();
 		btnPesquisaId.addActionListener(ctrlADMaterial.pesquisarMaterial);

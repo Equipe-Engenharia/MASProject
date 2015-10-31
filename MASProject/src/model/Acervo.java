@@ -1,9 +1,7 @@
 package model;
 
-import java.util.List;
-
 public class Acervo {
-	private int idAcervo;
+	private int id;
 	private int status;
 	
 
@@ -15,9 +13,9 @@ public class Acervo {
 	}
 
 	public int getIdAcervo() {
-		return idAcervo;
+		return id;
 	}
 	public void setIdAcervo(int idAcervo) {
-		this.idAcervo = idAcervo;
+		this.id = idAcervo;
 	}
 }

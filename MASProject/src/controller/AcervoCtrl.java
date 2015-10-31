@@ -1,14 +1,11 @@
 package controller;
 
 import java.awt.Image;
-import java.awt.Label;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,15 +30,15 @@ import model.Categoria;
 import model.Material;
 import model.Obra;
 import model.Setor;
-import persistence.ObraArquivoImpl;
-import view.FormAlteraDelArtista;
-import view.FormAlteraDelCategoria;
-import view.FormAlteraDelMaterial;
-import view.FormRegisArtista;
-import view.FormRegisCategoria;
-import view.FormRegisMaterial;
+import persistence.ObraArquivo;
+import view.FrmArtistaCad;
+import view.FrmArtistaEdit;
+import view.FrmCategoriaCad;
+import view.FrmCategoriaEdit;
+import view.FrmMaterialCad;
+import view.FrmMaterialEdit;
 
-public class AcervoController implements ComponentListener, ActionListener {
+public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	private JLabel imagem, msgGravado, msgVazio, lblStatus;
 	private JTextField idObra, tfNomeArtista, nomeObra, dataAquisicao, textField_valor, txtNovaObra;
@@ -50,8 +47,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 	private JComboBox<String> cbCategoria;
 	private String nomeArtista;
 
-	// Variavel caminho imagem criada para gravar e carregar na hora de procurar
-	// obra
+	// Variavel caminho imagem criada para gravar e carregar na hora de procurar obra
 	private List<Obra> obras;
 
 	private String caminhoImagem;
@@ -62,15 +58,12 @@ public class AcervoController implements ComponentListener, ActionListener {
 	private JComboBox<String> comboStatus;
 	private JComboBox<String> comboStatusT;
 
-	private JButton btnPesqArtist, btnNovoArtista, btnEditarArtista; // passar o
-																		// resto
-																		// dos
-	// botoes
+	private JButton btnPesqArtist, btnNovoArtista, btnEditarArtista; // passar o resto dos botoes
 	private JPanel frmAcervo;
-	private ArquivosController arqController;
-	private PesqArtistaController pAController;
+	private ArquivosCtrl arqController;
+	private ArtistaPesqCtrl pAController;
 
-	public AcervoController(JTextField idObra, JLabel imagem, JComboBox<String> comboSetor,
+	public AcervoCtrl(JTextField idObra, JLabel imagem, JComboBox<String> comboSetor,
 			JComboBox<String> comboSetorT, JComboBox<String> comboStatus, JComboBox<String> comboStatusT,
 			JComboBox<String> cbCategoria, JComboBox<String> cbMaterial, JTextField nomeArtista, JTextField nomeObra,
 			JTextField dataAquisicao, JEditorPane descricaoObra, JLabel msgGravado, JLabel msgVazio,
@@ -100,7 +93,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 		lerAcervo();
 	}
 
-	public AcervoController(JTextField nomeArtista, JLabel imagem, JComboBox cbObras, JTextField txtNovaObra,
+	public AcervoCtrl(JTextField nomeArtista, JLabel imagem, JComboBox cbObras, JTextField txtNovaObra,
 			JComboBox<String> cbSetor2, JComboBox<String> cbMaterial2, JComboBox<String> cbCategoria2,
 			JComboBox<String> comboStatus2, JTextField data_obra, JEditorPane editor_descricao, JLabel msgGravado2,
 			JLabel msgVazio2, JTextField textField_valor2, JButton btnPesqArtist, JLabel status) {
@@ -134,7 +127,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 		String linha = new String();
 		ArrayList<String> acervo = new ArrayList<>();
 
-		arqController = new ArquivosController();
+		arqController = new ArquivosCtrl();
 		try {
 			arqController.leArquivo("../MASProject/dados/", "acervo");
 			linha = arqController.getBuffer();
@@ -146,7 +139,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 					Artista artista = new Artista();
 					artista.setNome(acervo.get(1));
 					Obra obra = new Obra();
-					obra.setIdObra(acervo.get(0));
+					obra.setId(acervo.get(0));
 					obra.setNomeObra(acervo.get(2));
 					obra.setDescricaoObra(acervo.get(3));
 					Categoria c = new Categoria();
@@ -204,7 +197,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 
 	public void gravarAcervo() {
 		Obra obra = new Obra();
-		ObraArquivoImpl obraImpl = new ObraArquivoImpl();
+		ObraArquivo obraImpl = new ObraArquivo();
 		Artista artista = new Artista();
 		Categoria categoria = new Categoria();
 		Material material = new Material();
@@ -235,7 +228,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 			categoria.setNome((String) cbCategoria.getSelectedItem());
 			artista.setNome(tfNomeArtista.getText());
 			obra.setNomeObra(nomeObra.getText());
-			obra.setIdObra(idObra.getText());
+			obra.setId(idObra.getText());
 			obra.setArtista(artista);
 			obra.setSetor(setor);
 			obra.setImagem(caminhoImagem);
@@ -281,7 +274,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 
 	public void preencherComboBoxMaterial() {
 		String linha = new String();
-		arqController = new ArquivosController();
+		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<Material> listMateriais = new ArrayList<>();
 
@@ -312,7 +305,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 
 	public void preencherComboBoxCategoria() {
 		String linha = new String();
-		arqController = new ArquivosController();
+		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<Categoria> listCategorias = new ArrayList<>();
 
@@ -340,7 +333,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 
 	public void preencherComboBoxSetores() {
 		String linha = new String();
-		arqController = new ArquivosController();
+		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<Setor> listSetores = new ArrayList<>();
 
@@ -369,7 +362,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 
 	public void preencherComboBoxSetoresAlteraDel() {
 		String linha = new String();
-		arqController = new ArquivosController();
+		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<Setor> listSetores = new ArrayList<>();
 
@@ -398,7 +391,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 
 	public void preencherComboStatusProprio() {
 		String linha = new String();
-		arqController = new ArquivosController();
+		arqController = new ArquivosCtrl();
 		try {
 			arqController.leArquivo("../MASProject/dados", "status_obra_propria");
 			linha = arqController.getBuffer();
@@ -413,7 +406,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 
 	public void preencherComboStatusTerceiro() {
 		String linha = new String();
-		arqController = new ArquivosController();
+		arqController = new ArquivosCtrl();
 		try {
 			arqController.leArquivo("../MASProject/dados", "status_obra_terceiros");
 			linha = arqController.getBuffer();
@@ -428,7 +421,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 
 	// Abre um JOptionPane com uma comboBox - Vitor
 	public void pesquisarArtista() {
-		pAController = new PesqArtistaController();
+		pAController = new ArtistaPesqCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<Artista> listArtista = new ArrayList<>();
 
@@ -461,14 +454,14 @@ public class AcervoController implements ComponentListener, ActionListener {
 
 
 	private void abrirTelaNovoArtista() {
-		FormRegisArtista newArtista = new FormRegisArtista(null, true);
+		FrmArtistaCad newArtista = new FrmArtistaCad(null, true);
 		newArtista.setVisible(true);
 		newArtista.setDefaultCloseOperation(newArtista.DISPOSE_ON_CLOSE);
 		newArtista.setResizable(false);
 	}
 
 	private void abrirTelaEditarArtista() {
-		FormAlteraDelArtista editArtista = new FormAlteraDelArtista(null, true);
+		FrmArtistaEdit editArtista = new FrmArtistaEdit(null, true);
 		editArtista.setVisible(true);
 		editArtista.setDefaultCloseOperation(editArtista.DISPOSE_ON_CLOSE);
 		editArtista.setResizable(false);
@@ -481,7 +474,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			FormRegisCategoria formCate = new FormRegisCategoria();
+			FrmCategoriaCad formCate = new FrmCategoriaCad();
 			formCate.setVisible(true);
 			formCate.setLocationRelativeTo(null);
 		}
@@ -494,7 +487,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			FormRegisMaterial frame = new FormRegisMaterial();
+			FrmMaterialCad frame = new FrmMaterialCad();
 			frame.setVisible(true);
 			frame.setLocationRelativeTo(null);
 		}
@@ -507,7 +500,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			FormAlteraDelMaterial frame = new FormAlteraDelMaterial();
+			FrmMaterialEdit frame = new FrmMaterialEdit();
 			frame.setVisible(true);
 			frame.setLocationRelativeTo(null);
 		}
@@ -531,7 +524,7 @@ public class AcervoController implements ComponentListener, ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			FormAlteraDelCategoria frame = new FormAlteraDelCategoria();
+			FrmCategoriaEdit frame = new FrmCategoriaEdit();
 			frame.setVisible(true);
 			frame.setLocationRelativeTo(null);
 		}
@@ -583,10 +576,8 @@ public class AcervoController implements ComponentListener, ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String action = e.getActionCommand(); // verifica qual botao foi
-												// pressionado na tela
-		if (action.equals(btnPesqArtist.getText())) { // compara com o texto do
-														// botao
+		String action = e.getActionCommand(); // verifica qual botao foi pressionado na tela
+		if (action.equals(btnPesqArtist.getText())) { // compara com o texto do otao
 			pesquisarArtista();
 		} else if (action.equals(btnNovoArtista.getText())) {
 			abrirTelaNovoArtista();

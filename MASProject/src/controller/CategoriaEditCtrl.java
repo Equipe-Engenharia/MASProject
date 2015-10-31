@@ -15,9 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import model.Categoria;
-import persistence.CategoriaArquivoImpl;
+import persistence.CategoriaArquivo;
 
-public class AlteraDelCategoriaController implements ComponentListener {
+public class CategoriaEditCtrl implements ComponentListener {
 
 	private JTextField nomeCategoria, idCategoria;
 	private JButton btApagar, btGravar;
@@ -25,9 +25,9 @@ public class AlteraDelCategoriaController implements ComponentListener {
 	private List<Categoria> categorias;
 	private static int contador = 1;
 
-	private ArquivosController ctrlArquivos;
+	private ArquivosCtrl ctrlArquivos;
 
-	public AlteraDelCategoriaController(JTextField idCartegoria, JTextField nomeCategoria,
+	public CategoriaEditCtrl(JTextField idCartegoria, JTextField nomeCategoria,
 			JButton btnApagar, JButton btnGravar, JLabel msgGravar, JLabel msgVazio) {
 
 		this.idCategoria = idCartegoria;
@@ -45,7 +45,7 @@ public class AlteraDelCategoriaController implements ComponentListener {
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 
-		ctrlArquivos = new ArquivosController();
+		ctrlArquivos = new ArquivosCtrl();
 		try {
 			ctrlArquivos.leArquivo("../MASProject/dados/", "categorias");
 			linha = ctrlArquivos.getBuffer();
@@ -72,7 +72,7 @@ public class AlteraDelCategoriaController implements ComponentListener {
 
 	public void gravarCategoria() {
 		Categoria categoria = new Categoria();
-		CategoriaArquivoImpl categoriaImpl = new CategoriaArquivoImpl();
+		CategoriaArquivo categoriaImpl = new CategoriaArquivo();
 
 		categoria.setId(idCategoria.getText());
 		categoria.setNome(nomeCategoria.getText());

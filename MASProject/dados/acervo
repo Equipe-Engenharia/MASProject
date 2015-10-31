@@ -1,13 +1,26 @@
 ID Obra :ACV151029-131138
-Nome do Artista :Diego
-Nome da obra :Monalisa
-Descri��o :asd
-Categoria :Monalisa
-Data :11/11/1111
+Nome do Artista :
+Nome da obra :Monalisa alterada
+Descrição :
+Categoria :Monalisa alterada
+Data :
 Imagem :../MASProject/icons/painting.png
 Material : Pedra
-Setor : Setor A
+Setor : Setor C
 Valor :15,00
 Obra Propria :true
+Status :Exposição
+---------------------------
+ID Obra :ACV151031-023801
+Nome do Artista :FElipe
+Nome da obra :Testando
+Descrição :
+Categoria : Pintura
+Data :31/10/2015
+Imagem :../MASProject/icons/painting.png
+Material : Óleo
+Setor : Setor A
+Valor :
+Obra Propria :false
 Status :Exposição
 ---------------------------

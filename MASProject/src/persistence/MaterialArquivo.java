@@ -7,10 +7,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import controller.IArquivosController;
-import model.Artista;
+import controller.ArquivosICtrl;
+import model.Material;;
 
-public class ArtistaArquivoImpl implements IArquivosController {
+public class MaterialArquivo implements ArquivosICtrl {
 
 	StringBuffer buffer;
 
@@ -44,9 +44,11 @@ public class ArtistaArquivoImpl implements IArquivosController {
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID :" + ((Artista) object).getId());
+		buffer.append("ID: " + ((Material) object).getId());
 		buffer.append("\r\n");
-		buffer.append("Artista :" + ((Artista) object).getNome());
+		buffer.append("Material: " + ((Material) object).getNome());
+		buffer.append("\r\n");
+		buffer.append("Categoria: " + ((Material) object).getCategoria());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");

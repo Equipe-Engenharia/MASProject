@@ -18,22 +18,13 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 import javax.swing.ImageIcon;
 
-import controller.AcervoController;
+import controller.AcervoCtrl;
 
-import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
-import javax.swing.JSeparator;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.MatteBorder;
-import java.awt.Color;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.TitledBorder;
 
-public class FormAcervo extends JFrame {
+public class FrmAcervoCad extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -50,11 +41,7 @@ public class FormAcervo extends JFrame {
 	private JComboBox<String> comboStatus;
 	private JComboBox<String> comboStatusT;
 	private JTextField textField_valor;
-	private JButton btnPesquisaArtist, btnNovoArtista, btnEditarArtista; // deixar
-																			// os
-																			// demais
-																			// botoes
-																			// private
+	private JButton btnPesquisaArtist, btnNovoArtista, btnEditarArtista; // deixar os demais botoes private
 
 	/**
 	 * Launch the application.
@@ -63,7 +50,7 @@ public class FormAcervo extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormAcervo frame = new FormAcervo();
+					FrmAcervoCad frame = new FrmAcervoCad();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,12 +62,10 @@ public class FormAcervo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormAcervo() throws ParseException {
+	public FrmAcervoCad() throws ParseException {
 		setResizable(false);
 		setTitle("Registro de Acervo");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // quando ela for
-														// chamada pelo menu
-														// trocar para
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // quando ela for chamada pelo menu trocar para
 		setBounds(100, 100, 625, 737); // DISPOSE_ON_CLOSE
 		contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -242,11 +227,11 @@ public class FormAcervo extends JFrame {
 		panel_terceiros.setLayout(null);
 
 		JLabel lblStatus_1 = new JLabel("Status");
-		lblStatus_1.setBounds(131, 23, 46, 14);
+		lblStatus_1.setBounds(88, 23, 46, 14);
 		panel_terceiros.add(lblStatus_1);
 
 		comboStatusT = new JComboBox<String>();
-		comboStatusT.setBounds(183, 21, 110, 20);
+		comboStatusT.setBounds(133, 21, 128, 20);
 		panel_terceiros.add(comboStatusT);
 
 		JLabel lblSetor = new JLabel("Setor");
@@ -287,7 +272,7 @@ public class FormAcervo extends JFrame {
 
 		// botão de pesquisar artista e o Jpanel passados como parametro -
 		// Vitor
-		AcervoController Acontroller = new AcervoController(idObra, lblSelecImagem, comboSetor, comboSetorT,
+		AcervoCtrl Acontroller = new AcervoCtrl(idObra, lblSelecImagem, comboSetor, comboSetorT,
 				comboStatus, comboStatusT, cbCategoria, cbMaterial, nome_artist, nome_obra, data_obra, editor_descricao,
 				msgGravado, msgVazio, textField_valor, btnPesquisaArtist, contentPane, btnNovoArtista,
 				btnEditarArtista);

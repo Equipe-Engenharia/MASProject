@@ -8,97 +8,96 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import model.Artista;
-import persistence.ArtistaArquivoImpl;
+import model.Categoria;
+import model.Material;
+import persistence.MaterialArquivo;
 
-public class AlteraDelArtistaController implements ComponentListener {
+public class MaterialEditCtrl implements ComponentListener {
 
-	private JTextField nomeArtista, idArtista;
+	private JComboBox<String> cbCategoria;
+	private JTextField nomeMaterial, idMaterial;
 	private JButton btApagar, btGravar;
 	private JLabel msgGravar, msgVazio;
-	private List<Artista> artistas;
 	private static int contador = 1;
 
-	private ArquivosController ctrlArquivos;
+	private ArquivosCtrl ctrlArquivos;
 
-	public AlteraDelArtistaController(JTextField idArtista, JTextField nomeArtista,
+	public MaterialEditCtrl(JTextField idMaterial, JComboBox<String> cbCategoria, JTextField nomeMaterial,
 			JButton btnApagar, JButton btnGravar, JLabel msgGravar, JLabel msgVazio) {
 
-		this.idArtista = idArtista;
+		this.cbCategoria = cbCategoria;
+		this.idMaterial = idMaterial;
 		this.btApagar = btnApagar;
 		this.btGravar = btnGravar;
 		this.msgGravar = msgGravar;
 		this.msgVazio = msgVazio;
-		this.nomeArtista = nomeArtista;
-		this.artistas = new ArrayList<Artista>();
-		
-		lerArtista();
-	}
-	
-	public void lerArtista() {
-		String linha = new String();
-		ArrayList<String> list = new ArrayList<>();
+		this.nomeMaterial = nomeMaterial;
 
-		ctrlArquivos = new ArquivosController();
+	}
+
+	public void preencherComboBoxCategoria() {
+		String linha = new String();
+		ctrlArquivos = new ArquivosCtrl();
+		ArrayList<String> listString = new ArrayList<>();
+		ArrayList<Categoria> listCategorias = new ArrayList<>();
+
 		try {
-			ctrlArquivos.leArquivo("../MASProject/dados/", "artistas");
+			ctrlArquivos.leArquivo("../MASProject/dados/", "categorias");
 			linha = ctrlArquivos.getBuffer();
-			String[] listaArtista = linha.split(";");
-			for (String s : listaArtista) {
+			String[] categorias = linha.split(";");
+			for (String s : categorias) {
 				String text = s.replaceAll(".*:", "");
-				list.add(text);
+				listString.add(text);
 				if (s.contains("---")) {
-					Artista artista = new Artista();
-					artista.setId(list.get(0));
-					artista.setNome(list.get(1));
-					artistas.add(artista);
-					list.clear();
+					Categoria c = new Categoria();
+					c.setNome(listString.get(1));
+					listCategorias.add(c);
+					listString.clear();
 				}
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		/*for(Material a :  artistas){
-			System.out.println(a.getNome());
-		}*/
+		for (Categoria c : listCategorias) {
+			cbCategoria.addItem(c.getNome());
+		}
 	}
 
-	public void gravarArtista() {
-		Artista artista = new Artista();
-		ArtistaArquivoImpl artistaImpl = new ArtistaArquivoImpl();
+	public void gravarMaterial() {
+		Material material = new Material();
+		MaterialArquivo materialImpl = new MaterialArquivo();
 
-		artista.setId(idArtista.getText());
-		artista.setNome(nomeArtista.getText());
+		material.setId(idMaterial.getText());
+		material.setNome(nomeMaterial.getText());
+		material.setCategoria(cbCategoria.getSelectedItem().toString());
 
-		if (!nomeArtista
-				.getText().isEmpty()) {
+		if (!nomeMaterial.getText().isEmpty()) {
 			try {
-				artistaImpl.escreveArquivo("../MASProject/dados/", "artistas", nomeArtista.getText(), artista);
+				materialImpl.escreveArquivo("../MASProject/dados/", "materiais", nomeMaterial.getText(), material);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			msgGravar.setText(nomeArtista.getText() + " salvo com sucesso!");
+			msgGravar.setText(nomeMaterial.getText() + " salvo com sucesso!");
 			msgGravar.setVisible(true);
-			nomeArtista.setText(null);
+			nomeMaterial.setText(null);
 		} else {
 			msgGravar.setVisible(false);
 			msgVazio.setVisible(true);
 		}
 	}
 
-	public void pesquisarArtista() {
+	public void pesquisarMaterial() {
 
-		if (!nomeArtista.getText().isEmpty() || !idArtista.getText().isEmpty()) {
-			msgGravar.setText(nomeArtista.getText() + " localizado com sucesso!");
+		if (!nomeMaterial.getText().isEmpty() || !idMaterial.getText().isEmpty()) {
+			msgGravar.setText(nomeMaterial.getText() + " localizado com sucesso!");
 			msgGravar.setVisible(true);
-			nomeArtista.setText(null);
+			nomeMaterial.setText(null);
 		} else {
 			msgGravar.setVisible(false);
 			msgVazio.setText("Por favor, use um dos campos de Pesquisa!");
@@ -107,12 +106,12 @@ public class AlteraDelArtistaController implements ComponentListener {
 		
 	}
 
-	public void apagarArtista() {
+	public void apagarMaterial() {
 		
-		if (!nomeArtista.getText().isEmpty()) {
-			msgGravar.setText(nomeArtista.getText() + " excluído com sucesso!");
+		if (!nomeMaterial.getText().isEmpty()) {
+			msgGravar.setText(nomeMaterial.getText() + " excluído com sucesso!");
 			msgGravar.setVisible(true);
-			nomeArtista.setText(null);
+			nomeMaterial.setText(null);
 		} else {
 			msgGravar.setVisible(false);
 			msgVazio.setVisible(true);
@@ -120,27 +119,27 @@ public class AlteraDelArtistaController implements ComponentListener {
 
 	}
 
-	public ActionListener pesquisarArtista = new ActionListener() {
+	public ActionListener pesquisarMaterial = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			pesquisarArtista();
+			pesquisarMaterial();
 		}
 	};
 	
-	public ActionListener apagarArtista = new ActionListener() {
+	public ActionListener apagarMaterial = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			apagarArtista();
+			apagarMaterial();
 		}
 	};
 
-	public ActionListener gravarArtista = new ActionListener() {
+	public ActionListener gravarMaterial = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			gravarArtista();
+			gravarMaterial();
 		}
 	};
 
@@ -166,8 +165,8 @@ public class AlteraDelArtistaController implements ComponentListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (contador == 1) {
-				idArtista.setText(null);
-				nomeArtista.setText(null);
+				idMaterial.setText(null);
+				nomeMaterial.setText(null);
 				contador += 1;
 			}
 
