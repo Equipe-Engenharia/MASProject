@@ -7,7 +7,10 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -43,9 +46,11 @@ public class MaterialCtrl implements ComponentListener {
 		lerMaterial();
 	}
 
-	public void gerarIdSetor() {
-		GeradordeID geraID = new GeradordeID();
-		idMaterial.setText("MAT"+geraID.getIndice());
+	public void gerarId() {
+		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
+		Date date = new Date();
+		String id = (dateFormat.format(date));
+		idMaterial.setText("MAT" + id);
 	}
 
 	public void lerMaterial() {
@@ -148,7 +153,7 @@ public class MaterialCtrl implements ComponentListener {
 			msgGravar.setText(nomeMaterial.getText() + " salvo com sucesso!");
 			msgGravar.setVisible(true);
 			nomeMaterial.setText(null);
-			gerarIdSetor();
+			gerarId();
 		} else {
 			msgGravar.setVisible(false);
 			msgVazio.setVisible(true);

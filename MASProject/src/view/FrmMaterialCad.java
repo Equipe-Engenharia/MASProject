@@ -65,6 +65,7 @@ public class FrmMaterialCad extends JFrame {
 		contentPane.add(lblNovoMaterial);
 		
 		idMaterial = new JTextField();
+		idMaterial.setEnabled(false);
 		idMaterial.setEditable(false);
 		idMaterial.setBounds(180, 33, 178, 20);
 		idMaterial.setHorizontalAlignment(SwingConstants.CENTER);
@@ -113,7 +114,7 @@ public class FrmMaterialCad extends JFrame {
 		
 		MaterialCtrl ctrlMaterial = new MaterialCtrl(idMaterial, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravado, msgVazio);
 		
-		ctrlMaterial.gerarIdSetor();
+		ctrlMaterial.gerarId();
 		ctrlMaterial.preencherComboBoxCategoria();
 		btnGravar.addActionListener(ctrlMaterial.gravarMaterial);
 		txtMaterial.addMouseListener(ctrlMaterial.limpaCampo);
