@@ -97,11 +97,11 @@ public class FrmSetorEdit extends JFrame {
 		btnPesqNomSet.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnPesqNomSet);
 		
-		JButton btnExcluir = new JButton("Excluir");
-		btnExcluir.setEnabled(false);
-		btnExcluir.setBounds(288, 166, 97, 34);
-		btnExcluir.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		contentPane.add(btnExcluir);
+		JButton btnApagar = new JButton("Apagar");
+		btnApagar.setEnabled(false);
+		btnApagar.setBounds(288, 166, 97, 34);
+		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
+		contentPane.add(btnApagar);
 		
 		JButton btnFechar = new JButton("Fechar");
 		btnFechar.addActionListener(new ActionListener() {
@@ -124,12 +124,12 @@ public class FrmSetorEdit extends JFrame {
 		lblDigiteUmDos.setBounds(10, 11, 362, 14);
 		contentPane.add(lblDigiteUmDos);
 		
-		SetorEditCtrl ADSetor = new SetorEditCtrl(txtDigiteOId,txtDigitadoN,btnPesqIdSet,btnPesqNomSet,btnGravar,btnExcluir);
+		SetorEditCtrl ADSetor = new SetorEditCtrl(txtDigiteOId,txtDigitadoN,btnPesqIdSet,btnPesqNomSet, btnApagar,btnGravar);
 	
 		btnPesqIdSet.addActionListener(ADSetor.pesquisaIDSetor);
 		btnPesqNomSet.addActionListener(ADSetor.pesquisaNomeSetor);
 		btnGravar.addActionListener(ADSetor.gravarAlteracoesSetor);
-		btnExcluir.addActionListener(ADSetor.excluirSetor);
+		btnApagar.addActionListener(ADSetor.excluirSetor);
 		
 	}
 	
