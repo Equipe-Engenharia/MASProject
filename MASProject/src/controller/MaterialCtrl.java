@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import model.Categoria;
 import model.Material;
 import persistence.MaterialArquivo;
+import view.FrmMaterialCad;
 
 public class MaterialCtrl implements ComponentListener {
 
@@ -173,6 +174,15 @@ public class MaterialCtrl implements ComponentListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			apagarMaterial();
+		}
+	};
+	
+public ActionListener fecharTela = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			FrmMaterialCad frame = new FrmMaterialCad();
+			frame.setVisible(false);
 		}
 	};
 	

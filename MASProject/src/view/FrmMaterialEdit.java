@@ -92,6 +92,18 @@ public class FrmMaterialEdit extends JFrame {
 		msgVazio.setVisible(false);
 		contentPane.add(msgVazio);
 		
+		JButton btnPesquisaId = new JButton(" Busca ID");
+		btnPesquisaId.setToolTipText("Use o campo e clique para realizar a busca por número ID");
+		btnPesquisaId.setBounds(377, 26, 117, 34);
+		btnPesquisaId.setIcon(new ImageIcon("../MASProject/icons/search.png"));
+		contentPane.add(btnPesquisaId);
+		
+		JButton btnPesquisaMaterial = new JButton(" Busca Material");
+		btnPesquisaMaterial.setToolTipText("Use o campo e clique para realizar a busca por número Material");
+		btnPesquisaMaterial.setBounds(377, 98, 117, 34);
+		btnPesquisaMaterial.setIcon(new ImageIcon("../MASProject/icons/search.png"));
+		contentPane.add(btnPesquisaMaterial);
+		
 		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setEnabled(false);
 		btnGravar.setBounds(159, 166, 117, 34);
@@ -118,27 +130,15 @@ public class FrmMaterialEdit extends JFrame {
 		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
 		contentPane.add(btnFechar);
 		
-		JButton btnPesquisaId = new JButton(" Busca ID");
-		btnPesquisaId.setToolTipText("Use o campo e clique para realizar a busca por número ID");
-		btnPesquisaId.setBounds(377, 26, 117, 34);
-		btnPesquisaId.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		contentPane.add(btnPesquisaId);
+		MaterialCtrl ctrlMaterial = new MaterialCtrl(idMaterial, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravar, msgVazio);
 		
-		JButton btnPesquisaMaterial = new JButton(" Busca Material");
-		btnPesquisaMaterial.setToolTipText("Use o campo e clique para realizar a busca por número Material");
-		btnPesquisaMaterial.setBounds(377, 98, 117, 34);
-		btnPesquisaMaterial.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		contentPane.add(btnPesquisaMaterial);
-		
-		MaterialCtrl ctrlADMaterial = new MaterialCtrl(idMaterial, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravar, msgVazio);
-		
-		ctrlADMaterial.preencherComboBoxCategoria();
-		btnPesquisaId.addActionListener(ctrlADMaterial.pesquisarMaterial);
-		btnPesquisaMaterial.addActionListener(ctrlADMaterial.pesquisarMaterial);
-		btnApagar.addActionListener(ctrlADMaterial.apagarMaterial);
-		btnGravar.addActionListener(ctrlADMaterial.gravarMaterial);
-		idMaterial.addMouseListener(ctrlADMaterial.limpaCampo);
-		txtMaterial.addMouseListener(ctrlADMaterial.limpaCampo);
-		txtMaterial.addActionListener(ctrlADMaterial.gravarMaterial);
+		ctrlMaterial.preencherComboBoxCategoria();
+		btnPesquisaId.addActionListener(ctrlMaterial.pesquisarMaterial);
+		btnPesquisaMaterial.addActionListener(ctrlMaterial.pesquisarMaterial);
+		btnApagar.addActionListener(ctrlMaterial.apagarMaterial);
+		btnGravar.addActionListener(ctrlMaterial.gravarMaterial);
+		idMaterial.addMouseListener(ctrlMaterial.limpaCampo);
+		txtMaterial.addMouseListener(ctrlMaterial.limpaCampo);
+		txtMaterial.addActionListener(ctrlMaterial.gravarMaterial);
 	}
 }
