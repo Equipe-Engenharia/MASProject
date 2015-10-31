@@ -270,31 +270,30 @@ public class FrmAcervoCad extends JFrame {
 		btnFechar.setBounds(471, 669, 117, 34);
 		contentPane.add(btnFechar);
 
-		// botão de pesquisar artista e o Jpanel passados como parametro -
-		// Vitor
-		AcervoCtrl Acontroller = new AcervoCtrl(idObra, lblSelecImagem, comboSetor, comboSetorT,
+		// botão de pesquisar artista e o Jpanel passados como parametro - Vitor
+		AcervoCtrl ctrlAcervo = new AcervoCtrl(idObra, lblSelecImagem, comboSetor, comboSetorT,
 				comboStatus, comboStatusT, cbCategoria, cbMaterial, nome_artist, nome_obra, data_obra, editor_descricao,
 				msgGravado, msgVazio, textField_valor, btnPesquisaArtist, contentPane, btnNovoArtista,
 				btnEditarArtista);
 
-		btnPesquisaArtist.addActionListener(Acontroller);
-		btnNovoArtista.addActionListener(Acontroller);
-		btnEditarArtista.addActionListener(Acontroller);
+		btnPesquisaArtist.addActionListener(ctrlAcervo);
+		btnNovoArtista.addActionListener(ctrlAcervo);
+		btnEditarArtista.addActionListener(ctrlAcervo);
 
-		Acontroller.gerarIdSetor();
-		btnPesquisarImagem.addActionListener(Acontroller.inserir_imagem);
-		btnGravar.addActionListener(Acontroller.gravarAcervo);
-		btnExcluirImagem.addActionListener(Acontroller.remover_imagem);
-		btnNovaCategoria.addActionListener(Acontroller.novaCategoria);
-		btnEditarCategoria.addActionListener(Acontroller.editarCategoria);
-		btnNovoMaterial.addActionListener(Acontroller.novoMaterial);
-		btnEditarMaterial.addActionListener(Acontroller.editarMaterial);
-		btnFechar.addActionListener(Acontroller.fecharTela);
-		Acontroller.preencherComboBoxCategoria();
-		Acontroller.preencherComboBoxMaterial();
-		Acontroller.preencherComboBoxSetores();
-		Acontroller.preencherComboStatusProprio();
-		Acontroller.preencherComboStatusTerceiro();
+		ctrlAcervo.gerarId();
+		btnPesquisarImagem.addActionListener(ctrlAcervo.inserir_imagem);
+		btnGravar.addActionListener(ctrlAcervo.gravarAcervo);
+		btnExcluirImagem.addActionListener(ctrlAcervo.remover_imagem);
+		btnNovaCategoria.addActionListener(ctrlAcervo.novaCategoria);
+		btnEditarCategoria.addActionListener(ctrlAcervo.editarCategoria);
+		btnNovoMaterial.addActionListener(ctrlAcervo.novoMaterial);
+		btnEditarMaterial.addActionListener(ctrlAcervo.editarMaterial);
+		btnFechar.addActionListener(ctrlAcervo.fecharTela);
+		ctrlAcervo.preencherComboBoxCategoria();
+		ctrlAcervo.preencherComboBoxMaterial();
+		ctrlAcervo.preencherComboBoxSetores();
+		ctrlAcervo.preencherComboStatusProprio();
+		ctrlAcervo.preencherComboStatusTerceiro();
 
 	}
 }

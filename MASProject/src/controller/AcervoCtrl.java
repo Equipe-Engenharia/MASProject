@@ -8,7 +8,10 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -118,9 +121,11 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	}
 
-	public void gerarIdSetor() {
-		GeradordeID geraID = new GeradordeID();
-		idObra.setText("ACV" + geraID.getIndice());
+	public void gerarId() {
+		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
+		Date date = new Date();
+		String id = (dateFormat.format(date));
+		idObra.setText("ACV" + id);
 	}
 
 	public void lerAcervo() {
