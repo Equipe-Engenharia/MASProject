@@ -7,7 +7,10 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -26,11 +29,11 @@ public class ArtistaCtrl implements ComponentListener {
 	private ArquivosCtrl ctrlArquivos;
 
 	public ArtistaCtrl(JTextField idArtista, JTextField nomeArtista,
-			JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
+			JButton btnGravar, JLabel msgGravar, JLabel msgVazio) {
 
 		this.idArtista = idArtista;
 		this.btGravar = btnGravar;
-		this.msgGravado = msgGravado;
+		this.msgGravado = msgGravar;
 		this.msgVazio = msgVazio;
 		this.nomeArtista = nomeArtista;
 		this.artistas = new ArrayList<Artista>();
@@ -38,9 +41,11 @@ public class ArtistaCtrl implements ComponentListener {
 		lerArtista();
 	}
 
-	public void gerarIdSetor() {
-		GeradordeID geraID = new GeradordeID();
-		idArtista.setText("ART"+geraID.getIndice());
+	public void gerarId() {
+		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
+		Date date = new Date();
+		String id = (dateFormat.format(date));
+		idArtista.setText("ART" + id);
 	}
 
 	public void lerArtista() {
@@ -88,7 +93,7 @@ public class ArtistaCtrl implements ComponentListener {
 			msgGravado.setText(nomeArtista.getText() + " salvo com sucesso!");
 			msgGravado.setVisible(true);
 			nomeArtista.setText(null);
-			gerarIdSetor();
+			gerarId();
 		} else {
 			msgGravado.setVisible(false);
 			msgVazio.setVisible(true);

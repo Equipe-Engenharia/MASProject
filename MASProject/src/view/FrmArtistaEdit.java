@@ -19,7 +19,7 @@ public class FrmArtistaEdit extends JDialog{
   
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField idArtista;
+	private JTextField txtId;
 	private JTextField txtArtista;
 
 	/**
@@ -59,11 +59,11 @@ public class FrmArtistaEdit extends JDialog{
 		lblEditArtista.setBounds(70, 93, 97, 16);
 		contentPane.add(lblEditArtista);
 		
-		idArtista = new JTextField();
-		idArtista.setToolTipText("Digite o ID do Artista…");
-		idArtista.setBounds(180, 54, 178, 20);
-		contentPane.add(idArtista);
-		idArtista.setColumns(10);
+		txtId = new JTextField();
+		txtId.setToolTipText("Digite o ID do Artista…");
+		txtId.setBounds(180, 54, 178, 20);
+		contentPane.add(txtId);
+		txtId.setColumns(10);
 		
 		txtArtista = new JTextField();
 		txtArtista.setToolTipText("Digite o nome do material");
@@ -111,13 +111,13 @@ public class FrmArtistaEdit extends JDialog{
 		btnPesquisaArtista.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnPesquisaArtista);
 		
-		ArtistaEditCtrl ctrlADArtista = new ArtistaEditCtrl(idArtista, txtArtista, btnApagar, btnGravar, msgGravar, msgVazio);
+		ArtistaEditCtrl ctrlADArtista = new ArtistaEditCtrl(txtId, txtArtista, btnApagar, btnGravar, msgGravar, msgVazio);
 		
 		btnPesquisaId.addActionListener(ctrlADArtista.pesquisarArtista);
 		btnPesquisaArtista.addActionListener(ctrlADArtista.pesquisarArtista);
 		btnApagar.addActionListener(ctrlADArtista.apagarArtista);
 		btnGravar.addActionListener(ctrlADArtista.gravarArtista);
-		idArtista.addMouseListener(ctrlADArtista.limpaCampo);
+		txtId.addMouseListener(ctrlADArtista.limpaCampo);
 		txtArtista.addMouseListener(ctrlADArtista.limpaCampo);
 		txtArtista.addActionListener(ctrlADArtista.gravarArtista);
 	}

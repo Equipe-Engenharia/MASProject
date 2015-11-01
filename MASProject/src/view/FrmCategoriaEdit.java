@@ -21,9 +21,9 @@ public class FrmCategoriaEdit extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField tfIdCategoria;
-	private JTextField tfNomeCategoria;
-	private JButton btnApagar, btnGravarEdit, btnIdPesquisa, btnCategoriaPesquisa;
+	private JTextField txtId;
+	private JTextField txtCategoria;
+	private JButton btnApagar, btnGravar, btnIdPesquisa, btnCategoriaPesquisa;
 	private JLabel msgGravar, msgVazio; 
 	
 
@@ -64,17 +64,17 @@ public class FrmCategoriaEdit extends JFrame {
 		lblEditCategoria.setBounds(67, 93, 100, 16);
 		contentPane.add(lblEditCategoria);
 		
-		tfIdCategoria = new JTextField();
-		tfIdCategoria.setToolTipText("Digite o ID do Artista…");
-		tfIdCategoria.setBounds(180, 54, 178, 20);
-		contentPane.add(tfIdCategoria);
-		tfIdCategoria.setColumns(10);
+		txtId = new JTextField();
+		txtId.setToolTipText("Digite o ID do Artista…");
+		txtId.setBounds(180, 54, 178, 20);
+		contentPane.add(txtId);
+		txtId.setColumns(10);
 		
-		tfNomeCategoria = new JTextField();
-		tfNomeCategoria.setToolTipText("Digite o nome do material");
-		tfNomeCategoria.setBounds(178, 93, 178, 28);
-		contentPane.add(tfNomeCategoria);
-		tfNomeCategoria.setColumns(10);
+		txtCategoria = new JTextField();
+		txtCategoria.setToolTipText("Digite o nome do material");
+		txtCategoria.setBounds(178, 93, 178, 28);
+		contentPane.add(txtCategoria);
+		txtCategoria.setColumns(10);
 		
 		msgGravar = new JLabel("");
 		msgGravar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
@@ -88,11 +88,11 @@ public class FrmCategoriaEdit extends JFrame {
 		msgVazio.setVisible(false);
 		contentPane.add(msgVazio);
 		
-		btnGravarEdit = new JButton("Gravar");
-		btnGravarEdit.setEnabled(false);
-		btnGravarEdit.setBounds(288, 166, 97, 34);
-		btnGravarEdit.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		contentPane.add(btnGravarEdit);
+		btnGravar = new JButton("Gravar");
+		btnGravar.setEnabled(false);
+		btnGravar.setBounds(288, 166, 97, 34);
+		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
+		contentPane.add(btnGravar);
 		
 		btnApagar = new JButton("Apagar");
 		btnApagar.addActionListener(new ActionListener() {
@@ -116,12 +116,12 @@ public class FrmCategoriaEdit extends JFrame {
 		btnCategoriaPesquisa.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnCategoriaPesquisa);
 		
-		CategoriaCtrl ctrlCategoria = new CategoriaCtrl(tfIdCategoria, tfNomeCategoria, btnApagar, btnGravarEdit, msgGravar, msgVazio, btnIdPesquisa, btnCategoriaPesquisa);
+		CategoriaCtrl ctrlCategoria = new CategoriaCtrl(txtId, txtCategoria, btnApagar, btnGravar, msgGravar, msgVazio, btnIdPesquisa, btnCategoriaPesquisa);
 		
 		btnIdPesquisa.addActionListener(ctrlCategoria.pesquisaIdCat);
 		btnCategoriaPesquisa.addActionListener(ctrlCategoria.pesquisarNomeCat);
 		btnApagar.addActionListener(ctrlCategoria.apagarCategoria);
-		btnGravarEdit.addActionListener(ctrlCategoria.gravarCategoriaEdit);
+		btnGravar.addActionListener(ctrlCategoria.gravarCategoriaEdit);
 
 	}
 }

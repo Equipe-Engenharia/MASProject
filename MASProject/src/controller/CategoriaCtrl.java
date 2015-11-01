@@ -7,7 +7,10 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -54,9 +57,11 @@ public class CategoriaCtrl implements ComponentListener {
 		this.msgVazio = msgVazio;
 	}
 
-	public void gerarIdSetor() {
-		GeradordeID geraID = new GeradordeID();
-		idCategoria.setText("CTG"+geraID.getIndice());
+	public void gerarId() {
+		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
+		Date date = new Date();
+		String id = (dateFormat.format(date));
+		idCategoria.setText("CTG" + id);
 	}
 
 	public void lerCategoria() {
@@ -104,7 +109,7 @@ public class CategoriaCtrl implements ComponentListener {
 			msgGravado.setText(nomeCategoria.getText() + " salvo com sucesso!");
 			msgGravado.setVisible(true);
 			nomeCategoria.setText(null);
-			gerarIdSetor();
+			gerarId();
 		} else {
 			msgGravado.setVisible(false);
 			msgVazio.setVisible(true);
@@ -159,7 +164,7 @@ public class CategoriaCtrl implements ComponentListener {
 		}
 	};
 	
-	//Manipulaçao da Tela de CategoriaEdit
+	//Manipulaï¿½ao da Tela de CategoriaEdit
 	
 	public void pesquisaIdCat(){
 		

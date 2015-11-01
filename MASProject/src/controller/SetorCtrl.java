@@ -45,7 +45,7 @@ public class SetorCtrl {
 		this.btnGravarEdit = btnGravarEdit;
 	}
 
-	public void gerarIdSetor() {
+	public void gerarId() {
 		// Chamada deste metodo no gravaSetor e no FormRegisSetor
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
@@ -69,7 +69,7 @@ public class SetorCtrl {
 			}
 			mensagemGravado.setText(nomeset.getText() + " salvo com sucesso!!!");
 			mensagemGravado.setVisible(true);
-			gerarIdSetor();
+			gerarId();
 		} else {
 			mensagemGravado.setVisible(false);
 			mensagemVazio.setVisible(true);
@@ -182,7 +182,7 @@ public class SetorCtrl {
 	};
 	
 	
-	//Tela de edição
+	//Tela de ediï¿½ï¿½o
 	
 	
 	public void pesquisaIDSetor(){

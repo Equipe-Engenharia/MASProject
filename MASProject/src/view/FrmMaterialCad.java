@@ -19,7 +19,7 @@ public class FrmMaterialCad extends JFrame {
 	private JPanel contentPane;
 	private JComboBox<String> cbCategoria;
 	private JTextField txtMaterial;
-	private JTextField idMaterial;
+	private JTextField txtId;
 	
 
 	/**
@@ -63,13 +63,13 @@ public class FrmMaterialCad extends JFrame {
 		lblNovoMaterial.setBounds(83, 107, 97, 16);
 		contentPane.add(lblNovoMaterial);
 		
-		idMaterial = new JTextField();
-		idMaterial.setEnabled(false);
-		idMaterial.setEditable(false);
-		idMaterial.setBounds(180, 33, 178, 20);
-		idMaterial.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(idMaterial);
-		idMaterial.setColumns(10);
+		txtId = new JTextField();
+		txtId.setEnabled(false);
+		txtId.setEditable(false);
+		txtId.setBounds(180, 33, 178, 20);
+		txtId.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(txtId);
+		txtId.setColumns(10);
 		
 		cbCategoria = new JComboBox<String>();
 		cbCategoria.setBounds(179, 65, 178, 28);
@@ -81,11 +81,11 @@ public class FrmMaterialCad extends JFrame {
 		contentPane.add(txtMaterial);
 		txtMaterial.setColumns(10);
 		
-		JLabel msgGravado = new JLabel("");
-		msgGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
-		msgGravado.setBounds(43, 177, 230, 23);
-		msgGravado.setVisible(false);
-		contentPane.add(msgGravado);
+		JLabel msgGravar = new JLabel("");
+		msgGravar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
+		msgGravar.setBounds(43, 177, 230, 23);
+		msgGravar.setVisible(false);
+		contentPane.add(msgGravar);
 
 		JLabel msgVazio = new JLabel("CAMPO VAZIO!");
 		msgVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
@@ -107,7 +107,7 @@ public class FrmMaterialCad extends JFrame {
 		
 		JButton btnApagar = new JButton("Apagar");
 		
-		MaterialCtrl ctrlMaterial = new MaterialCtrl(idMaterial, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravado, msgVazio);
+		MaterialCtrl ctrlMaterial = new MaterialCtrl(txtId, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravar, msgVazio);
 		
 		ctrlMaterial.gerarId();
 		ctrlMaterial.preencherComboBoxCategoria();

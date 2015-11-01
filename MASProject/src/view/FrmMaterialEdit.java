@@ -20,7 +20,7 @@ public class FrmMaterialEdit extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JComboBox<String> cbCategoria;
-	private JTextField idMaterial;
+	private JTextField txtId;
 	private JTextField txtMaterial;
 
 	/**
@@ -64,11 +64,11 @@ public class FrmMaterialEdit extends JFrame {
 		lblEditMaterial.setBounds(71, 101, 97, 16);
 		contentPane.add(lblEditMaterial);
 		
-		idMaterial = new JTextField();
-		idMaterial.setToolTipText("Digite o ID do Material");
-		idMaterial.setBounds(180, 33, 178, 20);
-		contentPane.add(idMaterial);
-		idMaterial.setColumns(10);
+		txtId = new JTextField();
+		txtId.setToolTipText("Digite o ID do Material");
+		txtId.setBounds(180, 33, 178, 20);
+		contentPane.add(txtId);
+		txtId.setColumns(10);
 		
 		cbCategoria = new JComboBox<String>();
 		cbCategoria.setBounds(179, 65, 178, 28);
@@ -120,14 +120,14 @@ public class FrmMaterialEdit extends JFrame {
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
 		
-		MaterialCtrl ctrlMaterial = new MaterialCtrl(idMaterial, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravar, msgVazio);
+		MaterialCtrl ctrlMaterial = new MaterialCtrl(txtId, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravar, msgVazio);
 		
 		ctrlMaterial.preencherComboBoxCategoria();
 		btnPesquisaId.addActionListener(ctrlMaterial.pesquisarMaterial);
 		btnPesquisaMaterial.addActionListener(ctrlMaterial.pesquisarMaterial);
 		btnApagar.addActionListener(ctrlMaterial.apagarMaterial);
 		btnGravar.addActionListener(ctrlMaterial.gravarMaterial);
-		idMaterial.addMouseListener(ctrlMaterial.limpaCampo);
+		txtId.addMouseListener(ctrlMaterial.limpaCampo);
 		txtMaterial.addMouseListener(ctrlMaterial.limpaCampo);
 		txtMaterial.addActionListener(ctrlMaterial.gravarMaterial);
 	}

@@ -18,7 +18,7 @@ public class FrmSetorEdit extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtDigitadoN, txtDigiteId;
+	private JTextField txtSetor, txtId;
 	private JButton btnGravar,  btnPesqIdSet, btnPesqNomSet, btnApagar;
 	private JLabel lblDigiteUmDos, lblIdDoSetor, lblNomeDoSetor, mensagemGravado, mensagemVazio  ;
 
@@ -72,11 +72,11 @@ public class FrmSetorEdit extends JFrame {
 		mensagemVazio.setVisible(false);
 		contentPane.add(mensagemVazio);
 
-		txtDigitadoN = new JTextField();
-		txtDigitadoN.setToolTipText("Digite o nome do setor...");
-		txtDigitadoN.setBounds(178, 93, 178, 28);
-		contentPane.add(txtDigitadoN);
-		txtDigitadoN.setColumns(10);
+		txtSetor = new JTextField();
+		txtSetor.setToolTipText("Digite o nome do setor...");
+		txtSetor.setBounds(178, 93, 178, 28);
+		contentPane.add(txtSetor);
+		txtSetor.setColumns(10);
 		
 		btnGravar = new JButton("Gravar");
 		btnGravar.setBounds(288, 166, 97, 34);
@@ -100,23 +100,23 @@ public class FrmSetorEdit extends JFrame {
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
 
-		txtDigiteId = new JTextField();
-		txtDigiteId.setToolTipText("Digite o ID do setor...");
-		txtDigiteId.setBounds(180, 54, 178, 20);
-		contentPane.add(txtDigiteId);
-		txtDigiteId.setColumns(10);
+		txtId = new JTextField();
+		txtId.setToolTipText("Digite o ID do setor...");
+		txtId.setBounds(180, 54, 178, 20);
+		contentPane.add(txtId);
+		txtId.setColumns(10);
 
 		lblDigiteUmDos = new JLabel("Digite em um dos campos e aperte o bot\u00E3o para pesquisar...");
 		lblDigiteUmDos.setForeground(Color.RED);
 		lblDigiteUmDos.setBounds(10, 11, 362, 14);
 		contentPane.add(lblDigiteUmDos);
 
-		SetorCtrl RsCtrl = new SetorCtrl(txtDigiteId, txtDigitadoN, btnPesqIdSet, btnPesqNomSet, btnApagar, btnGravar);
+		SetorCtrl ctrlSetor = new SetorCtrl(txtId, txtSetor, btnPesqIdSet, btnPesqNomSet, btnApagar, btnGravar);
 
-		btnPesqIdSet.addActionListener(RsCtrl.pesquisaIDSetor);
-		btnPesqNomSet.addActionListener(RsCtrl.pesquisaNomeSetor);
-		btnGravar.addActionListener(RsCtrl.gravarAlteracoesSetor);
-		btnApagar.addActionListener(RsCtrl.excluirSetor);
+		btnPesqIdSet.addActionListener(ctrlSetor.pesquisaIDSetor);
+		btnPesqNomSet.addActionListener(ctrlSetor.pesquisaNomeSetor);
+		btnGravar.addActionListener(ctrlSetor.gravarAlteracoesSetor);
+		btnApagar.addActionListener(ctrlSetor.excluirSetor);
 
 	}
 

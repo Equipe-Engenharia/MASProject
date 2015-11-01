@@ -19,7 +19,7 @@ public class FrmArtistaCad extends JFrame {
 	static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtArtista;
-	private JTextField idArtista;
+	private JTextField txtId;
 	
 	/**
 	 * Launch the application.
@@ -58,13 +58,13 @@ public class FrmArtistaCad extends JFrame {
 		lblNovoArtista.setBounds(84, 87, 97, 16);
 		contentPane.add(lblNovoArtista);
 		
-		idArtista = new JTextField();
-		idArtista.setEnabled(false);
-		idArtista.setEditable(false);
-		idArtista.setBounds(181, 49, 178, 20);
-		idArtista.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(idArtista);
-		idArtista.setColumns(10);
+		txtId = new JTextField();
+		txtId.setEnabled(false);
+		txtId.setEditable(false);
+		txtId.setBounds(181, 49, 178, 20);
+		txtId.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(txtId);
+		txtId.setColumns(10);
 		
 		txtArtista = new JTextField();
 		txtArtista.setToolTipText("Digite o novo Artista…");
@@ -72,11 +72,11 @@ public class FrmArtistaCad extends JFrame {
 		contentPane.add(txtArtista);
 		txtArtista.setColumns(10);
 		
-		JLabel msgGravado = new JLabel("");
-		msgGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
-		msgGravado.setBounds(43, 177, 230, 23);
-		msgGravado.setVisible(false);
-		contentPane.add(msgGravado);
+		JLabel msgGravar = new JLabel("");
+		msgGravar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
+		msgGravar.setBounds(43, 177, 230, 23);
+		msgGravar.setVisible(false);
+		contentPane.add(msgGravar);
 
 		JLabel msgVazio = new JLabel("CAMPO VAZIO!");
 		msgVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
@@ -90,9 +90,9 @@ public class FrmArtistaCad extends JFrame {
 		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
 		
-		ArtistaCtrl ctrlArtista = new ArtistaCtrl(idArtista, txtArtista, btnGravar, msgGravado, msgVazio);
+		ArtistaCtrl ctrlArtista = new ArtistaCtrl(txtId, txtArtista, btnGravar, msgGravar, msgVazio);
 		
-		ctrlArtista.gerarIdSetor();
+		ctrlArtista.gerarId();
 		btnGravar.addActionListener(ctrlArtista.gravarArtista);
 		txtArtista.addMouseListener(ctrlArtista.limpaCampo);
 		txtArtista.addActionListener(ctrlArtista.gravarArtista);
