@@ -2,29 +2,26 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.SystemColor;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
-import javax.swing.ImageIcon;
 
 import controller.AcervoCtrl;
-
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import javax.swing.UIManager;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class FrmAcervoCad extends JFrame {
 
@@ -283,9 +280,9 @@ public class FrmAcervoCad extends JFrame {
 		contentPane.add(btnFechar);
 		
 		// botão de pesquisar artista e o Jpanel passados como parametro - Vitor
-		AcervoCtrl ctrlAcervo = new AcervoCtrl(idObra, lblSelecImagem, cbSetor, cbSetorT,
+		AcervoCtrl ctrlAcervo = new AcervoCtrl(contentPane, idObra, lblSelecImagem, cbSetor, cbSetorT,
 				cbStatus, cbStatusT, cbCategoria, cbMaterial, txtArtist, txtObra, ftxtData, editDescricao,
-				msgGravado, msgVazio, txtValor, btnPesquisaArtist, contentPane, btnNovoArtista,
+				msgGravado, msgVazio, txtValor, btnPesquisaArtist, btnNovoArtista,
 				btnEditarArtista, btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, 
 				btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT);
 

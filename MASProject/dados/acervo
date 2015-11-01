@@ -24,3 +24,16 @@ Valor :
 Obra Propria :false
 Status :Exposição
 ---------------------------
+ID Obra :ACV151101-021855
+Nome do Artista :Henrique
+Nome da obra :Teste de Obra
+Descrição :
+Categoria : Pintura
+Data :20/08/2015
+Imagem :../MASProject/icons/painting.png
+Material : Óleo
+Setor : Setor A
+Valor :5.000.000,00
+Obra Propria :true
+Status :Emprestada
+---------------------------

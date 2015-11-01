@@ -621,6 +621,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 // CHAMADA DE TELA ////////////////////////////////////////////
 	
+	@SuppressWarnings("static-access")
 	private void abrirTelaNovoArtista() {
 		FrmArtistaCad newArtista = new FrmArtistaCad(null, true);
 		newArtista.setVisible(true);
@@ -628,6 +629,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		newArtista.setResizable(false);
 	}
 
+	@SuppressWarnings("static-access")
 	private void abrirTelaEditarArtista() {
 		FrmArtistaEdit editArtista = new FrmArtistaEdit(null, true);
 		editArtista.setVisible(true);
@@ -635,6 +637,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		editArtista.setResizable(false);
 	}
 	
+	@SuppressWarnings("static-access")
 	private void abrirTelaNovaCategoria() {
 		FrmCategoriaCad newCategoria = new FrmCategoriaCad();
 		newCategoria.setVisible(true);
@@ -642,6 +645,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		newCategoria.setResizable(false);
 	}
 	
+	@SuppressWarnings("static-access")
 	private void abrirTelaEditarCategoria() {
 		FrmCategoriaEdit editCategoria = new FrmCategoriaEdit();
 		editCategoria.setVisible(true);
@@ -649,6 +653,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		editCategoria.setResizable(false);
 	}
 	
+	@SuppressWarnings("static-access")
 	private void abrirTelaNovoMaterial() {
 		FrmMaterialCad newMaterial = new FrmMaterialCad();
 		newMaterial.setVisible(true);
@@ -656,6 +661,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		newMaterial.setResizable(false);
 	}
 	
+	@SuppressWarnings("static-access")
 	private void abrirTelaEditarMaterial() {
 		FrmMaterialEdit editMaterial = new FrmMaterialEdit();
 		editMaterial.setVisible(true);
@@ -663,6 +669,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		editMaterial.setResizable(false);
 	}
 	
+	@SuppressWarnings("static-access")
 	private void abrirTelaNovoSetor() {
 		FrmSetorCad newSetor = new FrmSetorCad();
 		newSetor.setVisible(true);
@@ -670,6 +677,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		newSetor.setResizable(false);
 	}
 	
+	@SuppressWarnings("static-access")
 	private void abrirTelaEditarSetor() {
 		FrmSetorEdit editSetor = new FrmSetorEdit();
 		editSetor.setVisible(true);

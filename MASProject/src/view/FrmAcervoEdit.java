@@ -32,7 +32,7 @@ public class FrmAcervoEdit extends JFrame {
 	private JComboBox<String> cbCategoria, cbMaterial, cbSetor, cbSetorT, cbStatus, cbStatusT;
 	private JButton btnPesquisarImagem, btnExcluirImagem, btnPesquisaArtist, btnNovoArtista, btnEditarArtista, 
 	btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, 
-	btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT, btnGravar, btnFechar; // deixar os demais botoes private
+	btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT, btnGravar; // deixar os demais botoes private
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -90,7 +90,7 @@ public class FrmAcervoEdit extends JFrame {
 		contentPane.add(txtArtist);
 		txtArtist.setColumns(10);
 
-		JButton btnPesquisaArtist = new JButton("");
+		btnPesquisaArtist = new JButton("");
 		btnPesquisaArtist.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		btnPesquisaArtist.setBounds(522, 22, 29, 28);
 		contentPane.add(btnPesquisaArtist);
@@ -189,11 +189,6 @@ public class FrmAcervoEdit extends JFrame {
 		cbSetor.setBounds(167, 185, 133, 20);
 		contentPane.add(cbSetor);
 
-		JButton btnGravar = new JButton("Gravar Alterações");
-		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnGravar.setBounds(298, 594, 122, 34);
-		contentPane.add(btnGravar);
-
 		JLabel lblSelecImagem = new JLabel("");
 		lblSelecImagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
 		lblSelecImagem.setBackground(SystemColor.inactiveCaption);
@@ -202,16 +197,25 @@ public class FrmAcervoEdit extends JFrame {
 		lblSelecImagem.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		contentPane.add(lblSelecImagem);
 
-		JButton btnPesquisarImagem = new JButton("");
+		btnPesquisarImagem = new JButton("");
 		btnPesquisarImagem.setIcon(new ImageIcon("../MASProject/icons/add.png"));
 		btnPesquisarImagem.setBounds(440, 299, 46, 30);
 		contentPane.add(btnPesquisarImagem);
 
-		JButton btnExcluirImagem = new JButton("");
+		btnExcluirImagem = new JButton("");
 		btnExcluirImagem.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		btnExcluirImagem.setBounds(497, 299, 46, 30);
 		contentPane.add(btnExcluirImagem);
-
+		
+		JButton btnExcluir = new JButton("Excluir Obra");
+		btnExcluir.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
+		btnExcluir.setBounds(457, 594, 122, 34);
+		
+		btnGravar = new JButton("Gravar Alterações");
+		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
+		btnGravar.setBounds(298, 594, 122, 34);
+		contentPane.add(btnGravar);
+		
 		idObra = new JTextField();
 		
 		AcervoCtrl ctrlAcervo = new AcervoCtrl(contentPane,idObra, lblSelecImagem, cbSetor, cbSetorT,
@@ -219,27 +223,22 @@ public class FrmAcervoEdit extends JFrame {
 				msgGravado, msgVazio, txtValor, btnPesquisaArtist,  btnNovoArtista,
 				btnEditarArtista, btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, 
 				btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT);
-
-		btnPesquisarImagem.addActionListener(ctrlAcervo.inserir_imagem);
-
-		btnExcluirImagem.addActionListener(ctrlAcervo.remover_imagem);
-		btnGravar.addActionListener(ctrlAcervo.editar_acervo);
-
-		JButton btnExcluir = new JButton("Excluir Obra");
-		btnExcluir.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-
-		btnExcluir.addActionListener(ctrlAcervo.excluir_obraAcervo);
-		ctrlAcervo.preencherComboBoxObras();
-		btnPesquisaArtist.addActionListener(ctrlAcervo.pesquisaArtistaEditar);
-		btnPesquisaObra.addActionListener(ctrlAcervo.pesquisarObra);
-
-		btnExcluir.setBounds(457, 594, 122, 34);
-		//txtNovaObra.addMouseListener(ctrlAcervo.limpaCampos());
+		
+		contentPane.add(btnExcluir);
 		ctrlAcervo.preencherComboBoxCategoria();
 		ctrlAcervo.preencherComboBoxMaterial();
 		ctrlAcervo.preencherComboBoxSetoresAlteraDel();
 		ctrlAcervo.preencherComboStatusProprio();
-		contentPane.add(btnExcluir);
-
+		ctrlAcervo.preencherComboBoxObras();
+		//txtNovaObra.addMouseListener(ctrlAcervo.limpaCampos()); //PRECISA CONSERTO
+		btnPesquisarImagem.addActionListener(ctrlAcervo.inserir_imagem);
+		btnPesquisaArtist.addActionListener(ctrlAcervo.pesquisaArtistaEditar);
+		btnPesquisaObra.addActionListener(ctrlAcervo.pesquisarObra);
+		btnExcluirImagem.addActionListener(ctrlAcervo.remover_imagem);
+		btnExcluir.addActionListener(ctrlAcervo.excluir_obraAcervo);	
+		btnGravar.addActionListener(ctrlAcervo.editar_acervo);
+		
+		
+		
 	}
 }
