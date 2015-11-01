@@ -155,9 +155,9 @@ public class FrmAcervoEdit extends JFrame {
 		lblNewLabel_1.setBounds(28, 330, 139, 14);
 		contentPane.add(lblNewLabel_1);
 
-		JEditorPane editDescricao = new JEditorPane();
-		editDescricao.setBounds(28, 346, 558, 81);
-		contentPane.add(editDescricao);
+		JEditorPane edtDescricao = new JEditorPane();
+		edtDescricao.setBounds(28, 346, 558, 81);
+		contentPane.add(edtDescricao);
 
 		JLabel lblStatus = new JLabel("Status");
 		lblStatus.setBounds(125, 261, 46, 14);
@@ -214,9 +214,9 @@ public class FrmAcervoEdit extends JFrame {
 
 		idObra = new JTextField();
 		
-		AcervoCtrl ctrlAcervo = new AcervoCtrl(idObra, lblSelecImagem, cbSetor, cbSetorT,
-				cbStatus, cbStatusT, cbCategoria, cbMaterial, txtArtist, txtObra, ftxtData, editDescricao,
-				msgGravado, msgVazio, txtValor, btnPesquisaArtist, contentPane, btnNovoArtista,
+		AcervoCtrl ctrlAcervo = new AcervoCtrl(contentPane,idObra, lblSelecImagem, cbSetor, cbSetorT,
+				cbStatus, cbStatusT, cbCategoria, cbMaterial, txtArtist, txtObra, ftxtData, edtDescricao,
+				msgGravado, msgVazio, txtValor, btnPesquisaArtist,  btnNovoArtista,
 				btnEditarArtista, btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, 
 				btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT);
 
