@@ -30,12 +30,13 @@ public class FrmAcervoCad extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField idObra, nome_artist, nome_obra, textField_valor;
-	private JFormattedTextField data_obra;
+	private JTextField idObra, txtArtist, txtObra, txtValor;
+	private JFormattedTextField ftxtData;
 	private MaskFormatter maskData;
 	private DecimalFormat maskValor;
-	private JComboBox<String> cbCategoria, cbMaterial, comboSetor, comboSetorT, comboStatus, comboStatusT;
-	private JButton btnPesquisarImagem, btnExcluirImagem, btnPesquisaArtist, btnNovoArtista, btnEditarArtista, btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, 
+	private JComboBox<String> cbCategoria, cbMaterial, cbSetor, cbSetorT, cbStatus, cbStatusT;
+	private JButton btnPesquisarImagem, btnExcluirImagem, btnPesquisaArtist, btnNovoArtista, btnEditarArtista, 
+	btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, 
 	btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT, btnGravar, btnFechar; // deixar os demais botoes private
 
 	/**
@@ -95,11 +96,11 @@ public class FrmAcervoCad extends JFrame {
 		msgVazio.setVisible(false);
 		contentPane.add(msgVazio);
 
-		nome_artist = new JTextField();
-		nome_artist.setEditable(false);
-		nome_artist.setBounds(166, 56, 352, 20);
-		contentPane.add(nome_artist);
-		nome_artist.setColumns(10);
+		txtArtist = new JTextField();
+		txtArtist.setEditable(false);
+		txtArtist.setBounds(166, 56, 352, 20);
+		contentPane.add(txtArtist);
+		txtArtist.setColumns(10);
 
 		// Modificado a visibilidade do botão para privado - Vitor
 		// Ações transferido para o acervoController - Vitor
@@ -120,21 +121,21 @@ public class FrmAcervoCad extends JFrame {
 		lblNomeDaObra.setBounds(67, 133, 98, 14);
 		contentPane.add(lblNomeDaObra);
 
-		nome_obra = new JTextField();
-		nome_obra.setBounds(166, 133, 352, 20);
-		contentPane.add(nome_obra);
-		nome_obra.setColumns(10);
+		txtObra = new JTextField();
+		txtObra.setBounds(166, 133, 352, 20);
+		contentPane.add(txtObra);
+		txtObra.setColumns(10);
 
 		JLabel lblNewLabel = new JLabel("Data de Composição");
 		lblNewLabel.setBounds(28, 165, 139, 14);
 		contentPane.add(lblNewLabel);
 
 		maskData = new MaskFormatter("##/##/####");
-		data_obra = new JFormattedTextField(maskData);
-		data_obra.setBounds(168, 165, 98, 20);
-		contentPane.add(data_obra);
-		data_obra.setColumns(10);
-		data_obra.setHorizontalAlignment(SwingConstants.CENTER);
+		ftxtData = new JFormattedTextField(maskData);
+		ftxtData.setBounds(168, 165, 98, 20);
+		contentPane.add(ftxtData);
+		ftxtData.setColumns(10);
+		ftxtData.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JLabel lblCategoriaDaObra = new JLabel("Categoria da Obra");
 		lblCategoriaDaObra.setBounds(44, 221, 122, 14);
@@ -156,10 +157,10 @@ public class FrmAcervoCad extends JFrame {
 		lblNewLabel_1.setBounds(30, 388, 139, 14);
 		contentPane.add(lblNewLabel_1);
 
-		JEditorPane editor_descricao = new JEditorPane();
-		editor_descricao.setForeground(UIManager.getColor("TableHeader.foreground"));
-		editor_descricao.setBounds(30, 404, 558, 81);
-		contentPane.add(editor_descricao);
+		JEditorPane editDescricao = new JEditorPane();
+		editDescricao.setForeground(UIManager.getColor("TableHeader.foreground"));
+		editDescricao.setBounds(30, 404, 558, 81);
+		contentPane.add(editDescricao);
 
 		btnNovaCategoria = new JButton("Nova Categoria");
 		btnNovaCategoria.setToolTipText("Não encontrou a categoria?");
@@ -191,17 +192,17 @@ public class FrmAcervoCad extends JFrame {
 		lblStatus.setBounds(299, 23, 46, 14);
 		panel_proprio.add(lblStatus);
 
-		comboStatus = new JComboBox<String>();
-		comboStatus.setBounds(344, 20, 179, 20);
-		panel_proprio.add(comboStatus);
+		cbStatus = new JComboBox<String>();
+		cbStatus.setBounds(344, 20, 179, 20);
+		panel_proprio.add(cbStatus);
 
 		JLabel Setor = new JLabel("Setor");
 		Setor.setBounds(29, 23, 46, 14);
 		panel_proprio.add(Setor);
 
-		comboSetor = new JComboBox<String>();
-		comboSetor.setBounds(71, 20, 179, 20);
-		panel_proprio.add(comboSetor);
+		cbSetor = new JComboBox<String>();
+		cbSetor.setBounds(71, 20, 179, 20);
+		panel_proprio.add(cbSetor);
 
 		JLabel lblValorDaAquisio = new JLabel("Valor da aquisi\u00E7\u00E3o (R$)");
 		lblValorDaAquisio.setBounds(262, 56, 143, 14);
@@ -211,11 +212,11 @@ public class FrmAcervoCad extends JFrame {
 		NumberFormatter formatter = new NumberFormatter(maskValor);
 		formatter.setFormat(maskValor);
 		formatter.setAllowsInvalid(false);
-		textField_valor = new JFormattedTextField(maskValor);
-		textField_valor.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_valor.setBounds(413, 53, 110, 20);
-		panel_proprio.add(textField_valor);
-		textField_valor.setColumns(10);
+		txtValor = new JFormattedTextField(maskValor);
+		txtValor.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtValor.setBounds(413, 53, 110, 20);
+		panel_proprio.add(txtValor);
+		txtValor.setColumns(10);
 
 		JPanel panel_terceiros = new JPanel();
 		abas.addTab("Obra de Terceiro", null, panel_terceiros, null);
@@ -225,17 +226,17 @@ public class FrmAcervoCad extends JFrame {
 		lblStatus_1.setBounds(299, 23, 46, 14);
 		panel_terceiros.add(lblStatus_1);
 
-		comboStatusT = new JComboBox<String>();
-		comboStatusT.setBounds(344, 20, 179, 20);
-		panel_terceiros.add(comboStatusT);
+		cbStatusT = new JComboBox<String>();
+		cbStatusT.setBounds(344, 20, 179, 20);
+		panel_terceiros.add(cbStatusT);
 
 		JLabel lblSetor = new JLabel("Setor");
 		lblSetor.setBounds(29, 23, 46, 14);
 		panel_terceiros.add(lblSetor);
 
-		comboSetorT = new JComboBox<String>();
-		comboSetorT.setBounds(71, 20, 179, 20);
-		panel_terceiros.add(comboSetorT);
+		cbSetorT = new JComboBox<String>();
+		cbSetorT.setBounds(71, 20, 179, 20);
+		panel_terceiros.add(cbSetorT);
 
 		JLabel lblSelecImagem = new JLabel("");
 		lblSelecImagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
@@ -247,12 +248,12 @@ public class FrmAcervoCad extends JFrame {
 
 		btnPesquisarImagem = new JButton("");
 		btnPesquisarImagem.setIcon(new ImageIcon("../MASProject/icons/add.png"));
-		btnPesquisarImagem.setBounds(409, 354, 46, 23);
+		btnPesquisarImagem.setBounds(409, 354, 46, 30);
 		contentPane.add(btnPesquisarImagem);
 
 		btnExcluirImagem = new JButton("");
 		btnExcluirImagem.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		btnExcluirImagem.setBounds(465, 354, 46, 23);
+		btnExcluirImagem.setBounds(465, 354, 46, 30);
 		contentPane.add(btnExcluirImagem);
 		
 		btnNovoSetorT = new JButton("Novo Setor");
@@ -282,9 +283,9 @@ public class FrmAcervoCad extends JFrame {
 		contentPane.add(btnFechar);
 		
 		// botão de pesquisar artista e o Jpanel passados como parametro - Vitor
-		AcervoCtrl ctrlAcervo = new AcervoCtrl(idObra, lblSelecImagem, comboSetor, comboSetorT,
-				comboStatus, comboStatusT, cbCategoria, cbMaterial, nome_artist, nome_obra, data_obra, editor_descricao,
-				msgGravado, msgVazio, textField_valor, btnPesquisaArtist, contentPane, btnNovoArtista,
+		AcervoCtrl ctrlAcervo = new AcervoCtrl(idObra, lblSelecImagem, cbSetor, cbSetorT,
+				cbStatus, cbStatusT, cbCategoria, cbMaterial, txtArtist, txtObra, ftxtData, editDescricao,
+				msgGravado, msgVazio, txtValor, btnPesquisaArtist, contentPane, btnNovoArtista,
 				btnEditarArtista, btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, 
 				btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT);
 

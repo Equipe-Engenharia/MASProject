@@ -112,29 +112,6 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		lerAcervo();
 	}
 
-	public AcervoCtrl(JTextField nomeArtista, JLabel imagem, JComboBox cbObras, JTextField txtNovaObra,
-			JComboBox<String> cbSetor2, JComboBox<String> cbMaterial2, JComboBox<String> cbCategoria2,
-			JComboBox<String> comboStatus2, JTextField data_obra, JEditorPane editor_descricao, JLabel msgGravado2,
-			JLabel msgVazio2, JTextField textField_valor2, JButton btnPesqArtist, JLabel status) {
-
-		this.imagem = imagem;
-		this.tfNomeArtista = nomeArtista;
-		this.cbObras = cbObras;
-		this.txtNovaObra = txtNovaObra;
-		this.cbSetor = cbSetor2;
-		this.cbMaterial = cbMaterial2;
-		this.cbCategoria = cbCategoria2;
-		this.comboStatus = comboStatus2;
-		this.dataAquisicao = data_obra;
-		this.descricaoObra = editor_descricao;
-		this.msgGravado = msgGravado2;
-		this.msgVazio = msgVazio2;
-		this.btnPesqArtist = btnPesqArtist;
-		this.textField_valor = textField_valor2;
-		this.obras = new ArrayList<Obra>();
-		this.lblStatus = status;
-	}
-
 
 	// MANIPULA CRUD ///////////////////////////////////////////////
 	
@@ -179,13 +156,115 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		/*
-		 * for (Obra o : obras) { System.out.println(o.getNomeObra()); }
-		 */
-
+	}
+	
+	public void atualizaDados(List<Obra> listObras) {
+		File f = new File("../MASProject/dados/acervo");
+		f.delete();
+		ObraArquivo obraImpl = new ObraArquivo();
+		for (Obra obra : listObras) {
+			try {
+				obraImpl.escreveArquivo("../MASProject/dados/", "acervo", "", obra);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
+	public void editarAcervo(String nomeObra) {
+		Artista artista = new Artista();
+		Obra o = new Obra();
+		Categoria categoria = new Categoria();
+		Material material = new Material();
+		Setor setor = new Setor();
+		Obra obra = new Obra();
+		for (Obra ob : obras) {
+			if (nomeObra.equalsIgnoreCase(ob.getNome())) {
+				obra = ob;
+			}
+		}
+		for (int i = 0; i < obras.size(); i++) {
+			if (obras.get(i).getNome().equalsIgnoreCase(obra.getNome())) {
+				if (txtNovaObra.getText().isEmpty()
+						|| txtNovaObra.getText().equalsIgnoreCase("Nome da Obra Atualizada")) {
+					artista.setNome(tfNomeArtista.getText());
+					o.setNomeObra((String) cbObras.getSelectedItem());
+					o.setDataComposicao(dataAquisicao.getText());
+					categoria.setNome((String) cbObras.getSelectedItem());
+					setor.setNome((String) cbSetor.getSelectedItem());
+					material.setNome((String) cbMaterial.getSelectedItem());
+					o.setStatus((String) comboStatus.getSelectedItem());
+					o.setDescricaoObra(descricaoObra.getText());
+					o.setPreco(textField_valor.getText());
+					o.setImagem(imagem.getText());
+
+				} else {
+					artista.setNome(tfNomeArtista.getText());
+					o.setNomeObra(txtNovaObra.getText());
+					o.setDataComposicao(dataAquisicao.getText());
+					categoria.setNome((String) cbObras.getSelectedItem());
+					setor.setNome((String) cbSetor.getSelectedItem());
+					material.setNome((String) cbMaterial.getSelectedItem());
+					o.setStatus((String) comboStatus.getSelectedItem());
+					o.setDescricaoObra(descricaoObra.getText());
+					o.setPreco(textField_valor.getText());
+					o.setImagem(imagem.getText());
+				}
+				obras.get(i).setArtista(artista);
+				obras.get(i).setCategoria(categoria);
+				obras.get(i).setSetor(setor);
+				obras.get(i).setMaterial(material);
+				obras.get(i).setNomeObra(o.getNome());
+				if (!(textField_valor.getText().isEmpty())) {
+					obras.get(i).setPreco(o.getPreco());
+				}
+				if (!(caminhoImagem.isEmpty()||caminhoImagem == null)) {
+					obras.get(i).setImagem(caminhoImagem);
+				}
+				obras.get(i).setDescricaoObra(o.getDescricao());
+				obras.get(i).setStatus(o.getStatus());
+				obras.get(i).setDataComposicao(o.getDataComposicao());
+			}
+		}
+		msgGravado.setVisible(true);
+		limpaCampos();
+		int delay = 2000; // delay de 5 seg.
+		int interval = 1000; // intervalo de 1 seg.
+		final Timer timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				msgGravado.setVisible(false);
+				timer.cancel();
+			}
+		}, delay, interval);
+		atualizaDados(obras);
+		cbObras.removeAllItems();
+		preencherComboBoxObrasNovo();
+	}
+	
+	public void excluirObraAcervo(String nomeObra){
+		for(int i = 0; i<obras.size(); i++){
+			if (nomeObra.equalsIgnoreCase(obras.get(i).getNome())) {
+				obras.remove(i);
+			}
+		}
+		atualizaDados(obras);
+		cbObras.removeAllItems();
+		preencherComboBoxObrasNovo();
+		msgGravado.setText("Deletado com sucesso");
+		msgGravado.setVisible(true);
+		limpaCampos();
+		int delay = 2000; // delay de 5 seg.
+		int interval = 1000; // intervalo de 1 seg.
+		final Timer timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				msgGravado.setVisible(false);
+				timer.cancel();
+			}
+		}, delay, interval);
+	}
+	
 	public void gravarAcervo() {
 		Obra obra = new Obra();
 		ObraArquivo obraImpl = new ObraArquivo();
@@ -294,10 +373,67 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	}
 	
+	public String getNomeArtista() {
+		return nomeArtista;
+	}
+	
+	public void setNomeArtista(String nomeArtista) {
+		this.nomeArtista = nomeArtista;
+		recarregarCbObras(nomeArtista);
+	}
+	
+	public void pesquisarArtistaEditar() {
+		pAController = new ArtistaPesqCtrl();
+		ArrayList<String> listString = new ArrayList<>();
+		ArrayList<Artista> listArtista = new ArrayList<>();
+
+		String[] possibilities = pAController.getArtista();
+
+		for (String s : possibilities) {
+			String text = s.replaceAll(".*:", "");
+			listString.add(text);
+			if (s.contains("---")) {
+				Artista artista = new Artista();
+				artista.setNome(listString.get(1));
+				listArtista.add(artista);
+				listString.clear();
+			}
+		}
+		String[] possibilities2 = new String[listArtista.size()];
+
+		for (int i = 0; i < listArtista.size(); i++) {
+			possibilities2[i] = listArtista.get(i).getNome();
+		}
+
+		String s = (String) JOptionPane.showInputDialog(frmAcervo, "Escolha o artista:\n", "Pesquisar o Artista",
+				JOptionPane.INFORMATION_MESSAGE, null, possibilities2, possibilities2[0]);
+		if (s != null && s.length() > 0) {
+			tfNomeArtista.setText(s);
+			setNomeArtista(s);
+			return;
+		}
+	}
+	
 	
 	// PREENCHIMENTO COMBOBOX ////////////////////////////////
 	
-		public void pesquisarArtista() { // Abre um JOptionPane com uma comboBox - Vitor
+	public void preencherComboBoxObras() {
+		obras.clear();
+		lerAcervo();
+		for (Obra o : obras) {
+			cbObras.addItem(o.getNome());
+		}
+	}
+	
+	public void preencherComboBoxObrasNovo() {
+		obras.clear();
+		lerAcervo();
+		for (Obra o : obras) {
+			cbObras.addItem(o.getNome());
+		}
+	}
+	
+	public void pesquisarArtista() { // Abre um JOptionPane com uma comboBox - Vitor
 			pAController = new ArtistaPesqCtrl();
 			ArrayList<String> listString = new ArrayList<>();
 			ArrayList<Artista> listArtista = new ArrayList<>();
@@ -567,6 +703,13 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 	};
 	
+	public ActionListener pesquisaArtistaEditar = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			pesquisarArtistaEditar();
+		}
+	};
+	
 	public ActionListener fecharTela = new ActionListener() {
 		
 		@Override
@@ -593,6 +736,27 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			procuraImagem();
 		}
 	};
+	
+	public ActionListener excluir_obraAcervo = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			excluirObraAcervo((String) cbObras.getSelectedItem());
+		}
+	};
+	
+	public ActionListener editar_acervo = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			editarAcervo((String) cbObras.getSelectedItem());
+		}
+	};
+
+	public ActionListener pesquisarObra = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			procurarObra((String) cbObras.getSelectedItem());
+		}
+	};
 
 	public ActionListener gravarAcervo = new ActionListener() {
 		@Override
@@ -607,9 +771,69 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			imagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
 		}
 	};
+	
 
 	
 	//EVENTOS COMBOBOX
+	
+	private void recarregarCbObras(String nomeArtista) {
+		obras.clear();
+		lerAcervo();
+		cbObras.removeAllItems();
+		for (Obra o : obras) {
+			System.out.println(o.getNome());
+			if (nomeArtista.equalsIgnoreCase(o.getArtista().getNome())) {
+				cbObras.addItem(o.getNome());
+			}
+		}
+	}
+
+	public void procurarObra(String nomeObra) {
+		Obra obra = new Obra();
+		for (Obra o : obras) {
+			if (o.getNome().equalsIgnoreCase(nomeObra)) {
+				obra = o;
+			}
+		}
+		System.out.println(obra.getArtista().getNome());
+		preencheCampos(obra);
+	}
+	
+	public void preencheCampos(Obra obra) {
+		dataAquisicao.setText(obra.getDataComposicao());
+		tfNomeArtista.setText(obra.getArtista().getNome());
+
+		descricaoObra.setText(obra.getDescricao());
+		ImageIcon img = new ImageIcon(obra.getImagem());
+		Image newImg = img.getImage().getScaledInstance(imagem.getWidth(), imagem.getHeight(), Image.SCALE_DEFAULT);
+		imagem.setIcon(new ImageIcon(newImg));
+		for (int i = 0; i < cbCategoria.getItemCount(); i++) {
+			if (obra.getCategoria().getNome().equalsIgnoreCase(cbCategoria.getItemAt(i))) {
+				cbCategoria.setSelectedIndex(i);
+			}
+		}
+		for (int i = 0; i < cbSetor.getItemCount(); i++) {
+			if (obra.getSetor().getNome().equalsIgnoreCase(cbSetor.getItemAt(i))) {
+				cbSetor.setSelectedIndex(i);
+			}
+		}
+		for (int i = 0; i < cbMaterial.getItemCount(); i++) {
+			if (obra.getMaterial().getNome().equalsIgnoreCase(cbMaterial.getItemAt(i))) {
+				cbMaterial.setSelectedIndex(i);
+			}
+		}
+		for (int i = 0; i < comboStatus.getItemCount(); i++) {
+			if (obra.getStatus().equalsIgnoreCase(comboStatus.getItemAt(i))) {
+				comboStatus.setSelectedIndex(i);
+			}
+		}
+		if (obra.isProprietario()) {
+			textField_valor.setText(obra.getPreco());
+		} else {
+			textField_valor.setVisible(false);
+			lblStatus.setText("");
+		}
+	}
 	
 	@Override
 	public void componentResized(ComponentEvent e) {
