@@ -1,24 +1,37 @@
-ID: MAT151028-202730
-Material: Pedra
-Categoria:  Esculturas
----------------------------
-ID: MAT151028-202737
-Material: Gesso
-Categoria:  Esculturas
----------------------------
-ID: MAT151028-202744
-Material: Óleo
-Categoria:  Pinturas
----------------------------
-ID: MAT151031-032112
-Material: Vidro
-Categoria:  Escultura
----------------------------
-ID: MAT151031-035533
-Material: Gesso
-Categoria:  Estátua
----------------------------
-ID: MAT151031-111319
+ID: MAT151102-011002
 Material: Argila
-Categoria:  Estátua
+Categoria: Escultura
 ---------------------------
+ID: MAT151102-025419
+Material: Bronze
+Categoria: Escultura
+---------------------------
+ID: MAT151102-025425
+Material: Vidro
+Categoria: Escultura
+---------------------------
+ID: MAT151102-025433
+Material: Prata
+Categoria: Escultura
+---------------------------
+ID: MAT151102-025440
+Material: Ferro
+Categoria: Escultura
+---------------------------
+ID: MAT151102-025447
+Material: Argila
+Categoria: Escultura
+---------------------------
+ID: MAT151102-025501
+Material: Gesso
+Categoria: Escultura
+---------------------------
+ID: MAT151102-025543
+Material: Madeira
+Categoria: Escultura
+---------------------------
+ID: MAT151102-025547
+Material: Ouro
+Categoria: Escultura
+---------------------------
+

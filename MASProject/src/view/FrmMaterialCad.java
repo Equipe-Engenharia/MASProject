@@ -94,20 +94,13 @@ public class FrmMaterialCad extends JFrame {
 		contentPane.add(msgVazio);
 
 		JButton btnGravar = new JButton("Gravar");
-		btnGravar.setEnabled(false);
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
 		
-		/*btnFechar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dispose();
-			}
-		});*/
-		
 		JButton btnApagar = new JButton("Apagar");
 		
-		MaterialCtrl ctrlMaterial = new MaterialCtrl(txtId, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravar, msgVazio);
+		MaterialCtrl ctrlMaterial = new MaterialCtrl(contentPane, txtId, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravar, msgVazio);
 		
 		ctrlMaterial.gerarId();
 		ctrlMaterial.preencherComboBoxCategoria();
