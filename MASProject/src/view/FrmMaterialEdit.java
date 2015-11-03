@@ -60,8 +60,8 @@ public class FrmMaterialEdit extends JFrame {
 		lblEditCategoria.setBounds(50, 108, 117, 16);
 		contentPane.add(lblEditCategoria);
 		
-		JLabel lblEditMaterial = new JLabel("Editar Material");
-		lblEditMaterial.setBounds(71, 71, 97, 16);
+		JLabel lblEditMaterial = new JLabel("ID ou o Material");
+		lblEditMaterial.setBounds(68, 71, 100, 16);
 		contentPane.add(lblEditMaterial);
 		
 		txtId = new JTextField();
@@ -82,7 +82,7 @@ public class FrmMaterialEdit extends JFrame {
 		contentPane.add(txtMaterial);
 		txtMaterial.setColumns(10);
 		
-		JButton btnPesquisaMaterial = new JButton(" Busca Material");
+		JButton btnPesquisaMaterial = new JButton("Pesquisar");
 		btnPesquisaMaterial.setToolTipText("Use o campo e clique para realizar a busca por número Material");
 		btnPesquisaMaterial.setBounds(377, 62, 117, 34);
 		btnPesquisaMaterial.setIcon(new ImageIcon("../MASProject/icons/search.png"));
