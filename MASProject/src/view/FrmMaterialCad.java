@@ -52,15 +52,15 @@ public class FrmMaterialCad extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblIdMaterial = new JLabel("ID");
-		lblIdMaterial.setBounds(148, 35, 20, 16);
+		lblIdMaterial.setBounds(154, 35, 14, 16);
 		contentPane.add(lblIdMaterial);
 
 		JLabel lblCategoria = new JLabel("Categoria da Obra");
-		lblCategoria.setBounds(50, 70, 117, 16);
+		lblCategoria.setBounds(51, 108, 117, 16);
 		contentPane.add(lblCategoria);
 		
 		JLabel lblNovoMaterial = new JLabel("Novo Material");
-		lblNovoMaterial.setBounds(83, 107, 97, 16);
+		lblNovoMaterial.setBounds(81, 71, 87, 16);
 		contentPane.add(lblNovoMaterial);
 		
 		txtId = new JTextField();
@@ -72,35 +72,21 @@ public class FrmMaterialCad extends JFrame {
 		txtId.setColumns(10);
 		
 		cbCategoria = new JComboBox<String>();
-		cbCategoria.setBounds(179, 65, 178, 28);
+		cbCategoria.setBounds(180, 102, 178, 28);
 		contentPane.add(cbCategoria);
 		
 		txtMaterial = new JTextField();
 		txtMaterial.setToolTipText("Digite o novo material…");
-		txtMaterial.setBounds(179, 101, 178, 28);
+		txtMaterial.setBounds(179, 65, 178, 28);
 		contentPane.add(txtMaterial);
 		txtMaterial.setColumns(10);
-		
-		JLabel msgGravar = new JLabel("");
-		msgGravar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
-		msgGravar.setBounds(43, 177, 230, 23);
-		msgGravar.setVisible(false);
-		contentPane.add(msgGravar);
-
-		JLabel msgVazio = new JLabel("CAMPO VAZIO!");
-		msgVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		msgVazio.setBounds(43, 177, 192, 23);
-		msgVazio.setVisible(false);
-		contentPane.add(msgVazio);
 
 		JButton btnGravar = new JButton("Gravar");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
 		
-		JButton btnApagar = new JButton("Apagar");
-		
-		MaterialCtrl ctrlMaterial = new MaterialCtrl(contentPane, txtId, cbCategoria, txtMaterial, btnApagar, btnGravar, msgGravar, msgVazio);
+		MaterialCtrl ctrlMaterial = new MaterialCtrl(contentPane, txtId, cbCategoria, txtMaterial);
 		
 		ctrlMaterial.gerarId();
 		ctrlMaterial.preencherComboBoxCategoria();
