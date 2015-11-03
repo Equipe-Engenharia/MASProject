@@ -2,15 +2,15 @@ package model;
 
 public class Setor {
 
-	private String identificacao;
+	private String id;
 	private String nome;
 
-	public String getIdentificacao() {
-		return identificacao;
+	public String getId() {
+		return id;
 	}
 
-	public void setIdentificacao(String string) {
-		this.identificacao = string;
+	public void setId(String string) {
+		this.id = string;
 	}
 
 	public String getNome() {
@@ -20,5 +20,4 @@ public class Setor {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 }

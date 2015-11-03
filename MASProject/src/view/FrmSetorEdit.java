@@ -19,7 +19,7 @@ public class FrmSetorEdit extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtSetor, txtId;
-	private JButton btnGravar,  btnPesqIdSet, btnPesqNomSet, btnApagar;
+	private JButton btnGravar, btnPesqNomSet, btnApagar;
 	private JLabel lblDigiteUmDos, lblIdDoSetor, lblNomeDoSetor, mensagemGravado, mensagemVazio  ;
 
 	/**
@@ -57,7 +57,7 @@ public class FrmSetorEdit extends JFrame {
 		contentPane.add(lblIdDoSetor);
 
 		lblNomeDoSetor = new JLabel("Setor");
-		lblNomeDoSetor.setBounds(135, 93, 32, 16);
+		lblNomeDoSetor.setBounds(135, 99, 32, 16);
 		contentPane.add(lblNomeDoSetor);
 
 		mensagemGravado = new JLabel("");
@@ -78,45 +78,40 @@ public class FrmSetorEdit extends JFrame {
 		contentPane.add(txtSetor);
 		txtSetor.setColumns(10);
 		
-		btnGravar = new JButton("Gravar");
+		btnGravar = new JButton("Editar");
 		btnGravar.setBounds(288, 166, 97, 34);
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		contentPane.add(btnGravar);
-		btnGravar.setEnabled(false);
 
-		 btnPesqIdSet = new JButton(" Busca ID");
-		btnPesqIdSet.setBounds(377, 47, 117, 34);
-		btnPesqIdSet.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		contentPane.add(btnPesqIdSet);
-
-		btnPesqNomSet = new JButton("Busca Setor");
+		btnPesqNomSet = new JButton("Pesquisar");
 		btnPesqNomSet.setBounds(376, 90, 117, 34);
 		btnPesqNomSet.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnPesqNomSet);
 
-		btnApagar = new JButton("Apagar");
-		btnApagar.setEnabled(false);
+		btnApagar = new JButton("Excluir");
 		btnApagar.setBounds(397, 166, 97, 34);
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
 
 		txtId = new JTextField();
+		txtId.setEditable(false);
+		txtId.setEnabled(false);
 		txtId.setToolTipText("Digite o ID do setor...");
-		txtId.setBounds(180, 54, 178, 20);
+		txtId.setBounds(178, 54, 178, 20);
 		contentPane.add(txtId);
 		txtId.setColumns(10);
 
 		lblDigiteUmDos = new JLabel("Digite em um dos campos e aperte o bot\u00E3o para pesquisar...");
 		lblDigiteUmDos.setForeground(Color.RED);
-		lblDigiteUmDos.setBounds(10, 11, 362, 14);
+		lblDigiteUmDos.setBounds(10, 11, 434, 14);
+		lblDigiteUmDos.setVisible(false);
 		contentPane.add(lblDigiteUmDos);
 
-		SetorCtrl ctrlSetor = new SetorCtrl(txtId, txtSetor, contentPane);
-
-		btnPesqIdSet.addActionListener(ctrlSetor.pesquisaSetor);
-		btnPesqNomSet.addActionListener(ctrlSetor.pesquisaSetor);
-		btnGravar.addActionListener(ctrlSetor.gravarAlteracoesSetor);
+		SetorCtrl ctrlSetor = new SetorCtrl(contentPane, txtId, txtSetor);
+		btnPesqNomSet.addActionListener(ctrlSetor.pesquisarSetor);
+		btnGravar.addActionListener(ctrlSetor.gravarSetor);
 		btnApagar.addActionListener(ctrlSetor.excluirSetor);
+		txtSetor.addActionListener(ctrlSetor.pesquisarSetor);
 
 	}
 

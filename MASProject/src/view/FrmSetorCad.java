@@ -91,9 +91,8 @@ public class FrmSetorCad extends JFrame {
 		btnGravar = new JButton("Gravar");
 		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
-		btnGravar.setEnabled(false);
 
-		SetorCtrl ctrlSetor = new SetorCtrl(txtId, txtSetor, msgGravar, msgVazio, btnGravar);
+		SetorCtrl ctrlSetor = new SetorCtrl(contentPane, txtId, txtSetor);
 
 		// Essa linha abaixo será excluida quando o menu estiver pronto pois
 		// será um evento do botão que chama este Form***
@@ -101,8 +100,7 @@ public class FrmSetorCad extends JFrame {
 
 		txtSetor.addMouseListener(ctrlSetor.limpaCampo);
 		txtSetor.addActionListener(ctrlSetor.gravarSetor);
-		txtSetor.addKeyListener(ctrlSetor.ativaGravar);
 		btnGravar.addActionListener(ctrlSetor.gravarSetor);
-
+//		txtSetor.addKeyListener(ctrlSetor.ativaGravar);
 	}
 }

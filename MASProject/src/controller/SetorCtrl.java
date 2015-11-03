@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -15,8 +17,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -24,31 +24,44 @@ import javax.swing.JTextField;
 import model.Setor;
 import persistence.SetorArquivo;
 
-public class SetorCtrl {
-   private JPanel frmSetor;
-	private JLabel mensagemGravado, mensagemVazio;
-	private JTextField nomeset, idsetor, txtDigiteId, txtDigitadoN;
-	private JButton btnGravar;
-	private Setor setor = new Setor();
-	private List <Setor> setores;
-	private String validar;
-	private ArquivosCtrl arqController = new ArquivosCtrl();
+public class SetorCtrl implements ComponentListener {
 
-	public SetorCtrl(JTextField id_setor, JTextField nomeDigit, JLabel mensagemGravado, JLabel mensagemVazio,
-			JButton btnGravar) {
-		this.idsetor = id_setor;
-		this.mensagemGravado = mensagemGravado;
-		this.mensagemVazio = mensagemVazio;
-		this.nomeset = nomeDigit;
-		this.btnGravar = btnGravar;
-		
+//	private JLabel mensagemGravado, mensagemVazio; //SUBISTITUIDO POR JOPTION PANE
+//	private JButton btnGravar;
+	private JPanel frmSetor;
+	private JTextField idSetor, nomeSetor;
+	private List <Setor> setores;
+	private static int contador = 1;
+	private String validar;
+	private ArquivosCtrl ctrlArquivos = new ArquivosCtrl();
+	private Setor setor = new Setor();
+	
+
+	public SetorCtrl(JPanel frmSetor, JTextField idSetor, JTextField txtSetor) {  // JLabel mensagemGravado, JLabel mensagemVazio,JButton btnGravar) {
+		this.idSetor = idSetor;
+//		this.mensagemGravado = mensagemGravado; //SUBISTITUIDO POR JOPTION PANE
+//		this.mensagemVazio = mensagemVazio;
+//		this.btnGravar = btnGravar;
+		this.nomeSetor = txtSetor;
+		this.setores = new ArrayList<Setor>();
+	
+		lerSetor();
 	}
 	
-	public SetorCtrl(JTextField txtDigiteId, JTextField txtDigitadoN,  JPanel contentPane){
-		this.txtDigiteId = txtDigiteId;
-		this.txtDigitadoN = txtDigitadoN;
-		this.frmSetor = contentPane;
-		
+	
+	// METODOS DE SUPORTE ////////////////////////
+	
+	public void gerarId() {
+		// Chamada deste metodo no gravaSetor e no FormRegisSetor
+		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
+		Date date = new Date();
+		String id = (dateFormat.format(date));
+		idSetor.setText("SET" + id);
+	}
+	
+	public void limpaCampos() {
+		nomeSetor.setText(null);
+		idSetor.setText(null);	
 	}
 	
 	public void msg(String tipo, String mensagem) {
@@ -61,10 +74,8 @@ public class SetorCtrl {
 					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
 		case "cancelsearch":
-			// JOptionPane.showMessageDialog(null, "ATENÇÃO! Cancelando sua
-			// pesquisa!", "Registro de Material",
-			// JOptionPane.PLAIN_MESSAGE, new
-			// ImageIcon("../MASProject/icons/warning.png"));
+			// JOptionPane.showMessageDialog(null, "ATENÇÃO! Cancelando sua pesquisa!", "Registro de Material",
+			// JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/warning.png"));
 			break;
 		case "nosearch":
 			JOptionPane.showMessageDialog(null,
@@ -82,8 +93,8 @@ public class SetorCtrl {
 			break;
 		case "errorrec":
 			JOptionPane.showMessageDialog(null,
-					"ATENÇÃO!\nNão foi possível apagar o registro: " + txtDigiteId.getText() + " "
-							+ txtDigitadoN.getText() + "!\nVerifique sua digitação!",
+					"ATENÇÃO!\nNão foi possível apagar o registro: " + idSetor.getText() + " "
+							+ nomeSetor.getText() + "!\nVerifique sua digitação!",
 					"Registro de Setor", JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
@@ -104,58 +115,33 @@ public class SetorCtrl {
 		}
 	}
 
-	public void gerarId() {
-		// Chamada deste metodo no gravaSetor e no FormRegisSetor
-		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
-		Date date = new Date();
-		String id = (dateFormat.format(date));
-		idsetor.setText("SET" + id);
-	}
 	
-	public void  leSetor(){
+	// CRUD //////////////////////////	
+	
+	public void  lerSetor(){
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 
 		try {
-			arqController.leArquivo("../MASProject/dados/", "setores");
-			linha = arqController.getBuffer();
+			ctrlArquivos.leArquivo("../MASProject/dados/", "setores");
+			linha = ctrlArquivos.getBuffer();
 			String[] listaSetor = linha.split(";");
 			for (String s : listaSetor) {
 				String text = s.replaceAll(".*: ", ""); //ERRO QUE IMPEDE A EXCLUSÃO DO REGISTRO - PRECISA DE 2 ESPAÇOS DEPOIS DO *:
 				list.add(text);
 				if (s.contains("---")) {
-				Setor setor = new Setor();
-				    setor.setIdentificacao(list.get(0));
-				    setor.setNome(list.get(1));
+					Setor setor = new Setor();
+					setor.setId(list.get(0));
+					setor.setNome(list.get(1));
 					setores.add(setor);
 					list.clear();
 				}
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void gravaSetor(String pesquisa) {
-	    new SetorArquivo();
-
-		setor.setIdentificacao(idsetor.getText());
-		setor.setNome(nomeset.getText());
-
-		if (!txtDigitadoN.getText().isEmpty()) {
-			setor.setIdentificacao(txtDigiteId.getText());
-			setor.setNome(txtDigitadoN.getText());
-			setores.add(setor);
-			msg("save", pesquisa);
-			atualizaDados(setores);
-			txtDigitadoN.setText(null);
-			gerarId();
-		} else {
-			msg("errornull", pesquisa);
-		}
-	}
-	
 	public void atualizaDados(List<Setor> listSetor) {
 		File f = new File("../MASProject/dados/setores");
 		f.delete();
@@ -169,16 +155,83 @@ public class SetorCtrl {
 		}
 	}
 	
-	public void limpaCampos() {
-		txtDigitadoN.setText(null);
-		txtDigiteId.setText(null);	
-		//cbCategoria.setSelectedIndex(0);
+	public void pesquisarSetor(String pesquisa) {
+		ArrayList<Setor> listSetor = new ArrayList<>();
+		List<Setor> dados = setores;
+
+		if (!nomeSetor.getText().isEmpty() || !idSetor.getText().isEmpty()) {
+
+			for (int i = 0; i < setores.size(); i++) {
+				if (pesquisa.equalsIgnoreCase(setores.get(i).getId())) {
+					idSetor.setText(setores.get(i).getId());
+					nomeSetor.setText(setores.get(i).getNome());
+					validar = "id";
+				} else if (pesquisa.equalsIgnoreCase(setores.get(i).getNome())) {
+					validar = "nome";
+				}
+			}
+			if (validar == "nome") {
+				for (int i = 0; i < dados.size(); i++) {
+
+					boolean filtro = pesquisa.equalsIgnoreCase(setores.get(i).getNome());
+
+					if (filtro == true) {
+                        Setor s = new Setor();
+
+						s.setId(setores.get(i).getId());
+						s.setNome(setores.get(i).getNome());
+						listSetor.add(s);
+					}
+				}
+				String[] filtro = new String[listSetor.size()];
+				for (int i = 0; i < listSetor.size(); i++) {
+					filtro[i] = listSetor.get(i).getId();
+				}
+				String s = (String) JOptionPane.showInputDialog(frmSetor, "Escolha o ID:\n", "Selecione o ID",
+						JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
+				if (s != null && s.length() > 0) {
+					for (int i = 0; i < setores.size(); i++) {
+						if (s.equalsIgnoreCase(setores.get(i).getId())) {
+							idSetor.setText(setores.get(i).getId());
+							nomeSetor.setText(setores.get(i).getNome());
+						}
+					}
+					validar = "";
+				} else {
+					msg("cancelsearch", "");
+				}
+			} else {
+				if (validar != "id") {
+					msg("nosearch", pesquisa);
+					validar = "";
+				}
+			}
+		} else {
+			msg("errorsearch", pesquisa);
+		}
+	}
+
+	public void editarSetor(String pesquisa) {
+		if (!idSetor.getText().isEmpty()) {
+			for (int i = 0; i < setores.size(); i++) {
+				if (pesquisa.equalsIgnoreCase(setores.get(i).getId())) {
+					setor.setId(idSetor.getText());
+					setor.setNome(nomeSetor.getText());
+					setores.set(i, setor);
+					atualizaDados(setores);
+					msg("edit", pesquisa);
+					limpaCampos();
+				}
+			}
+		} else {
+			msg("errorsearch", pesquisa);
+		}
 	}
 	
-	public void excluiSetor(String pesquisa) {
-		if (!txtDigiteId.getText().isEmpty()) {
+	public void excluirSetor(String pesquisa) {
+		if (!idSetor.getText().isEmpty()) {
 			for (int i = 0; i < setores.size(); i++) {
-				if (pesquisa.equalsIgnoreCase(setores.get(i).getIdentificacao())) {
+				if (pesquisa.equalsIgnoreCase(setores.get(i).getId())) {
 					setores.remove(i);
 					validar = "ok";
 				}
@@ -195,204 +248,132 @@ public class SetorCtrl {
 			pesquisarSetor(pesquisa);
 		}
 	}
-	
-	
-	public void pesquisarSetor(String pesquisa) {
-		ArrayList<Setor> listSetor = new ArrayList<>();
-		List<Setor> dados = setores;
 
-		if (!txtDigitadoN.getText().isEmpty() || !txtDigiteId.getText().isEmpty()) {
+	public void gravarSetor(String pesquisa) {
+	    new SetorArquivo();
 
-			for (int i = 0; i < setores.size(); i++) {
-				if (pesquisa.equalsIgnoreCase(setores.get(i).getIdentificacao())) {
-					txtDigiteId.setText(setores.get(i).getIdentificacao());
-					txtDigitadoN.setText(setores.get(i).getNome());
-					validar = "id";
-				} else if (pesquisa.equalsIgnoreCase(setores.get(i).getNome())) {
-					validar = "nome";
-				}
-			}
-			if (validar == "nome") {
-				for (int i = 0; i < dados.size(); i++) {
-
-					boolean filtro = pesquisa.equalsIgnoreCase(setores.get(i).getNome());
-
-					if (filtro == true) {
-                        Setor s = new Setor();
-
-						s.setIdentificacao(setores.get(i).getIdentificacao());
-						s.setNome(setores.get(i).getNome());
-						listSetor.add(s);
-					}
-				}
-				String[] filtro = new String[listSetor.size()];
-				for (int i = 0; i < listSetor.size(); i++) {
-					filtro[i] = listSetor.get(i).getIdentificacao();
-				}
-				String s = (String) JOptionPane.showInputDialog(frmSetor, "Escolha o ID:\n", "Selecione o ID",
-						JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
-				if (s != null && s.length() > 0) {
-					for (int i = 0; i < setores.size(); i++) {
-						if (s.equalsIgnoreCase(setores.get(i).getIdentificacao())) {
-							txtDigiteId.setText(setores.get(i).getIdentificacao());
-							txtDigitadoN.setText(setores.get(i).getNome());
-						}
-					}
-					validar = "";
-				} else {
-					msg("cancelsearch", "");
-				}
-			} else {
-				validar = "";
-				if (validar != "id") {
-					msg("nosearch", pesquisa);
-				}
-			}
-
+		if (!nomeSetor.getText().isEmpty()) {
+			setor.setId(idSetor.getText());
+			setor.setNome(nomeSetor.getText());
+			setores.add(setor);
+			msg("save", pesquisa);
+			atualizaDados(setores);
+			nomeSetor.setText(null);
+			gerarId();
 		} else {
-			msg("errorsearch", pesquisa);
-		}
-	}
-
-	public void editarSetor(String pesquisa) {
-		if (!txtDigiteId.getText().isEmpty()) {
-			for (int i = 0; i < setores.size(); i++) {
-				if (pesquisa.equalsIgnoreCase(setores.get(i).getIdentificacao())) {
-					setor.setIdentificacao(txtDigiteId.getText());
-					setor.setNome(txtDigitadoN.getText());
-					setores.set(i, setor);
-					atualizaDados(setores);
-					msg("edit", pesquisa);
-					limpaCampos();
-				}
-			}
-		} else {
-			msg("errorsearch", pesquisa);
+			msg("errornull", pesquisa);
 		}
 	}
 	
+	// CONTROLE BOTAO //////////////////////////////	
 	
-	public ActionListener gravarSetor = new ActionListener() {
-
+	public ActionListener pesquisarSetor = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			gravaSetor(txtDigiteId.getText());
-			nomeset.setText(null);
+			pesquisarSetor(nomeSetor.getText());
 		}
 	};
-
 	
-
-	public ActionListener fecharTela = new ActionListener() {
-
+	public ActionListener excluirSetor = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			if (idSetor.getText().isEmpty()) {
+				excluirSetor(nomeSetor.getText());
+			} else {
+				excluirSetor(idSetor.getText());
+			}
+		}
+	};
+	
+	public ActionListener editarSetor = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			editarSetor(idSetor.getText());
+		}
+	};
+	
+	public ActionListener gravarSetor = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			gravarSetor(idSetor.getText());
+		}
+	};
+	
+	public ActionListener fecharTela = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
 			System.exit(0);
 		}
 	};
 
 	public KeyListener ativaGravar = new KeyListener() {
-
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-			if (!nomeset.getText().isEmpty()) {
-				btnGravar.setEnabled(true);
+			if (!nomeSetor.getText().isEmpty()) {
+//				btnGravar.setEnabled(true);
 			} else {
-				btnGravar.setEnabled(false);
+//				btnGravar.setEnabled(false);
 			}
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 	};
+	
+	// CONTROLE MOUSE ///////////////////////////////
 
 	public MouseListener limpaCampo = new MouseListener() {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// se for clicado pela primeira vez o campo fica limpo para
 			// preencher com o nome do setor
-
-			// para que a mensagem n�o fique visivel a todo momento
-			btnGravar.setEnabled(true);
-			mensagemGravado.setVisible(false);
-			mensagemVazio.setVisible(false);
-		}
-	};
-	
-	
-	//Tela de edi��o
-	
-	
-	 
-	 public ActionListener pesquisaSetor = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			pesquisarSetor(txtDigitadoN.getText());
-		}
-	};
-
-	
-
-	public ActionListener gravarAlteracoesSetor = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			editarSetor(txtDigiteId.getText());
-		}
-	};
-
-	public ActionListener excluirSetor = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			if (txtDigiteId.getText().isEmpty()) {
-				excluiSetor(txtDigitadoN.getText());
-			} else {
-				excluiSetor(txtDigiteId.getText());
+			// para que a mensagem não fique visivel a todo momento
+			if (contador == 1) {
+				nomeSetor.setText(null);
+				contador += 1;
 			}
+//			btnGravar.setEnabled(true); //SUBISTITUIDO POR JOPTION PANE
+//			mensagemGravado.setVisible(false);
+//			mensagemVazio.setVisible(false);
 		}
 	};
-	 
 
+	@Override
+	public void componentResized(ComponentEvent e) {
+
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+	}
 }

@@ -12,12 +12,12 @@ import controller.ArquivosICtrl;
 import model.Setor;
 
 public class SetorArquivo implements ArquivosICtrl{
+	
 	private StringBuffer buffer;
 
 	public String getBuffer() {
 		return buffer.toString();
 	}
-
 
 	@Override
 	public void leArquivo(String diretorio, String arquivo) throws IOException {
@@ -40,16 +40,14 @@ public class SetorArquivo implements ArquivosICtrl{
 		} else {
 			throw new IOException("Arquivo inexistente");
 		}
-		
-		
 	}
 
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID do Setor: "+((Setor) object).getIdentificacao());
+		buffer.append("ID: "+((Setor) object).getId());
 		buffer.append("\r\n");
-		buffer.append("Nome do Setor: "+((Setor) object).getNome());
+		buffer.append("Setor: " + ((Setor) object).getNome());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");
@@ -81,5 +79,4 @@ public class SetorArquivo implements ArquivosICtrl{
 		// TODO Auto-generated method stub
 		
 	}
-
 }
