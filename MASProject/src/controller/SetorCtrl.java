@@ -28,7 +28,7 @@ public class SetorCtrl {
    private JPanel frmSetor;
 	private JLabel mensagemGravado, mensagemVazio;
 	private JTextField nomeset, idsetor, txtDigiteId, txtDigitadoN;
-	private JButton btnGravar,btnGravarEdit, btnPesqIdSet, btnPesqNomSet, btnApagar;
+	private JButton btnGravar;
 	private Setor setor = new Setor();
 	private List <Setor> setores;
 	private String validar;
@@ -42,17 +42,11 @@ public class SetorCtrl {
 		this.nomeset = nomeDigit;
 		this.btnGravar = btnGravar;
 		
-		leSetor();
 	}
 	
-	public SetorCtrl(JTextField txtDigiteId, JTextField txtDigitadoN, JButton btnPesqIdSet, JButton btnPesqNomSet,
-			JButton btnApagar, JButton btnGravarEdit, JPanel contentPane){
+	public SetorCtrl(JTextField txtDigiteId, JTextField txtDigitadoN,  JPanel contentPane){
 		this.txtDigiteId = txtDigiteId;
 		this.txtDigitadoN = txtDigitadoN;
-		this.btnPesqIdSet = btnPesqIdSet;
-		this.btnPesqNomSet = btnPesqNomSet;
-		this.btnApagar = btnApagar;
-		this.btnGravarEdit = btnGravarEdit;
 		this.frmSetor = contentPane;
 		
 	}
@@ -144,7 +138,6 @@ public class SetorCtrl {
 	}
 
 	public void gravaSetor(String pesquisa) {
-		Setor setor = new Setor();
 	    new SetorArquivo();
 
 		setor.setIdentificacao(idsetor.getText());
@@ -262,7 +255,6 @@ public class SetorCtrl {
 	}
 
 	public void editarSetor(String pesquisa) {
-		Setor setor = new Setor();
 		if (!txtDigiteId.getText().isEmpty()) {
 			for (int i = 0; i < setores.size(); i++) {
 				if (pesquisa.equalsIgnoreCase(setores.get(i).getIdentificacao())) {

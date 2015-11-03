@@ -111,7 +111,7 @@ public class FrmSetorEdit extends JFrame {
 		lblDigiteUmDos.setBounds(10, 11, 362, 14);
 		contentPane.add(lblDigiteUmDos);
 
-		SetorCtrl ctrlSetor = new SetorCtrl(txtId, txtSetor, btnPesqIdSet, btnPesqNomSet, btnApagar, btnGravar, contentPane);
+		SetorCtrl ctrlSetor = new SetorCtrl(txtId, txtSetor, contentPane);
 
 		btnPesqIdSet.addActionListener(ctrlSetor.pesquisaSetor);
 		btnPesqNomSet.addActionListener(ctrlSetor.pesquisaSetor);
