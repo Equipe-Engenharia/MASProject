@@ -88,7 +88,7 @@ public class FrmMaterialCad extends JFrame {
 		
 		MaterialCtrl ctrlMaterial = new MaterialCtrl(contentPane, txtId, cbCategoria, txtMaterial);
 		
-		ctrlMaterial.gerarId();
+		ctrlMaterial.gerarId();//ESTA CHAMADA É TEMPORÁRIO - SERÁ IMPLEMNTADO NO MENU COMO EVENTO NA CHAMADA DESTE FORM
 		ctrlMaterial.preencherComboBoxCategoria();
 		btnGravar.addActionListener(ctrlMaterial.gravarMaterial);
 		txtMaterial.addMouseListener(ctrlMaterial.limpaCampo);

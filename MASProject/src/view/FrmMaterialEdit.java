@@ -93,7 +93,7 @@ public class FrmMaterialEdit extends JFrame {
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		contentPane.add(btnGravar);
 		
-		JButton btnApagar = new JButton("Apagar");
+		JButton btnApagar = new JButton("Excluir");
 		btnApagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -106,7 +106,7 @@ public class FrmMaterialEdit extends JFrame {
 		
 		ctrlMaterial.preencherComboBoxCategoria();
 		btnPesquisaMaterial.addActionListener(ctrlMaterial.pesquisarMaterial);
-		btnApagar.addActionListener(ctrlMaterial.apagarMaterial);
+		btnApagar.addActionListener(ctrlMaterial.excluirMaterial);
 		btnGravar.addActionListener(ctrlMaterial.editarMaterial);
 		txtId.addMouseListener(ctrlMaterial.limpaCampo);
 		txtMaterial.addMouseListener(ctrlMaterial.limpaCampo);

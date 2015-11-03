@@ -31,7 +31,8 @@ public class MaterialCtrl implements ComponentListener {
 	private List<Material> materiais;
 	private static int contador = 1;
 	private String validar;
-	private ArquivosCtrl ctrlArquivos;
+	private ArquivosCtrl ctrlArquivos = new ArquivosCtrl();
+	private Material material = new Material();
 
 	public MaterialCtrl(JPanel frmMaterial, JTextField idMaterial, JComboBox<String> cbCategoria,
 			JTextField txtMaterial) {
@@ -47,7 +48,7 @@ public class MaterialCtrl implements ComponentListener {
 
 	// METODOS DE SUPORTE ////////////////////////
 
-	public void gerarId() {
+	public void gerarId() { // USO DESTE METODO NO GRAVARMATERIAL E FRMMATERIAL (CAD E EDIT)
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String id = (dateFormat.format(date));
@@ -113,11 +114,6 @@ public class MaterialCtrl implements ComponentListener {
 		}
 	}
 
-	public void msgTeste(String teste) { // USO PARA TESTE NO SISTEMA - SERÁ
-											// INUTILIZADA
-		JOptionPane.showMessageDialog(null, teste, "Teste do Controller Material", JOptionPane.PLAIN_MESSAGE,
-				new ImageIcon("../MASProject/icons/warning.png"));
-	}
 
 	// PREENCHE COMBOBOX /////////////////////
 
@@ -154,8 +150,7 @@ public class MaterialCtrl implements ComponentListener {
 	public void lerMaterial() {
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
-
-		ctrlArquivos = new ArquivosCtrl();
+	
 		try {
 			ctrlArquivos.leArquivo("../MASProject/dados/", "materiais");
 			linha = ctrlArquivos.getBuffer();
@@ -172,7 +167,6 @@ public class MaterialCtrl implements ComponentListener {
 					list.clear();
 				}
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -243,12 +237,11 @@ public class MaterialCtrl implements ComponentListener {
 					msg("cancelsearch", "");
 				}
 			} else {
-				validar = "";
 				if (validar != "id") {
 					msg("nosearch", pesquisa);
 				}
+				validar = "";
 			}
-
 		} else {
 			msg("errorsearch", pesquisa);
 		}
@@ -273,7 +266,7 @@ public class MaterialCtrl implements ComponentListener {
 		}
 	}
 
-	public void apagarMaterial(String pesquisa) {
+	public void excluirMaterial(String pesquisa) {
 		if (!idMaterial.getText().isEmpty()) {
 			for (int i = 0; i < materiais.size(); i++) {
 				if (pesquisa.equalsIgnoreCase(materiais.get(i).getId())) {
@@ -295,8 +288,6 @@ public class MaterialCtrl implements ComponentListener {
 	}
 
 	public void gravarMaterial(String pesquisa) {
-
-		Material material = new Material();
 		new MaterialArquivo();
 
 		if (!nomeMaterial.getText().isEmpty()) {
@@ -323,14 +314,14 @@ public class MaterialCtrl implements ComponentListener {
 		}
 	};
 
-	public ActionListener apagarMaterial = new ActionListener() {
+	public ActionListener excluirMaterial = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (idMaterial.getText().isEmpty()) {
-				apagarMaterial(nomeMaterial.getText());
+				excluirMaterial(nomeMaterial.getText());
 			} else {
-				apagarMaterial(idMaterial.getText());
+				excluirMaterial(idMaterial.getText());
 			}
 		}
 	};

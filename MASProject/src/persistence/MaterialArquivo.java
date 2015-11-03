@@ -12,7 +12,7 @@ import model.Material;;
 
 public class MaterialArquivo implements ArquivosICtrl {
 
-	StringBuffer buffer;
+	private StringBuffer buffer;
 
 	public String getBuffer() {
 		return buffer.toString();
