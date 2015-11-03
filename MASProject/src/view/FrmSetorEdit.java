@@ -113,8 +113,8 @@ public class FrmSetorEdit extends JFrame {
 
 		SetorCtrl ctrlSetor = new SetorCtrl(txtId, txtSetor, btnPesqIdSet, btnPesqNomSet, btnApagar, btnGravar);
 
-		btnPesqIdSet.addActionListener(ctrlSetor.pesquisaIDSetor);
-		btnPesqNomSet.addActionListener(ctrlSetor.pesquisaNomeSetor);
+		btnPesqIdSet.addActionListener(ctrlSetor.pesquisaSetor);
+		btnPesqNomSet.addActionListener(ctrlSetor.pesquisaSetor);
 		btnGravar.addActionListener(ctrlSetor.gravarAlteracoesSetor);
 		btnApagar.addActionListener(ctrlSetor.excluirSetor);
 
