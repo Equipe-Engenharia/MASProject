@@ -26,7 +26,30 @@ ID: MAT151102-025543
 Material: Madeira
 Categoria: Escultura
 ---------------------------
-ID: MAT151102-025547
+ID: MAT151102-124623
 Material: Ouro
+Categoria: Estátua
+---------------------------
+ID: MAT151102-124632
+Material: Teste
+Categoria: Pintura
+---------------------------
+ID: MAT151102-124641
+Material: Teste
 Categoria: Escultura
 ---------------------------
+<<<<<<< HEAD
+=======
+ID: MAT151103-045503
+Material: Testando
+Categoria: Pintura
+---------------------------
+ID: MAT151103-050533
+Material: Gesso
+Categoria: Estátua
+---------------------------
+ID: MAT151103-050714
+Material: Óleo
+Categoria: Pintura
+---------------------------
+>>>>>>> branch 'master' of https://github.com/Equipe-Engenharia/MASProject.git

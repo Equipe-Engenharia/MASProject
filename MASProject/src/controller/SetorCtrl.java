@@ -13,20 +13,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import model.Setor;
 import persistence.SetorArquivo;
 
 public class SetorCtrl {
-
+   private JPanel frmSetor;
 	private JLabel mensagemGravado, mensagemVazio;
 	private JTextField nomeset, idsetor, txtDigiteId, txtDigitadoN;
 	private JButton btnGravar,btnGravarEdit, btnPesqIdSet, btnPesqNomSet, btnApagar;
@@ -42,66 +41,71 @@ public class SetorCtrl {
 		this.mensagemVazio = mensagemVazio;
 		this.nomeset = nomeDigit;
 		this.btnGravar = btnGravar;
+		
+		leSetor();
 	}
 	
 	public SetorCtrl(JTextField txtDigiteId, JTextField txtDigitadoN, JButton btnPesqIdSet, JButton btnPesqNomSet,
-			JButton btnApagar, JButton btnGravarEdit){
+			JButton btnApagar, JButton btnGravarEdit, JPanel contentPane){
 		this.txtDigiteId = txtDigiteId;
 		this.txtDigitadoN = txtDigitadoN;
 		this.btnPesqIdSet = btnPesqIdSet;
 		this.btnPesqNomSet = btnPesqNomSet;
 		this.btnApagar = btnApagar;
 		this.btnGravarEdit = btnGravarEdit;
+		this.frmSetor = contentPane;
+		
 	}
 	
-public void msg(String tipo){
-		
+	public void msg(String tipo, String mensagem) {
+
 		switch (tipo) {
 
-		case "erroVazio":
-			JOptionPane.showMessageDialog(null, "ATENÇÃO!\nCampo Vazio", "Registro de Setor",
+		case "errornull":
+			JOptionPane.showMessageDialog(null, "ATENÇÃO!\nCampo Vazio.\nPor favor, digite o ID ou nome do Setor.",
+					"Registro de Setor", JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/warning.png"));
+			break;
+		case "cancelsearch":
+			// JOptionPane.showMessageDialog(null, "ATENÇÃO! Cancelando sua
+			// pesquisa!", "Registro de Material",
+			// JOptionPane.PLAIN_MESSAGE, new
+			// ImageIcon("../MASProject/icons/warning.png"));
+			break;
+		case "nosearch":
+			JOptionPane.showMessageDialog(null,
+					"ATENÇÃO!\n\nNão localizamos o registro: '" + mensagem + "' !\nVerifique sua digitação.",
+					"Pesquisa de Setor", JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/warning.png"));
+			break;
+		case "errorsearch":
+			JOptionPane.showMessageDialog(null, "ATENÇÃO! Por favor, digite para pesquisar!", "Registro de Setor",
 					JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/warning.png"));
 			break;
-		case "okPesquisa":
-				if (JOptionPane.showConfirmDialog(null, "Registro " + txtDigitadoN.getText() + " localizado com sucesso!\nGostaria de apagá-lo?",
-					"Registro de Setor", JOptionPane.OK_CANCEL_OPTION)== JOptionPane.OK_OPTION){
-					excluiSetor(txtDigiteId.getText(),txtDigitadoN.getText());
-					} else {
-						editarSetor(txtDigitadoN.getText());
-					}
+		case "save":
+			JOptionPane.showMessageDialog(null, "Registro '" + mensagem + "' salvo com sucesso.",
+					"Registro de Material", JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/record.png"));
 			break;
-		case "noPesquisa":
-			JOptionPane.showMessageDialog(null, "ATENÇÃO!\n\nNão localizamos o registro: ' " + txtDigiteId.getText()
-			+ " " + txtDigitadoN.getText() + " ' !\nVerifique sua digitação.", "Pesquisa de Setores",
-					JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/warning.png"));
-			break;	
-		case "erroPesquisa":
-			JOptionPane.showMessageDialog(null, "ATENÇÃO! Por favor, use um dos campos de Pesquisa!", "Registro de Setore",
-					JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/warning.png"));
+		case "errorrec":
+			JOptionPane.showMessageDialog(null,
+					"ATENÇÃO!\nNão foi possível apagar o registro: " + txtDigiteId.getText() + " "
+							+ txtDigitadoN.getText() + "!\nVerifique sua digitação!",
+					"Registro de Setor", JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
-		case "okGrava":
-			JOptionPane.showMessageDialog(null, "Registro '" + txtDigitadoN.getText() + "' salvo com sucesso.",
+		case "edit":
+			JOptionPane.showMessageDialog(null, "Registro '" + mensagem + "' editado com sucesso.",
 					"Registro de Setor", JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/record.png"));
 			break;
-		case "erroGrava":
-			JOptionPane.showMessageDialog(null, "ATENÇÃO!\nNão foi possível apagar o registro: " + txtDigiteId.getText()
-			+ " " + txtDigitadoN.getText() + "!\nVerifique sua digitação!", "Registro de Setor",
-					JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/warning.png"));
-			break;
-		case "okApaga":
-			JOptionPane.showMessageDialog(null, "Registro apagado com sucesso.",
+		case "delete":
+			JOptionPane.showMessageDialog(null, "Registro '" + mensagem + "' apagado com sucesso.",
 					"Registro de Setor", JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/record.png"));
 			break;
-		case "teste":
-			////////////////////////////////
-			JOptionPane.showMessageDialog(null, "TESTE: ", "Teste do Controller Material",
-			JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/warning.png"));
-			break;
-
 		default:
 			JOptionPane.showMessageDialog(null,
-					"OOPS!\n\nQue feio, Ed Stark perdeu a cabeça, e algo não deveria ter acontecido…\n\nVolte ao trabalho!!!",
-					"Erro no Controller Setor", JOptionPane.PLAIN_MESSAGE,
+					"OOPS!\n\nQue feio, Ed Stark perdeu a cabeça, e algo não deveria ter acontecido…\n\n" + mensagem
+							+ "\n\nVolte ao trabalho e conserte isso!!!",
+					"Erro no Controller Material", JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
 		}
 	}
@@ -139,30 +143,24 @@ public void msg(String tipo){
 		}
 	}
 
-	public void gravaSetor() {
+	public void gravaSetor(String pesquisa) {
 		Setor setor = new Setor();
-		SetorArquivo setorImpl = new SetorArquivo();
+	    new SetorArquivo();
 
 		setor.setIdentificacao(idsetor.getText());
 		setor.setNome(nomeset.getText());
 
-		if (!nomeset.getText().isEmpty()) {
-			try {
-				setorImpl.escreveArquivo("../MASProject/dados/", "setores", nomeset.getText(), setor);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			msg("okGrava");
+		if (!txtDigitadoN.getText().isEmpty()) {
+			setor.setIdentificacao(txtDigiteId.getText());
+			setor.setNome(txtDigitadoN.getText());
+			setores.add(setor);
+			msg("save", pesquisa);
+			atualizaDados(setores);
 			txtDigitadoN.setText(null);
 			gerarId();
 		} else {
-			mensagemGravado.setVisible(false);
-			mensagemVazio.setVisible(true);
+			msg("errornull", pesquisa);
 		}
-		// implementar a acao de apagar o campo de nome e criar uma nova id
-		// quando clicar em gravar
-		msg("erroVazio");
 	}
 	
 	public void atualizaDados(List<Setor> listSetor) {
@@ -183,103 +181,101 @@ public void msg(String tipo){
 		txtDigiteId.setText(null);	
 		//cbCategoria.setSelectedIndex(0);
 	}
-	public void excluiSetor(String idSet, String nSetor) {
-		if (!nomeset.getText().isEmpty() || !idsetor.getText().isEmpty()) {
+	
+	public void excluiSetor(String pesquisa) {
+		if (!txtDigiteId.getText().isEmpty()) {
 			for (int i = 0; i < setores.size(); i++) {
-				if (idSet.equalsIgnoreCase(setores.get(i).getIdentificacao())) {
-					setores.remove(i);
-					validar = "ok";
-				} else if ((nSetor.equalsIgnoreCase(setores.get(i).getNome()))) {
+				if (pesquisa.equalsIgnoreCase(setores.get(i).getIdentificacao())) {
 					setores.remove(i);
 					validar = "ok";
 				}
 			}
 			if (validar == "ok") {
 				atualizaDados(setores);
-				// msgGravar.setText("Deletado com sucesso");
-				// msgGravar.setVisible(true);
-				msg("okApaga");
+				msg("delete", pesquisa);
 				limpaCampos();
-				int delay = 2000; // DELAY 5 SEG
-				int interval = 1000; // INTERVALO 1 SEG
-				final Timer timer = new Timer();
-				timer.scheduleAtFixedRate(new TimerTask() {
-					public void run() {
-						// msgGravar.setVisible(false);
-						timer.cancel();
-					}
-				}, delay, interval);
 			} else {
 				validar = "";
-				msg("erroApaga");
+				msg("erroApaga", pesquisa);
 			}
 		} else {
-		 msg("erroVazio");
+			pesquisarSetor(pesquisa);
 		}
 	}
 	
 	
-	public void pesquisarSetor(String nomeSet) {
+	public void pesquisarSetor(String pesquisa) {
+		ArrayList<Setor> listSetor = new ArrayList<>();
+		List<Setor> dados = setores;
+
 		if (!txtDigitadoN.getText().isEmpty() || !txtDigiteId.getText().isEmpty()) {
+
 			for (int i = 0; i < setores.size(); i++) {
-				if (nomeSet.equalsIgnoreCase(setores.get(i).getIdentificacao())) {
-					validar = "ok";
-				} else if (nomeSet.equalsIgnoreCase(setores.get(i).getNome())) {
-					validar = "ok";
+				if (pesquisa.equalsIgnoreCase(setores.get(i).getIdentificacao())) {
+					txtDigiteId.setText(setores.get(i).getIdentificacao());
+					txtDigitadoN.setText(setores.get(i).getNome());
+					validar = "id";
+				} else if (pesquisa.equalsIgnoreCase(setores.get(i).getNome())) {
+					validar = "nome";
 				}
 			}
-			if (validar == "ok") {
-				// msgGravar.setText(nomeMaterial.getText() + " localizado com
-				// sucesso!");
-				// msgGravar.setVisible(true);
-				msg("okPesquisa");
-				//nomeMaterial.setText(null);
+			if (validar == "nome") {
+				for (int i = 0; i < dados.size(); i++) {
+
+					boolean filtro = pesquisa.equalsIgnoreCase(setores.get(i).getNome());
+
+					if (filtro == true) {
+                        Setor s = new Setor();
+
+						s.setIdentificacao(setores.get(i).getIdentificacao());
+						s.setNome(setores.get(i).getNome());
+						listSetor.add(s);
+					}
+				}
+				String[] filtro = new String[listSetor.size()];
+				for (int i = 0; i < listSetor.size(); i++) {
+					filtro[i] = listSetor.get(i).getIdentificacao();
+				}
+				String s = (String) JOptionPane.showInputDialog(frmSetor, "Escolha o ID:\n", "Selecione o ID",
+						JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
+				if (s != null && s.length() > 0) {
+					for (int i = 0; i < setores.size(); i++) {
+						if (s.equalsIgnoreCase(setores.get(i).getIdentificacao())) {
+							txtDigiteId.setText(setores.get(i).getIdentificacao());
+							txtDigitadoN.setText(setores.get(i).getNome());
+						}
+					}
+					validar = "";
+				} else {
+					msg("cancelsearch", "");
+				}
 			} else {
-				// msgGravar.setVisible(false);
-				// msgVazio.setText("Por favor, use um dos campos de
-				// Pesquisa!");
-				// msgVazio.setVisible(true);
-				msg("noPesquisa");
-//				btApagar.setEnabled(false);
-//				btGravar.setEnabled(false);
 				validar = "";
+				if (validar != "id") {
+					msg("nosearch", pesquisa);
+				}
 			}
+
 		} else {
-			msg("erroPesquisa");
+			msg("errorsearch", pesquisa);
 		}
 	}
 
-	public void editarSetor(String setor){
-		Setor s = new Setor();
-		if (!txtDigitadoN.getText().isEmpty() || !txtDigiteId.getText().isEmpty()) {
+	public void editarSetor(String pesquisa) {
+		Setor setor = new Setor();
+		if (!txtDigiteId.getText().isEmpty()) {
 			for (int i = 0; i < setores.size(); i++) {
-				if (setor.equalsIgnoreCase(setores.get(i).getNome())) {
-					txtDigiteId.setText(setores.get(i).getIdentificacao().toString());
-					txtDigitadoN.setText(setores.get(i).getNome().toString());
-					
-					s.setIdentificacao(txtDigiteId.getText());
-					s.setNome(txtDigitadoN.getText());
-					
+				if (pesquisa.equalsIgnoreCase(setores.get(i).getIdentificacao())) {
+					setor.setIdentificacao(txtDigiteId.getText());
+					setor.setNome(txtDigitadoN.getText());
+					setores.set(i, setor);
+					atualizaDados(setores);
+					msg("edit", pesquisa);
+					limpaCampos();
 				}
-//				msg(materiais.get(i).toString());
-//				materiais.get(i).setId(m.getId());
-//				materiais.get(i).setNome(m.getNome());
-//				materiais.get(i).setCategoria(m.getCategoria());
 			}
-			
-			//msg("teste");
-			//limpaCampos();
-			int delay = 2000; // DELAY 5 SEG
-			int interval = 1000; // INTERVALO 1 SEG
-			final Timer timer = new Timer();
-			timer.scheduleAtFixedRate(new TimerTask() {
-				public void run() {
-					// msgGravar.setVisible(false);
-					timer.cancel();
-				}
-			}, delay, interval);
-			atualizaDados(setores);
-			
+		} else {
+			msg("errorsearch", pesquisa);
 		}
 	}
 	
@@ -289,7 +285,7 @@ public void msg(String tipo){
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			gravaSetor();
+			gravaSetor(txtDigiteId.getText());
 			nomeset.setText(null);
 		}
 	};
@@ -389,7 +385,7 @@ public void msg(String tipo){
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			gravaSetor();
+			editarSetor(txtDigiteId.getText());
 		}
 	};
 
@@ -398,7 +394,11 @@ public void msg(String tipo){
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			excluiSetor(txtDigiteId.getText(), txtDigitadoN.getText());
+			if (txtDigiteId.getText().isEmpty()) {
+				excluiSetor(txtDigitadoN.getText());
+			} else {
+				excluiSetor(txtDigiteId.getText());
+			}
 		}
 	};
 	 
