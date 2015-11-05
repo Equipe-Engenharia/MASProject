@@ -60,8 +60,8 @@ public class FrmMaterialEdit extends JFrame {
 		lblEditCategoria.setBounds(50, 108, 117, 16);
 		contentPane.add(lblEditCategoria);
 		
-		JLabel lblEditMaterial = new JLabel("ID ou o Material");
-		lblEditMaterial.setBounds(68, 71, 100, 16);
+		JLabel lblEditMaterial = new JLabel("ID ou Material");
+		lblEditMaterial.setBounds(78, 71, 90, 16);
 		contentPane.add(lblEditMaterial);
 		
 		txtId = new JTextField();
