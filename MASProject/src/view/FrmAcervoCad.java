@@ -93,7 +93,7 @@ public class FrmAcervoCad extends JFrame {
 		msgVazio.setVisible(false);
 		contentPane.add(msgVazio);
 
-		txtArtist = new JTextField("GG2");
+		txtArtist = new JTextField("");
 		txtArtist.setEditable(false);
 		txtArtist.setBounds(166, 56, 352, 20);
 		contentPane.add(txtArtist);

@@ -166,7 +166,6 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		this.msgGravar = msgGravar;
 		this.msgVazio = msgVazio;
 		this.caminhoImagem = "../MASProject/icons/painting.png";
-
 		lerAcervo();
 	}
 	// MANIPULA CRUD ///////////////////////////////////////////////
@@ -392,6 +391,8 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			}, delay, interval);
 		}
 	}
+
+	
 
 	// METODOS DE SUPORTE ///////////////////////////////////////////
 
@@ -751,6 +752,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		editCategoria.setVisible(true);
 		editCategoria.setDefaultCloseOperation(editCategoria.DISPOSE_ON_CLOSE);
 		editCategoria.setResizable(false);
+
 	}
 
 	@SuppressWarnings("static-access")
@@ -882,22 +884,22 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	public void procurarObraPorId() {
 		String idObra = JOptionPane.showInputDialog(null, "Qual é o Id da obra?");
-		if(idObra != null){
+		if (idObra != null) {
 			Obra obra = new Obra();
 			obras.clear();
 			lerAcervo();
 			for (Obra o : obras) {
-				if(o.getId().equalsIgnoreCase(idObra)){
+				if (o.getId().equalsIgnoreCase(idObra)) {
 					obra = o;
 				}
 			}
-			if(obra.getNome() == null){
+			if (obra.getNome() == null) {
 				JOptionPane.showMessageDialog(null, "Nada Encontrado");
 				procurarObraPorId();
-			}else{
-				preencheCampos(obra);		
+			} else {
+				preencheCampos(obra);
 			}
-		}else{
+		} else {
 			limpaCamposEditar();
 		}
 	}
@@ -918,7 +920,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	// EVENTOS COMBOBOX
 
-	private void recarregarCbObras(String nomeArtista) {
+	public void recarregarCbObras(String nomeArtista) {
 		obras.clear();
 		lerAcervo();
 		cbObras.removeAllItems();
