@@ -6,15 +6,23 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import model.Artista;
+import model.Categoria;
 import persistence.ArtistaArquivo;
 
 public class ArtistaEditCtrl implements ComponentListener {
@@ -24,6 +32,11 @@ public class ArtistaEditCtrl implements ComponentListener {
 	private JLabel msgGravar, msgVazio;
 	private List<Artista> artistas;
 	private static int contador = 1;
+	StringBuffer buffer;
+
+	public String getBuffer() {
+		return buffer.toString();
+	}
 
 	private ArquivosCtrl ctrlArquivos;
 
@@ -40,7 +53,7 @@ public class ArtistaEditCtrl implements ComponentListener {
 		
 		lerArtista();
 	}
-	
+	Artista artista = new Artista();
 	public void lerArtista() {
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
@@ -84,8 +97,10 @@ public class ArtistaEditCtrl implements ComponentListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			msgGravar.setText(nomeArtista.getText() + " salvo com sucesso!");
-			msgGravar.setVisible(true);
+			
+//			msgGravar.setText(nomeArtista.getText() + " salvo com sucesso!");
+//			msgGravar.setVisible(true);
+			 JOptionPane.showMessageDialog(null, "Artista  gravado com sucesso!");
 			nomeArtista.setText(null);
 		} else {
 			msgGravar.setVisible(false);
@@ -93,38 +108,228 @@ public class ArtistaEditCtrl implements ComponentListener {
 		}
 	}
 
-	public void pesquisarArtista() {
+	
+		public void   pesquisarArtista(String diretorio, String arquivo) throws IOException {
+			
+			Artista artista = new Artista();
+	
+				File arq = new File(diretorio, arquivo);
+				if (arq.exists()) {
+					
+					
+					FileInputStream leFluxo = new FileInputStream(arq);
+					InputStreamReader leDados = new InputStreamReader(leFluxo);
+					BufferedReader bufferLeitura = new BufferedReader(leDados);
+					String linha = bufferLeitura.readLine();
+					buffer = new StringBuffer();
+					String conversaoPesquisa = nomeArtista.getText();
+					String conversaoPesquisa2 =  idArtista.getText();
+					if(nomeArtista.getText().isEmpty())
+					{
+						JOptionPane.showMessageDialog(null, "Campo Vazio!Digite o que deseja procurar");
+						
+					}
+					else{
+					        while (linha != null) {
+						    linha = bufferLeitura.readLine();
+						
+						    if (linha.equals(conversaoPesquisa)||linha.equals(conversaoPesquisa2))
 
-		if (!nomeArtista.getText().isEmpty() || !idArtista.getText().isEmpty()) {
-			msgGravar.setText(nomeArtista.getText() + " localizado com sucesso!");
-			msgGravar.setVisible(true);
-			nomeArtista.setText(null);
-		} else {
-			msgGravar.setVisible(false);
-			msgVazio.setText("Por favor, use um dos campos de Pesquisa!");
-			msgVazio.setVisible(true);
-		}
+						    {
+							
+							    JOptionPane.showMessageDialog(null, "Artista  encontrado na base de dados");
+							
+						    }
+					
+						
+
+					                               } 
+
+					      bufferLeitura.close();
+					      leDados.close();
+					        leFluxo.close();
+					
+
+				       }
+					JOptionPane.showMessageDialog(null, "Escolha uma das opções abaixo");
+				}
+				
+
+			}
+
 		
-	}
+		public void editar(String diretorio, String arquivo,String diretorio2, String arquivo2,Object object) throws IOException {
+			artista.setNome(nomeArtista.getText());
 
-	public void apagarArtista() {
-		
-		if (!nomeArtista.getText().isEmpty()) {
-			msgGravar.setText(nomeArtista.getText() + " excluÃ­do com sucesso!");
-			msgGravar.setVisible(true);
-			nomeArtista.setText(null);
-		} else {
-			msgGravar.setVisible(false);
-			msgVazio.setVisible(true);
+			File arq = new File(diretorio, arquivo);
+			if (arq.exists()) {
+				
+				String editado;
+				FileInputStream leFluxo = new FileInputStream(arq);
+				InputStreamReader leDados = new InputStreamReader(leFluxo);
+				BufferedReader bufferLeitura = new BufferedReader(leDados);
+				String linha = bufferLeitura.readLine();
+				buffer = new StringBuffer();
+				String conversaoPesquisa =  nomeArtista.getText();
+				if(nomeArtista.getText().isEmpty())
+				{
+					JOptionPane.showMessageDialog(null, "Campo Vazio!");
+					
+				}
+				else{
+				while (linha != null ) {
+					linha = bufferLeitura.readLine();
+					
+					
+					 if (linha.equals(conversaoPesquisa))
+					{
+						
+						StringBuffer buffer = new StringBuffer();
+						buffer.append(JOptionPane.showInputDialog("Digite o novo nome desse artista "));
+						JOptionPane.showMessageDialog(null,"Artista alterado com sucesso");
+						buffer.append("\r\n");
+						buffer.append( ((Artista) object).getId());
+						buffer.append("\r\n");
+						File arq1 = new File(diretorio2, arquivo2);
+						boolean arquivoExiste;
+						if (arq1.exists()) {
+							arquivoExiste = true;
+						} else {
+							arq1.createNewFile();
+							arquivoExiste = false;
+						}
+						FileWriter escreveArquivo = new FileWriter(arq1, arquivoExiste);
+						PrintWriter gravaDados = new PrintWriter(escreveArquivo);
+						gravaDados.write(buffer.toString());
+						gravaDados.flush();
+						gravaDados.close();
+						escreveArquivo.close();
+
+
+						
+					}else
+					{
+						
+
+						StringBuffer buffer = new StringBuffer();
+						buffer.append( ((Artista) object).getNome());
+						buffer.append("\r\n");
+						buffer.append( ((Artista) object).getId());
+						buffer.append("\r\n");
+						File arq1 = new File(diretorio2, arquivo2);
+						boolean arquivoExiste;
+						if (arq1.exists()) {
+							arquivoExiste = true;
+						} else {
+							arq1.createNewFile();
+							arquivoExiste = false;
+						}
+						FileWriter escreveArquivo = new FileWriter(arq1, arquivoExiste);
+						PrintWriter gravaDados = new PrintWriter(escreveArquivo);
+						gravaDados.write(buffer.toString());
+						gravaDados.flush();
+						gravaDados.close();
+						escreveArquivo.close();
+						
+					}
+
+					
+						
+					
+					
+				}
+
+				bufferLeitura.close();
+				leDados.close();
+				leFluxo.close();
+
+
+			}
+				//Se conseguir arrumar o problema com os getters depois
+			// Precisa Abilitar abaixo para substituir para o arquivo já editado
+//			 new File(arquivo).delete();
+//			    new File(arquivo2).renameTo(new File(arquivo));
+
 		}
 
-	}
+
+		}
+
+		public void apagarArtista(String diretorio, String arquivo,String diretorio3, String arquivo3,Object object) throws IOException {
+			
+
+				File arq = new File(diretorio, arquivo);
+				if (arq.exists()) {
+					
+					FileInputStream leFluxo = new FileInputStream(arq);
+					InputStreamReader leDados = new InputStreamReader(leFluxo);
+					BufferedReader bufferLeitura = new BufferedReader(leDados);
+					String linha = bufferLeitura.readLine();
+					buffer = new StringBuffer();
+					
+					String conversaoPesquisa = nomeArtista.getText();
+					String conversaoPesquisa2 = idArtista.getText();
+					while (linha != null) {
+						linha = bufferLeitura.readLine();
+						
+						
+
+						if (linha.equals(conversaoPesquisa)||linha.equals(conversaoPesquisa2))
+						{
+							JOptionPane.showMessageDialog(null, "Artista Apagado");
+						}
+						else
+						{
+							
+
+							StringBuffer buffer = new StringBuffer();
+							buffer.append(((Artista) object).getId());
+							buffer.append("\r\n");
+							buffer.append(((Artista) object).getNome());
+							buffer.append("\r\n");
+						    buffer.append("\r\n");
+							File arq1 = new File(diretorio3, arquivo3);
+							boolean arquivoExiste;
+							if (arq1.exists()) {
+								arquivoExiste = true;
+							} else {
+								arq1.createNewFile();
+								arquivoExiste = false;
+							}
+							FileWriter escreveArquivo = new FileWriter(arq1, arquivoExiste);
+							PrintWriter gravaDados = new PrintWriter(escreveArquivo);
+							gravaDados.write(buffer.toString());
+							gravaDados.flush();
+							gravaDados.close();
+							escreveArquivo.close();
+						}
+							
+						
+						
+					}
+
+					bufferLeitura.close();
+					leDados.close();
+					leFluxo.close();
+
+				}
+				//Se conseguir arrumar o problema com os getters depois
+				// Precisa Abilitar abaixo para substituir para o arquivo já editado
+//				 new File(arquivo).delete();
+//				    new File(arquivo3).renameTo(new File(arquivo));
+
+			}
 
 	public ActionListener pesquisarArtista = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			pesquisarArtista();
+			try {
+				pesquisarArtista("../MASProject/dados/", "artistas");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	};
 	
@@ -132,7 +337,12 @@ public class ArtistaEditCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			apagarArtista();
+			try {
+				apagarArtista("../MASProject/dados/", "artistas","../MASProject/dados/", "apagado",artista);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	};
 

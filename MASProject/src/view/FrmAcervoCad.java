@@ -2,6 +2,9 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 
@@ -22,6 +25,7 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
 import controller.AcervoCtrl;
+import controller.ArtistaPesqCtrl;
 
 public class FrmAcervoCad extends JFrame {
 
@@ -35,7 +39,8 @@ public class FrmAcervoCad extends JFrame {
 	private JButton btnPesquisarImagem, btnExcluirImagem, btnPesquisaArtist, btnNovoArtista, btnEditarArtista, 
 	btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, 
 	btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT, btnGravar, btnFechar; // deixar os demais botoes private
-
+	// alterei aqui
+	ArtistaPesqCtrl pesq=new ArtistaPesqCtrl(btnEditarArtista, idObra, cbCategoria);
 	/**
 	 * Launch the application.
 	 */
@@ -104,6 +109,17 @@ public class FrmAcervoCad extends JFrame {
 		btnPesquisaArtist = new JButton("");
 		btnPesquisaArtist.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		btnPesquisaArtist.setBounds(522, 52, 29, 28);
+		
+		btnPesquisaArtist.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					pesq.preencherComboBoxArtista();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		contentPane.add(btnPesquisaArtist);
 
 		btnNovoArtista = new JButton("Novo Artista");
@@ -288,7 +304,7 @@ public class FrmAcervoCad extends JFrame {
 
 		btnPesquisarImagem.addActionListener(ctrlAcervo.inserir_imagem);
 		btnExcluirImagem.addActionListener(ctrlAcervo.remover_imagem);
-		btnPesquisaArtist.addActionListener(ctrlAcervo);
+	//	btnPesquisaArtist.addActionListener(ctrlAcervo);
 		btnNovoArtista.addActionListener(ctrlAcervo);
 		btnEditarArtista.addActionListener(ctrlAcervo);
 		btnNovaCategoria.addActionListener(ctrlAcervo.novaCategoria);

@@ -388,7 +388,8 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	}
 	
 	public void pesquisarArtistaEditar() {
-		pAController = new ArtistaPesqCtrl();
+		/// alterei aqui
+		pAController = new ArtistaPesqCtrl(btnEditarArtista, dataAquisicao, cbCategoria);
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<Artista> listArtista = new ArrayList<>();
 
@@ -440,7 +441,8 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	}
 	
 	public void pesquisarArtista() { // Abre um JOptionPane com uma comboBox - Vitor
-			pAController = new ArtistaPesqCtrl();
+		/// alterei aqui
+		pAController = new ArtistaPesqCtrl(btnEditarArtista, dataAquisicao, cbCategoria);
 			ArrayList<String> listString = new ArrayList<>();
 			ArrayList<Artista> listArtista = new ArrayList<>();
 

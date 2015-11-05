@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import model.Artista;
@@ -90,8 +91,9 @@ public class ArtistaCtrl implements ComponentListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			msgGravado.setText(nomeArtista.getText() + " salvo com sucesso!");
-			msgGravado.setVisible(true);
+//			msgGravado.setText(nomeArtista.getText() + " salvo com sucesso!");
+//			msgGravado.setVisible(true);
+			JOptionPane.showMessageDialog(null,"Artista Gravado");
 			nomeArtista.setText(null);
 			gerarId();
 		} else {

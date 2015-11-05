@@ -3,6 +3,7 @@ package view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,7 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import controller.ArtistaEditCtrl; 
+import controller.ArtistaEditCtrl;
+import model.Artista; 
   
 public class FrmArtistaEdit extends JDialog{  
   
@@ -41,6 +43,7 @@ public class FrmArtistaEdit extends JDialog{
 	/**
 	 * Create the frame.
 	 */
+	Artista artista = new Artista();
 	public FrmArtistaEdit(FrmAcervoCad parent, boolean modal) {
 		setTitle("Editar/Excluir Artista");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -99,6 +102,24 @@ public class FrmArtistaEdit extends JDialog{
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
 		
+		final ArtistaEditCtrl ctrlADArtista = new ArtistaEditCtrl(txtId, txtArtista, btnApagar, btnGravar, msgGravar, msgVazio);
+	
+		JButton btnEditar = new JButton("Editar");
+	//	btnEditar.setEnabled(false);
+		btnEditar.setBounds(200, 166, 97, 34);
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ctrlADArtista.editar("../MASProject/dados", "artistas","../MASProject/dados", "editado",artista);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnEditar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
+		contentPane.add(btnEditar);
+		
 		JButton btnPesquisaId = new JButton(" Busca ID");
 		btnPesquisaId.setToolTipText("Use o campo e clique para realizar a busca por número ID");
 		btnPesquisaId.setBounds(377, 47, 117, 34);
@@ -111,12 +132,13 @@ public class FrmArtistaEdit extends JDialog{
 		btnPesquisaArtista.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnPesquisaArtista);
 		
-		ArtistaEditCtrl ctrlADArtista = new ArtistaEditCtrl(txtId, txtArtista, btnApagar, btnGravar, msgGravar, msgVazio);
+		//ArtistaEditCtrl ctrlADArtista = new ArtistaEditCtrl(txtId, txtArtista, btnApagar, btnGravar, msgGravar, msgVazio);
 		
 		btnPesquisaId.addActionListener(ctrlADArtista.pesquisarArtista);
 		btnPesquisaArtista.addActionListener(ctrlADArtista.pesquisarArtista);
 		btnApagar.addActionListener(ctrlADArtista.apagarArtista);
 		btnGravar.addActionListener(ctrlADArtista.gravarArtista);
+	//	btnEditar.addActionListener(ctrlADArtista.editar(diretorio, arquivo, diretorio2, arquivo2);;
 		txtId.addMouseListener(ctrlADArtista.limpaCampo);
 		txtArtista.addMouseListener(ctrlADArtista.limpaCampo);
 		txtArtista.addActionListener(ctrlADArtista.gravarArtista);

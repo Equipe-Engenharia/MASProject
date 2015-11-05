@@ -44,12 +44,12 @@ public class ArtistaArquivo implements ArquivosICtrl {
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID :" + ((Artista) object).getId());
+		buffer.append( ((Artista) object).getId());
 		buffer.append("\r\n");
-		buffer.append("Artista :" + ((Artista) object).getNome());
+		buffer.append( ((Artista) object).getNome());
 		buffer.append("\r\n");
-		buffer.append("---------------------------");
-		buffer.append("\r\n");
+//		buffer.append("---------------------------");
+//		buffer.append("\r\n");
 		File arq = new File(diretorio, arquivo);
 		boolean arquivoExiste;
 		if (arq.exists()) {
