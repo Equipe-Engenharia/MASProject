@@ -27,7 +27,7 @@ public class FrmAcervoEdit extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField idObra, txtArtist, txtObra;
+	private JTextField txtArtist, txtObra;
 	private JFormattedTextField txtValor;
 	private JFormattedTextField ftxtData;
 	private MaskFormatter maskData;
@@ -80,12 +80,11 @@ public class FrmAcervoEdit extends JFrame {
 		lblId.setBounds(20, 55, 200, 14);
 		contentPane.add(lblId);
 
-		idObra = new JTextField();
-		idObra.setBounds(166, 55, 126, 20);
-		idObra.setEditable(false);
-		idObra.setEnabled(false);
-		idObra.setColumns(10);
-		contentPane.add(idObra);
+		JTextField idObra2 = new JTextField();
+		idObra2.setBounds(166, 55, 126, 20);
+		idObra2.setEditable(false);
+		idObra2.setColumns(10);
+		contentPane.add(idObra2);
 
 
 		JButton btnPesquisaId = new JButton("");
@@ -246,13 +245,13 @@ public class FrmAcervoEdit extends JFrame {
 		btnGravar.setBounds(298, 594, 122, 34);
 		contentPane.add(btnGravar);
 
-		idObra = new JTextField();
+
 
 		AcervoCtrl ctrlAcervo = new AcervoCtrl(contentPane, lblSelecImagem, lblStatus, lblValor, cbSetor,
 				cbSetorT, cbStatus, cbStatusT, cbCategoria, cbObras, cbMaterial, txtArtist, txtObra, txtNovaObra,
 				ftxtData, edtDescricao, msgGravado, msgVazio, txtValor, btnPesquisaArtist, btnNovoArtista,
 				btnEditarArtista, btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial,
-				btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT ,idObra);
+				btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT ,idObra2);
 
 		contentPane.add(btnExcluir);
 		ctrlAcervo.preencherComboBoxCategoria();
