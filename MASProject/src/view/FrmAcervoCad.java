@@ -2,9 +2,6 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.SystemColor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 
@@ -25,22 +22,20 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
 import controller.AcervoCtrl;
-import controller.ArtistaPesqCtrl;
 
 public class FrmAcervoCad extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField idObra, txtArtist, txtObra, txtValor;
-	private JFormattedTextField ftxtData;
+	private JTextField idObra, txtArtist, txtObra;
+	private JFormattedTextField ftxtData, txtValor;
 	private MaskFormatter maskData;
 	private DecimalFormat maskValor;
 	private JComboBox<String> cbCategoria, cbMaterial, cbSetor, cbSetorT, cbStatus, cbStatusT;
 	private JButton btnPesquisarImagem, btnExcluirImagem, btnPesquisaArtist, btnNovoArtista, btnEditarArtista, 
 	btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, 
 	btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT, btnGravar, btnFechar; // deixar os demais botoes private
-	// alterei aqui
-	ArtistaPesqCtrl pesq=new ArtistaPesqCtrl(btnEditarArtista, idObra, cbCategoria);
+
 	/**
 	 * Launch the application.
 	 */
@@ -98,7 +93,7 @@ public class FrmAcervoCad extends JFrame {
 		msgVazio.setVisible(false);
 		contentPane.add(msgVazio);
 
-		txtArtist = new JTextField();
+		txtArtist = new JTextField("GG2");
 		txtArtist.setEditable(false);
 		txtArtist.setBounds(166, 56, 352, 20);
 		contentPane.add(txtArtist);
@@ -109,17 +104,6 @@ public class FrmAcervoCad extends JFrame {
 		btnPesquisaArtist = new JButton("");
 		btnPesquisaArtist.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		btnPesquisaArtist.setBounds(522, 52, 29, 28);
-		
-		btnPesquisaArtist.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					pesq.preencherComboBoxArtista();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
 		contentPane.add(btnPesquisaArtist);
 
 		btnNovoArtista = new JButton("Novo Artista");
@@ -304,7 +288,7 @@ public class FrmAcervoCad extends JFrame {
 
 		btnPesquisarImagem.addActionListener(ctrlAcervo.inserir_imagem);
 		btnExcluirImagem.addActionListener(ctrlAcervo.remover_imagem);
-	//	btnPesquisaArtist.addActionListener(ctrlAcervo);
+		btnPesquisaArtist.addActionListener(ctrlAcervo);
 		btnNovoArtista.addActionListener(ctrlAcervo);
 		btnEditarArtista.addActionListener(ctrlAcervo);
 		btnNovaCategoria.addActionListener(ctrlAcervo.novaCategoria);

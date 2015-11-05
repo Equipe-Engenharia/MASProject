@@ -57,8 +57,14 @@ public class ObraArquivo implements ArquivosICtrl{
 		buffer.append("\r\n");
 		buffer.append("Data :"+((Obra) object).getDataComposicao());
 		buffer.append("\r\n");
-		buffer.append("Imagem :"+((Obra) object).getImagem());
-		buffer.append("\r\n");
+		if(((Obra) object).getImagem().contains("C:")){
+			String text = ((Obra) object).getImagem().replaceAll(".*:", "");
+			buffer.append("Imagem :"+text);
+			buffer.append("\r\n");
+		}else{
+			buffer.append("Imagem :"+((Obra) object).getImagem());
+			buffer.append("\r\n");
+		}
 		buffer.append("Material :"+((Obra) object).getMaterial().getNome());
 		buffer.append("\r\n");
 		buffer.append("Setor :"+((Obra) object).getSetor().getNome());
