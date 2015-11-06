@@ -59,7 +59,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	private JComboBox<String> cbStatusT;
 	private JComboBox<String> cbSetor;
 
-	private JButton btnPesqArtist, btnNovoArtista, btnEditarArtista, btnNovaCategoria, btnNovoMaterial,
+	private JButton btnGravar, btnPesqArtist, btnNovoArtista, btnEditarArtista, btnNovaCategoria, btnNovoMaterial,
 			btnEditarMaterial, btnNovoSetor, btnEditarCategoria, btnEditarSetor, btnNovoSetorT, btnEditarSetorT; // passar
 																													// o
 																													// resto
@@ -76,12 +76,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	private List<Obra> obras;// Variavel caminho imagem criada para gravar e
 								// carregar na hora de procurar obra
 
-	public AcervoCtrl(JComboBox<String> cbMaterial) {
-		this.cbMaterial = cbMaterial;
-	}
 
-	public AcervoCtrl() {
-	}
 
 	public AcervoCtrl(JPanel frmAcervo, JLabel imagem, JLabel lblStatus, JLabel lblValor, JComboBox<String> cbSetor,
 			JComboBox<String> cbSetorT, JComboBox<String> cbStatus, JComboBox<String> cbStatusT,
@@ -90,9 +85,11 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			JEditorPane descricaoObra, JLabel msgGravar, JLabel msgVazio, JFormattedTextField txtValor,
 			JButton btnPesqArtist, JButton btnNovoArtista, JButton btnEditarArtista, JButton btnNovaCategoria,
 			JButton btnEditarCategoria, JButton btnNovoMaterial, JButton btnEditarMaterial, JButton btnNovoSetor,
-			JButton btnEditarSetor, JButton btnNovoSetorT, JButton btnEditarSetorT, JTextField idObra) {
+			JButton btnEditarSetor, JButton btnNovoSetorT, JButton btnEditarSetorT, JTextField idObra,
+			JButton btnGravar) {
 
 		this.frmAcervo = frmAcervo;
+		this.btnGravar = btnGravar;
 		this.idObra = idObra;
 		this.obras = new ArrayList<Obra>();
 		this.imagem = imagem;
@@ -124,7 +121,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		this.txtValor = txtValor;
 		this.msgGravar = msgGravar;
 		this.msgVazio = msgVazio;
-		this.caminhoImagem = "../MASProject/icons/painting.png";
+		this.caminhoImagem = "";
 
 		lerAcervo();
 	}
@@ -251,7 +248,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 						artista.setNome(nomeArtista.getText());
 						o.setNomeObra((String) cbObras.getSelectedItem());
 						o.setDataComposicao(dataAquisicao.getText());
-						categoria.setNome((String) cbObras.getSelectedItem());
+						categoria.setNome((String) cbCategoria.getSelectedItem());
 						setor.setNome((String) cbSetor.getSelectedItem());
 						material.setNome((String) cbMaterial.getSelectedItem());
 						o.setStatus((String) cbStatus.getSelectedItem());
@@ -262,7 +259,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 						artista.setNome(nomeArtista.getText());
 						o.setNomeObra(txtNovaObra.getText());
 						o.setDataComposicao(dataAquisicao.getText());
-						categoria.setNome((String) cbObras.getSelectedItem());
+						categoria.setNome((String) cbCategoria.getSelectedItem());
 						setor.setNome((String) cbSetor.getSelectedItem());
 						material.setNome((String) cbMaterial.getSelectedItem());
 						o.setStatus((String) cbStatus.getSelectedItem());
@@ -392,8 +389,6 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 	}
 
-	
-
 	// METODOS DE SUPORTE ///////////////////////////////////////////
 
 	public void gerarId() {
@@ -422,17 +417,17 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		imagem.setBackground(SystemColor.inactiveCaption);
 		imagem.setHorizontalAlignment(SwingConstants.CENTER);
 		nomeArtista.setText(null);
+		btnGravar.setEnabled(false);
 		txtNovaObra.setText(null);
 		txtValor.setText(null);
 		dataAquisicao.setText(null);
 		edtDescricao.setText(null);
+		idObra.setText(null);
 		cbMaterial.setSelectedIndex(0);
 		cbCategoria.setSelectedIndex(0);
 		cbStatus.setSelectedIndex(0);
-
 		cbSetor.setSelectedIndex(0);
 		cbObras.setSelectedIndex(0);
-
 	}
 
 	public void procuraImagem() {
@@ -620,6 +615,9 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			arqController.leArquivo("../MASProject/dados/", "setores");
 			linha = arqController.getBuffer();
 			String[] setores = linha.split(";");
+			cbSetor.addItem("");
+			cbSetorT.addItem("");
+
 			for (String s : setores) {
 				String text = s.replaceAll(".*:", "");
 				listString.add(text);
@@ -649,6 +647,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			arqController.leArquivo("../MASProject/dados/", "setores");
 			linha = arqController.getBuffer();
 			String[] setores = linha.split(";");
+
 			for (String s : setores) {
 				String text = s.replaceAll(".*:", "");
 				listString.add(text);
@@ -761,6 +760,9 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		newMaterial.setVisible(true);
 		newMaterial.setDefaultCloseOperation(newMaterial.DISPOSE_ON_CLOSE);
 		newMaterial.setResizable(false);
+		if(newMaterial.isActive()){
+			
+		}
 	}
 
 	@SuppressWarnings("static-access")
@@ -872,6 +874,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			procurarObra((String) cbObras.getSelectedItem());
+
 		}
 	};
 	public ActionListener pesquisarPorId = new ActionListener() {
@@ -897,6 +900,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 				JOptionPane.showMessageDialog(null, "Nada Encontrado");
 				procurarObraPorId();
 			} else {
+				btnGravar.setEnabled(true);
 				preencheCampos(obra);
 			}
 		} else {
@@ -915,6 +919,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			imagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
+			caminhoImagem = "../MASProject/icons/painting.png";
 		}
 	};
 
@@ -943,6 +948,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			JOptionPane.showMessageDialog(null, "Escolha uma obra para ser carregada");
 			limpaCamposEditar();
 		} else {
+			btnGravar.setEnabled(true);
 			preencheCampos(obra);
 		}
 	}

@@ -35,7 +35,7 @@ public class FrmAcervoEdit extends JFrame {
 	private JComboBox<String> cbCategoria, cbMaterial, cbSetor, cbSetorT, cbStatus, cbStatusT;
 	private JButton btnPesquisarImagem, btnExcluirImagem, btnPesquisaArtist, btnNovoArtista, btnEditarArtista,
 			btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, btnNovoSetor, btnEditarSetor,
-			btnNovoSetorT, btnEditarSetorT, btnGravar; // deixar os demais
+			btnNovoSetorT, btnEditarSetorT; // deixar os demais
 														// botoes private
 
 	public static void main(String[] args) {
@@ -240,9 +240,11 @@ public class FrmAcervoEdit extends JFrame {
 		btnExcluir.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		btnExcluir.setBounds(457, 594, 122, 34);
 
-		btnGravar = new JButton("Gravar Alterações");
+		JButton btnGravar = new JButton("Gravar Alterações");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.setBounds(298, 594, 122, 34);
+		btnGravar.setEnabled(false);
+		btnGravar.setToolTipText("Carregue Uma Obra Para Editar");
 		contentPane.add(btnGravar);
 
 
@@ -251,7 +253,7 @@ public class FrmAcervoEdit extends JFrame {
 				cbSetorT, cbStatus, cbStatusT, cbCategoria, cbObras, cbMaterial, txtArtist, txtObra, txtNovaObra,
 				ftxtData, edtDescricao, msgGravado, msgVazio, txtValor, btnPesquisaArtist, btnNovoArtista,
 				btnEditarArtista, btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial,
-				btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT ,idObra2);
+				btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT ,idObra2,btnGravar);
 
 		contentPane.add(btnExcluir);
 		ctrlAcervo.preencherComboBoxCategoria();

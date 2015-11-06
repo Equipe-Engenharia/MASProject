@@ -1,59 +1,33 @@
-ID Obra :ACV151031-023801
-Nome do Artista :FElipe
-Nome da obra :Testandiooo
-Descrição :
-Categoria :Pintura
-Data :31/10/2014
-Imagem :../MASProject/icons/painting.png
-Material : Óleo
-Setor : Teste
-Valor :122.222.222,00
-Obra Propria :false
-Status :Exposição
----------------------------
 ID Obra :ACV151101-021855
 Nome do Artista :Henrique
 Nome da obra :Teste de Obra
 Descrição :
-Categoria :Pintura
+Categoria :Teste de Obra
 Data :20/08/2015
-Imagem :\Users\Plutão\Desktop\fotos\futuro.jpg
+Imagem :../MASProject/icons/painting.png
 Material : Óleo
 Setor : Teste
-Valor :5.000.000,00
+Valor :4.000.000,00
 Obra Propria :true
 Status :Emprestada
----------------------------
-ID Obra :ACV151105-103842
-Nome do Artista :Fernando
-Nome da obra :O Mini Grito
-Descrição :ssss
-Categoria :Pintura
-Data :11/04/2015
-Imagem :../MASProject/icons/painting.png
-Material : Ferro
-Setor : Teste
-Valor :122.222.222,00
-Obra Propria :true
-Status :Exposição
 ---------------------------
 ID Obra :ACV151105-113002
 Nome do Artista :Laranja
 Nome da obra :Laranjeiras
-Descri��o :111
+Descrição :111
 Categoria : Escultura
-Data :11/11/1111
+Data :22/22/2222
 Imagem :\Users\Plutão\Desktop\fotos\brasil.jpg
 Material : Prata
 Setor : Branco
-Valor :111.111.111.111,00
+Valor :222.222.222,00
 Obra Propria :true
 Status :Emprestada
 ---------------------------
 ID Obra :ACV151105-120215
 Nome do Artista :GG
 Nome da obra :Galinha Pintadinha
-Descri��o :
+Descrição :
 Categoria : Estátua
 Data :11/11/1111
 Imagem :\Users\Plutão\Desktop\fotos\tempo.jpg
@@ -66,10 +40,10 @@ Status :Reservada
 ID Obra :ACV151105-121315
 Nome do Artista :GG2
 Nome da obra :AA
-Descri��o :
+Descrição :
 Categoria : Escultura
 Data :22/22/2222
-Imagem :\Users\Plut�o\Desktop\fotos\esporte.jpg
+Imagem :\Users\Plut�o\Desktop\fotos\esporte.jpg
 Material : Ferro
 Setor : Teste
 Valor :

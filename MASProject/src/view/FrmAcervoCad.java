@@ -31,10 +31,16 @@ public class FrmAcervoCad extends JFrame {
 	private JFormattedTextField ftxtData, txtValor;
 	private MaskFormatter maskData;
 	private DecimalFormat maskValor;
-	private JComboBox<String> cbCategoria, cbMaterial, cbSetor, cbSetorT, cbStatus, cbStatusT;
-	private JButton btnPesquisarImagem, btnExcluirImagem, btnPesquisaArtist, btnNovoArtista, btnEditarArtista, 
-	btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, 
-	btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT, btnGravar, btnFechar; // deixar os demais botoes private
+	private JComboBox<String> cbMaterial;
+
+
+	private JComboBox<String> cbCategoria, cbSetor, cbSetorT, cbStatus, cbStatusT;
+	private JButton btnPesquisarImagem, btnExcluirImagem, btnPesquisaArtist, btnNovoArtista, btnEditarArtista,
+			btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, btnNovoSetor, btnEditarSetor,
+			btnNovoSetorT, btnEditarSetorT, btnGravar, btnFechar; // deixar os
+																	// demais
+																	// botoes
+																	// private
 
 	/**
 	 * Launch the application.
@@ -58,7 +64,9 @@ public class FrmAcervoCad extends JFrame {
 	public FrmAcervoCad() throws ParseException {
 		setResizable(false);
 		setTitle("Registro de Acervo");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // quando ela for chamada pelo menu trocar para
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // quando ela for
+														// chamada pelo menu
+														// trocar para
 		setBounds(100, 100, 625, 737); // DISPOSE_ON_CLOSE
 		contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -252,23 +260,23 @@ public class FrmAcervoCad extends JFrame {
 		btnExcluirImagem.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		btnExcluirImagem.setBounds(465, 354, 46, 30);
 		contentPane.add(btnExcluirImagem);
-		
+
 		btnNovoSetorT = new JButton("Novo Setor");
 		btnNovoSetorT.setBounds(133, 49, 117, 29);
 		panel_terceiros.add(btnNovoSetorT);
-		
+
 		btnEditarSetorT = new JButton("Editar Setor");
 		btnEditarSetorT.setBounds(17, 49, 117, 29);
 		panel_terceiros.add(btnEditarSetorT);
-		
+
 		btnEditarSetor = new JButton("Editar Setor");
 		btnEditarSetor.setBounds(17, 49, 117, 29);
 		panel_proprio.add(btnEditarSetor);
-		
+
 		btnNovoSetor = new JButton("Novo Setor");
 		btnNovoSetor.setBounds(133, 49, 117, 29);
 		panel_proprio.add(btnNovoSetor);
-		
+
 		btnGravar = new JButton("Gravar");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.setBounds(338, 670, 107, 34);
@@ -278,13 +286,13 @@ public class FrmAcervoCad extends JFrame {
 		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
 		btnFechar.setBounds(471, 669, 117, 34);
 		contentPane.add(btnFechar);
-		
-		// botão de pesquisar artista e o Jpanel passados como parametro - Vitor
-		AcervoCtrl ctrlAcervo = new AcervoCtrl(contentPane, idObra, lblSelecImagem, cbSetor, cbSetorT,
-				cbStatus, cbStatusT, cbCategoria, cbMaterial, txtArtist, txtObra, ftxtData, editDescricao,
-				msgGravado, msgVazio, txtValor, btnPesquisaArtist, btnNovoArtista,
-				btnEditarArtista, btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, 
-				btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT);
+
+		// botão de pesquisar artista e o Jpanel passados como parametro -
+		// Vitor
+		AcervoCtrl ctrlAcervo = new AcervoCtrl(contentPane, idObra, lblSelecImagem, cbSetor, cbSetorT, cbStatus,
+				cbStatusT, cbCategoria, cbMaterial, txtArtist, txtObra, ftxtData, editDescricao, msgGravado, msgVazio,
+				txtValor, btnPesquisaArtist, btnNovoArtista, btnEditarArtista, btnNovaCategoria, btnEditarCategoria,
+				btnNovoMaterial, btnEditarMaterial, btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT);
 
 		btnPesquisarImagem.addActionListener(ctrlAcervo.inserir_imagem);
 		btnExcluirImagem.addActionListener(ctrlAcervo.remover_imagem);
