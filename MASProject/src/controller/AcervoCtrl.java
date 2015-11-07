@@ -463,14 +463,13 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		recarregarCbObras(nomeArtista);
 	}
 
-	public void pesquisarArtistaEditar() {
-		/// alterei aqui
-		pAController = new ArtistaPesqCtrl(btnEditarArtista, dataAquisicao, cbCategoria);
+	//alterei o nome pesquisarArtistaEditar por editarArtista
+	public void editarArtista() {
+		//
+		//pAController = new ArtistaPesqCtrl(btnEditarArtista, dataAquisicao, cbCategoria);
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<Artista> listArtista = new ArrayList<>();
-
 		String[] possibilities = pAController.getArtista();
-
 		for (String s : possibilities) {
 			String text = s.replaceAll(".*:", "");
 			listString.add(text);
@@ -482,17 +481,8 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			}
 		}
 		String[] possibilities2 = new String[listArtista.size()];
-
 		for (int i = 0; i < listArtista.size(); i++) {
 			possibilities2[i] = listArtista.get(i).getNome();
-		}
-
-		String s = (String) JOptionPane.showInputDialog(frmAcervo, "Escolha o artista:\n", "Pesquisar o Artista",
-				JOptionPane.INFORMATION_MESSAGE, null, possibilities2, possibilities2[0]);
-		if (s != null && s.length() > 0) {
-			nomeArtista.setText(s);
-			setNomeArtista(s);
-			return;
 		}
 	}
 
@@ -510,33 +500,13 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 	}
 
+	
 	public void pesquisarArtista() { // Abre um JOptionPane com uma comboBox -
 										// Vitor
-		/// alterei aqui
-		pAController = new ArtistaPesqCtrl(btnEditarArtista, dataAquisicao, cbCategoria);
-		ArrayList<String> listString = new ArrayList<>();
-		ArrayList<Artista> listArtista = new ArrayList<>();
-
-		String[] possibilities = pAController.getArtista();
-
-		for (String s : possibilities) {
-			String text = s.replaceAll(".*:", "");
-			listString.add(text);
-			if (s.contains("---")) {
-				Artista artista = new Artista();
-				artista.setNome(listString.get(1));
-				listArtista.add(artista);
-				listString.clear();
-			}
-		}
-		String[] possibilities2 = new String[listArtista.size()];
-
-		for (int i = 0; i < listArtista.size(); i++) {
-			possibilities2[i] = listArtista.get(i).getNome();
-		}
-
+		pAController = new ArtistaPesqCtrl();
+		Object[] possibilities = pAController.getArtista();
 		String s = (String) JOptionPane.showInputDialog(frmAcervo, "Escolha o artista:\n", "Pesquisar o Artista",
-				JOptionPane.INFORMATION_MESSAGE, null, possibilities2, possibilities2[0]);
+		JOptionPane.INFORMATION_MESSAGE, null, possibilities, possibilities[0]);
 		if (s != null && s.length() > 0) {
 			nomeArtista.setText(s);
 			artistaNome = s;
@@ -822,10 +792,10 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 	};
 
-	public ActionListener pesquisaArtistaEditar = new ActionListener() {
+	public ActionListener pesquisaArtista= new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			pesquisarArtistaEditar();
+			pesquisarArtista();
 		}
 	};
 

@@ -266,7 +266,7 @@ public class FrmAcervoEdit extends JFrame {
 		btnPesquisarImagem.addActionListener(ctrlAcervo.inserir_imagem);
 		btnPesquisaId.addActionListener(ctrlAcervo.pesquisarPorId);
 
-		btnPesquisaArtist.addActionListener(ctrlAcervo.pesquisaArtistaEditar);
+		btnPesquisaArtist.addActionListener(ctrlAcervo.pesquisaArtista);
 		btnPesquisaObra.addActionListener(ctrlAcervo.pesquisarObra);
 		btnExcluirImagem.addActionListener(ctrlAcervo.remover_imagem);
 		btnExcluir.addActionListener(ctrlAcervo.excluir_obraAcervo);
