@@ -181,7 +181,7 @@ public class ArtistaCtrl implements ComponentListener {
 				if (nome.getText().equalsIgnoreCase(artistas.get(i).getId())) {
 					id.setText(artistas.get(i).getId());
 					nome.setText(artistas.get(i).getNome());
-					validar = false;
+					validar = true;
 				} else if (nome.getText().equalsIgnoreCase(artistas.get(i).getNome())) {
 					validar = true;
 				}
@@ -230,7 +230,7 @@ public class ArtistaCtrl implements ComponentListener {
 		validar = false;
 		if (!id.getText().isEmpty()) {
 			for (int i = 0; i < artistas.size(); i++) {
-				if (nome.getText().equalsIgnoreCase(artistas.get(i).getNome())) {				
+				if (!id.getText().equalsIgnoreCase(artistas.get(i).getId()) && nome.getText().equalsIgnoreCase(artistas.get(i).getNome())) {				
 					msg("erroredit",artistas.get(i).getNome());
 					validar = true;
 				} 

@@ -182,7 +182,7 @@ public class CategoriaCtrl implements ComponentListener {
 				if (id.getText().equalsIgnoreCase(categorias.get(i).getId())) {
 					id.setText(categorias.get(i).getId());
 					nome.setText(categorias.get(i).getNome());
-					validar = false;
+					validar = true;
 				} else if (nome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {
 					validar = true;
 				}
@@ -229,7 +229,7 @@ public class CategoriaCtrl implements ComponentListener {
 		validar = false;
 		if (!id.getText().isEmpty()) {
 			for (int i = 0; i < categorias.size(); i++) {
-				if (nome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {				
+				if (!id.getText().equalsIgnoreCase(categorias.get(i).getId()) && nome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {				
 					msg("erroredit",categorias.get(i).getNome());
 					validar = true;
 				} 

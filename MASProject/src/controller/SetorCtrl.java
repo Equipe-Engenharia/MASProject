@@ -182,7 +182,7 @@ public class SetorCtrl implements ComponentListener {
 				if (nome.getText().equalsIgnoreCase(setores.get(i).getId())) {
 					id.setText(setores.get(i).getId());
 					nome.setText(setores.get(i).getNome());
-					validar = false;
+					validar = true;
 				} else if (nome.getText().equalsIgnoreCase(setores.get(i).getNome())) {
 					validar = true;
 				}
@@ -231,7 +231,7 @@ public class SetorCtrl implements ComponentListener {
 		validar = false;
 		if (!id.getText().isEmpty()) {
 			for (int i = 0; i < setores.size(); i++) {
-				if (nome.getText().equalsIgnoreCase(setores.get(i).getNome())) {				
+				if (!id.getText().equalsIgnoreCase(setores.get(i).getId()) && nome.getText().equalsIgnoreCase(setores.get(i).getNome())) {				
 					msg("erroredit",setores.get(i).getNome());
 					validar = true;
 				} 

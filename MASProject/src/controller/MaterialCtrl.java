@@ -221,7 +221,7 @@ public class MaterialCtrl implements ComponentListener {
 					id.setText(materiais.get(i).getId());
 					nome.setText(materiais.get(i).getNome());
 					cbCategoria.getModel().setSelectedItem(materiais.get(i).getCategoria());
-					validar = false;
+					validar = true;
 				} else if (nome.getText().equalsIgnoreCase(materiais.get(i).getNome())) {
 					validar = true;
 					cbCategoria.getModel().setSelectedItem(materiais.get(i).getCategoria());
@@ -272,7 +272,8 @@ public class MaterialCtrl implements ComponentListener {
 		validar = false;
 		if (!id.getText().isEmpty()) {
 			for (int i = 0; i < materiais.size(); i++) {
-				if (nome.getText().equalsIgnoreCase(materiais.get(i).getNome()) 
+				if (!id.getText().equalsIgnoreCase(materiais.get(i).getId()) 
+						&& nome.getText().equalsIgnoreCase(materiais.get(i).getNome())
 						&& cbCategoria.getSelectedItem().toString().equalsIgnoreCase(materiais.get(i).getCategoria())) {
 					msg("erroredit", materiais.get(i).getNome());
 					validar = true;
