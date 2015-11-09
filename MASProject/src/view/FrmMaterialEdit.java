@@ -14,14 +14,17 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.MaterialCtrl;
+import javax.swing.JTable;
 
 public class FrmMaterialEdit extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JComboBox<String> cbCategoria;
-	private JTextField txtId;
-	private JTextField txtMaterial;
+	private JTextField txtId, txtMaterial;
+	private JTable tbMaterial;
+	private JButton btnPesquisar, btnEditar, btnApagar;
+	
 
 	/**
 	 * Launch the application.
@@ -42,10 +45,11 @@ public class FrmMaterialEdit extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
 	public FrmMaterialEdit() {
 		setTitle("Editar/Excluir Material da Obra");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 540, 250);
+		setBounds(100, 100, 540, 444);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
@@ -67,7 +71,6 @@ public class FrmMaterialEdit extends JFrame {
 		txtId = new JTextField();
 		txtId.setEditable(false);
 		txtId.setEnabled(false);
-		txtId.setToolTipText("Digite o ID do Material");
 		txtId.setBounds(180, 33, 178, 20);
 		contentPane.add(txtId);
 		txtId.setColumns(10);
@@ -82,18 +85,23 @@ public class FrmMaterialEdit extends JFrame {
 		contentPane.add(txtMaterial);
 		txtMaterial.setColumns(10);
 		
-		JButton btnPesquisaMaterial = new JButton("Pesquisar");
-		btnPesquisaMaterial.setToolTipText("Use o campo e clique para realizar a busca por número Material");
-		btnPesquisaMaterial.setBounds(377, 62, 117, 34);
-		btnPesquisaMaterial.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		contentPane.add(btnPesquisaMaterial);
+		tbMaterial = new JTable();
+		tbMaterial.setCellSelectionEnabled(true);
+		tbMaterial.setBounds(28, 231, 484, 166);
+		contentPane.add(tbMaterial);
 		
-		JButton btnGravar = new JButton("Editar");
-		btnGravar.setBounds(288, 166, 97, 34);
-		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		contentPane.add(btnGravar);
+		btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setToolTipText("Use o campo para realizar a busca pelo número de Identificação ou o Material");
+		btnPesquisar.setBounds(377, 62, 117, 34);
+		btnPesquisar.setIcon(new ImageIcon("../MASProject/icons/search.png"));
+		contentPane.add(btnPesquisar);
 		
-		JButton btnApagar = new JButton("Excluir");
+		btnEditar = new JButton("Editar");
+		btnEditar.setBounds(288, 166, 97, 34);
+		btnEditar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
+		contentPane.add(btnEditar);
+		
+		btnApagar = new JButton("Excluir");
 		btnApagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -102,14 +110,14 @@ public class FrmMaterialEdit extends JFrame {
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
 		
-		MaterialCtrl ctrlMaterial = new MaterialCtrl(contentPane, txtId, cbCategoria, txtMaterial);
+		MaterialCtrl controle = new MaterialCtrl(contentPane, txtId, cbCategoria, txtMaterial, tbMaterial);
 		
-		ctrlMaterial.preencherComboBoxCategoria();
-		btnPesquisaMaterial.addActionListener(ctrlMaterial.pesquisarMaterial);
-		btnApagar.addActionListener(ctrlMaterial.excluirMaterial);
-		btnGravar.addActionListener(ctrlMaterial.editarMaterial);
-		txtId.addMouseListener(ctrlMaterial.limpaCampo);
-		txtMaterial.addMouseListener(ctrlMaterial.limpaCampo);
-		txtMaterial.addActionListener(ctrlMaterial.pesquisarMaterial);
+		controle.preencherComboBoxCategoria();
+		txtId.addMouseListener(controle.limpaCampo);
+		txtMaterial.addMouseListener(controle.limpaCampo);
+		txtMaterial.addActionListener(controle.pesquisar);
+		btnPesquisar.addActionListener(controle.pesquisar);
+		btnApagar.addActionListener(controle.excluir);
+		btnEditar.addActionListener(controle.editar);
 	}
 }

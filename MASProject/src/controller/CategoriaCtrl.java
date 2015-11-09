@@ -6,6 +6,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,8 +14,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import model.Categoria;
@@ -22,59 +24,128 @@ import persistence.CategoriaArquivo;
 
 public class CategoriaCtrl implements ComponentListener {
 
-	private JTextField idCategoria, nomeCategoria;
-	private JButton btGravar, btnApagar, btnIdPesquisa, btnCategoriaPesquisa;
-	private JLabel msgGravado, msgVazio;
+	private JPanel form;
+	private JTextField id, nome;
 	private List<Categoria> categorias;
 	private static int contador = 1;
-	private ArquivosCtrl ctrlArquivos;
+	private boolean validar;
+	private ArquivosCtrl arquivo = new ArquivosCtrl();
+	private CategoriaArquivo formatar = new CategoriaArquivo();
 
-	public CategoriaCtrl(JTextField idCategoria, JTextField nomeCategoria,
-			JButton btnGravar, JLabel msgGravado, JLabel msgVazio) {
+	public CategoriaCtrl(JPanel form, JTextField id, JTextField nome) {
 
-		this.idCategoria = idCategoria;
-		this.btGravar = btnGravar;
-		this.msgGravado = msgGravado;
-		this.msgVazio = msgVazio;
-		this.nomeCategoria = nomeCategoria;
+		this.id = id;
+		this.nome = nome;
 		this.categorias = new ArrayList<Categoria>();
+
 		
 		lerCategoria();
 	}
 	
-	public CategoriaCtrl(JTextField tfIdCategoria, JTextField tfNomeCategoria,
-			JButton btnApagar, JButton btnGravarEdit, JLabel msgGravar,
-			JLabel msgVazio, JButton btnIdPesquisa,
-			JButton btnCategoriaPesquisa) {
-		
-		this.idCategoria = tfIdCategoria;
-		this.btGravar = btnGravarEdit;
-		this.btnApagar = btnApagar;
-		this.btnCategoriaPesquisa = btnCategoriaPesquisa;
-		this.btnIdPesquisa = btnIdPesquisa;
-		this.nomeCategoria = tfNomeCategoria;
-		this.msgGravado = msgGravar;
-		this.msgVazio = msgVazio;
-	}
+	// METODOS DE SUPORTE ////////////////////////
 
-	public void gerarId() {
+	public void gerarId(){
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
-		String id = (dateFormat.format(date));
-		idCategoria.setText("CTG" + id);
+		String NewId = (dateFormat.format(date));
+		id.setText("CAT" + NewId);
 	}
+
+	public void limpaCampos() {
+		nome.setText(null);
+		id.setText(null);
+	}
+
+	public void msg(String tipo, String mensagem) {
+
+		switch (tipo) {
+
+		case "errornull":
+			JOptionPane.showMessageDialog(null, 
+					"ATENÇÃO!\nCampo Vazio.\nPor favor, digite o ID ou nome do Categoria.", 
+					"Registro de Categoria", 
+					JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/warning.png"));
+			break;
+		case "nosearch":
+			JOptionPane.showMessageDialog(null, 
+					"ATENÇÃO!\n\nNão localizamos o registro: '" + mensagem + "' !\nVerifique sua digitação.", 
+					"Pesquisa de Categoria", 
+					JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/warning.png"));
+			break;
+		case "errorsearch":
+			JOptionPane.showMessageDialog(null, 
+					"ATENÇÃO! Por favor, digite para pesquisar!", 
+					"Registro de Categoria",
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"));
+			break;
+		case "save":
+			JOptionPane.showMessageDialog(null, 
+					"Registro '" + mensagem + "' salvo com sucesso.", 
+					"Registro de Categoria", 
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/record.png"));
+			break;
+		case "errorrec":
+			JOptionPane.showMessageDialog(null, 
+					"ATENÇÃO!\nNão foi possível apagar o registro: " + id.getText() + " "
+					+ nome.getText() + "!\nVerifique sua digitação!", 
+					"Registro de Categoria", 
+					JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/warning.png"));
+			break;
+		case "edit":
+			JOptionPane.showMessageDialog(null, 
+					"Registro '" + mensagem + "' editado com sucesso.", 
+					"Registro de Categoria", 
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/record.png"));
+			break;
+		case "erroredit":
+			JOptionPane.showMessageDialog(null, 
+					"Registro '" + mensagem + "' já existe!",
+					"Registro de Categoria", 
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"));
+			break;
+		case "delete":
+			JOptionPane.showMessageDialog(null, 
+					"Registro '" + mensagem + "' apagado com sucesso.", 
+					"Registro de Categoria", 
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/record.png"));
+			break;
+		case "errordelete":
+			JOptionPane.showMessageDialog(null, 
+					"Registro '" + mensagem + "' não pode ser alterado para a exclusão.",
+					"Registro de Categoria", 
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"));
+			break;
+		default:
+			JOptionPane.showMessageDialog(null, 
+					"OOPS!\n\nQue feio, Ed Stark perdeu a cabeça, e algo não deveria ter acontecido…\n\nTermo: " + mensagem
+					+ "\n\nVolte ao trabalho e conserte isso!!!", 
+					"Erro no Controller Categoria", 
+					JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/warning.png"));
+		}
+	}
+
+	// CRUD //////////////////////////
 
 	public void lerCategoria() {
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
-
-		ctrlArquivos = new ArquivosCtrl();
+	
 		try {
-			ctrlArquivos.leArquivo("../MASProject/dados/", "categorias");
-			linha = ctrlArquivos.getBuffer();
+			arquivo.leArquivo("../MASProject/dados/", "categorias");
+			linha = arquivo.getBuffer();
 			String[] listaCategoria = linha.split(";");
 			for (String s : listaCategoria) {
-				String text = s.replaceAll(".*:", "");
+				String text = s.replaceAll(".*: ", "");
 				list.add(text);
 				if (s.contains("---")) {
 					Categoria categoria = new Categoria();
@@ -84,53 +155,183 @@ public class CategoriaCtrl implements ComponentListener {
 					list.clear();
 				}
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		/*for(Material a :  categorias){
-			System.out.println(a.getNome());
-		}*/
 	}
 
-	public void gravarCategoria() {
-		Categoria categoria = new Categoria();
-		CategoriaArquivo categorialImpl = new CategoriaArquivo();
-
-		categoria.setId(idCategoria.getText());
-		categoria.setNome(nomeCategoria.getText());
-
-		if (!nomeCategoria.getText().isEmpty()) {
+	public void atualizaDados(List<Categoria> listCategorias) {
+		File f = new File("../MASProject/dados/categorias");
+		f.delete();	
+		for (Categoria categoria : listCategorias) {
 			try {
-				categorialImpl.escreveArquivo("../MASProject/dados/", "categorias", nomeCategoria.getText(), categoria);
+				formatar.escreveArquivo("../MASProject/dados/", "categorias", "", categoria);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			msgGravado.setText(nomeCategoria.getText() + " salvo com sucesso!");
-			msgGravado.setVisible(true);
-			nomeCategoria.setText(null);
-			gerarId();
-		} else {
-			msgGravado.setVisible(false);
-			msgVazio.setVisible(true);
 		}
 	}
 
-	public ActionListener gravarCategoria = new ActionListener() {
+	public void pesquisar() {
+
+		ArrayList<Categoria> listCategoria = new ArrayList<>();
+		String pesquisa ="";
+		if (!nome.getText().isEmpty() || !id.getText().isEmpty()) {
+
+			for (int i = 0; i < categorias.size(); i++) {
+				if (id.getText().equalsIgnoreCase(categorias.get(i).getId())) {
+					id.setText(categorias.get(i).getId());
+					nome.setText(categorias.get(i).getNome());
+					validar = false;
+				} else if (nome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {
+					validar = true;
+				}
+			}
+			if (validar == true) {
+				for (int i = 0; i < categorias.size(); i++) {
+					if (nome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {
+						Categoria item = new Categoria();
+						item.setId(categorias.get(i).getId());
+						item.setNome(categorias.get(i).getNome());
+						listCategoria.add(item);
+					}
+				}
+				String[] filtro = new String[listCategoria.size()];
+				for (int i = 0; i < listCategoria.size(); i++) {
+					filtro[i] = listCategoria.get(i).getId();
+					pesquisa = listCategoria.get(i).getId();
+				}
+				if (filtro != null && filtro.length > 1) {
+					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
+							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
+				}
+				for (int i = 0; i < categorias.size(); i++) {
+					if (pesquisa.equalsIgnoreCase(categorias.get(i).getId())) {
+						id.setText(categorias.get(i).getId());
+						nome.setText(categorias.get(i).getNome());
+					}
+				}
+				validar = false;
+			} else {
+				if (pesquisa == "") {
+					msg("nosearch", nome.getText());
+					limpaCampos();
+				}
+				validar = false;
+			}
+		} else {
+			msg("errorsearch", nome.getText());
+		}
+	}
+
+	public void editar() {
+		Categoria categoria = new Categoria();
+		validar = false;
+		if (!id.getText().isEmpty()) {
+			for (int i = 0; i < categorias.size(); i++) {
+				if (nome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {				
+					msg("erroredit",categorias.get(i).getNome());
+					validar = true;
+				} 
+			}
+			if(!(validar == true)){
+				for (int i = 0; i < categorias.size(); i++) {
+					if (id.getText().equalsIgnoreCase(categorias.get(i).getId())) {
+						categoria.setId(id.getText());
+						categoria.setNome(nome.getText());
+						categorias.set(i, categoria);
+						atualizaDados(categorias);
+						msg("edit", nome.getText());
+						limpaCampos();
+					}
+				}
+			}
+		} else {
+			msg("errorsearch", nome.getText());
+		}
+	}
+
+	public void excluir() {
+		if (!id.getText().isEmpty()) {
+			for (int i = 0; i < categorias.size(); i++) {
+				if (id.getText().equalsIgnoreCase(categorias.get(i).getId()) && nome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {
+					categorias.remove(i);
+					validar = true;
+				}
+			}
+			if (validar == true) {
+				atualizaDados(categorias);
+				msg("delete", nome.getText());
+				limpaCampos();
+			} else {
+				validar = false;
+				msg("errordelete", id.getText());
+			}
+		} else {
+			pesquisar();
+		}
+	}
+
+	public void gravar() {
+		new CategoriaArquivo();
+		Categoria categoria = new Categoria();
+		validar = false;
+		if (!nome.getText().isEmpty()) {
+			for (int i = 0; i < categorias.size(); i++) {
+				if (nome.getText().equalsIgnoreCase(categorias.get(i).getNome())){
+					msg("erroredit", categorias.get(i).getNome());
+					validar = true;
+				}
+			}
+			if(!(validar == true)){	
+				categoria.setId(id.getText());
+				categoria.setNome(nome.getText());
+				categorias.add(categoria);
+				msg("save", nome.getText());
+				atualizaDados(categorias);
+				nome.setText(null);
+				gerarId();
+			}
+		} else {
+			msg("errornull", nome.getText());
+		}
+	}
+
+	// CONTROLE BOTAO //////////////////////////////
+
+	public ActionListener pesquisar = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			gravarCategoria();
+			pesquisar();
 		}
 	};
-	
-	public ActionListener fecharCategoria = new ActionListener() {
-		
+
+	public ActionListener excluir = new ActionListener() {
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.exit(0);
+				excluir();
 		}
 	};
+
+	public ActionListener editar = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			editar();
+		}
+	};
+
+	public ActionListener gravar = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			gravar();
+		}
+	};
+
+	// CONTROLE MOUSE ///////////////////////////////
 
 	public MouseListener limpaCampo = new MouseListener() {
 
@@ -154,107 +355,26 @@ public class CategoriaCtrl implements ComponentListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (contador == 1) {
-				nomeCategoria.setText(null);
+				id.setText(null);
+				nome.setText(null);
 				contador += 1;
 			}
-			
-			btGravar.setEnabled(true);
-			msgGravado.setVisible(false);
-			msgVazio.setVisible(false);
 		}
 	};
-	
-	//Manipula�ao da Tela de CategoriaEdit
-	
-	public void pesquisaIdCat(){
-		
-		/*
-		 	if (!nomeCategoria.getText().isEmpty() || !idCategoria.getText().isEmpty()) {
-			msgGravado.setText(nomeCategoria.getText() + " localizado com sucesso!");
-			msgGravado.setVisible(true);
-			nomeCategoria.setText(null);
-		} else {
-			msgGravado.setVisible(false);
-			msgVazio.setText("Por favor, use um dos campos de Pesquisa!");
-			msgVazio.setVisible(true);
-		}
-		*/
-	}
-	
-	public void pesquisarNomeCat(){
-		
-	}
-	
-	public void apagarCategoria(){
-		/*
-		 	if (!nomeCategoria.getText().isEmpty()) {
-			msgGravado.setText(nomeCategoria.getText() + " excluído com sucesso!");
-			msgGravado.setVisible(true);
-			nomeCategoria.setText(null);
-		} else {
-			msgGravado.setVisible(false);
-			msgVazio.setVisible(true);
-		}
-		
-		*/
-
-	}
-	
-	public void gravarCategoriaEdit(){
-		
-	}
-	
-	public ActionListener pesquisaIdCat = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			pesquisaIdCat();
-		}
-	};
-	
-	public ActionListener pesquisarNomeCat = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			pesquisarNomeCat();
-		}
-	};
-	
-	public ActionListener apagarCategoria = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			apagarCategoria();
-		}
-	};
-	
-	public ActionListener gravarCategoriaEdit = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			gravarCategoriaEdit();
-		}
-	};
-
 
 	@Override
 	public void componentHidden(ComponentEvent e) {
-		
 	}
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
-		
 	}
 
 	@Override
 	public void componentResized(ComponentEvent e) {
-		
 	}
 
 	@Override
 	public void componentShown(ComponentEvent e) {
-		
 	}
-
 }

@@ -1,8 +1,6 @@
 package view;
 
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,8 +16,9 @@ public class FrmArtistaCad extends JFrame {
 
 	static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtArtista;
-	private JTextField txtId;
+	private JLabel lblId, lblArtista;
+	private JTextField txtArtista, txtId;
+	private JButton btnGravar;
 	
 	/**
 	 * Launch the application.
@@ -28,7 +27,7 @@ public class FrmArtistaCad extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrmMaterialEdit frame = new FrmMaterialEdit();
+					FrmArtistaCad frame = new FrmArtistaCad();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +39,8 @@ public class FrmArtistaCad extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrmArtistaCad(FrmAcervoCad parent, boolean modal) {  
+	
+	public FrmArtistaCad() {  
 		setTitle("Registro de Artista");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
@@ -50,13 +50,13 @@ public class FrmArtistaCad extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblIdArtista = new JLabel("ID");
-		lblIdArtista.setBounds(148, 51, 21, 16);
-		contentPane.add(lblIdArtista);
+		lblId = new JLabel("ID");
+		lblId.setBounds(148, 51, 21, 16);
+		contentPane.add(lblId);
 		
-		JLabel lblNovoArtista = new JLabel("Novo Artista");
-		lblNovoArtista.setBounds(84, 87, 97, 16);
-		contentPane.add(lblNovoArtista);
+		lblArtista = new JLabel("Novo Artista");
+		lblArtista.setBounds(84, 87, 97, 16);
+		contentPane.add(lblArtista);
 		
 		txtId = new JTextField();
 		txtId.setEnabled(false);
@@ -71,31 +71,18 @@ public class FrmArtistaCad extends JFrame {
 		txtArtista.setBounds(180, 81, 178, 28);
 		contentPane.add(txtArtista);
 		txtArtista.setColumns(10);
-		
-		JLabel msgGravar = new JLabel("");
-		msgGravar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
-		msgGravar.setBounds(43, 177, 230, 23);
-		msgGravar.setVisible(false);
-		contentPane.add(msgGravar);
 
-		JLabel msgVazio = new JLabel("CAMPO VAZIO!");
-		msgVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		msgVazio.setBounds(43, 177, 192, 23);
-		msgVazio.setVisible(false);
-		contentPane.add(msgVazio);
-
-		JButton btnGravar = new JButton("Gravar");
-		btnGravar.setEnabled(false);
+		btnGravar = new JButton("Gravar");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
 		
-		ArtistaCtrl ctrlArtista = new ArtistaCtrl(txtId, txtArtista, btnGravar, msgGravar, msgVazio);
+		ArtistaCtrl controle = new ArtistaCtrl (contentPane, txtId, txtArtista);
 		
-		ctrlArtista.gerarId();
-		btnGravar.addActionListener(ctrlArtista.gravarArtista);
-		txtArtista.addMouseListener(ctrlArtista.limpaCampo);
-		txtArtista.addActionListener(ctrlArtista.gravarArtista);
+		controle.gerarId();
+		btnGravar.addActionListener(controle.gravar);
+		txtArtista.addMouseListener(controle.limpaCampo);
+		txtArtista.addActionListener(controle.gravar);
     }  
 }  
 

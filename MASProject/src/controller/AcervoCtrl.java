@@ -693,7 +693,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	@SuppressWarnings("static-access")
 	private void abrirTelaNovoArtista() {
-		FrmArtistaCad newArtista = new FrmArtistaCad(null, true);
+		FrmArtistaCad newArtista = new FrmArtistaCad();
 		newArtista.setVisible(true);
 		newArtista.setDefaultCloseOperation(newArtista.DISPOSE_ON_CLOSE);
 		newArtista.setResizable(false);
@@ -701,7 +701,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	@SuppressWarnings("static-access")
 	private void abrirTelaEditarArtista() {
-		FrmArtistaEdit editArtista = new FrmArtistaEdit(null, true);
+		FrmArtistaEdit editArtista = new FrmArtistaEdit();
 		editArtista.setVisible(true);
 		editArtista.setDefaultCloseOperation(editArtista.DISPOSE_ON_CLOSE);
 		editArtista.setResizable(false);

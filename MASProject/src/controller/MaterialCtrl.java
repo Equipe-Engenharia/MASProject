@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import model.Categoria;
@@ -25,22 +26,23 @@ import persistence.MaterialArquivo;
 
 public class MaterialCtrl implements ComponentListener {
 
-	private JPanel frmMaterial;
-	private JTextField idMaterial, nomeMaterial;
+	private JPanel form;
+	private JTextField id, nome;
+	private JTable tabela;
 	private JComboBox<String> cbCategoria;
 	private List<Material> materiais;
 	private static int contador = 1;
-	private String validar;
-	private ArquivosCtrl ctrlArquivos = new ArquivosCtrl();
-	private Material material = new Material();
+	private boolean validar;
+	private ArquivosCtrl arquivo = new ArquivosCtrl();
+	private MaterialArquivo formatar = new MaterialArquivo();
 
-	public MaterialCtrl(JPanel frmMaterial, JTextField idMaterial, JComboBox<String> cbCategoria,
-			JTextField txtMaterial) {
+	public MaterialCtrl(JPanel form, JTextField id, JComboBox<String> cbCategoria,
+			JTextField txtMaterial, JTable tabela) {
 
-		this.frmMaterial = frmMaterial;
+		this.form = form;
 		this.cbCategoria = cbCategoria;
-		this.idMaterial = idMaterial;
-		this.nomeMaterial = txtMaterial;
+		this.id = id;
+		this.nome = txtMaterial;
 		this.materiais = new ArrayList<Material>();
 
 		lerMaterial();
@@ -51,13 +53,13 @@ public class MaterialCtrl implements ComponentListener {
 	public void gerarId() { // USO DESTE METODO NO GRAVARMATERIAL E FRMMATERIAL (CAD E EDIT)
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
-		String id = (dateFormat.format(date));
-		idMaterial.setText("MAT" + id);
+		String NewId = (dateFormat.format(date));
+		id.setText("MAT" + NewId);
 	}
 
 	public void limpaCampos() {
-		nomeMaterial.setText(null);
-		idMaterial.setText(null);
+		nome.setText(null);
+		id.setText(null);
 		cbCategoria.setSelectedIndex(0);
 	}
 
@@ -66,50 +68,74 @@ public class MaterialCtrl implements ComponentListener {
 		switch (tipo) {
 
 		case "errornull":
-			JOptionPane.showMessageDialog(null, "ATENÇÃO!\nCampo Vazio.\nPor favor, digite o ID ou nome do Material.",
-					"Registro de Material", JOptionPane.PLAIN_MESSAGE,
+			JOptionPane.showMessageDialog(null, 
+					"ATENÇÃO!\nCampo Vazio.\nPor favor, digite o ID ou nome do Material.",
+					"Registro de Material", 
+					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
-			break;
-		case "cancelsearch":
-			// JOptionPane.showMessageDialog(null, "ATENÇÃO! Cancelando sua
-			// pesquisa!", "Registro de Material",
-			// JOptionPane.PLAIN_MESSAGE, new
-			// ImageIcon("../MASProject/icons/warning.png"));
 			break;
 		case "nosearch":
 			JOptionPane.showMessageDialog(null,
 					"ATENÇÃO!\n\nNão localizamos o registro: '" + mensagem + "' !\nVerifique sua digitação.",
-					"Pesquisa de Material", JOptionPane.PLAIN_MESSAGE,
+					"Pesquisa de Material", 
+					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
 		case "errorsearch":
-			JOptionPane.showMessageDialog(null, "ATENÇÃO! Por favor, digite para pesquisar!", "Registro de Material",
-					JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/warning.png"));
+			JOptionPane.showMessageDialog(null, 
+					"ATENÇÃO! Por favor, digite para pesquisar!", 
+					"Registro de Material",
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
 		case "save":
-			JOptionPane.showMessageDialog(null, "Registro '" + mensagem + "' salvo com sucesso.",
-					"Registro de Material", JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/record.png"));
+			JOptionPane.showMessageDialog(null, 
+					"Registro '" + mensagem + "' salvo com sucesso.",
+					"Registro de Material", 
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/record.png"));
 			break;
 		case "errorrec":
 			JOptionPane.showMessageDialog(null,
-					"ATENÇÃO!\nNão foi possível apagar o registro: " + idMaterial.getText() + " "
-							+ nomeMaterial.getText() + "!\nVerifique sua digitação!",
-					"Registro de Material", JOptionPane.PLAIN_MESSAGE,
+					"ATENÇÃO!\nNão foi possível apagar o registro: " + id.getText() + " " + nome.getText() + "!\nVerifique sua digitação!",
+					"Registro de Material", 
+					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
 		case "edit":
-			JOptionPane.showMessageDialog(null, "Registro '" + mensagem + "' editado com sucesso.",
-					"Registro de Material", JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/record.png"));
+			JOptionPane.showMessageDialog(null, 
+					"Registro '" + mensagem + "' editado com sucesso.",
+					"Registro de Material", 
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/record.png"));
+			break;
+		case "erroredit":
+			JOptionPane.showMessageDialog(null, 
+					"Registro '" + mensagem + "' já existe!",
+					"Registro de Material", 
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
 		case "delete":
-			JOptionPane.showMessageDialog(null, "Registro '" + mensagem + "' apagado com sucesso.",
-					"Registro de Material", JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/record.png"));
+			JOptionPane.showMessageDialog(null, 
+					"Registro '" + mensagem + "' apagado com sucesso.",
+					"Registro de Material", 
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/record.png"));
+			break;
+		case "errordelete":
+			JOptionPane.showMessageDialog(null, 
+					"Registro '" + mensagem + "' não pode ser alterado para a exclusão.",
+					"Registro de Material", 
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
 		default:
 			JOptionPane.showMessageDialog(null,
 					"OOPS!\n\nQue feio, Ed Stark perdeu a cabeça, e algo não deveria ter acontecido…\n\n" + mensagem
-							+ "\n\nVolte ao trabalho e conserte isso!!!",
-					"Erro no Controller Material", JOptionPane.PLAIN_MESSAGE,
+					+ "\n\nVolte ao trabalho e conserte isso!!!",
+					"Erro no Controller Material", 
+					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
 		}
 	}
@@ -119,16 +145,16 @@ public class MaterialCtrl implements ComponentListener {
 
 	public void preencherComboBoxCategoria() {
 		String linha = new String();
-		ctrlArquivos = new ArquivosCtrl();
+		arquivo = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<Categoria> listCategorias = new ArrayList<>();
 
 		try {
-			ctrlArquivos.leArquivo("../MASProject/dados/", "categorias");
-			linha = ctrlArquivos.getBuffer();
+			arquivo.leArquivo("../MASProject/dados/", "categorias");
+			linha = arquivo.getBuffer();
 			String[] categorias = linha.split(";");
 			for (String s : categorias) {
-				String text = s.replaceAll(".*: ", ""); // CORRIGIDO ERRO NA RECUPERAÇÃO DO REGISTRO - PRECISA DE 2 ESPAÇOS DEPOIS DO *:
+				String text = s.replaceAll(".*: ", "");
 				listString.add(text);
 				if (s.contains("---")) {
 					Categoria c = new Categoria();
@@ -152,11 +178,11 @@ public class MaterialCtrl implements ComponentListener {
 		ArrayList<String> list = new ArrayList<>();
 	
 		try {
-			ctrlArquivos.leArquivo("../MASProject/dados/", "materiais");
-			linha = ctrlArquivos.getBuffer();
+			arquivo.leArquivo("../MASProject/dados/", "materiais");
+			linha = arquivo.getBuffer();
 			String[] listaMaterial = linha.split(";");
 			for (String s : listaMaterial) {
-				String text = s.replaceAll(".*: ", ""); // CORRIGIDO ERRO QUE IMPEDE A EXCLUSÃO DO REGISTRO - PRECISA DE 2 ESPAÇOS DEPOIS DO *:
+				String text = s.replaceAll(".*: ", "");
 				list.add(text);
 				if (s.contains("---")) {
 					Material material = new Material();
@@ -175,170 +201,186 @@ public class MaterialCtrl implements ComponentListener {
 	public void atualizaDados(List<Material> listMateriais) {
 		File f = new File("../MASProject/dados/materiais");
 		f.delete();
-		MaterialArquivo materialImpl = new MaterialArquivo();
 		for (Material material : listMateriais) {
 			try {
-				materialImpl.escreveArquivo("../MASProject/dados/", "materiais", "", material);
+				formatar.escreveArquivo("../MASProject/dados/", "materiais", "", material);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	public void pesquisarMaterial(String pesquisa) {
+	public void pesquisar() {
 
 		ArrayList<Material> listMaterial = new ArrayList<>();
-		List<Material> dados = materiais;
-
-		if (!nomeMaterial.getText().isEmpty() || !idMaterial.getText().isEmpty()) {
+		String pesquisa ="";
+		if (!nome.getText().isEmpty() || !id.getText().isEmpty()) {
 
 			for (int i = 0; i < materiais.size(); i++) {
-				if (pesquisa.equalsIgnoreCase(materiais.get(i).getId())) {
-					idMaterial.setText(materiais.get(i).getId());
-					nomeMaterial.setText(materiais.get(i).getNome());
+				if (nome.getText().equalsIgnoreCase(materiais.get(i).getId())) {
+					id.setText(materiais.get(i).getId());
+					nome.setText(materiais.get(i).getNome());
 					cbCategoria.getModel().setSelectedItem(materiais.get(i).getCategoria());
-					validar = "id";
-				} else if (pesquisa.equalsIgnoreCase(materiais.get(i).getNome())) {
-					validar = "nome";
+					validar = false;
+				} else if (nome.getText().equalsIgnoreCase(materiais.get(i).getNome())) {
+					validar = true;
 					cbCategoria.getModel().setSelectedItem(materiais.get(i).getCategoria());
 				}
 			}
-			if (validar == "nome") {
-				for (int i = 0; i < dados.size(); i++) {
-
-					boolean filtro = pesquisa.equalsIgnoreCase(materiais.get(i).getNome());
-
+			if (validar == true) {
+				for (int i = 0; i < materiais.size(); i++) {
+					boolean filtro = nome.getText().equalsIgnoreCase(materiais.get(i).getNome());
 					if (filtro == true) {
-
-						Material m = new Material();
-
-						m.setId(materiais.get(i).getId());
-						m.setNome(materiais.get(i).getNome());
-						m.setCategoria(materiais.get(i).getCategoria());
-						listMaterial.add(m);
+						Material item = new Material();
+						item.setId(materiais.get(i).getId());
+						item.setNome(materiais.get(i).getNome());
+						item.setCategoria(materiais.get(i).getCategoria());
+						listMaterial.add(item);
 					}
 				}
 				String[] filtro = new String[listMaterial.size()];
 				for (int i = 0; i < listMaterial.size(); i++) {
 					filtro[i] = listMaterial.get(i).getId();
+					pesquisa = listMaterial.get(i).getId();
 				}
-				String s = (String) JOptionPane.showInputDialog(frmMaterial, "Escolha o ID:\n", "Selecione o ID",
-						JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
-				if (s != null && s.length() > 0) {
-					for (int i = 0; i < materiais.size(); i++) {
-						if (s.equalsIgnoreCase(materiais.get(i).getId())) {
-							idMaterial.setText(materiais.get(i).getId());
-							nomeMaterial.setText(materiais.get(i).getNome());
-							cbCategoria.getModel().setSelectedItem(materiais.get(i).getCategoria());
-						}
+				if (filtro != null && filtro.length > 1) {
+					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
+							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
+				} 
+				for (int i = 0; i < materiais.size(); i++) {
+					if (pesquisa.equalsIgnoreCase(materiais.get(i).getId())) {
+						id.setText(materiais.get(i).getId());
+						nome.setText(materiais.get(i).getNome());
+						cbCategoria.getModel().setSelectedItem(materiais.get(i).getCategoria());
 					}
-					validar = "";
-				} else {
-					msg("cancelsearch", "");
 				}
+				validar = false;
 			} else {
-				if (validar != "id") {
-					msg("nosearch", pesquisa);
-				}
-				validar = "";
-			}
-		} else {
-			msg("errorsearch", pesquisa);
-		}
-	}
-
-	public void editarMaterial(String pesquisa) {
-		Material material = new Material();
-		if (!idMaterial.getText().isEmpty()) {
-			for (int i = 0; i < materiais.size(); i++) {
-				if (pesquisa.equalsIgnoreCase(materiais.get(i).getId())) {
-					material.setId(idMaterial.getText());
-					material.setNome(nomeMaterial.getText());
-					material.setCategoria((String) cbCategoria.getSelectedItem());
-					materiais.set(i, material);
-					atualizaDados(materiais);
-					msg("edit", pesquisa);
+				if (pesquisa == "") {
+					msg("nosearch", nome.getText());
 					limpaCampos();
 				}
+				validar = false;
 			}
 		} else {
-			msg("errorsearch", pesquisa);
+			msg("errorsearch", nome.getText());
 		}
 	}
 
-	public void excluirMaterial(String pesquisa) {
-		if (!idMaterial.getText().isEmpty()) {
+	public void editar() {
+		Material material = new Material();
+		validar = false;
+		if (!id.getText().isEmpty()) {
 			for (int i = 0; i < materiais.size(); i++) {
-				if (pesquisa.equalsIgnoreCase(materiais.get(i).getId())) {
-					materiais.remove(i);
-					validar = "ok";
+				if (nome.getText().equalsIgnoreCase(materiais.get(i).getNome()) 
+						&& cbCategoria.getSelectedItem().toString().equalsIgnoreCase(materiais.get(i).getCategoria())) {
+					msg("erroredit", materiais.get(i).getNome());
+					validar = true;
+				} 
+			}
+			if(!(validar == true)){
+				for (int i = 0; i < materiais.size(); i++) {
+					if (id.getText().equalsIgnoreCase(materiais.get(i).getId())) {
+						material.setId(id.getText());
+						material.setNome(nome.getText());
+						material.setCategoria((String) cbCategoria.getSelectedItem());
+						materiais.set(i, material);
+						atualizaDados(materiais);
+						msg("edit", nome.getText());
+						limpaCampos();	
+					}
 				}
 			}
-			if (validar == "ok") {
-				atualizaDados(materiais);
-				msg("delete", pesquisa);
-				limpaCampos();
-			} else {
-				validar = "";
-				msg("erroApaga", pesquisa);
-			}
 		} else {
-			pesquisarMaterial(pesquisa);
+			msg("errorsearch", nome.getText());
 		}
 	}
 
-	public void gravarMaterial(String pesquisa) {
-		new MaterialArquivo();
-
-		if (!nomeMaterial.getText().isEmpty()) {
-			material.setId(idMaterial.getText());
-			material.setNome(nomeMaterial.getText());
-			material.setCategoria(cbCategoria.getSelectedItem().toString());
-			materiais.add(material);
-			msg("save", pesquisa);
-			atualizaDados(materiais);
-			nomeMaterial.setText(null);
-			gerarId();
+	public void excluir() {
+		validar = false;
+		if (!id.getText().isEmpty()) {
+			for (int i = 0; i < materiais.size(); i++) {
+				if (id.getText().equalsIgnoreCase(materiais.get(i).getId()) 
+						&& nome.getText().equalsIgnoreCase(materiais.get(i).getNome())
+						&& cbCategoria.getSelectedItem().toString().equalsIgnoreCase(materiais.get(i).getCategoria())) {
+					materiais.remove(i);
+					validar = true;
+				} else {
+					if(i == materiais.size()){
+					msg("errordelete", materiais.get(i).getNome());
+					}
+				}
+			}
+			if (validar == true) {
+				atualizaDados(materiais);
+				msg("delete", nome.getText());
+				limpaCampos();
+			} else {
+				validar = false;
+				msg("errordelete", id.getText());
+			}
 		} else {
-			msg("errornull", pesquisa);
+			pesquisar();
+		}
+	}
+
+	public void gravar() {
+		new MaterialArquivo();
+		Material material = new Material();
+		validar = false;
+		if (!nome.getText().isEmpty()) {
+			for (int i = 0; i < materiais.size(); i++) {	
+				if (nome.getText().equalsIgnoreCase(materiais.get(i).getNome()) && cbCategoria.getSelectedItem().toString().equalsIgnoreCase(materiais.get(i).getCategoria())) {
+					msg("erroredit", materiais.get(i).getNome());
+					validar = true;
+				}
+			}
+			if(!(validar == true)){
+				material.setId(id.getText());
+				material.setNome(nome.getText());
+				material.setCategoria(cbCategoria.getSelectedItem().toString());
+				materiais.add(material);
+				msg("save", nome.getText());
+				atualizaDados(materiais);
+				nome.setText(null);
+				gerarId();
+			}
+		} else {
+			msg("errornull", nome.getText());
 		}
 	}
 
 	// CONTROLE BOTAO //////////////////////////////
 
-	public ActionListener pesquisarMaterial = new ActionListener() {
+	public ActionListener pesquisar = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			pesquisarMaterial(nomeMaterial.getText());
+			pesquisar();
 		}
 	};
 
-	public ActionListener excluirMaterial = new ActionListener() {
+	public ActionListener excluir = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (idMaterial.getText().isEmpty()) {
-				excluirMaterial(nomeMaterial.getText());
-			} else {
-				excluirMaterial(idMaterial.getText());
-			}
+				excluir();
 		}
 	};
 
-	public ActionListener editarMaterial = new ActionListener() {
+	public ActionListener editar = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			editarMaterial(idMaterial.getText());
+			editar();
 		}
 	};
 
-	public ActionListener gravarMaterial = new ActionListener() {
+	public ActionListener gravar = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			gravarMaterial(idMaterial.getText());
+			gravar();
 		}
 	};
 
@@ -366,7 +408,7 @@ public class MaterialCtrl implements ComponentListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (contador == 1) {
-				nomeMaterial.setText(null);
+				nome.setText(null);
 				contador += 1;
 			}
 		}

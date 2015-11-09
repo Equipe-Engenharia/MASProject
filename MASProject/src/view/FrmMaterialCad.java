@@ -7,6 +7,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -18,8 +19,10 @@ public class FrmMaterialCad extends JFrame {
 	static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JComboBox<String> cbCategoria;
-	private JTextField txtMaterial;
-	private JTextField txtId;
+	private JTextField txtMaterial,txtId;
+	private JTable tbMaterial;
+	private JButton btnGravar;
+	
 	
 
 	/**
@@ -41,6 +44,7 @@ public class FrmMaterialCad extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
 	public FrmMaterialCad() {
 		setTitle("Registro de Material da Obra");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -68,8 +72,9 @@ public class FrmMaterialCad extends JFrame {
 		txtId.setEditable(false);
 		txtId.setBounds(180, 33, 178, 20);
 		txtId.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(txtId);
 		txtId.setColumns(10);
+		contentPane.add(txtId);
+		
 		
 		cbCategoria = new JComboBox<String>();
 		cbCategoria.setBounds(180, 102, 178, 28);
@@ -78,20 +83,21 @@ public class FrmMaterialCad extends JFrame {
 		txtMaterial = new JTextField();
 		txtMaterial.setToolTipText("Digite o novo material…");
 		txtMaterial.setBounds(179, 65, 178, 28);
-		contentPane.add(txtMaterial);
 		txtMaterial.setColumns(10);
+		contentPane.add(txtMaterial);
+		
 
-		JButton btnGravar = new JButton("Gravar");
+		btnGravar = new JButton("Gravar");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
 		
-		MaterialCtrl ctrlMaterial = new MaterialCtrl(contentPane, txtId, cbCategoria, txtMaterial);
+		MaterialCtrl controle = new MaterialCtrl(contentPane, txtId, cbCategoria, txtMaterial, tbMaterial);
 		
-		ctrlMaterial.gerarId();//ESTA CHAMADA É TEMPORÁRIO - SERÁ IMPLEMNTADO NO MENU COMO EVENTO NA CHAMADA DESTE FORM
-		ctrlMaterial.preencherComboBoxCategoria();
-		btnGravar.addActionListener(ctrlMaterial.gravarMaterial);
-		txtMaterial.addMouseListener(ctrlMaterial.limpaCampo);
-		txtMaterial.addActionListener(ctrlMaterial.gravarMaterial);
+		controle.gerarId();
+		controle.preencherComboBoxCategoria();
+		btnGravar.addActionListener(controle.gravar);
+		txtMaterial.addMouseListener(controle.limpaCampo);
+		txtMaterial.addActionListener(controle.gravar);
 	}
 }
