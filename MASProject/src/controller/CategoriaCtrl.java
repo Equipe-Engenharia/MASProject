@@ -62,29 +62,29 @@ public class CategoriaCtrl implements ComponentListener {
 
 		case "errornull":
 			JOptionPane.showMessageDialog(null, 
-					"ATENÇÃO!\nCampo Vazio.\nPor favor, digite o ID ou nome do Categoria.", 
-					"Registro de Categoria", 
+					"ATENÇÃO!\nCampo Vazio.\nPor favor, digite o ID ou nome do Setor.", 
+					"Erro", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
 		case "nosearch":
 			JOptionPane.showMessageDialog(null, 
 					"ATENÇÃO!\n\nNão localizamos o registro: '" + mensagem + "' !\nVerifique sua digitação.", 
-					"Pesquisa de Categoria", 
+					"Não Localizado", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
 		case "errorsearch":
 			JOptionPane.showMessageDialog(null, 
 					"ATENÇÃO! Por favor, digite para pesquisar!", 
-					"Registro de Categoria",
+					"Erro",
 					JOptionPane.PLAIN_MESSAGE, 
 					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
 		case "save":
 			JOptionPane.showMessageDialog(null, 
 					"Registro '" + mensagem + "' salvo com sucesso.", 
-					"Registro de Categoria", 
+					"Confirmação", 
 					JOptionPane.PLAIN_MESSAGE, 
 					new ImageIcon("../MASProject/icons/record.png"));
 			break;
@@ -92,43 +92,53 @@ public class CategoriaCtrl implements ComponentListener {
 			JOptionPane.showMessageDialog(null, 
 					"ATENÇÃO!\nNão foi possível apagar o registro: " + id.getText() + " "
 					+ nome.getText() + "!\nVerifique sua digitação!", 
-					"Registro de Categoria", 
+					"Erro", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
 		case "edit":
 			JOptionPane.showMessageDialog(null, 
 					"Registro '" + mensagem + "' editado com sucesso.", 
-					"Registro de Categoria", 
+					"Confirmação", 
 					JOptionPane.PLAIN_MESSAGE, 
 					new ImageIcon("../MASProject/icons/record.png"));
 			break;
 		case "erroredit":
 			JOptionPane.showMessageDialog(null, 
 					"Registro '" + mensagem + "' já existe!",
-					"Registro de Categoria", 
+					"Já Cadastrado", 
 					JOptionPane.PLAIN_MESSAGE, 
 					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
+		case "deleteconfirm":
+			Object[] options = { "Confirmar", "Cancelar" };  
+			int r = JOptionPane.showOptionDialog(null, "Você confirma a exclusão do registro '" + mensagem + "'?",
+					"Exclusão de Registro", 
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"), options, options[0]);
+			if (r == 0) {
+				validar = false;
+			}
+			break;
 		case "delete":
 			JOptionPane.showMessageDialog(null, 
-					"Registro '" + mensagem + "' apagado com sucesso.", 
-					"Registro de Categoria", 
+					"Registro '" + mensagem + "' excluído com sucesso.", 
+					"Confirmação", 
 					JOptionPane.PLAIN_MESSAGE, 
 					new ImageIcon("../MASProject/icons/record.png"));
 			break;
 		case "errordelete":
 			JOptionPane.showMessageDialog(null, 
 					"Registro '" + mensagem + "' não pode ser alterado para a exclusão.",
-					"Registro de Categoria", 
+					"Erro", 
 					JOptionPane.PLAIN_MESSAGE, 
 					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
 		default:
 			JOptionPane.showMessageDialog(null, 
 					"OOPS!\n\nQue feio, Ed Stark perdeu a cabeça, e algo não deveria ter acontecido…\n\nTermo: " + mensagem
-					+ "\n\nVolte ao trabalho e conserte isso!!!", 
-					"Erro no Controller Categoria", 
+					+ "\n\nVolte ao trabalho duro e conserte isso!!!", 
+					"Erro no Controller", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
 		}
@@ -262,9 +272,12 @@ public class CategoriaCtrl implements ComponentListener {
 				}
 			}
 			if (validar == true) {
-				atualizaDados(categorias);
-				msg("delete", nome.getText());
-				limpaCampos();
+				msg("deleteconfirm", nome.getText());
+				if (validar == false){
+					atualizaDados(categorias);
+					msg("delete", nome.getText());
+					limpaCampos();
+				}
 			} else {
 				validar = false;
 				msg("errordelete", id.getText());
