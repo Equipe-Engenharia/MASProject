@@ -179,7 +179,7 @@ public class CategoriaCtrl implements ComponentListener {
 		if (!nome.getText().isEmpty() || !id.getText().isEmpty()) {
 
 			for (int i = 0; i < categorias.size(); i++) {
-				if (id.getText().equalsIgnoreCase(categorias.get(i).getId())) {
+				if (nome.getText().equalsIgnoreCase(categorias.get(i).getId())) {
 					id.setText(categorias.get(i).getId());
 					nome.setText(categorias.get(i).getNome());
 					validar = true;
@@ -189,7 +189,9 @@ public class CategoriaCtrl implements ComponentListener {
 			}
 			if (validar == true) {
 				for (int i = 0; i < categorias.size(); i++) {
-					if (nome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {
+
+					boolean filtro = nome.getText().equalsIgnoreCase(categorias.get(i).getNome());
+					if (filtro == true) {
 						Categoria item = new Categoria();
 						item.setId(categorias.get(i).getId());
 						item.setNome(categorias.get(i).getNome());
@@ -211,7 +213,7 @@ public class CategoriaCtrl implements ComponentListener {
 						nome.setText(categorias.get(i).getNome());
 					}
 				}
-				validar = false;
+				validar = false; 
 			} else {
 				if (pesquisa == "") {
 					msg("nosearch", nome.getText());

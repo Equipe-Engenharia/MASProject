@@ -173,9 +173,8 @@ public class SetorCtrl implements ComponentListener {
 
 	public void pesquisar() {
 
-		ArrayList<Setor> lista = new ArrayList<>();
-		List<Setor> dados = setores;
-		String not = "";
+		ArrayList<Setor> listSetor = new ArrayList<>();
+		String pesquisa ="";
 		if (!nome.getText().isEmpty() || !id.getText().isEmpty()) {
 
 			for (int i = 0; i < setores.size(); i++) {
@@ -188,34 +187,34 @@ public class SetorCtrl implements ComponentListener {
 				}
 			}
 			if (validar == true) {
-				for (int i = 0; i < dados.size(); i++) {
+				for (int i = 0; i < setores.size(); i++) {
 
 					boolean filtro = nome.getText().equalsIgnoreCase(setores.get(i).getNome());
-
 					if (filtro == true) {
 						Setor item = new Setor();
 						item.setId(setores.get(i).getId());
 						item.setNome(setores.get(i).getNome());
-						lista.add(item);
+						listSetor.add(item);
 					}
 				}
-				String[] filtro = new String[lista.size()];
-				for (int i = 0; i < lista.size(); i++) {
-					filtro[i] = lista.get(i).getId();
+				String[] filtro = new String[listSetor.size()];
+				for (int i = 0; i < listSetor.size(); i++) {
+					filtro[i] = listSetor.get(i).getId();
+					pesquisa = listSetor.get(i).getId();
 				}
-				String s = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
-						JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
-				if (s != null && s.length() > 0) {
-					for (int i = 0; i < setores.size(); i++) {
-						if (s.equalsIgnoreCase(setores.get(i).getId())) {
-							id.setText(setores.get(i).getId());
-							nome.setText(setores.get(i).getNome());
-						}
+				if (filtro != null && filtro.length > 1) {
+					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
+							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
+				}
+				for (int i = 0; i < setores.size(); i++) {
+					if (pesquisa.equalsIgnoreCase(setores.get(i).getId())) {
+						id.setText(setores.get(i).getId());
+						nome.setText(setores.get(i).getNome());
 					}
-					validar = false;
-				} 
+				}
+				validar = false; 
 			} else {
-				if (not == "") {
+				if (pesquisa == "") {
 					msg("nosearch", nome.getText());
 					limpaCampos();
 				}

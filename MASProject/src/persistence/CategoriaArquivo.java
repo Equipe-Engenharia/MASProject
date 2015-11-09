@@ -47,9 +47,9 @@ public class CategoriaArquivo implements ArquivosICtrl {
 			Object object) throws IOException {
 		
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID da Categoria : "+((Categoria) object).getId());
+		buffer.append("ID        : "+((Categoria) object).getId());
 		buffer.append("\r\n");
-		buffer.append("Nome da Categoria : "+((Categoria) object).getNome());
+		buffer.append("Categoria : "+((Categoria) object).getNome());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");

@@ -45,9 +45,9 @@ public class SetorArquivo implements ArquivosICtrl{
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID: "+((Setor) object).getId());
+		buffer.append("ID    : "+((Setor) object).getId());
 		buffer.append("\r\n");
-		buffer.append("Setor: " + ((Setor) object).getNome());
+		buffer.append("Setor : " + ((Setor) object).getNome());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");
