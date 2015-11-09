@@ -258,12 +258,14 @@ public class MaterialCtrl implements ComponentListener {
 					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
 							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
 				} 
+				if (pesquisa == "0" || pesquisa != null){
 				for (int i = 0; i < materiais.size(); i++) {
 					if (pesquisa.equalsIgnoreCase(materiais.get(i).getId())) {
 						id.setText(materiais.get(i).getId());
 						nome.setText(materiais.get(i).getNome());
 						cbCategoria.getModel().setSelectedItem(materiais.get(i).getCategoria());
 					}
+				}
 				}
 				validar = false;
 			} else {
@@ -329,6 +331,8 @@ public class MaterialCtrl implements ComponentListener {
 					atualizaDados(materiais);
 					msg("delete", nome.getText());
 					limpaCampos();
+				} else {
+					lerMaterial();	
 				}
 			} else {
 				validar = false;

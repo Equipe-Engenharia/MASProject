@@ -276,6 +276,8 @@ public class ArtistaCtrl implements ComponentListener {
 					atualizaDados(artistas);
 					msg("delete", nome.getText());
 					limpaCampos();
+				} else {
+					lerArtista();	
 				}
 			} else {
 				validar = false;
