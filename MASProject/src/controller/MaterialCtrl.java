@@ -332,6 +332,7 @@ public class MaterialCtrl implements ComponentListener {
 					msg("delete", nome.getText());
 					limpaCampos();
 				} else {
+					materiais.clear();
 					lerMaterial();	
 				}
 			} else {

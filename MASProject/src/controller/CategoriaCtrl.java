@@ -278,6 +278,7 @@ public class CategoriaCtrl implements ComponentListener {
 					msg("delete", nome.getText());
 					limpaCampos();
 				} else {
+					categorias.clear();
 					lerCategoria();	
 				}
 			} else {
