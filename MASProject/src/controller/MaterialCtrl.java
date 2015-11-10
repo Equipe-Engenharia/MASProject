@@ -17,9 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-
 import model.Categoria;
 import model.Material;
 import persistence.MaterialArquivo;
@@ -28,7 +26,6 @@ public class MaterialCtrl implements ComponentListener {
 
 	private JPanel form;
 	private JTextField id, nome;
-	private JTable tabela;
 	private JComboBox<String> cbCategoria;
 	private List<Material> materiais;
 	private static int contador = 1;
@@ -37,7 +34,7 @@ public class MaterialCtrl implements ComponentListener {
 	private MaterialArquivo formatar = new MaterialArquivo();
 
 	public MaterialCtrl(JPanel form, JTextField id, JComboBox<String> cbCategoria,
-			JTextField txtMaterial, JTable tabela) {
+			JTextField txtMaterial) {
 
 		this.form = form;
 		this.cbCategoria = cbCategoria;
@@ -62,6 +59,7 @@ public class MaterialCtrl implements ComponentListener {
 		id.setText(null);
 		cbCategoria.setSelectedIndex(0);
 	}
+	
 
 	public void msg(String tipo, String mensagem) {
 
@@ -223,7 +221,7 @@ public class MaterialCtrl implements ComponentListener {
 
 	public void pesquisar() {
 
-		ArrayList<Material> listMaterial = new ArrayList<>();
+		ArrayList<Material> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!nome.getText().isEmpty() || !id.getText().isEmpty()) {
 
@@ -246,13 +244,13 @@ public class MaterialCtrl implements ComponentListener {
 						item.setId(materiais.get(i).getId());
 						item.setNome(materiais.get(i).getNome());
 						item.setCategoria(materiais.get(i).getCategoria());
-						listMaterial.add(item);
+						lista.add(item);
 					}
 				}
-				String[] filtro = new String[listMaterial.size()];
-				for (int i = 0; i < listMaterial.size(); i++) {
-					filtro[i] = listMaterial.get(i).getId();
-					pesquisa = listMaterial.get(i).getId();
+				String[] filtro = new String[lista.size()];
+				for (int i = 0; i < lista.size(); i++) {
+					filtro[i] = lista.get(i).getId();
+					pesquisa = lista.get(i).getId();					
 				}
 				if (filtro != null && filtro.length > 1) {
 					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",

@@ -184,7 +184,7 @@ public class CategoriaCtrl implements ComponentListener {
 
 	public void pesquisar() {
 
-		ArrayList<Categoria> listCategoria = new ArrayList<>();
+		ArrayList<Categoria> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!nome.getText().isEmpty() || !id.getText().isEmpty()) {
 
@@ -205,13 +205,13 @@ public class CategoriaCtrl implements ComponentListener {
 						Categoria item = new Categoria();
 						item.setId(categorias.get(i).getId());
 						item.setNome(categorias.get(i).getNome());
-						listCategoria.add(item);
+						lista.add(item);
 					}
 				}
-				String[] filtro = new String[listCategoria.size()];
-				for (int i = 0; i < listCategoria.size(); i++) {
-					filtro[i] = listCategoria.get(i).getId();
-					pesquisa = listCategoria.get(i).getId();
+				String[] filtro = new String[lista.size()];
+				for (int i = 0; i < lista.size(); i++) {
+					filtro[i] = lista.get(i).getId();
+					pesquisa = lista.get(i).getId();
 				}
 				if (filtro != null && filtro.length > 1) {
 					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",

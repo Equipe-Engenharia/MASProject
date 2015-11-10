@@ -183,7 +183,7 @@ public class SetorCtrl implements ComponentListener {
 
 	public void pesquisar() {
 
-		ArrayList<Setor> listSetor = new ArrayList<>();
+		ArrayList<Setor> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!nome.getText().isEmpty() || !id.getText().isEmpty()) {
 
@@ -204,13 +204,13 @@ public class SetorCtrl implements ComponentListener {
 						Setor item = new Setor();
 						item.setId(setores.get(i).getId());
 						item.setNome(setores.get(i).getNome());
-						listSetor.add(item);
+						lista.add(item);
 					}
 				}
-				String[] filtro = new String[listSetor.size()];
-				for (int i = 0; i < listSetor.size(); i++) {
-					filtro[i] = listSetor.get(i).getId();
-					pesquisa = listSetor.get(i).getId();
+				String[] filtro = new String[lista.size()];
+				for (int i = 0; i < lista.size(); i++) {
+					filtro[i] = lista.get(i).getId();
+					pesquisa = lista.get(i).getId();
 				}
 				if (filtro != null && filtro.length > 1) {
 					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",

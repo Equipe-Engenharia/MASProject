@@ -183,7 +183,7 @@ public class ArtistaCtrl implements ComponentListener {
 
 	public void pesquisar() {
 
-		ArrayList<Artista> listArtista = new ArrayList<>();
+		ArrayList<Artista> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!nome.getText().isEmpty() || !id.getText().isEmpty()) {
 
@@ -204,13 +204,13 @@ public class ArtistaCtrl implements ComponentListener {
 						Artista item = new Artista();
 						item.setId(artistas.get(i).getId());
 						item.setNome(artistas.get(i).getNome());
-						listArtista.add(item);
+						lista.add(item);
 					}
 				}
-				String[] filtro = new String[listArtista.size()];
-				for (int i = 0; i < listArtista.size(); i++) {
-					filtro[i] = listArtista.get(i).getId();
-					pesquisa = listArtista.get(i).getId();
+				String[] filtro = new String[lista.size()];
+				for (int i = 0; i < lista.size(); i++) {
+					filtro[i] = lista.get(i).getId();
+					pesquisa = lista.get(i).getId();
 				}
 				if (filtro != null && filtro.length > 1) {
 					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",

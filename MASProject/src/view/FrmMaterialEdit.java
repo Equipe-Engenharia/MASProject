@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.MaterialCtrl;
-import javax.swing.JTable;
 
 public class FrmMaterialEdit extends JFrame {
 
@@ -22,7 +21,6 @@ public class FrmMaterialEdit extends JFrame {
 	private JPanel contentPane;
 	private JComboBox<String> cbCategoria;
 	private JTextField txtId, txtMaterial;
-	private JTable tbMaterial;
 	private JButton btnPesquisar, btnEditar, btnApagar;
 	
 
@@ -49,7 +47,7 @@ public class FrmMaterialEdit extends JFrame {
 	public FrmMaterialEdit() {
 		setTitle("Editar/Excluir Material da Obra");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 540, 444);
+		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
@@ -84,12 +82,7 @@ public class FrmMaterialEdit extends JFrame {
 		txtMaterial.setBounds(179, 65, 178, 28);
 		contentPane.add(txtMaterial);
 		txtMaterial.setColumns(10);
-		
-		tbMaterial = new JTable();
-		tbMaterial.setCellSelectionEnabled(true);
-		tbMaterial.setBounds(28, 231, 484, 166);
-		contentPane.add(tbMaterial);
-		
+	
 		btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.setToolTipText("Use o campo para realizar a busca pelo número de Identificação ou o Material");
 		btnPesquisar.setBounds(377, 62, 117, 34);
@@ -110,7 +103,7 @@ public class FrmMaterialEdit extends JFrame {
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
 		
-		MaterialCtrl controle = new MaterialCtrl(contentPane, txtId, cbCategoria, txtMaterial, tbMaterial);
+		MaterialCtrl controle = new MaterialCtrl(contentPane, txtId, cbCategoria, txtMaterial);
 		
 		controle.preencherComboBoxCategoria();
 		txtId.addMouseListener(controle.limpaCampo);

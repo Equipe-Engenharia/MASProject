@@ -1,13 +1,13 @@
 package view;
 
 import java.awt.EventQueue;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -20,7 +20,6 @@ public class FrmMaterialCad extends JFrame {
 	private JPanel contentPane;
 	private JComboBox<String> cbCategoria;
 	private JTextField txtMaterial,txtId;
-	private JTable tbMaterial;
 	private JButton btnGravar;
 	
 	
@@ -92,7 +91,7 @@ public class FrmMaterialCad extends JFrame {
 		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
 		
-		MaterialCtrl controle = new MaterialCtrl(contentPane, txtId, cbCategoria, txtMaterial, tbMaterial);
+		MaterialCtrl controle = new MaterialCtrl(contentPane, txtId, cbCategoria, txtMaterial);
 		
 		controle.gerarId();
 		controle.preencherComboBoxCategoria();
