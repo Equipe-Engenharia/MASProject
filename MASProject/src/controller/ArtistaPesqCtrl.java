@@ -27,8 +27,8 @@ public class ArtistaPesqCtrl{
 			nArtista = linha.split(";");
 			nomeArtista = new StringBuffer();
 			for(String nome : nArtista){
-				if(!nome.contains("ART")){
-					nomeArtista.append(nome);
+				if(nome.contains("Artista")){
+					nomeArtista.append(nome.substring(10));
 					nomeArtista.append(";");
 				}
 			}
