@@ -277,6 +277,7 @@ public class SetorCtrl implements ComponentListener {
 					msg("delete", nome.getText());
 					limpaCampos();
 				} else {
+					setores.clear();
 					lerSetor();	
 				}
 			} else {
