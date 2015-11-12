@@ -31,6 +31,8 @@ public class ArtistaCtrl implements ComponentListener {
 	private boolean validar;
 	private ArquivosCtrl arquivo = new ArquivosCtrl();
 	ArtistaArquivo formatar = new ArtistaArquivo();
+	private ArquivosCtrl arqController; //possivelmente essa linha sai, usar somente o "arquivo" logo acima
+	private String[] artista;
 
 	public ArtistaCtrl(JPanel form, JTextField id, JTextField nome) {
 
@@ -39,6 +41,10 @@ public class ArtistaCtrl implements ComponentListener {
 		this.artistas = new ArrayList<Artista>();
 		
 		lerArtista();
+	}
+	
+	public ArtistaCtrl(){
+		this.artista = preencherComboBoxArtista();
 	}
 
 	// METODOS DE SUPORTE ////////////////////////
@@ -49,10 +55,38 @@ public class ArtistaCtrl implements ComponentListener {
 		String NewId = (dateFormat.format(date));
 		id.setText("ART" + NewId);
 	}
+	
+	public String[] getArtista(){
+		return artista;
+	}
 
 	public void limpaCampos() {
 		nome.setText(null);
 		id.setText(null);
+	}
+	
+	private String[] preencherComboBoxArtista(){
+		String linha = new String();
+		String nArtista[] = null; 
+		StringBuffer nomeArtista;
+		arqController = new ArquivosCtrl();
+		try {
+			arqController.leArquivo("../MASProject/dados", "artistas");
+			linha = arqController.getBuffer();
+			nArtista = linha.split(";");
+			nomeArtista = new StringBuffer();
+			for(String nome : nArtista){
+				if(nome.contains("Artista")){
+					nomeArtista.append(nome.substring(10));
+					nomeArtista.append(";");
+				}
+			}
+			linha = nomeArtista.toString();
+			nArtista = linha.split(";");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return nArtista;
 	}
 
 	public void msg(String tipo, String mensagem) {

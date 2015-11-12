@@ -72,7 +72,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	private static int contador = 1;
 
 	private ArquivosCtrl arqController;
-	private ArtistaPesqCtrl pAController;
+	private ArtistaCtrl pAController;
 	private List<Obra> obras;// Variavel caminho imagem criada para gravar e
 								// carregar na hora de procurar obra
 
@@ -503,7 +503,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	
 	public void pesquisarArtista() { // Abre um JOptionPane com uma comboBox -
 										// Vitor
-		pAController = new ArtistaPesqCtrl();
+		pAController = new ArtistaCtrl();
 		Object[] possibilities = pAController.getArtista();
 		String s = (String) JOptionPane.showInputDialog(frmAcervo, "Escolha o artista:\n", "Pesquisar o Artista",
 		JOptionPane.INFORMATION_MESSAGE, null, possibilities, possibilities[0]);
