@@ -7,7 +7,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,8 +78,6 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	private ArtistaCtrl pAController;
 	private List<Obra> obras;// Variavel caminho imagem criada para gravar e
 								// carregar na hora de procurar obra
-
-
 
 	public AcervoCtrl(JPanel frmAcervo, JLabel imagem, JLabel lblStatus, JLabel lblValor, JComboBox<String> cbSetor,
 			JComboBox<String> cbSetorT, JComboBox<String> cbStatus, JComboBox<String> cbStatusT,
@@ -215,13 +216,24 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		File f = new File("../MASProject/dados/acervo");
 		f.delete();
 		ObraArquivo obraImpl = new ObraArquivo();
-		for (Obra obra : listObras) {
+		if (listObras.isEmpty()) {
+			File arq = new File("../MASProject/dados/", "acervo");
 			try {
-				obraImpl.escreveArquivo("../MASProject/dados/", "acervo", "", obra);
+				arq.createNewFile();
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else {
+			for (Obra obra : listObras) {
+				try {
+					obraImpl.escreveArquivo("../MASProject/dados/", "acervo", "", obra);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
+
 	}
 
 	public void editarAcervo(String nomeObra) {
@@ -254,7 +266,8 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 						o.setStatus((String) cbStatus.getSelectedItem());
 						o.setDescricaoObra(edtDescricao.getText());
 						o.setPreco(txtValor.getText());
-						o.setImagem(imagem.getText());
+						System.out.println(imagem.getText());
+						// o.setImagem("../MASProject/icons/painting.png");
 					} else {
 						artista.setNome(nomeArtista.getText());
 						o.setNomeObra(txtNovaObra.getText());
@@ -265,8 +278,14 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 						o.setStatus((String) cbStatus.getSelectedItem());
 						o.setDescricaoObra(edtDescricao.getText());
 						o.setPreco(txtValor.getText());
-						o.setImagem(imagem.getText());
+						System.out.println(imagem.getText());
+						// o.setImagem("../MASProject/icons/painting.png");
 					}
+					if (txtNovaObra.getText().isEmpty()
+							|| txtNovaObra.getText().equalsIgnoreCase("Editar nome da Obra")) {
+
+					}
+
 					obras.get(i).setArtista(artista);
 					obras.get(i).setCategoria(categoria);
 					obras.get(i).setSetor(setor);
@@ -276,7 +295,15 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 						obras.get(i).setPreco(o.getPreco());
 					}
 					if (!(caminhoImagem.isEmpty() || caminhoImagem == null)) {
+						System.out.println(caminhoImagem);
+
+						copiaImg();
+						System.out.println("if (!(caminhoImagem.isEmpty() || caminhoImagem == null)) {");
 						obras.get(i).setImagem(caminhoImagem);
+					} else {
+						System.out.println("else");
+
+						obras.get(i).setImagem(obra.getImagem());
 					}
 					obras.get(i).setDescricaoObra(o.getDescricao());
 					obras.get(i).setStatus(o.getStatus());
@@ -307,6 +334,8 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		} else {
 			for (int i = 0; i < obras.size(); i++) {
 				if (nomeObra.equalsIgnoreCase(obras.get(i).getNome())) {
+					File fImagem = new File(obras.get(i).getImagem());
+					fImagem.delete();
 					obras.remove(i);
 				}
 			}
@@ -329,6 +358,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	}
 
 	public void gravarAcervo() {
+		gerarId();
 		Obra obra = new Obra();
 		ObraArquivo obraImpl = new ObraArquivo();
 		Artista artista = new Artista();
@@ -355,6 +385,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 				obra.setStatus((String) cbStatusT.getSelectedItem());
 				setor.setNome((String) cbSetorT.getSelectedItem());
 			}
+			copiaImg();
 			msgGravar.setVisible(true);
 			msgVazio.setVisible(false);
 			material.setNome((String) cbMaterial.getSelectedItem());
@@ -390,6 +421,25 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	}
 
 	// METODOS DE SUPORTE ///////////////////////////////////////////
+	public void copiaImg() {
+		try {
+			String tipo = caminhoImagem.replaceAll(".*\\.", "");
+			System.out.println(tipo);
+			String l = caminhoImagem;
+			String i = "../MASProject/imagens/" + idObra.getText() + "." + tipo;
+			caminhoImagem = i;
+			FileInputStream fisDe = new FileInputStream(l);
+			FileOutputStream fisPara = new FileOutputStream(i);
+			FileChannel fcPara = fisDe.getChannel();
+			FileChannel fcDe = fisPara.getChannel();
+			if (fcPara.transferTo(0, fcPara.size(), fcDe) == 0L) {
+				fcPara.close();
+				fcDe.close();
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e);
+		}
+	}
 
 	public void gerarId() {
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
@@ -413,9 +463,11 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	}
 
 	public void limpaCamposEditar() {
-		imagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
 		imagem.setBackground(SystemColor.inactiveCaption);
 		imagem.setHorizontalAlignment(SwingConstants.CENTER);
+		ImageIcon img = new ImageIcon("../MASProject/icons/painting.png");
+		Image newImg = img.getImage().getScaledInstance(imagem.getWidth(), imagem.getHeight(), Image.SCALE_DEFAULT);
+		imagem.setIcon(new ImageIcon(newImg));
 		nomeArtista.setText(null);
 		btnGravar.setEnabled(false);
 		txtNovaObra.setText(null);
@@ -463,10 +515,11 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		recarregarCbObras(nomeArtista);
 	}
 
-	//alterei o nome pesquisarArtistaEditar por editarArtista
+	// alterei o nome pesquisarArtistaEditar por editarArtista
 	public void editarArtista() {
 		//
-		//pAController = new ArtistaPesqCtrl(btnEditarArtista, dataAquisicao, cbCategoria);
+		// pAController = new ArtistaPesqCtrl(btnEditarArtista, dataAquisicao,
+		// cbCategoria);
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<Artista> listArtista = new ArrayList<>();
 		String[] possibilities = pAController.getArtista();
@@ -500,17 +553,38 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 	}
 
-	
 	public void pesquisarArtista() { // Abre um JOptionPane com uma comboBox -
 										// Vitor
 		pAController = new ArtistaCtrl();
 		Object[] possibilities = pAController.getArtista();
 		String s = (String) JOptionPane.showInputDialog(frmAcervo, "Escolha o artista:\n", "Pesquisar o Artista",
-		JOptionPane.INFORMATION_MESSAGE, null, possibilities, possibilities[0]);
+				JOptionPane.INFORMATION_MESSAGE, null, possibilities, possibilities[0]);
 		if (s != null && s.length() > 0) {
 			nomeArtista.setText(s);
 			artistaNome = s;
 			return;
+		}
+	}
+
+	public void pesquisarArtistaEditar() {
+		pAController = new ArtistaCtrl();
+		Object[] possibilities = pAController.getArtista();
+		String s = (String) JOptionPane.showInputDialog(frmAcervo, "Escolha o artista:\n", "Pesquisar o Artista",
+				JOptionPane.INFORMATION_MESSAGE, null, possibilities, possibilities[0]);
+		if (s != null && s.length() > 0) {
+			for (Obra o : obras) {
+				if (s.equalsIgnoreCase(o.getArtista().getNome())) {
+					artistaNome = s;
+				}
+			}
+			if (artistaNome == null || artistaNome.equalsIgnoreCase("")) {
+				JOptionPane.showMessageDialog(null, "Este Artista não contem obras no Sistema");
+				System.out.println("Este artista não tem obras cadastradas");
+				pesquisarArtistaEditar();
+			} else {
+				nomeArtista.setText(s);
+				recarregarCbObras(s);
+			}
 		}
 	}
 
@@ -537,6 +611,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		cbCategoria.removeAllItems();
 		cbCategoria.addItem("");
 		for (Categoria c : listCategorias) {
 			cbCategoria.addItem(c.getNome());
@@ -568,6 +643,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		cbMaterial.removeAllItems();
 		cbMaterial.addItem("");
 
 		for (Material m : listMateriais) {
@@ -585,6 +661,8 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			arqController.leArquivo("../MASProject/dados/", "setores");
 			linha = arqController.getBuffer();
 			String[] setores = linha.split(";");
+			cbSetorT.removeAllItems();
+			cbSetor.removeAllItems();
 			cbSetor.addItem("");
 			cbSetorT.addItem("");
 
@@ -644,6 +722,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			arqController.leArquivo("../MASProject/dados", "status_obra_propria");
 			linha = arqController.getBuffer();
 			String[] proprio = linha.split(";");
+			cbStatus.removeAllItems();
 			cbStatus.addItem("");
 
 			for (String s : proprio) {
@@ -661,6 +740,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			arqController.leArquivo("../MASProject/dados", "status_obra_terceiros");
 			linha = arqController.getBuffer();
 			String[] terceiro = linha.split(";");
+			cbStatusT.removeAllItems();
 			cbStatusT.addItem("");
 
 			for (String s : terceiro) {
@@ -730,8 +810,8 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		newMaterial.setVisible(true);
 		newMaterial.setDefaultCloseOperation(newMaterial.DISPOSE_ON_CLOSE);
 		newMaterial.setResizable(false);
-		if(newMaterial.isActive()){
-			
+		if (newMaterial.isActive()) {
+
 		}
 	}
 
@@ -792,10 +872,16 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 	};
 
-	public ActionListener pesquisaArtista= new ActionListener() {
+	public ActionListener pesquisaArtista = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			pesquisarArtista();
+		}
+	};
+	public ActionListener pesquisaArtistaEditar = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			pesquisarArtistaEditar();
 		}
 	};
 
@@ -899,9 +985,11 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		obras.clear();
 		lerAcervo();
 		cbObras.removeAllItems();
+		cbObras.addItem("");
+		limpaCamposEditar();
 		for (Obra o : obras) {
-			System.out.println(o.getNome());
 			if (nomeArtista.equalsIgnoreCase(o.getArtista().getNome())) {
+				this.nomeArtista.setText(nomeArtista);
 				cbObras.addItem(o.getNome());
 			}
 		}
@@ -929,6 +1017,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		idObra.setText(obra.getId());
 		edtDescricao.setText(obra.getDescricao());
 		ImageIcon img = new ImageIcon(obra.getImagem());
+		// caminhoImagem = obra.getImagem();
 		Image newImg = img.getImage().getScaledInstance(imagem.getWidth(), imagem.getHeight(), Image.SCALE_DEFAULT);
 		imagem.setIcon(new ImageIcon(newImg));
 		for (int i = 0; i < cbCategoria.getItemCount(); i++) {

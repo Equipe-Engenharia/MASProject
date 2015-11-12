@@ -2,6 +2,8 @@ package view;
 
 import java.awt.EventQueue;
 import java.awt.SystemColor;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 
@@ -289,7 +291,7 @@ public class FrmAcervoCad extends JFrame {
 
 		// botão de pesquisar artista e o Jpanel passados como parametro -
 		// Vitor
-		AcervoCtrl ctrlAcervo = new AcervoCtrl(contentPane, idObra, lblSelecImagem, cbSetor, cbSetorT, cbStatus,
+		final AcervoCtrl ctrlAcervo = new AcervoCtrl(contentPane, idObra, lblSelecImagem, cbSetor, cbSetorT, cbStatus,
 				cbStatusT, cbCategoria, cbMaterial, txtArtist, txtObra, ftxtData, editDescricao, msgGravado, msgVazio,
 				txtValor, btnPesquisaArtist, btnNovoArtista, btnEditarArtista, btnNovaCategoria, btnEditarCategoria,
 				btnNovoMaterial, btnEditarMaterial, btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT);
@@ -310,6 +312,78 @@ public class FrmAcervoCad extends JFrame {
 		btnGravar.addActionListener(ctrlAcervo.gravarAcervo);
 		btnFechar.addActionListener(ctrlAcervo.fecharTela);
 
+		cbMaterial.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				ctrlAcervo.preencherComboBoxMaterial();
+
+			}
+		});
+		cbCategoria.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				ctrlAcervo.preencherComboBoxCategoria();
+
+			}
+		});
+		cbSetor.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				ctrlAcervo.preencherComboBoxSetores();
+
+			}
+		});
+		cbSetorT.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				ctrlAcervo.preencherComboBoxSetores();
+
+			}
+		});
+		cbStatus.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				ctrlAcervo.preencherComboStatusProprio();
+
+			}
+		});
+		cbStatusT.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				ctrlAcervo.preencherComboStatusTerceiro();
+
+			}
+		});
 		ctrlAcervo.gerarId();
 		ctrlAcervo.preencherComboBoxCategoria();
 		ctrlAcervo.preencherComboBoxMaterial();
