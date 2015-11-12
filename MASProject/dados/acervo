@@ -1,52 +1,26 @@
-ID Obra :ACV151101-021855
-Nome do Artista :Henrique
-Nome da obra :Teste de Obra
-Descrição :
-Categoria :Teste de Obra
-Data :20/08/2015
-Imagem :../MASProject/icons/painting.png
-Material : Óleo
-Setor : Teste
-Valor :4.000.000,00
-Obra Propria :true
-Status :Emprestada
----------------------------
-ID Obra :ACV151105-113002
-Nome do Artista :Laranja
-Nome da obra :Laranjeiras
-Descrição :111
-Categoria : Escultura
-Data :22/22/2222
-Imagem :\Users\Plutão\Desktop\fotos\brasil.jpg
-Material : Prata
-Setor : Branco
-Valor :222.222.222,00
-Obra Propria :true
-Status :Emprestada
----------------------------
-ID Obra :ACV151105-120215
-Nome do Artista :GG
-Nome da obra :Galinha Pintadinha
-Descrição :
-Categoria : Estátua
-Data :11/11/1111
-Imagem :\Users\Plutão\Desktop\fotos\tempo.jpg
-Material : Argilinha
-Setor : Teste
-Valor :
-Obra Propria :false
-Status :Reservada
----------------------------
-ID Obra :ACV151105-121315
-Nome do Artista :GG2
+ID Obra :ACV151112-115610
+Nome do Artista :Fernando
 Nome da obra :AA
-Descrição :
-Categoria : Escultura
-Data :22/22/2222
-Imagem :\Users\Plut�o\Desktop\fotos\esporte.jpg
+Descri��o :lolll
+Categoria : Pintura
+Data :11/11/1111
+Imagem :../MASProject/imagens/ACV151112-115610.jpg
 Material : Ferro
-Setor : Teste
+Setor : Preto
+Valor :21.111.111.111,00
+Obra Propria :true
+Status :Exposição
+---------------------------
+ID Obra :ACV151112-115631
+Nome do Artista :Alfeu
+Nome da obra :SP
+Descri��o :lkp
+Categoria : Busto
+Data :11/11/1111
+Imagem :../MASProject/imagens/ACV151112-115631.jpg
+Material : Ferro
+Setor : Preto
 Valor :
 Obra Propria :false
-Status :
+Status :Exposição
 ---------------------------

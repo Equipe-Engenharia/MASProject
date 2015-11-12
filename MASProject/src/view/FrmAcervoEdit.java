@@ -261,12 +261,9 @@ public class FrmAcervoEdit extends JFrame {
 		ctrlAcervo.preencherComboBoxSetoresAlteraDel();
 		ctrlAcervo.preencherComboStatusProprio();
 		ctrlAcervo.preencherComboBoxObras();
-		// txtNovaObra.addMouseListener(ctrlAcervo.limpaCampos()); //PRECISA
-		// CONSERTO
 		btnPesquisarImagem.addActionListener(ctrlAcervo.inserir_imagem);
 		btnPesquisaId.addActionListener(ctrlAcervo.pesquisarPorId);
-
-		btnPesquisaArtist.addActionListener(ctrlAcervo.pesquisaArtista);
+		btnPesquisaArtist.addActionListener(ctrlAcervo.pesquisaArtistaEditar);
 		btnPesquisaObra.addActionListener(ctrlAcervo.pesquisarObra);
 		btnExcluirImagem.addActionListener(ctrlAcervo.remover_imagem);
 		btnExcluir.addActionListener(ctrlAcervo.excluir_obraAcervo);
