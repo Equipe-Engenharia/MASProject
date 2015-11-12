@@ -93,7 +93,7 @@ public class FrmVisitanteCad extends JFrame {
 		cbNacionali.setBounds(324, 55, 110, 20);
 		contentPane.add(cbNacionali);
 
-		lblNacionalidade = new JLabel("Nascionalidade");
+		lblNacionalidade = new JLabel("Nacionalidade");
 		lblNacionalidade.setBounds(237, 58, 77, 14);
 		contentPane.add(lblNacionalidade);
 
@@ -114,15 +114,15 @@ public class FrmVisitanteCad extends JFrame {
 		contentPane.add(lblIdiomas);
 
 		checkPT = new JCheckBox("Portugu\u00EAs ");
-		checkPT.setBounds(106, 140, 77, 23);
+		checkPT.setBounds(106, 140, 97, 23);
 		contentPane.add(checkPT);
 
 		checkING = new JCheckBox("Ingl\u00EAs");
-		checkING.setBounds(197, 140, 69, 23);
+		checkING.setBounds(205, 140, 69, 23);
 		contentPane.add(checkING);
 
 		checkESP = new JCheckBox("Espanhol");
-		checkESP.setBounds(279, 140, 86, 23);
+		checkESP.setBounds(298, 140, 86, 23);
 		contentPane.add(checkESP);
 
 	    btnGravar = new JButton("Gravar");
