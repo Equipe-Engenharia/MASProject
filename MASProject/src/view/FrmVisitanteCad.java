@@ -7,6 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+
+import controller.VisitanteCtrl;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -22,8 +25,7 @@ public class FrmVisitanteCad extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtNome;
-	private JTextField txtDataNasc;
+	private JTextField txtNome, txtDataNasc;
 	private JLabel lblNomeDoVisitante, lblNacionalidade, lblSexo, lblIdiomas, lblData, lblContinente;
 	private JComboBox<String> cbContinente, cbNacionali;
 	private JRadioButton rdbtnMasculino, rdbtnFeminino;
@@ -128,5 +130,9 @@ public class FrmVisitanteCad extends JFrame {
 	    btnGravar = new JButton("Gravar");
 		btnGravar.setBounds(345, 191, 89, 23);
 		contentPane.add(btnGravar);
+		
+		VisitanteCtrl vController = new VisitanteCtrl(txtNome,txtDataNasc, cbNacionali,rdbtnMasculino,rdbtnFeminino, checkING,checkPT,checkESP);
+		
+		btnGravar.addActionListener(vController.gravarVisita);
 	}
 }
