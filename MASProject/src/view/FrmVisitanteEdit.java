@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 import javax.swing.ImageIcon;
@@ -16,17 +18,16 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-public class FrmVisitanteCad extends JFrame {
+public class FrmVisitanteEdit extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtNome;
-	private JTextField txtDataNasc;
+	private JTextField txtNome, txtDataNasc;
 	private JLabel lblNomeDoVisitante, lblNacionalidade, lblSexo, lblIdiomas, lblData;
 	private JComboBox<String> cbNacionali;
 	private JRadioButton rdbtnMasculino, rdbtnFeminino;
 	private JCheckBox checkPT, checkING, checkESP;
-	private JButton btnGravar;
+	private JButton btnPesquisar, btnEditar, btnApagar;
 	private MaskFormatter maskData;
 
 	/**
@@ -37,7 +38,7 @@ public class FrmVisitanteCad extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrmVisitanteCad frame = new FrmVisitanteCad();
+					FrmVisitanteEdit frame = new FrmVisitanteEdit();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,8 +51,8 @@ public class FrmVisitanteCad extends JFrame {
 	 * Create the frame.
 	 * @throws ParseException 
 	 */
-	public FrmVisitanteCad() throws ParseException {
-		setTitle("Cadastrar Novo Visitante");
+	public FrmVisitanteEdit() throws ParseException {
+		setTitle("Editar Visitante");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
@@ -65,7 +66,7 @@ public class FrmVisitanteCad extends JFrame {
 		contentPane.add(lblNomeDoVisitante);
 
 		txtNome = new JTextField();
-		txtNome.setBounds(156, 33, 337, 20);
+		txtNome.setBounds(156, 33, 229, 20);
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
  
@@ -116,9 +117,24 @@ public class FrmVisitanteCad extends JFrame {
 		checkESP.setBounds(176, 176, 101, 23);
 		contentPane.add(checkESP);
 
-		btnGravar = new JButton("Gravar");
-		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnGravar.setBounds(397, 166, 97, 34);
-		contentPane.add(btnGravar);
+		btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setToolTipText("Use o campo para realizar a busca pelo número de Identificação ou o Material");
+		btnPesquisar.setBounds(397, 27, 97, 34);
+		btnPesquisar.setIcon(new ImageIcon("../MASProject/icons/search.png"));
+		contentPane.add(btnPesquisar);
+		
+		btnEditar = new JButton("Editar");
+		btnEditar.setBounds(288, 166, 97, 34);
+		btnEditar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
+		contentPane.add(btnEditar);
+		
+		btnApagar = new JButton("Excluir");
+		btnApagar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnApagar.setBounds(397, 166, 97, 34);
+		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
+		contentPane.add(btnApagar);
 	}
 }
