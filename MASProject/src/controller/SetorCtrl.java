@@ -25,17 +25,17 @@ import persistence.SetorArquivo;
 public class SetorCtrl implements ComponentListener {
 
 	private JPanel form;
-	private JTextField id, nome;
+	private JTextField txtId, txtNome;
 	private List<Setor> setores;
 	private static int contador = 1;
 	private boolean validar;
 	private ArquivosCtrl arquivo = new ArquivosCtrl();
 	private SetorArquivo formatar = new SetorArquivo();
 
-	public SetorCtrl (JPanel form, JTextField id, JTextField nome) {
+	public SetorCtrl (JPanel form, JTextField txtId, JTextField txtNome) {
 
-		this.id = id;
-		this.nome = nome;
+		this.txtId = txtId;
+		this.txtNome = txtNome;
 		this.setores = new ArrayList<Setor>();
 
 		lerArquivo();
@@ -47,12 +47,12 @@ public class SetorCtrl implements ComponentListener {
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String NewId = (dateFormat.format(date));
-		id.setText("SET" + NewId);
+		txtId.setText("SET" + NewId);
 	}
 
 	public void limpaCampos() {
-		nome.setText(null);
-		id.setText(null);
+		txtId.setText(null);
+		txtNome.setText(null);		
 	}
 
 	public void msg(String tipo, String mensagem) {
@@ -89,8 +89,8 @@ public class SetorCtrl implements ComponentListener {
 			break;
 		case "errorrec":
 			JOptionPane.showMessageDialog(null, 
-					"ATENÇÃO!\nNão foi possível apagar o registro: " + id.getText() + " "
-					+ nome.getText() + "!\nVerifique sua digitação!", 
+					"ATENÇÃO!\nNão foi possível apagar o registro: " + txtId.getText() + " "
+					+ txtNome.getText() + "!\nVerifique sua digitação!", 
 					"Erro", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
@@ -185,21 +185,21 @@ public class SetorCtrl implements ComponentListener {
 
 		ArrayList<Setor> lista = new ArrayList<>();
 		String pesquisa ="";
-		if (!nome.getText().isEmpty() || !id.getText().isEmpty()) {
+		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
 
 			for (int i = 0; i < setores.size(); i++) {
-				if (nome.getText().equalsIgnoreCase(setores.get(i).getId())) {
-					id.setText(setores.get(i).getId());
-					nome.setText(setores.get(i).getNome());
+				if (txtNome.getText().equalsIgnoreCase(setores.get(i).getId())) {
+					txtId.setText(setores.get(i).getId());
+					txtNome.setText(setores.get(i).getNome());
 					validar = true;
-				} else if (nome.getText().equalsIgnoreCase(setores.get(i).getNome())) {
+				} else if (txtNome.getText().equalsIgnoreCase(setores.get(i).getNome())) {
 					validar = true;
 				}
 			}
 			if (validar == true) {
 				for (int i = 0; i < setores.size(); i++) {
 
-					boolean filtro = nome.getText().equalsIgnoreCase(setores.get(i).getNome());
+					boolean filtro = txtNome.getText().equalsIgnoreCase(setores.get(i).getNome());
 					if (filtro == true) {
 						Setor item = new Setor();
 						item.setId(setores.get(i).getId());
@@ -218,63 +218,63 @@ public class SetorCtrl implements ComponentListener {
 				}
 				for (int i = 0; i < setores.size(); i++) {
 					if (pesquisa.equalsIgnoreCase(setores.get(i).getId())) {
-						id.setText(setores.get(i).getId());
-						nome.setText(setores.get(i).getNome());
+						txtId.setText(setores.get(i).getId());
+						txtNome.setText(setores.get(i).getNome());
 					}
 				}
 				validar = false; 
 			} else {
 				if (pesquisa == "") {
-					msg("nosearch", nome.getText());
+					msg("nosearch", txtNome.getText());
 					limpaCampos();
 				}
 				validar = false;
 			}
 		} else {
-			msg("errorsearch", nome.getText());
+			msg("errorsearch", txtNome.getText());
 		}
 	}
 	
 	public void editar() {
 		Setor setor = new Setor();
 		validar = false;
-		if (!id.getText().isEmpty()) {
+		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < setores.size(); i++) {
-				if (!id.getText().equalsIgnoreCase(setores.get(i).getId()) && nome.getText().equalsIgnoreCase(setores.get(i).getNome())) {				
+				if (!txtId.getText().equalsIgnoreCase(setores.get(i).getId()) && txtNome.getText().equalsIgnoreCase(setores.get(i).getNome())) {				
 					msg("erroredit",setores.get(i).getNome());
 					validar = true;
 				} 
 			}
 			if(!(validar == true)){
 				for (int i = 0; i < setores.size(); i++) {
-					if (nome.getText().equalsIgnoreCase(setores.get(i).getId())) {
-						setor.setId(id.getText());
-						setor.setNome(nome.getText());
+					if (txtNome.getText().equalsIgnoreCase(setores.get(i).getId())) {
+						setor.setId(txtId.getText());
+						setor.setNome(txtNome.getText());
 						setores.set(i, setor);
 						atualizaDados(setores);
-						msg("edit", nome.getText());
+						msg("edit", txtNome.getText());
 						limpaCampos();
 					}
 				}
 			}
 		} else {
-			msg("errorsearch", nome.getText());
+			msg("errorsearch", txtNome.getText());
 		}
 	}
 
 	public void excluir() {
-		if (!id.getText().isEmpty()) {
+		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < setores.size(); i++) {
-				if (id.getText().equalsIgnoreCase(setores.get(i).getId()) && nome.getText().equalsIgnoreCase(setores.get(i).getNome())) {
+				if (txtId.getText().equalsIgnoreCase(setores.get(i).getId()) && txtNome.getText().equalsIgnoreCase(setores.get(i).getNome())) {
 					setores.remove(i);
 					validar = true;
 				}
 			}
 			if (validar == true) {
-				msg("deleteconfirm", nome.getText());
+				msg("deleteconfirm", txtNome.getText());
 				if (validar == false){
 					atualizaDados(setores);
-					msg("delete", nome.getText());
+					msg("delete", txtNome.getText());
 					limpaCampos();
 				} else {
 					setores.clear();
@@ -282,7 +282,7 @@ public class SetorCtrl implements ComponentListener {
 				}
 			} else {
 				validar = false;
-				msg("errordelete", id.getText());
+				msg("errordelete", txtId.getText());
 			}
 		} else {
 			pesquisar();
@@ -293,24 +293,24 @@ public class SetorCtrl implements ComponentListener {
 		new SetorArquivo();
 		Setor setor = new Setor();
 		validar = false;
-		if (!nome.getText().isEmpty()) {
+		if (!txtNome.getText().isEmpty()) {
 			for (int i = 0; i < setores.size(); i++) {
-				if (nome.getText().equalsIgnoreCase(setores.get(i).getNome())){
+				if (txtNome.getText().equalsIgnoreCase(setores.get(i).getNome())){
 					msg("erroredit", setores.get(i).getNome());
 					validar = true;
 				}
 			}
 			if(!(validar == true)){	
-				setor.setId(id.getText());
-				setor.setNome(nome.getText());
+				setor.setId(txtId.getText());
+				setor.setNome(txtNome.getText());
 				setores.add(setor);
-				msg("save", nome.getText());
+				msg("save", txtNome.getText());
 				atualizaDados(setores);
-				nome.setText(null);
+				txtNome.setText(null);
 				gerarId();
 			}
 		} else {
-			msg("errornull", nome.getText());
+			msg("errornull", txtNome.getText());
 		}
 	}
 
@@ -372,7 +372,7 @@ public class SetorCtrl implements ComponentListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (contador == 1) {
-				nome.setText(null);
+				txtNome.setText(null);
 				contador += 1;
 			}
 		}

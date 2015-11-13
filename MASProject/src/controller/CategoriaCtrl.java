@@ -25,17 +25,17 @@ import persistence.CategoriaArquivo;
 public class CategoriaCtrl implements ComponentListener {
 
 	private JPanel form;
-	private JTextField id, nome;
+	private JTextField txtId, txtNome;
 	private List<Categoria> categorias;
 	private static int contador = 1;
 	private boolean validar;
 	private ArquivosCtrl arquivo = new ArquivosCtrl();
 	private CategoriaArquivo formatar = new CategoriaArquivo();
 
-	public CategoriaCtrl(JPanel form, JTextField id, JTextField nome) {
+	public CategoriaCtrl(JPanel form, JTextField txtId, JTextField txtNome) {
 
-		this.id = id;
-		this.nome = nome;
+		this.txtId = txtId;
+		this.txtNome = txtNome;
 		this.categorias = new ArrayList<Categoria>();
 
 		
@@ -48,12 +48,12 @@ public class CategoriaCtrl implements ComponentListener {
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String NewId = (dateFormat.format(date));
-		id.setText("CAT" + NewId);
+		txtId.setText("CAT" + NewId);
 	}
 
 	public void limpaCampos() {
-		nome.setText(null);
-		id.setText(null);
+		txtId.setText(null);
+		txtNome.setText(null);	
 	}
 
 	public void msg(String tipo, String mensagem) {
@@ -90,8 +90,8 @@ public class CategoriaCtrl implements ComponentListener {
 			break;
 		case "errorrec":
 			JOptionPane.showMessageDialog(null, 
-					"ATENÇÃO!\nNão foi possível apagar o registro: " + id.getText() + " "
-					+ nome.getText() + "!\nVerifique sua digitação!", 
+					"ATENÇÃO!\nNão foi possível apagar o registro: " + txtId.getText() + " "
+					+ txtNome.getText() + "!\nVerifique sua digitação!", 
 					"Erro", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
@@ -186,21 +186,21 @@ public class CategoriaCtrl implements ComponentListener {
 
 		ArrayList<Categoria> lista = new ArrayList<>();
 		String pesquisa ="";
-		if (!nome.getText().isEmpty() || !id.getText().isEmpty()) {
+		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
 
 			for (int i = 0; i < categorias.size(); i++) {
-				if (nome.getText().equalsIgnoreCase(categorias.get(i).getId())) {
-					id.setText(categorias.get(i).getId());
-					nome.setText(categorias.get(i).getNome());
+				if (txtNome.getText().equalsIgnoreCase(categorias.get(i).getId())) {
+					txtId.setText(categorias.get(i).getId());
+					txtNome.setText(categorias.get(i).getNome());
 					validar = true;
-				} else if (nome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {
+				} else if (txtNome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {
 					validar = true;
 				}
 			}
 			if (validar == true) {
 				for (int i = 0; i < categorias.size(); i++) {
 
-					boolean filtro = nome.getText().equalsIgnoreCase(categorias.get(i).getNome());
+					boolean filtro = txtNome.getText().equalsIgnoreCase(categorias.get(i).getNome());
 					if (filtro == true) {
 						Categoria item = new Categoria();
 						item.setId(categorias.get(i).getId());
@@ -219,63 +219,63 @@ public class CategoriaCtrl implements ComponentListener {
 				}
 				for (int i = 0; i < categorias.size(); i++) {
 					if (pesquisa.equalsIgnoreCase(categorias.get(i).getId())) {
-						id.setText(categorias.get(i).getId());
-						nome.setText(categorias.get(i).getNome());
+						txtId.setText(categorias.get(i).getId());
+						txtNome.setText(categorias.get(i).getNome());
 					}
 				}
 				validar = false; 
 			} else {
 				if (pesquisa == "") {
-					msg("nosearch", nome.getText());
+					msg("nosearch", txtNome.getText());
 					limpaCampos();
 				}
 				validar = false;
 			}
 		} else {
-			msg("errorsearch", nome.getText());
+			msg("errorsearch", txtNome.getText());
 		}
 	}
 
 	public void editar() {
 		Categoria categoria = new Categoria();
 		validar = false;
-		if (!id.getText().isEmpty()) {
+		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < categorias.size(); i++) {
-				if (!id.getText().equalsIgnoreCase(categorias.get(i).getId()) && nome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {				
+				if (!txtId.getText().equalsIgnoreCase(categorias.get(i).getId()) && txtNome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {				
 					msg("erroredit",categorias.get(i).getNome());
 					validar = true;
 				} 
 			}
 			if(!(validar == true)){
 				for (int i = 0; i < categorias.size(); i++) {
-					if (id.getText().equalsIgnoreCase(categorias.get(i).getId())) {
-						categoria.setId(id.getText());
-						categoria.setNome(nome.getText());
+					if (txtId.getText().equalsIgnoreCase(categorias.get(i).getId())) {
+						categoria.setId(txtId.getText());
+						categoria.setNome(txtNome.getText());
 						categorias.set(i, categoria);
 						atualizaDados(categorias);
-						msg("edit", nome.getText());
+						msg("edit", txtNome.getText());
 						limpaCampos();
 					}
 				}
 			}
 		} else {
-			msg("errorsearch", nome.getText());
+			msg("errorsearch", txtNome.getText());
 		}
 	}
 
 	public void excluir() {
-		if (!id.getText().isEmpty()) {
+		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < categorias.size(); i++) {
-				if (id.getText().equalsIgnoreCase(categorias.get(i).getId()) && nome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {
+				if (txtId.getText().equalsIgnoreCase(categorias.get(i).getId()) && txtNome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {
 					categorias.remove(i);
 					validar = true;
 				}
 			}
 			if (validar == true) {
-				msg("deleteconfirm", nome.getText());
+				msg("deleteconfirm", txtNome.getText());
 				if (validar == false){
 					atualizaDados(categorias);
-					msg("delete", nome.getText());
+					msg("delete", txtNome.getText());
 					limpaCampos();
 				} else {
 					categorias.clear();
@@ -283,7 +283,7 @@ public class CategoriaCtrl implements ComponentListener {
 				}
 			} else {
 				validar = false;
-				msg("errordelete", id.getText());
+				msg("errordelete", txtId.getText());
 			}
 		} else {
 			pesquisar();
@@ -294,24 +294,24 @@ public class CategoriaCtrl implements ComponentListener {
 		new CategoriaArquivo();
 		Categoria categoria = new Categoria();
 		validar = false;
-		if (!nome.getText().isEmpty()) {
+		if (!txtNome.getText().isEmpty()) {
 			for (int i = 0; i < categorias.size(); i++) {
-				if (nome.getText().equalsIgnoreCase(categorias.get(i).getNome())){
+				if (txtNome.getText().equalsIgnoreCase(categorias.get(i).getNome())){
 					msg("erroredit", categorias.get(i).getNome());
 					validar = true;
 				}
 			}
 			if(!(validar == true)){	
-				categoria.setId(id.getText());
-				categoria.setNome(nome.getText());
+				categoria.setId(txtId.getText());
+				categoria.setNome(txtNome.getText());
 				categorias.add(categoria);
-				msg("save", nome.getText());
+				msg("save", txtNome.getText());
 				atualizaDados(categorias);
-				nome.setText(null);
+				txtNome.setText(null);
 				gerarId();
 			}
 		} else {
-			msg("errornull", nome.getText());
+			msg("errornull", txtNome.getText());
 		}
 	}
 
@@ -373,8 +373,8 @@ public class CategoriaCtrl implements ComponentListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (contador == 1) {
-				id.setText(null);
-				nome.setText(null);
+				txtId.setText(null);
+				txtNome.setText(null);
 				contador += 1;
 			}
 		}

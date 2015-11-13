@@ -25,7 +25,7 @@ import persistence.MaterialArquivo;
 public class MaterialCtrl implements ComponentListener {
 
 	private JPanel form;
-	private JTextField id, nome;
+	private JTextField txtId, txtNome;
 	private JComboBox<String> cbCategoria;
 	private List<Material> materiais;
 	private static int contador = 1;
@@ -33,13 +33,13 @@ public class MaterialCtrl implements ComponentListener {
 	private ArquivosCtrl arquivo = new ArquivosCtrl();
 	private MaterialArquivo formatar = new MaterialArquivo();
 
-	public MaterialCtrl(JPanel form, JTextField id, JComboBox<String> cbCategoria,
+	public MaterialCtrl(JPanel form, JTextField txtId, JComboBox<String> cbCategoria,
 			JTextField txtMaterial) {
 
 		this.form = form;
 		this.cbCategoria = cbCategoria;
-		this.id = id;
-		this.nome = txtMaterial;
+		this.txtId = txtId;
+		this.txtNome = txtMaterial;
 		this.materiais = new ArrayList<Material>();
 
 		lerArquivo();
@@ -51,12 +51,12 @@ public class MaterialCtrl implements ComponentListener {
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String NewId = (dateFormat.format(date));
-		id.setText("MAT" + NewId);
+		txtId.setText("MAT" + NewId);
 	}
 
 	public void limpaCampos() {
-		nome.setText(null);
-		id.setText(null);
+		txtId.setText(null);
+		txtNome.setText(null);
 		cbCategoria.setSelectedIndex(0);
 	}
 	
@@ -95,8 +95,8 @@ public class MaterialCtrl implements ComponentListener {
 			break;
 		case "errorrec":
 			JOptionPane.showMessageDialog(null, 
-					"ATENÇÃO!\nNão foi possível apagar o registro: " + id.getText() + " "
-					+ nome.getText() + "!\nVerifique sua digitação!", 
+					"ATENÇÃO!\nNão foi possível apagar o registro: " + txtId.getText() + " "
+					+ txtNome.getText() + "!\nVerifique sua digitação!", 
 					"Erro", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
@@ -223,22 +223,22 @@ public class MaterialCtrl implements ComponentListener {
 
 		ArrayList<Material> lista = new ArrayList<>();
 		String pesquisa ="";
-		if (!nome.getText().isEmpty() || !id.getText().isEmpty()) {
+		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
 
 			for (int i = 0; i < materiais.size(); i++) {
-				if (nome.getText().equalsIgnoreCase(materiais.get(i).getId())) {
-					id.setText(materiais.get(i).getId());
-					nome.setText(materiais.get(i).getNome());
+				if (txtNome.getText().equalsIgnoreCase(materiais.get(i).getId())) {
+					txtId.setText(materiais.get(i).getId());
+					txtNome.setText(materiais.get(i).getNome());
 					cbCategoria.getModel().setSelectedItem(materiais.get(i).getCategoria());
 					validar = true;
-				} else if (nome.getText().equalsIgnoreCase(materiais.get(i).getNome())) {
+				} else if (txtNome.getText().equalsIgnoreCase(materiais.get(i).getNome())) {
 					validar = true;
 					cbCategoria.getModel().setSelectedItem(materiais.get(i).getCategoria());
 				}
 			}
 			if (validar == true) {
 				for (int i = 0; i < materiais.size(); i++) {
-					boolean filtro = nome.getText().equalsIgnoreCase(materiais.get(i).getNome());
+					boolean filtro = txtNome.getText().equalsIgnoreCase(materiais.get(i).getNome());
 					if (filtro == true) {
 						Material item = new Material();
 						item.setId(materiais.get(i).getId());
@@ -259,8 +259,8 @@ public class MaterialCtrl implements ComponentListener {
 				if (pesquisa == "0" || pesquisa != null){
 				for (int i = 0; i < materiais.size(); i++) {
 					if (pesquisa.equalsIgnoreCase(materiais.get(i).getId())) {
-						id.setText(materiais.get(i).getId());
-						nome.setText(materiais.get(i).getNome());
+						txtId.setText(materiais.get(i).getId());
+						txtNome.setText(materiais.get(i).getNome());
 						cbCategoria.getModel().setSelectedItem(materiais.get(i).getCategoria());
 					}
 				}
@@ -268,23 +268,23 @@ public class MaterialCtrl implements ComponentListener {
 				validar = false;
 			} else {
 				if (pesquisa == "") {
-					msg("nosearch", nome.getText());
+					msg("nosearch", txtNome.getText());
 					limpaCampos();
 				}
 				validar = false;
 			}
 		} else {
-			msg("errorsearch", nome.getText());
+			msg("errorsearch", txtNome.getText());
 		}
 	}
 
 	public void editar() {
 		Material material = new Material();
 		validar = false;
-		if (!id.getText().isEmpty()) {
+		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < materiais.size(); i++) {
-				if (!id.getText().equalsIgnoreCase(materiais.get(i).getId()) 
-						&& nome.getText().equalsIgnoreCase(materiais.get(i).getNome())
+				if (!txtId.getText().equalsIgnoreCase(materiais.get(i).getId()) 
+						&& txtNome.getText().equalsIgnoreCase(materiais.get(i).getNome())
 						&& cbCategoria.getSelectedItem().toString().equalsIgnoreCase(materiais.get(i).getCategoria())) {
 					msg("erroredit", materiais.get(i).getNome());
 					validar = true;
@@ -292,28 +292,28 @@ public class MaterialCtrl implements ComponentListener {
 			}
 			if(!(validar == true)){
 				for (int i = 0; i < materiais.size(); i++) {
-					if (id.getText().equalsIgnoreCase(materiais.get(i).getId())) {
-						material.setId(id.getText());
-						material.setNome(nome.getText());
+					if (txtId.getText().equalsIgnoreCase(materiais.get(i).getId())) {
+						material.setId(txtId.getText());
+						material.setNome(txtNome.getText());
 						material.setCategoria((String) cbCategoria.getSelectedItem());
 						materiais.set(i, material);
 						atualizaDados(materiais);
-						msg("edit", nome.getText());
+						msg("edit", txtNome.getText());
 						limpaCampos();	
 					}
 				}
 			}
 		} else {
-			msg("errorsearch", nome.getText());
+			msg("errorsearch", txtNome.getText());
 		}
 	}
 
 	public void excluir() {
 		validar = false;
-		if (!id.getText().isEmpty()) {
+		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < materiais.size(); i++) {
-				if (id.getText().equalsIgnoreCase(materiais.get(i).getId()) 
-						&& nome.getText().equalsIgnoreCase(materiais.get(i).getNome())
+				if (txtId.getText().equalsIgnoreCase(materiais.get(i).getId()) 
+						&& txtNome.getText().equalsIgnoreCase(materiais.get(i).getNome())
 						&& cbCategoria.getSelectedItem().toString().equalsIgnoreCase(materiais.get(i).getCategoria())) {
 					materiais.remove(i);
 					validar = true;
@@ -324,10 +324,10 @@ public class MaterialCtrl implements ComponentListener {
 				}
 			}
 			if (validar == true) {
-				msg("deleteconfirm", nome.getText());
+				msg("deleteconfirm", txtNome.getText());
 				if (validar == false){
 					atualizaDados(materiais);
-					msg("delete", nome.getText());
+					msg("delete", txtNome.getText());
 					limpaCampos();
 				} else {
 					materiais.clear();
@@ -335,7 +335,7 @@ public class MaterialCtrl implements ComponentListener {
 				}
 			} else {
 				validar = false;
-				msg("errordelete", id.getText());
+				msg("errordelete", txtId.getText());
 			}
 		} else {
 			pesquisar();
@@ -346,25 +346,25 @@ public class MaterialCtrl implements ComponentListener {
 		new MaterialArquivo();
 		Material material = new Material();
 		validar = false;
-		if (!nome.getText().isEmpty()) {
+		if (!txtNome.getText().isEmpty()) {
 			for (int i = 0; i < materiais.size(); i++) {	
-				if (nome.getText().equalsIgnoreCase(materiais.get(i).getNome()) && cbCategoria.getSelectedItem().toString().equalsIgnoreCase(materiais.get(i).getCategoria())) {
+				if (txtNome.getText().equalsIgnoreCase(materiais.get(i).getNome()) && cbCategoria.getSelectedItem().toString().equalsIgnoreCase(materiais.get(i).getCategoria())) {
 					msg("erroredit", materiais.get(i).getNome());
 					validar = true;
 				}
 			}
 			if(!(validar == true)){
-				material.setId(id.getText());
-				material.setNome(nome.getText());
+				material.setId(txtId.getText());
+				material.setNome(txtNome.getText());
 				material.setCategoria(cbCategoria.getSelectedItem().toString());
 				materiais.add(material);
-				msg("save", nome.getText());
+				msg("save", txtNome.getText());
 				atualizaDados(materiais);
-				nome.setText(null);
+				txtNome.setText(null);
 				gerarId();
 			}
 		} else {
-			msg("errornull", nome.getText());
+			msg("errornull", txtNome.getText());
 		}
 	}
 
@@ -426,7 +426,7 @@ public class MaterialCtrl implements ComponentListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (contador == 1) {
-				nome.setText(null);
+				txtNome.setText(null);
 				contador += 1;
 			}
 		}

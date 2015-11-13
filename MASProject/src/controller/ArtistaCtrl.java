@@ -25,7 +25,7 @@ import persistence.ArtistaArquivo;
 public class ArtistaCtrl implements ComponentListener {
 
 	private JPanel form;
-	private JTextField id, nome;
+	private JTextField txtId, txtNome;
 	private List<Artista> artistas;
 	private static int contador = 1;
 	private boolean validar;
@@ -34,10 +34,10 @@ public class ArtistaCtrl implements ComponentListener {
 	private ArquivosCtrl arqController; //possivelmente essa linha sai, usar somente o "arquivo" logo acima
 	private String[] artista;
 
-	public ArtistaCtrl(JPanel form, JTextField id, JTextField nome) {
+	public ArtistaCtrl(JPanel form, JTextField txtId, JTextField txtNome) {
 
-		this.id = id;
-		this.nome = nome;
+		this.txtId = txtId;
+		this.txtNome = txtNome;
 		this.artistas = new ArrayList<Artista>();
 		
 		lerArquivo();
@@ -53,7 +53,7 @@ public class ArtistaCtrl implements ComponentListener {
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String NewId = (dateFormat.format(date));
-		id.setText("ART" + NewId);
+		txtId.setText("ART" + NewId);
 	}
 	
 	public String[] getArtista(){
@@ -61,8 +61,8 @@ public class ArtistaCtrl implements ComponentListener {
 	}
 
 	public void limpaCampos() {
-		nome.setText(null);
-		id.setText(null);
+		txtId.setText(null);
+		txtNome.setText(null);
 	}
 	
 	private String[] preencherComboBoxArtista(){
@@ -123,8 +123,8 @@ public class ArtistaCtrl implements ComponentListener {
 			break;
 		case "errorrec":
 			JOptionPane.showMessageDialog(null, 
-					"ATENÇÃO!\nNão foi possível apagar o registro: " + id.getText() + " "
-							+ nome.getText() + "!\nVerifique sua digitação!", 
+					"ATENÇÃO!\nNão foi possível apagar o registro: " + txtId.getText() + " "
+							+ txtNome.getText() + "!\nVerifique sua digitação!", 
 							"Erro", 
 							JOptionPane.PLAIN_MESSAGE,
 							new ImageIcon("../MASProject/icons/warning.png"));
@@ -219,21 +219,21 @@ public class ArtistaCtrl implements ComponentListener {
 
 		ArrayList<Artista> lista = new ArrayList<>();
 		String pesquisa ="";
-		if (!nome.getText().isEmpty() || !id.getText().isEmpty()) {
+		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
 
 			for (int i = 0; i < artistas.size(); i++) {
-				if (nome.getText().equalsIgnoreCase(artistas.get(i).getId())) {
-					id.setText(artistas.get(i).getId());
-					nome.setText(artistas.get(i).getNome());
+				if (txtNome.getText().equalsIgnoreCase(artistas.get(i).getId())) {
+					txtId.setText(artistas.get(i).getId());
+					txtNome.setText(artistas.get(i).getNome());
 					validar = true;
-				} else if (nome.getText().equalsIgnoreCase(artistas.get(i).getNome())) {
+				} else if (txtNome.getText().equalsIgnoreCase(artistas.get(i).getNome())) {
 					validar = true;
 				}
 			}
 			if (validar == true) {
 				for (int i = 0; i < artistas.size(); i++) {
 
-					boolean filtro = nome.getText().equalsIgnoreCase(artistas.get(i).getNome());
+					boolean filtro = txtNome.getText().equalsIgnoreCase(artistas.get(i).getNome());
 					if (filtro == true) {
 						Artista item = new Artista();
 						item.setId(artistas.get(i).getId());
@@ -252,63 +252,63 @@ public class ArtistaCtrl implements ComponentListener {
 				}
 				for (int i = 0; i < artistas.size(); i++) {
 					if (pesquisa.equalsIgnoreCase(artistas.get(i).getId())) {
-						id.setText(artistas.get(i).getId());
-						nome.setText(artistas.get(i).getNome());
+						txtId.setText(artistas.get(i).getId());
+						txtNome.setText(artistas.get(i).getNome());
 					}
 				}
 				validar = false; 
 			} else {
 				if (pesquisa == "") {
-					msg("nosearch", nome.getText());
+					msg("nosearch", txtNome.getText());
 					limpaCampos();
 				}
 				validar = false;
 			}
 		} else {
-			msg("errorsearch", nome.getText());
+			msg("errorsearch", txtNome.getText());
 		}
 	}
 
 	public void editar() {
 		Artista artista = new Artista();
 		validar = false;
-		if (!id.getText().isEmpty()) {
+		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < artistas.size(); i++) {
-				if (!id.getText().equalsIgnoreCase(artistas.get(i).getId()) && nome.getText().equalsIgnoreCase(artistas.get(i).getNome())) {				
+				if (!txtId.getText().equalsIgnoreCase(artistas.get(i).getId()) && txtNome.getText().equalsIgnoreCase(artistas.get(i).getNome())) {				
 					msg("erroredit",artistas.get(i).getNome());
 					validar = true;
 				} 
 			}
 			if(!(validar == true)){
 				for (int i = 0; i < artistas.size(); i++) {
-					if (id.getText().equalsIgnoreCase(artistas.get(i).getId())) {
-						artista.setId(id.getText());
-						artista.setNome(nome.getText());
+					if (txtId.getText().equalsIgnoreCase(artistas.get(i).getId())) {
+						artista.setId(txtId.getText());
+						artista.setNome(txtNome.getText());
 						artistas.set(i, artista);
 						atualizaDados(artistas);
-						msg("edit", nome.getText());
+						msg("edit", txtNome.getText());
 						limpaCampos();
 					}
 				}
 			}
 		} else {
-			msg("errorsearch", nome.getText());
+			msg("errorsearch", txtNome.getText());
 		}
 	}
 
 	public void excluir() {
-		if (!id.getText().isEmpty()) {
+		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < artistas.size(); i++) {
-				if (id.getText().equalsIgnoreCase(artistas.get(i).getId()) && nome.getText().equalsIgnoreCase(artistas.get(i).getNome())) {
+				if (txtId.getText().equalsIgnoreCase(artistas.get(i).getId()) && txtNome.getText().equalsIgnoreCase(artistas.get(i).getNome())) {
 					artistas.remove(i);
 					validar = true;
 				}
 			}
 			if (validar == true) {
-				msg("deleteconfirm", nome.getText());
+				msg("deleteconfirm", txtNome.getText());
 				if (validar == false){
 					atualizaDados(artistas);
-					msg("delete", nome.getText());
+					msg("delete", txtNome.getText());
 					limpaCampos();
 				} else {
 					artistas.clear();
@@ -316,7 +316,7 @@ public class ArtistaCtrl implements ComponentListener {
 				}
 			} else {
 				validar = false;
-				msg("errordelete", id.getText());
+				msg("errordelete", txtId.getText());
 			}
 		} else {
 			pesquisar();
@@ -327,24 +327,24 @@ public class ArtistaCtrl implements ComponentListener {
 		new ArtistaArquivo();
 		Artista artista = new Artista();
 		validar = false;
-		if (!nome.getText().isEmpty()) {
+		if (!txtNome.getText().isEmpty()) {
 			for (int i = 0; i < artistas.size(); i++) {
-				if (nome.getText().equalsIgnoreCase(artistas.get(i).getNome())){
+				if (txtNome.getText().equalsIgnoreCase(artistas.get(i).getNome())){
 					msg("erroredit", artistas.get(i).getNome());
 					validar = true;
 				}
 			}
 			if(!(validar == true)){	
-			artista.setId(id.getText());
-			artista.setNome(nome.getText());
+			artista.setId(txtId.getText());
+			artista.setNome(txtNome.getText());
 			artistas.add(artista);
-			msg("save", nome.getText());
+			msg("save", txtNome.getText());
 			atualizaDados(artistas);
-			nome.setText(null);
+			txtNome.setText(null);
 			gerarId();
 			}
 		} else {
-			msg("errornull", nome.getText());
+			msg("errornull", txtNome.getText());
 		}
 	}
 
@@ -406,7 +406,7 @@ public class ArtistaCtrl implements ComponentListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (contador == 1) {
-				nome.setText(null);
+				txtNome.setText(null);
 				contador += 1;
 			}
 		}
