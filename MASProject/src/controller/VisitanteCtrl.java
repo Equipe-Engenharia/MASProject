@@ -28,9 +28,9 @@ import persistence.VisitanteArquivo;
 public class VisitanteCtrl implements ComponentListener {
 	
 	private JPanel form;
-	private JTextField txtId, txtNome, txtDataNasc, txtDoc;
+	private JTextField txtId, txtNome, txtDataNasc;
 	private JComboBox<String> cbNacional;
-	private JRadioButton rdbtnCpf, rdbtnPassaport, rdbtnMasculino, rdbtnFeminino;
+	private JRadioButton rdbtnMasculino, rdbtnFeminino;
 	private JCheckBox checkPT, checkING, checkESP;
 	private List<Visitante> visitantes;
 	private static int contador = 1;
@@ -38,17 +38,14 @@ public class VisitanteCtrl implements ComponentListener {
 	private ArquivosCtrl arquivo = new ArquivosCtrl();
 	private VisitanteArquivo formatar = new VisitanteArquivo();
 
-	public VisitanteCtrl(JPanel form, JTextField txtId, JTextField txtNome, JTextField txtDataNasc, JTextField txtDoc, JComboBox<String> cbNacional,
-			JRadioButton rdbtnCpf, JRadioButton rdbtnPassaport, JRadioButton rdbtnMasculino, JRadioButton rdbtnFeminino, JCheckBox checkING, JCheckBox checkPT,
+	public VisitanteCtrl(JPanel form, JTextField txtId, JTextField txtNome, JTextField txtDataNasc, JComboBox<String> cbNacional,
+			JRadioButton rdbtnMasculino, JRadioButton rdbtnFeminino, JCheckBox checkING, JCheckBox checkPT,
 			JCheckBox checkESP) {
 		
 		this.txtId = txtId;
 		this.txtNome = txtNome;
 		this.txtDataNasc = txtDataNasc;
-		this.txtDoc = txtDoc;
 		this.cbNacional = cbNacional;
-		this.rdbtnCpf = rdbtnCpf;
-		this.rdbtnPassaport = rdbtnPassaport;
 		this.rdbtnMasculino = rdbtnMasculino;
 		this.rdbtnFeminino = rdbtnFeminino;
 		this.checkING = checkING;
@@ -71,9 +68,6 @@ public class VisitanteCtrl implements ComponentListener {
 		txtId.setText(null);
 		txtNome.setText(null);
 		cbNacional.setSelectedIndex(0);
-		txtDoc.setText(null);
-		rdbtnCpf.setSelected(false);
-		rdbtnPassaport.setSelected(false);
 		rdbtnMasculino.setSelected(false);
 		rdbtnFeminino.setSelected(false);
 		checkING.setSelected(false);
@@ -257,12 +251,7 @@ public class VisitanteCtrl implements ComponentListener {
 						item.setId(visitantes.get(i).getId());
 						item.setNome(visitantes.get(i).getNome());
 						item.setNacionalidade(visitantes.get(i).getNacionalidade());
-						item.setNumero(visitantes.get(i).getNumero());
-						if(visitantes.get(i).getDocumento() == "Cpf"){
-							item.setDocumento(visitantes.get(i).getDocumento());
-						}else if(visitantes.get(i).getDocumento() == "Passaport"){
-							item.setDocumento(visitantes.get(i).getDocumento());
-						}else if(visitantes.get(i).getSexo() == "Masculino"){
+						if(visitantes.get(i).getSexo() == "Masculino"){
 							item.setSexo(visitantes.get(i).getSexo());
 						}else if(visitantes.get(i).getSexo() == "Feminino"){
 							item.setSexo(visitantes.get(i).getSexo());
@@ -291,10 +280,7 @@ public class VisitanteCtrl implements ComponentListener {
 					if (pesquisa.equalsIgnoreCase(visitantes.get(i).getId())) {
 						txtId.setText(visitantes.get(i).getId());
 						txtNome.setText(visitantes.get(i).getNome());
-						txtDoc.setText(visitantes.get(i).getNumero());
-						cbNacional.getModel().setSelectedItem(visitantes.get(i).getNacionalidade());
-						rdbtnCpf.isSelected();
-						rdbtnPassaport.isSelected();
+						cbNacional.getModel().setSelectedItem(visitantes.get(i).getNacionalidade());;
 						rdbtnMasculino.isSelected();
 						rdbtnFeminino.isSelected();
 						checkING.isSelected();
@@ -334,13 +320,8 @@ public class VisitanteCtrl implements ComponentListener {
 						visitante.setId(txtId.getText());
 						visitante.setNome(txtNome.getText());
 						visitante.setDataNasc(txtDataNasc.getText());
-						visitante.setNumero(txtDoc.getText());
 						visitante.setNacionalidade(cbNacional.getSelectedItem().toString());
-						if(rdbtnCpf.isSelected()){
-							visitante.setDocumento(rdbtnCpf.getText());
-						}else if(rdbtnPassaport.isSelected()){
-							visitante.setDocumento(rdbtnPassaport.getText());
-						}else if(rdbtnMasculino.isSelected()){
+						if(rdbtnMasculino.isSelected()){
 							visitante.setSexo(rdbtnMasculino.getText());
 						}else if(rdbtnFeminino.isSelected()){
 							visitante.setSexo(rdbtnFeminino.getText());
@@ -414,13 +395,8 @@ public class VisitanteCtrl implements ComponentListener {
 				visitante.setId(txtId.getText());
 				visitante.setNome(txtNome.getText());
 				visitante.setDataNasc(txtDataNasc.getText());
-				visitante.setNumero(txtDoc.getText());
 				visitante.setNacionalidade(cbNacional.getSelectedItem().toString());
-				if(rdbtnCpf.isSelected()){
-					visitante.setDocumento(rdbtnCpf.getText());
-				}else if(rdbtnPassaport.isSelected()){
-					visitante.setDocumento(rdbtnPassaport.getText());
-				}else if(rdbtnMasculino.isSelected()){
+				if(rdbtnMasculino.isSelected()){
 					visitante.setSexo(rdbtnMasculino.getText());
 				}else if(rdbtnFeminino.isSelected()){
 					visitante.setSexo(rdbtnFeminino.getText());

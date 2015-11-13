@@ -5,8 +5,6 @@ public class Visitante {
 	private String nome;
 	private String dataNasc;
 	private String nacionalidade;
-	private String documento;
-	private String numero;
 	private String sexo;
 	private String idiomas;
 
@@ -42,22 +40,6 @@ public class Visitante {
 		this.nacionalidade = nacionalidade;
 	}
 	
-	public String getDocumento() {
-		return documento;
-	}
-
-	public void setDocumento(String documento) {
-		this.documento = documento;
-	}
-	
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
-
 	public String getSexo() {
 		return sexo;
 	}

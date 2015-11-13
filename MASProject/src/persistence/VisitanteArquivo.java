@@ -28,7 +28,7 @@ public class VisitanteArquivo implements ArquivosICtrl{
 			String linha = bufferLeitura.readLine();
 			buffer = new StringBuffer();
 			while (linha != null) {
-				//System.out.println(linha);
+				// System.out.println(linha);
 				buffer.append(linha);
 				buffer.append(";");
 				linha = bufferLeitura.readLine();
@@ -39,7 +39,6 @@ public class VisitanteArquivo implements ArquivosICtrl{
 		} else {
 			throw new IOException("Arquivo inexistente");
 		}
-		
 	}
 
 	@Override
@@ -52,10 +51,6 @@ public class VisitanteArquivo implements ArquivosICtrl{
 		buffer.append("Data de Nascimento: " + ((Visitante) object).getDataNasc());
 		buffer.append("\r\n");
 		buffer.append("Nacionalidade     : " + ((Visitante) object).getNacionalidade());
-		buffer.append("\r\n");
-		buffer.append("Documento         : " + ((Visitante) object).getDocumento());
-		buffer.append("\r\n");
-		buffer.append("Numero            : " + ((Visitante) object).getNumero());
 		buffer.append("\r\n");
 		buffer.append("Sexo              : " + ((Visitante) object).getSexo());
 		buffer.append("\r\n");
