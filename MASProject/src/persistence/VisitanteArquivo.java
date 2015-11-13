@@ -45,15 +45,16 @@ public class VisitanteArquivo implements ArquivosICtrl{
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("Nome    : "+((Visitante) object).getNome());
+		buffer.append("ID                : " + ((Visitante) object).getId());
+		buffer.append("Nome              : " + ((Visitante) object).getNome());
 		buffer.append("\r\n");
-		buffer.append("Data de Nascimento: "+((Visitante) object).getDataNasc());
+		buffer.append("Data de Nascimento: " + ((Visitante) object).getDataNasc());
 		buffer.append("\r\n");
-		buffer.append("Nacionalidade: "+((Visitante) object).getNacionalidade());
+		buffer.append("Nacionalidade     : " + ((Visitante) object).getNacionalidade());
 		buffer.append("\r\n");
-		buffer.append("Sexo: "+((Visitante) object).getSexo());
+		buffer.append("Sexo              : " + ((Visitante) object).getSexo());
 		buffer.append("\r\n");
-		buffer.append("Idiomas: "+((Visitante) object).getIdiomas());
+		buffer.append("Idiomas           : " + ((Visitante) object).getIdiomas());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");

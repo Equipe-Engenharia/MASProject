@@ -23,7 +23,7 @@ public class FrmVisitanteCad extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtNome, txtDataNasc;
+	private JTextField txtId, txtNome, txtDataNasc;
 	private JLabel lblNomeDoVisitante, lblNacionalidade, lblSexo, lblIdiomas, lblData;
 	private JComboBox<String> cbNacionali;
 	private JRadioButton rdbtnMasculino, rdbtnFeminino;
@@ -61,6 +61,14 @@ public class FrmVisitanteCad extends JFrame {
 		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		txtId = new JTextField();
+		txtId.setEnabled(false);
+		txtId.setEditable(false);
+		txtId.setVisible(false);
+		txtId.setColumns(10);
+		txtId.setBounds(6, 202, 121, 20);
+		contentPane.add(txtId);
 		
 		lblNomeDoVisitante = new JLabel("Nome do Visitante");
 		lblNomeDoVisitante.setBounds(31, 36, 128, 14);
@@ -123,8 +131,14 @@ public class FrmVisitanteCad extends JFrame {
 		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
 		
-		VisitanteCtrl vController = new VisitanteCtrl(txtNome,txtDataNasc, cbNacionali,rdbtnMasculino,rdbtnFeminino, checkING,checkPT,checkESP);
+		VisitanteCtrl controle = new VisitanteCtrl(contentPane, txtId, txtNome,txtDataNasc, cbNacionali,rdbtnMasculino,rdbtnFeminino, checkING,checkPT,checkESP);
 		
-		btnGravar.addActionListener(vController.gravarVisita);
+		
+		
+		controle.gerarId();
+		controle.preencherComboBoxNacional();
+		btnGravar.addActionListener(controle.gravar);
+		txtNome.addMouseListener(controle.limpaCampo);
+		txtNome.addActionListener(controle.gravar);
 	}
 }

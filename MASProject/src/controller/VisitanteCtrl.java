@@ -4,45 +4,80 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import model.Visitante;
 import persistence.VisitanteArquivo;
 
-public class VisitanteCtrl {
-	private boolean validar;
-	private List<Visitante> visitantes;
-	private JTextField txtNome, txtDataNasc;
-	//private JComboBox<String> cbContinente, cbNacionali;
+public class VisitanteCtrl implements ComponentListener {
+	
+	private JPanel form;
+	private JTextField txtId, txtNome, txtDataNasc;
+	private JComboBox<String> cbNacional;
 	private JRadioButton rdbtnMasculino, rdbtnFeminino;
 	private JCheckBox checkPT, checkING, checkESP;
+	private List<Visitante> visitantes;
+	private static int contador = 1;
+	private boolean validar;
+	private ArquivosCtrl arquivo = new ArquivosCtrl();
+	private VisitanteArquivo formatar = new VisitanteArquivo();
 
-	public VisitanteCtrl(JTextField txtNome, JTextField txtDataNasc, JComboBox<String> cbNacionali,
+	public VisitanteCtrl(JPanel form, JTextField txtId, JTextField txtNome, JTextField txtDataNasc, JComboBox<String> cbNacional,
 			JRadioButton rdbtnMasculino, JRadioButton rdbtnFeminino, JCheckBox checkING, JCheckBox checkPT,
 			JCheckBox checkESP) {
+		
+		this.txtId = txtId;
 		this.txtNome = txtNome;
 		this.txtDataNasc = txtDataNasc;
-		//
+		this.cbNacional = cbNacional;
 		this.rdbtnMasculino = rdbtnMasculino;
 		this.rdbtnFeminino = rdbtnFeminino;
 		this.checkING = checkING;
 		this.checkPT = checkPT;
 		this.checkESP = checkESP;
 		
+		lerArquivo();
+	}
+
+	// METODOS DE SUPORTE ////////////////////////
+
+	public void gerarId() { // USO DESTE METODO NO GRAVARMATERIAL E FRMMATERIAL (CAD E EDIT)
+		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
+		Date date = new Date();
+		String NewId = (dateFormat.format(date));
+		txtId.setText("VST" + NewId);
+	}
+
+	public void limpaCampos() {
+		txtNome.setText(null);
+		txtId.setText(null);
+		cbNacional.setSelectedIndex(0);
 	}
 	
+
 	public void msg(String tipo, String mensagem) {
 
 		switch (tipo) {
 
 		case "errornull":
 			JOptionPane.showMessageDialog(null, 
-					"ATENÇÃO!\nCampo Vazio.\nPor favor, digite o nome do Visitante.", 
+					"ATENÇÃO!\nCampo Vazio.\nPor favor, digite o ID ou nome do Setor.", 
 					"Erro", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
@@ -70,7 +105,8 @@ public class VisitanteCtrl {
 			break;
 		case "errorrec":
 			JOptionPane.showMessageDialog(null, 
-					"ATENÇÃO!\nNão foi possível apagar o registro: " +txtNome.getText() + "!\nVerifique sua digitação!", 
+					"ATENÇÃO!\nNão foi possível apagar o registro: " + txtId.getText() + " "
+					+ txtNome.getText() + "!\nVerifique sua digitação!", 
 					"Erro", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
@@ -123,49 +159,344 @@ public class VisitanteCtrl {
 		}
 	}
 
+
+	// PREENCHE COMBOBOX /////////////////////
+
+	public void preencherComboBoxNacional() {
+		String linha = new String();
+		arquivo = new ArquivosCtrl();
+		ArrayList<String> listString = new ArrayList<>();
+		try {
+			arquivo.leArquivo("../MASProject/dados/", "nacionalidades");
+			linha = arquivo.getBuffer();
+			String[] nacionalidades = linha.split(";");
+			for (String s : nacionalidades) {
+				cbNacional.addItem(s);
+				listString.clear();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// CRUD //////////////////////////
+
+	public void lerArquivo() {
+		String linha = new String();
+		ArrayList<String> list = new ArrayList<>();
+	
+		try {
+			arquivo.leArquivo("../MASProject/dados/", "visitante");
+			linha = arquivo.getBuffer();
+			String[] listaVisitante = linha.split(";");
+			for (String s : listaVisitante) {
+				String text = s.replaceAll(".*: ", "");
+				list.add(text);
+				if (s.contains("---")) {
+					Visitante visitante = new Visitante();
+					visitante.setId(list.get(0));
+					visitante.setNome(list.get(1));
+					visitante.setDataNasc(list.get(2));
+					visitante.setNacionalidade(list.get(3));
+					visitante.setSexo(list.get(4));
+					visitante.setIdiomas(list.get(5));
+					//visitantes.add(visitante);				//PROBLEMA AO ADCIONAR NA LISTA
+					list.clear();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void atualizaDados(List<Visitante> listVisitantes) {
+		File f = new File("../MASProject/dados/visitante");
+		f.delete();
+		for (Visitante visitante : listVisitantes) {
+			try {
+				formatar.escreveArquivo("../MASProject/dados/", "visitante", "", visitante);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void pesquisar() {
+
+		ArrayList<Visitante> lista = new ArrayList<>();
+		String pesquisa ="";
+		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
+
+			for (int i = 0; i < visitantes.size(); i++) {
+				if (txtNome.getText().equalsIgnoreCase(visitantes.get(i).getId())) {
+					txtId.setText(visitantes.get(i).getId());
+					txtNome.setText(visitantes.get(i).getNome());
+					cbNacional.getModel().setSelectedItem(visitantes.get(i).getNacionalidade());
+					validar = true;
+				} else if (txtNome.getText().equalsIgnoreCase(visitantes.get(i).getNome())) {
+					validar = true;
+					cbNacional.getModel().setSelectedItem(visitantes.get(i).getNacionalidade());
+				}
+			}
+			if (validar == true) {
+				for (int i = 0; i < visitantes.size(); i++) {
+					boolean filtro = txtNome.getText().equalsIgnoreCase(visitantes.get(i).getNome());
+					if (filtro == true) {
+						Visitante item = new Visitante();
+						item.setId(visitantes.get(i).getId());
+						item.setNome(visitantes.get(i).getNome());
+						item.setNacionalidade(visitantes.get(i).getNacionalidade());
+						if(rdbtnMasculino.isSelected()){
+							item.setSexo(rdbtnMasculino.getText());
+						}else if(rdbtnFeminino.isSelected()){
+							item.setSexo(rdbtnFeminino.getText());
+						}
+						if(checkING.isSelected()){
+							item.setIdiomas(checkING.getText());
+						}else if(checkPT.isSelected()){
+							item.setIdiomas(checkPT.getText());
+						}else if(checkESP.isSelected()){
+							item.setIdiomas(checkESP.getText());
+						}
+						lista.add(item);
+					}
+				}
+				String[] filtro = new String[lista.size()];
+				for (int i = 0; i < lista.size(); i++) {
+					filtro[i] = lista.get(i).getId();
+					pesquisa = lista.get(i).getId();					
+				}
+				if (filtro != null && filtro.length > 1) {
+					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
+							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
+				} 
+				if (pesquisa == "0" || pesquisa != null){
+				for (int i = 0; i < visitantes.size(); i++) {
+					if (pesquisa.equalsIgnoreCase(visitantes.get(i).getId())) {
+						txtId.setText(visitantes.get(i).getId());
+						txtNome.setText(visitantes.get(i).getNome());
+						cbNacional.getModel().setSelectedItem(visitantes.get(i).getNacionalidade());
+						rdbtnMasculino.isSelected();
+						rdbtnFeminino.isSelected();
+						checkING.isSelected();
+						checkPT.isSelected();
+						checkESP.isSelected();
+					}
+				}
+				}
+				validar = false;
+			} else {
+				if (pesquisa == "") {
+					msg("nosearch", txtNome.getText());
+					limpaCampos();
+				}
+				validar = false;
+			}
+		} else {
+			msg("errorsearch", txtNome.getText());
+		}
+	}
+
+	public void editar() {
+		Visitante visitante = new Visitante();
+		validar = false;
+		if (!txtId.getText().isEmpty()) {
+			for (int i = 0; i < visitantes.size(); i++) {
+				if (!txtId.getText().equalsIgnoreCase(visitantes.get(i).getId()) 
+						&& txtNome.getText().equalsIgnoreCase(visitantes.get(i).getNome())
+						&& cbNacional.getSelectedItem().toString().equalsIgnoreCase(visitantes.get(i).getNacionalidade())) {
+					msg("erroredit", visitantes.get(i).getNome());
+					validar = true;
+				} 
+			}
+			if(!(validar == true)){
+				for (int i = 0; i < visitantes.size(); i++) {
+					if (txtId.getText().equalsIgnoreCase(visitantes.get(i).getId())) {
+						visitante.setId(txtId.getText());
+						visitante.setNome(txtNome.getText());
+						visitante.setNacionalidade((String) cbNacional.getSelectedItem());
+						if(rdbtnMasculino.isSelected()){
+							visitante.setSexo(rdbtnMasculino.getText());
+						}else if(rdbtnFeminino.isSelected()){
+							visitante.setSexo(rdbtnFeminino.getText());
+						}
+						if(checkING.isSelected()){
+							visitante.setIdiomas(checkING.getText());
+						}else if(checkPT.isSelected()){
+							visitante.setIdiomas(checkPT.getText());
+						}else if(checkESP.isSelected()){
+							visitante.setIdiomas(checkESP.getText());
+						}
+						visitantes.set(i, visitante);
+						atualizaDados(visitantes);
+						msg("edit", txtNome.getText());
+						limpaCampos();	
+					}
+				}
+			}
+		} else {
+			msg("errorsearch", txtNome.getText());
+		}
+	}
+
+	public void excluir() {
+		validar = false;
+		if (!txtId.getText().isEmpty()) {
+			for (int i = 0; i < visitantes.size(); i++) {
+				if (txtId.getText().equalsIgnoreCase(visitantes.get(i).getId()) 
+						&& txtNome.getText().equalsIgnoreCase(visitantes.get(i).getNome())
+						&& cbNacional.getSelectedItem().toString().equalsIgnoreCase(visitantes.get(i).getNacionalidade())) {
+					visitantes.remove(i);
+					validar = true;
+				} else {
+					if(i == visitantes.size()){
+						msg("errordelete", visitantes.get(i).getNome());
+					}
+				}
+			}
+			if (validar == true) {
+				msg("deleteconfirm", txtNome.getText());
+				if (validar == false){
+					atualizaDados(visitantes);
+					msg("delete", txtNome.getText());
+					limpaCampos();
+				} else {
+					visitantes.clear();
+					lerArquivo();	
+				}
+			} else {
+				validar = false;
+				msg("errordelete", txtId.getText());
+			}
+		} else {
+			pesquisar();
+		}
+	}
+	
+	
 	public void gravar() {
 		new VisitanteArquivo();
-		Visitante visita = new Visitante();
+		Visitante visitante = new Visitante();
 		validar = false;
 		if (!txtNome.getText().isEmpty()) {
-			for (int i = 0; i < visitantes.size(); i++) {
-				if (txtNome.getText().equalsIgnoreCase(visitantes.get(i).getNome())){
-					//msg("erroredit", visitantes.get(i).getNome());
+			for (int i = 0; i < visitantes.size(); i++) {	
+				if (txtNome.getText().equalsIgnoreCase(visitantes.get(i).getNome()) && cbNacional.getSelectedItem().toString().equalsIgnoreCase(visitantes.get(i).getNacionalidade())) {
+					msg("erroredit", visitantes.get(i).getNome());
 					validar = true;
 				}
 			}
-			if(!(validar == true)){	
-				visita.setNome(txtNome.getText());
-				visita.setDataNasc(txtDataNasc.getText());
-				//visita.setNacionalidade();
+			if(!(validar == true)){
+				visitante.setId(txtId.getText());
+				visitante.setNome(txtNome.getText());
+				visitante.setDataNasc(txtDataNasc.getText());
+				visitante.setNacionalidade(cbNacional.getSelectedItem().toString());
 				if(rdbtnMasculino.isSelected()){
-					visita.setSexo(rdbtnMasculino.getText());
+					visitante.setSexo(rdbtnMasculino.getText());
 				}else if(rdbtnFeminino.isSelected()){
-					visita.setSexo(rdbtnFeminino.getText());
+					visitante.setSexo(rdbtnFeminino.getText());
 				}
-				
 				if(checkING.isSelected()){
-					visita.setIdiomas(checkING.getText());
+					visitante.setIdiomas(checkING.getText());
 				}else if(checkPT.isSelected()){
-					visita.setIdiomas(checkPT.getText());
+					visitante.setIdiomas(checkPT.getText());
 				}else if(checkESP.isSelected()){
-					visita.setIdiomas(checkESP.getText());
+					visitante.setIdiomas(checkESP.getText());
 				}
-				visitantes.add(visita);
+				visitantes.add(visitante);
 				msg("save", txtNome.getText());
-				//atualizaDados(visitantes);
+				atualizaDados(visitantes);
 			}
 		} else {
 			msg("errornull", txtNome.getText());
 		}
 	}
 	
-	public ActionListener gravarVisita = new ActionListener() {
-		
+
+	// CONTROLE BOTAO //////////////////////////////
+
+	public ActionListener pesquisar = new ActionListener() {
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			pesquisar();
+		}
+	};
+
+	public ActionListener excluir = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+				excluir();
+		}
+	};
+
+	public ActionListener editar = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			editar();
+		}
+	};
+
+	public ActionListener gravar = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
 			gravar();
 		}
 	};
+
+	// CONTROLE MOUSE ///////////////////////////////
+
+	public MouseListener limpaCampo = new MouseListener() {
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (contador == 1) {
+				txtNome.setText(null);
+				contador += 1;
+			}
+		}
+	};
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

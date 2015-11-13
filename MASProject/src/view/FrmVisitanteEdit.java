@@ -18,21 +18,19 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
+import controller.VisitanteCtrl;
+
 public class FrmVisitanteEdit extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtNome, txtDataNasc;
+	private JTextField txtId, txtNome, txtDataNasc;
 	private JLabel lblNomeDoVisitante, lblNacionalidade, lblSexo, lblIdiomas, lblData;
 	private JComboBox<String> cbNacionali;
 	private JRadioButton rdbtnMasculino, rdbtnFeminino;
 	private JCheckBox checkPT, checkING, checkESP;
 	private JButton btnPesquisar, btnEditar, btnApagar;
 	private MaskFormatter maskData;
-
-	/**
-	 * Launch the application.
-	 */
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -60,6 +58,14 @@ public class FrmVisitanteEdit extends JFrame {
 		setLocationRelativeTo(null);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		txtId = new JTextField();
+		txtId.setEnabled(false);
+		txtId.setEditable(false);
+		txtId.setColumns(10);
+		txtId.setVisible(false);
+		txtId.setBounds(6, 202, 121, 20);
+		contentPane.add(txtId);
 		
 		lblNomeDoVisitante = new JLabel("Nome do Visitante");
 		lblNomeDoVisitante.setBounds(31, 36, 128, 14);
@@ -136,5 +142,15 @@ public class FrmVisitanteEdit extends JFrame {
 		btnApagar.setBounds(397, 166, 97, 34);
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
+		
+		VisitanteCtrl controle = new VisitanteCtrl(contentPane, txtId, txtNome,txtDataNasc, cbNacionali,rdbtnMasculino,rdbtnFeminino, checkING,checkPT,checkESP);
+		
+		controle.preencherComboBoxNacional();
+		txtId.addMouseListener(controle.limpaCampo);
+		txtNome.addMouseListener(controle.limpaCampo);
+		txtNome.addActionListener(controle.pesquisar);
+		btnPesquisar.addActionListener(controle.pesquisar);
+		btnApagar.addActionListener(controle.excluir);
+		btnEditar.addActionListener(controle.editar);
 	}
 }

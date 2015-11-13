@@ -1,12 +1,21 @@
 package model;
 
 public class Visitante {
+	private String id;
 	private String nome;
 	private String dataNasc;
 	private String nacionalidade;
 	private String sexo;
 	private String idiomas;
 
+	public String getId(){
+		return id;
+	}
+	
+	public void setId(String id){
+		this.id = id;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
