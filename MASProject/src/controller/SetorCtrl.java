@@ -38,7 +38,7 @@ public class SetorCtrl implements ComponentListener {
 		this.nome = nome;
 		this.setores = new ArrayList<Setor>();
 
-		lerSetor();
+		lerArquivo();
 	}
 	
 	// METODOS DE SUPORTE ////////////////////////
@@ -145,7 +145,7 @@ public class SetorCtrl implements ComponentListener {
 
 	// CRUD //////////////////////////
 
-	public void lerSetor() {
+	public void lerArquivo() {
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 	
@@ -278,7 +278,7 @@ public class SetorCtrl implements ComponentListener {
 					limpaCampos();
 				} else {
 					setores.clear();
-					lerSetor();	
+					lerArquivo();	
 				}
 			} else {
 				validar = false;

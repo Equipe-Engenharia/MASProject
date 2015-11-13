@@ -39,7 +39,7 @@ public class CategoriaCtrl implements ComponentListener {
 		this.categorias = new ArrayList<Categoria>();
 
 		
-		lerCategoria();
+		lerArquivo();
 	}
 	
 	// METODOS DE SUPORTE ////////////////////////
@@ -146,7 +146,7 @@ public class CategoriaCtrl implements ComponentListener {
 
 	// CRUD //////////////////////////
 
-	public void lerCategoria() {
+	public void lerArquivo() {
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 	
@@ -279,7 +279,7 @@ public class CategoriaCtrl implements ComponentListener {
 					limpaCampos();
 				} else {
 					categorias.clear();
-					lerCategoria();	
+					lerArquivo();	
 				}
 			} else {
 				validar = false;

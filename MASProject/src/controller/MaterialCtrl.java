@@ -42,7 +42,7 @@ public class MaterialCtrl implements ComponentListener {
 		this.nome = txtMaterial;
 		this.materiais = new ArrayList<Material>();
 
-		lerMaterial();
+		lerArquivo();
 	}
 
 	// METODOS DE SUPORTE ////////////////////////
@@ -182,7 +182,7 @@ public class MaterialCtrl implements ComponentListener {
 
 	// CRUD //////////////////////////
 
-	public void lerMaterial() {
+	public void lerArquivo() {
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 	
@@ -331,7 +331,7 @@ public class MaterialCtrl implements ComponentListener {
 					limpaCampos();
 				} else {
 					materiais.clear();
-					lerMaterial();	
+					lerArquivo();	
 				}
 			} else {
 				validar = false;

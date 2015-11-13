@@ -40,7 +40,7 @@ public class ArtistaCtrl implements ComponentListener {
 		this.nome = nome;
 		this.artistas = new ArrayList<Artista>();
 		
-		lerArtista();
+		lerArquivo();
 	}
 	
 	public ArtistaCtrl(){
@@ -179,7 +179,7 @@ public class ArtistaCtrl implements ComponentListener {
 
 	// CRUD //////////////////////////
 
-	public void lerArtista() {
+	public void lerArquivo() {
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 	
@@ -312,7 +312,7 @@ public class ArtistaCtrl implements ComponentListener {
 					limpaCampos();
 				} else {
 					artistas.clear();
-					lerArtista();	
+					lerArquivo();	
 				}
 			} else {
 				validar = false;
