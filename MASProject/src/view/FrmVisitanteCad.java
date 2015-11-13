@@ -23,10 +23,10 @@ public class FrmVisitanteCad extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtId, txtNome, txtDataNasc;
-	private JLabel lblNomeDoVisitante, lblNacionalidade, lblSexo, lblIdiomas, lblData;
-	private JComboBox<String> cbNacionali;
-	private JRadioButton rdbtnMasculino, rdbtnFeminino;
+	private JTextField txtId, txtNome, txtDataNasc, txtDoc;
+	private JLabel lblNomeDoVisitante, lblNacionalidade, lblDocumento, lblSexo, lblIdiomas, lblData;
+	private JComboBox<String> cbNacional;
+	private JRadioButton rdbtnCpf, rdbtnPassaport, rdbtnMasculino, rdbtnFeminino;
 	private JCheckBox checkPT, checkING, checkESP;
 	private JButton btnGravar;
 	private MaskFormatter maskData;
@@ -71,59 +71,76 @@ public class FrmVisitanteCad extends JFrame {
 		contentPane.add(txtId);
 		
 		lblNomeDoVisitante = new JLabel("Nome do Visitante");
-		lblNomeDoVisitante.setBounds(31, 36, 128, 14);
+		lblNomeDoVisitante.setBounds(31, 23, 128, 14);
 		contentPane.add(lblNomeDoVisitante);
 
 		txtNome = new JTextField();
-		txtNome.setBounds(156, 33, 337, 20);
+		txtNome.setBounds(156, 20, 337, 20);
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
  
 		maskData = new MaskFormatter("##/##/####");
 		
 		lblData = new JLabel("Data de nascimento");
-		lblData.setBounds(31, 78, 138, 14);
+		lblData.setBounds(31, 58, 138, 14);
 		contentPane.add(lblData);
 		
 		txtDataNasc = new JFormattedTextField(maskData);
-		txtDataNasc.setBounds(156, 75, 101, 20);
+		txtDataNasc.setBounds(156, 55, 101, 20);
 		contentPane.add(txtDataNasc);
 		txtDataNasc.setColumns(10);
 		
 		lblNacionalidade = new JLabel("Nacionalidade");
-		lblNacionalidade.setBounds(260, 78, 91, 14);
+		lblNacionalidade.setBounds(260, 58, 91, 14);
 		contentPane.add(lblNacionalidade);
 
-		cbNacionali = new JComboBox<String>();
-		cbNacionali.setBounds(349, 75, 144, 20);
-		contentPane.add(cbNacionali);
+		cbNacional = new JComboBox<String>();
+		cbNacional.setBounds(349, 55, 144, 20);
+		contentPane.add(cbNacional);
+		
+		lblDocumento = new JLabel("Documento");
+		lblDocumento.setBounds(31, 91, 128, 16);
+		contentPane.add(lblDocumento);
+		
+		rdbtnCpf = new JRadioButton("CPF");
+		rdbtnCpf.setBounds(176, 87, 61, 23);
+		contentPane.add(rdbtnCpf);
+		
+		rdbtnPassaport = new JRadioButton("Passaport  Nº");
+		rdbtnPassaport.setBounds(231, 87, 120, 23);
+		contentPane.add(rdbtnPassaport);
+		
+		txtDoc = new JTextField();
+		txtDoc.setBounds(349, 85, 144, 28);
+		contentPane.add(txtDoc);
+		txtDoc.setColumns(10);
 
 		lblSexo = new JLabel("Sexo:");
-		lblSexo.setBounds(31, 116, 39, 14);
+		lblSexo.setBounds(31, 127, 39, 14);
 		contentPane.add(lblSexo);
 
 		rdbtnMasculino = new JRadioButton("Masculino");
-		rdbtnMasculino.setBounds(31, 136, 96, 23);
+		rdbtnMasculino.setBounds(31, 147, 96, 23);
 		contentPane.add(rdbtnMasculino);
 
 		rdbtnFeminino = new JRadioButton("Feminino");
-		rdbtnFeminino.setBounds(31, 156, 101, 23);
+		rdbtnFeminino.setBounds(31, 167, 101, 23);
 		contentPane.add(rdbtnFeminino);
 
 		lblIdiomas = new JLabel("Idioma do assistente auditivo:");
-		lblIdiomas.setBounds(156, 116, 190, 14);
+		lblIdiomas.setBounds(156, 127, 190, 14);
 		contentPane.add(lblIdiomas);
 
 		checkPT = new JCheckBox("Portugu\u00EAs ");
-		checkPT.setBounds(176, 136, 110, 23);
+		checkPT.setBounds(176, 147, 110, 23);
 		contentPane.add(checkPT);
 
 		checkING = new JCheckBox("Ingl\u00EAs");
-		checkING.setBounds(176, 156, 81, 23);
+		checkING.setBounds(176, 167, 81, 23);
 		contentPane.add(checkING);
 
 		checkESP = new JCheckBox("Espanhol");
-		checkESP.setBounds(176, 176, 101, 23);
+		checkESP.setBounds(176, 187, 101, 23);
 		contentPane.add(checkESP);
 
 		btnGravar = new JButton("Gravar");
@@ -131,9 +148,7 @@ public class FrmVisitanteCad extends JFrame {
 		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
 		
-		VisitanteCtrl controle = new VisitanteCtrl(contentPane, txtId, txtNome,txtDataNasc, cbNacionali,rdbtnMasculino,rdbtnFeminino, checkING,checkPT,checkESP);
-		
-		
+		VisitanteCtrl controle = new VisitanteCtrl(contentPane, txtId, txtNome,txtDataNasc, txtDoc, cbNacional, rdbtnCpf, rdbtnPassaport, rdbtnMasculino,rdbtnFeminino, checkING,checkPT,checkESP);
 		
 		controle.gerarId();
 		controle.preencherComboBoxNacional();
