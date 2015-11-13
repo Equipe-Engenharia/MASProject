@@ -200,7 +200,7 @@ public class VisitanteCtrl implements ComponentListener {
 					visitante.setNacionalidade(list.get(3));
 					visitante.setSexo(list.get(4));
 					visitante.setIdiomas(list.get(5));
-					//visitantes.add(visitante);				//PROBLEMA AO ADCIONAR NA LISTA
+					//visitantes.add(visitante);				//PROBLEMA AO ADCIONAR NA LISTA - IMPEDE O FUNCIONAMENTO DO CRUD
 					list.clear();
 				}
 			}
