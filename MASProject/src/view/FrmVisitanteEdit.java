@@ -143,7 +143,7 @@ public class FrmVisitanteEdit extends JFrame {
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
 		
-		VisitanteCtrl controle = new VisitanteCtrl(contentPane, txtId, txtNome,txtDataNasc, cbNacional, rdbtnMasculino,rdbtnFeminino, checkING,checkPT,checkESP);
+		VisitanteCtrl controle = new VisitanteCtrl(contentPane, txtId, txtNome,txtDataNasc, cbNacional, rdbtnMasculino,rdbtnFeminino,checkPT ,checkING,checkESP);
 		
 		controle.preencherComboBoxNacional();
 		txtId.addMouseListener(controle.limpaCampo);

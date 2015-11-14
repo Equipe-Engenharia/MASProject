@@ -6,7 +6,7 @@ public class VisitanteMdl {
 	private String dataNasc;
 	private String nacionalidade;
 	private String sexo;
-	private String idiomas;
+	private String idioma;
 
 	public String getId(){
 		return id;
@@ -48,12 +48,12 @@ public class VisitanteMdl {
 		this.sexo = sexo;
 	}
 
-	public String getIdiomas() {
-		return idiomas;
+	public String getIdioma() {
+		return idioma;
 	}
 
-	public void setIdiomas(String idiomas) {
-		this.idiomas = idiomas;
+	public void setIdioma(String idioma) {
+		this.idioma = idioma;
 	}
 
 }

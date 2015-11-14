@@ -131,7 +131,7 @@ public class FrmVisitanteCad extends JFrame {
 		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
 		
-		VisitanteCtrl controle = new VisitanteCtrl(contentPane, txtId, txtNome,txtDataNasc, cbNacional, rdbtnMasculino,rdbtnFeminino, checkING,checkPT,checkESP);
+		VisitanteCtrl controle = new VisitanteCtrl(contentPane, txtId, txtNome,txtDataNasc, cbNacional, rdbtnMasculino,rdbtnFeminino,checkPT, checkING,checkESP);
 		
 		controle.gerarId();
 		controle.preencherComboBoxNacional();

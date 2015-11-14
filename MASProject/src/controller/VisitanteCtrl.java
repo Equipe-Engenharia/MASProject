@@ -39,7 +39,7 @@ public class VisitanteCtrl implements ComponentListener {
 	private VisitanteFile arquivo = new VisitanteFile();
 
 	public VisitanteCtrl(JPanel form, JTextField txtId, JTextField txtNome, JTextField txtDataNasc, JComboBox<String> cbNacional,
-			JRadioButton rdbtnMasculino, JRadioButton rdbtnFeminino, JCheckBox checkING, JCheckBox checkPT,
+			JRadioButton rdbtnMasculino, JRadioButton rdbtnFeminino, JCheckBox checkPT, JCheckBox checkING,
 			JCheckBox checkESP) {
 		
 		this.txtId = txtId;
@@ -48,8 +48,8 @@ public class VisitanteCtrl implements ComponentListener {
 		this.cbNacional = cbNacional;
 		this.rdbtnMasculino = rdbtnMasculino;
 		this.rdbtnFeminino = rdbtnFeminino;
-		this.checkING = checkING;
 		this.checkPT = checkPT;
+		this.checkING = checkING;
 		this.checkESP = checkESP;
 		this.visitantes = new ArrayList<VisitanteMdl>();
 		
@@ -205,7 +205,7 @@ public class VisitanteCtrl implements ComponentListener {
 					visitante.setDataNasc(list.get(2));
 					visitante.setNacionalidade(list.get(3));
 					visitante.setSexo(list.get(4));
-					visitante.setIdiomas(list.get(5));
+					visitante.setIdioma(list.get(5));
 					visitantes.add(visitante);
 					list.clear();
 				}
@@ -226,6 +226,7 @@ public class VisitanteCtrl implements ComponentListener {
 			}
 		}
 	}
+
 
 	public void pesquisar() {
 
@@ -251,19 +252,10 @@ public class VisitanteCtrl implements ComponentListener {
 						VisitanteMdl item = new VisitanteMdl();
 						item.setId(visitantes.get(i).getId());
 						item.setNome(visitantes.get(i).getNome());
+						item.setDataNasc(visitantes.get(i).getDataNasc());
 						item.setNacionalidade(visitantes.get(i).getNacionalidade());
-						if(visitantes.get(i).getSexo() == "Masculino"){
-							item.setSexo(visitantes.get(i).getSexo());
-						}else if(visitantes.get(i).getSexo() == "Feminino"){
-							item.setSexo(visitantes.get(i).getSexo());
-						}
-						if(visitantes.get(i).getIdiomas() == "Ingles"){
-							item.setIdiomas(visitantes.get(i).getIdiomas());
-						}else if(visitantes.get(i).getIdiomas() == "Portugues"){
-							item.setIdiomas(visitantes.get(i).getIdiomas());
-						}else if(visitantes.get(i).getIdiomas() == "Espanhol"){
-							item.setIdiomas(visitantes.get(i).getIdiomas());
-						}
+						item.setSexo(visitantes.get(i).getSexo());
+						item.setIdioma(visitantes.get(i).getIdioma());
 						lista.add(item);
 					}
 				}
@@ -277,31 +269,39 @@ public class VisitanteCtrl implements ComponentListener {
 							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
 				} 
 				if (pesquisa == "0" || pesquisa != null){
-				for (int i = 0; i < visitantes.size(); i++) {
-					if (pesquisa.equalsIgnoreCase(visitantes.get(i).getId())) {
-						txtId.setText(visitantes.get(i).getId());
-						txtNome.setText(visitantes.get(i).getNome());
-						cbNacional.getModel().setSelectedItem(visitantes.get(i).getNacionalidade());;
-						rdbtnMasculino.isSelected();
-						rdbtnFeminino.isSelected();
-						checkING.isSelected();
-						checkPT.isSelected();
-						checkESP.isSelected();
+					for (int i = 0; i < visitantes.size(); i++) {
+						if (pesquisa.equalsIgnoreCase(visitantes.get(i).getId())) {
+							txtId.setText(visitantes.get(i).getId());
+							txtNome.setText(visitantes.get(i).getNome());
+							txtDataNasc.setText(visitantes.get(i).getDataNasc());
+							cbNacional.getModel().setSelectedItem(visitantes.get(i).getNacionalidade());
+							if (("Masculino").equalsIgnoreCase(visitantes.get(i).getSexo())){
+								rdbtnMasculino.setSelected(true);
+							}else if (("Feminino").equalsIgnoreCase(visitantes.get(i).getSexo())){
+								rdbtnFeminino.setSelected(true);
+							}
+							if (("Português").equalsIgnoreCase(visitantes.get(i).getIdioma().toString())){
+								checkPT.setSelected(true);
+							} else if (("Inglês").equalsIgnoreCase(visitantes.get(i).getIdioma().toString())){	
+								checkING.setSelected(true);
+							} else if (("Espanhol").equalsIgnoreCase(visitantes.get(i).getIdioma().toString())){
+								checkESP.setSelected(true);
+							}
+						}
 					}
-				}
-				}
-				validar = false;
-			} else {
-				if (pesquisa == "") {
-					msg("nosearch", txtNome.getText());
-					limpaCampos();
-				}
-				validar = false;
+					validar = false;
+				} 
 			}
+			else if (pesquisa == "") {
+				msg("nosearch", txtNome.getText());
+				limpaCampos();
+			}
+			validar = false;
 		} else {
 			msg("errorsearch", txtNome.getText());
-		}
+		}		
 	}
+		
 
 	public void editar() {
 		VisitanteMdl visitante = new VisitanteMdl();
@@ -328,11 +328,11 @@ public class VisitanteCtrl implements ComponentListener {
 							visitante.setSexo(rdbtnFeminino.getText());
 						}
 						if(checkING.isSelected()){
-							visitante.setIdiomas(checkING.getText());
+							visitante.setIdioma(checkING.getText());
 						}else if(checkPT.isSelected()){
-							visitante.setIdiomas(checkPT.getText());
+							visitante.setIdioma(checkPT.getText());
 						}else if(checkESP.isSelected()){
-							visitante.setIdiomas(checkESP.getText());
+							visitante.setIdioma(checkESP.getText());
 						}
 						visitantes.set(i, visitante);
 						atualizaDados(visitantes);
@@ -403,11 +403,11 @@ public class VisitanteCtrl implements ComponentListener {
 					visitante.setSexo(rdbtnFeminino.getText());
 				}
 				if(checkING.isSelected()){
-					visitante.setIdiomas(checkING.getText());
+					visitante.setIdioma(checkING.getText());
 				}else if(checkPT.isSelected()){
-					visitante.setIdiomas(checkPT.getText());
+					visitante.setIdioma(checkPT.getText());
 				}else if(checkESP.isSelected()){
-					visitante.setIdiomas(checkESP.getText());
+					visitante.setIdioma(checkESP.getText());
 				}
 				visitantes.add(visitante);
 				msg("save", txtNome.getText());

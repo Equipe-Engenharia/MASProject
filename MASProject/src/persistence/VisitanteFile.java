@@ -54,7 +54,7 @@ public class VisitanteFile implements ArquivosICtrl{
 		buffer.append("\r\n");
 		buffer.append("Sexo         : " + ((VisitanteMdl) object).getSexo());
 		buffer.append("\r\n");
-		buffer.append("Idioma       : " + ((VisitanteMdl) object).getIdiomas());
+		buffer.append("Idioma       : " + ((VisitanteMdl) object).getIdioma());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");
