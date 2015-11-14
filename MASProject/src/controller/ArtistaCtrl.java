@@ -19,25 +19,25 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import model.Artista;
-import persistence.ArtistaArquivo;
+import model.ArtistaMdl;
+import persistence.ArtistaFile;
 
 public class ArtistaCtrl implements ComponentListener {
 
 	private JPanel form;
 	private JTextField txtId, txtNome;
-	private List<Artista> artistas;
+	private List<ArtistaMdl> artistas;
 	private static int contador = 1;
 	private boolean validar;
-	private ArquivosCtrl arquivo = new ArquivosCtrl();
-	ArtistaArquivo formatar = new ArtistaArquivo();
+	private ArquivosCtrl arquivos = new ArquivosCtrl();
+	ArtistaFile arquivo = new ArtistaFile();
 	private String[] artista;
 
 	public ArtistaCtrl(JPanel form, JTextField txtId, JTextField txtNome) {
 
 		this.txtId = txtId;
 		this.txtNome = txtNome;
-		this.artistas = new ArrayList<Artista>();
+		this.artistas = new ArrayList<ArtistaMdl>();
 		
 		lerArquivo();
 	}
@@ -159,10 +159,10 @@ public class ArtistaCtrl implements ComponentListener {
 		String linha = new String();
 		String nArtista[] = null; 
 		StringBuffer nomeArtista;
-		arquivo = new ArquivosCtrl();
+		arquivos = new ArquivosCtrl();
 		try {
-			arquivo.leArquivo("../MASProject/dados", "artistas");
-			linha = arquivo.getBuffer();
+			arquivos.leArquivo("../MASProject/dados", "artistas");
+			linha = arquivos.getBuffer();
 			nArtista = linha.split(";");
 			nomeArtista = new StringBuffer();
 			for(String nome : nArtista){
@@ -187,14 +187,14 @@ public class ArtistaCtrl implements ComponentListener {
 		ArrayList<String> list = new ArrayList<>();
 	
 		try {
-			arquivo.leArquivo("../MASProject/dados/", "artistas");
-			linha = arquivo.getBuffer();
+			arquivos.leArquivo("../MASProject/dados/", "artistas");
+			linha = arquivos.getBuffer();
 			String[] listaArtista = linha.split(";");
 			for (String s : listaArtista) {
 				String text = s.replaceAll(".*: ", "");
 				list.add(text);
 				if (s.contains("---")) {
-					Artista artista = new Artista();
+					ArtistaMdl artista = new ArtistaMdl();
 					artista.setId(list.get(0));
 					artista.setNome(list.get(1));
 					artistas.add(artista);
@@ -206,12 +206,12 @@ public class ArtistaCtrl implements ComponentListener {
 		}
 	}
 
-	public void atualizaDados(List<Artista> listArtistas) {
+	public void atualizaDados(List<ArtistaMdl> listArtistas) {
 		File f = new File("../MASProject/dados/artistas");
 		f.delete();	
-		for (Artista artista : listArtistas) {
+		for (ArtistaMdl artista : listArtistas) {
 			try {
-				formatar.escreveArquivo("../MASProject/dados/", "artistas", "", artista);
+				arquivo.escreveArquivo("../MASProject/dados/", "artistas", "", artista);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -220,7 +220,7 @@ public class ArtistaCtrl implements ComponentListener {
 
 	public void pesquisar() {
 
-		ArrayList<Artista> lista = new ArrayList<>();
+		ArrayList<ArtistaMdl> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
 
@@ -238,7 +238,7 @@ public class ArtistaCtrl implements ComponentListener {
 
 					boolean filtro = txtNome.getText().equalsIgnoreCase(artistas.get(i).getNome());
 					if (filtro == true) {
-						Artista item = new Artista();
+						ArtistaMdl item = new ArtistaMdl();
 						item.setId(artistas.get(i).getId());
 						item.setNome(artistas.get(i).getNome());
 						lista.add(item);
@@ -273,7 +273,7 @@ public class ArtistaCtrl implements ComponentListener {
 	}
 
 	public void editar() {
-		Artista artista = new Artista();
+		ArtistaMdl artista = new ArtistaMdl();
 		validar = false;
 		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < artistas.size(); i++) {
@@ -327,8 +327,8 @@ public class ArtistaCtrl implements ComponentListener {
 	}
 
 	public void gravar() {
-		new ArtistaArquivo();
-		Artista artista = new Artista();
+		new ArtistaFile();
+		ArtistaMdl artista = new ArtistaMdl();
 		validar = false;
 		if (!txtNome.getText().isEmpty()) {
 			for (int i = 0; i < artistas.size(); i++) {

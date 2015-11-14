@@ -19,24 +19,24 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import model.Categoria;
-import persistence.CategoriaArquivo;
+import model.CategoriaMdl;
+import persistence.CategoriaFile;
 
 public class CategoriaCtrl implements ComponentListener {
 
 	private JPanel form;
 	private JTextField txtId, txtNome;
-	private List<Categoria> categorias;
+	private List<CategoriaMdl> categorias;
 	private static int contador = 1;
 	private boolean validar;
-	private ArquivosCtrl arquivo = new ArquivosCtrl();
-	private CategoriaArquivo formatar = new CategoriaArquivo();
+	private ArquivosCtrl arquivos = new ArquivosCtrl();
+	private CategoriaFile arquivo = new CategoriaFile();
 
 	public CategoriaCtrl(JPanel form, JTextField txtId, JTextField txtNome) {
 
 		this.txtId = txtId;
 		this.txtNome = txtNome;
-		this.categorias = new ArrayList<Categoria>();
+		this.categorias = new ArrayList<CategoriaMdl>();
 
 		
 		lerArquivo();
@@ -151,14 +151,14 @@ public class CategoriaCtrl implements ComponentListener {
 		ArrayList<String> list = new ArrayList<>();
 	
 		try {
-			arquivo.leArquivo("../MASProject/dados/", "categorias");
-			linha = arquivo.getBuffer();
+			arquivos.leArquivo("../MASProject/dados/", "categorias");
+			linha = arquivos.getBuffer();
 			String[] listaCategoria = linha.split(";");
 			for (String s : listaCategoria) {
 				String text = s.replaceAll(".*: ", "");
 				list.add(text);
 				if (s.contains("---")) {
-					Categoria categoria = new Categoria();
+					CategoriaMdl categoria = new CategoriaMdl();
 					categoria.setId(list.get(0));
 					categoria.setNome(list.get(1));
 					categorias.add(categoria);
@@ -170,12 +170,12 @@ public class CategoriaCtrl implements ComponentListener {
 		}
 	}
 
-	public void atualizaDados(List<Categoria> listCategorias) {
+	public void atualizaDados(List<CategoriaMdl> listCategorias) {
 		File f = new File("../MASProject/dados/categorias");
 		f.delete();	
-		for (Categoria categoria : listCategorias) {
+		for (CategoriaMdl categoria : listCategorias) {
 			try {
-				formatar.escreveArquivo("../MASProject/dados/", "categorias", "", categoria);
+				arquivo.escreveArquivo("../MASProject/dados/", "categorias", "", categoria);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -184,7 +184,7 @@ public class CategoriaCtrl implements ComponentListener {
 
 	public void pesquisar() {
 
-		ArrayList<Categoria> lista = new ArrayList<>();
+		ArrayList<CategoriaMdl> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
 
@@ -202,7 +202,7 @@ public class CategoriaCtrl implements ComponentListener {
 
 					boolean filtro = txtNome.getText().equalsIgnoreCase(categorias.get(i).getNome());
 					if (filtro == true) {
-						Categoria item = new Categoria();
+						CategoriaMdl item = new CategoriaMdl();
 						item.setId(categorias.get(i).getId());
 						item.setNome(categorias.get(i).getNome());
 						lista.add(item);
@@ -237,7 +237,7 @@ public class CategoriaCtrl implements ComponentListener {
 	}
 
 	public void editar() {
-		Categoria categoria = new Categoria();
+		CategoriaMdl categoria = new CategoriaMdl();
 		validar = false;
 		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < categorias.size(); i++) {
@@ -291,8 +291,8 @@ public class CategoriaCtrl implements ComponentListener {
 	}
 
 	public void gravar() {
-		new CategoriaArquivo();
-		Categoria categoria = new Categoria();
+		new CategoriaFile();
+		CategoriaMdl categoria = new CategoriaMdl();
 		validar = false;
 		if (!txtNome.getText().isEmpty()) {
 			for (int i = 0; i < categorias.size(); i++) {

@@ -18,20 +18,20 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import model.Categoria;
-import model.Material;
-import persistence.MaterialArquivo;
+import model.CategoriaMdl;
+import model.MaterialMdl;
+import persistence.MaterialFile;
 
 public class MaterialCtrl implements ComponentListener {
 
 	private JPanel form;
 	private JTextField txtId, txtNome;
 	private JComboBox<String> cbCategoria;
-	private List<Material> materiais;
+	private List<MaterialMdl> materiais;
 	private static int contador = 1;
 	private boolean validar;
-	private ArquivosCtrl arquivo = new ArquivosCtrl();
-	private MaterialArquivo formatar = new MaterialArquivo();
+	private ArquivosCtrl arquivos = new ArquivosCtrl();
+	private MaterialFile arquivo = new MaterialFile();
 
 	public MaterialCtrl(JPanel form, JTextField txtId, JComboBox<String> cbCategoria,
 			JTextField txtMaterial) {
@@ -40,7 +40,7 @@ public class MaterialCtrl implements ComponentListener {
 		this.cbCategoria = cbCategoria;
 		this.txtId = txtId;
 		this.txtNome = txtMaterial;
-		this.materiais = new ArrayList<Material>();
+		this.materiais = new ArrayList<MaterialMdl>();
 
 		lerArquivo();
 	}
@@ -154,19 +154,19 @@ public class MaterialCtrl implements ComponentListener {
 
 	public void preencherComboBoxCategoria() {
 		String linha = new String();
-		arquivo = new ArquivosCtrl();
+		arquivos = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
-		ArrayList<Categoria> listCategorias = new ArrayList<>();
+		ArrayList<CategoriaMdl> listCategorias = new ArrayList<>();
 
 		try {
-			arquivo.leArquivo("../MASProject/dados/", "categorias");
-			linha = arquivo.getBuffer();
+			arquivos.leArquivo("../MASProject/dados/", "categorias");
+			linha = arquivos.getBuffer();
 			String[] categorias = linha.split(";");
 			for (String s : categorias) {
 				String text = s.replaceAll(".*: ", "");
 				listString.add(text);
 				if (s.contains("---")) {
-					Categoria c = new Categoria();
+					CategoriaMdl c = new CategoriaMdl();
 					c.setNome(listString.get(1));
 					listCategorias.add(c);
 					listString.clear();
@@ -175,7 +175,7 @@ public class MaterialCtrl implements ComponentListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		for (Categoria c : listCategorias) {
+		for (CategoriaMdl c : listCategorias) {
 			cbCategoria.addItem(c.getNome());
 		}
 	}
@@ -187,14 +187,14 @@ public class MaterialCtrl implements ComponentListener {
 		ArrayList<String> list = new ArrayList<>();
 	
 		try {
-			arquivo.leArquivo("../MASProject/dados/", "materiais");
-			linha = arquivo.getBuffer();
+			arquivos.leArquivo("../MASProject/dados/", "materiais");
+			linha = arquivos.getBuffer();
 			String[] listaMaterial = linha.split(";");
 			for (String s : listaMaterial) {
 				String text = s.replaceAll(".*: ", "");
 				list.add(text);
 				if (s.contains("---")) {
-					Material material = new Material();
+					MaterialMdl material = new MaterialMdl();
 					material.setId(list.get(0));
 					material.setNome(list.get(1));
 					material.setCategoria(list.get(2));
@@ -207,12 +207,12 @@ public class MaterialCtrl implements ComponentListener {
 		}
 	}
 
-	public void atualizaDados(List<Material> listMateriais) {
+	public void atualizaDados(List<MaterialMdl> listMateriais) {
 		File f = new File("../MASProject/dados/materiais");
 		f.delete();
-		for (Material material : listMateriais) {
+		for (MaterialMdl material : listMateriais) {
 			try {
-				formatar.escreveArquivo("../MASProject/dados/", "materiais", "", material);
+				arquivo.escreveArquivo("../MASProject/dados/", "materiais", "", material);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -221,7 +221,7 @@ public class MaterialCtrl implements ComponentListener {
 
 	public void pesquisar() {
 
-		ArrayList<Material> lista = new ArrayList<>();
+		ArrayList<MaterialMdl> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
 
@@ -240,7 +240,7 @@ public class MaterialCtrl implements ComponentListener {
 				for (int i = 0; i < materiais.size(); i++) {
 					boolean filtro = txtNome.getText().equalsIgnoreCase(materiais.get(i).getNome());
 					if (filtro == true) {
-						Material item = new Material();
+						MaterialMdl item = new MaterialMdl();
 						item.setId(materiais.get(i).getId());
 						item.setNome(materiais.get(i).getNome());
 						item.setCategoria(materiais.get(i).getCategoria());
@@ -279,7 +279,7 @@ public class MaterialCtrl implements ComponentListener {
 	}
 
 	public void editar() {
-		Material material = new Material();
+		MaterialMdl material = new MaterialMdl();
 		validar = false;
 		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < materiais.size(); i++) {
@@ -343,8 +343,8 @@ public class MaterialCtrl implements ComponentListener {
 	}
 
 	public void gravar() {
-		new MaterialArquivo();
-		Material material = new Material();
+		new MaterialFile();
+		MaterialMdl material = new MaterialMdl();
 		validar = false;
 		if (!txtNome.getText().isEmpty()) {
 			for (int i = 0; i < materiais.size(); i++) {	

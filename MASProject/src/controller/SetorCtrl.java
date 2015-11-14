@@ -19,24 +19,24 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import model.Setor;
-import persistence.SetorArquivo;
+import model.SetorMdl;
+import persistence.SetorFile;
 
 public class SetorCtrl implements ComponentListener {
 
 	private JPanel form;
 	private JTextField txtId, txtNome;
-	private List<Setor> setores;
+	private List<SetorMdl> setores;
 	private static int contador = 1;
 	private boolean validar;
-	private ArquivosCtrl arquivo = new ArquivosCtrl();
-	private SetorArquivo formatar = new SetorArquivo();
+	private ArquivosCtrl arquivos = new ArquivosCtrl();
+	private SetorFile arquivo = new SetorFile();
 
 	public SetorCtrl (JPanel form, JTextField txtId, JTextField txtNome) {
 
 		this.txtId = txtId;
 		this.txtNome = txtNome;
-		this.setores = new ArrayList<Setor>();
+		this.setores = new ArrayList<SetorMdl>();
 
 		lerArquivo();
 	}
@@ -150,14 +150,14 @@ public class SetorCtrl implements ComponentListener {
 		ArrayList<String> list = new ArrayList<>();
 	
 		try {
-			arquivo.leArquivo("../MASProject/dados/", "setores");
-			linha = arquivo.getBuffer();
+			arquivos.leArquivo("../MASProject/dados/", "setores");
+			linha = arquivos.getBuffer();
 			String[] listaSetor = linha.split(";");
 			for (String s : listaSetor) {
 				String text = s.replaceAll(".*: ", "");
 				list.add(text);
 				if (s.contains("---")) {
-					Setor setor = new Setor();
+					SetorMdl setor = new SetorMdl();
 					setor.setId(list.get(0));
 					setor.setNome(list.get(1));
 					setores.add(setor);
@@ -169,12 +169,12 @@ public class SetorCtrl implements ComponentListener {
 		}
 	}
 
-	public void atualizaDados(List<Setor> lista) {
+	public void atualizaDados(List<SetorMdl> lista) {
 		File f = new File("../MASProject/dados/setores");
 		f.delete();	
-		for (Setor setor : lista) {
+		for (SetorMdl setor : lista) {
 			try {
-				formatar.escreveArquivo("../MASProject/dados/", "setores", "", setor);
+				arquivo.escreveArquivo("../MASProject/dados/", "setores", "", setor);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -183,7 +183,7 @@ public class SetorCtrl implements ComponentListener {
 
 	public void pesquisar() {
 
-		ArrayList<Setor> lista = new ArrayList<>();
+		ArrayList<SetorMdl> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
 
@@ -201,7 +201,7 @@ public class SetorCtrl implements ComponentListener {
 
 					boolean filtro = txtNome.getText().equalsIgnoreCase(setores.get(i).getNome());
 					if (filtro == true) {
-						Setor item = new Setor();
+						SetorMdl item = new SetorMdl();
 						item.setId(setores.get(i).getId());
 						item.setNome(setores.get(i).getNome());
 						lista.add(item);
@@ -236,7 +236,7 @@ public class SetorCtrl implements ComponentListener {
 	}
 	
 	public void editar() {
-		Setor setor = new Setor();
+		SetorMdl setor = new SetorMdl();
 		validar = false;
 		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < setores.size(); i++) {
@@ -290,8 +290,8 @@ public class SetorCtrl implements ComponentListener {
 	}
 
 	public void gravar() {
-		new SetorArquivo();
-		Setor setor = new Setor();
+		new SetorFile();
+		SetorMdl setor = new SetorMdl();
 		validar = false;
 		if (!txtNome.getText().isEmpty()) {
 			for (int i = 0; i < setores.size(); i++) {

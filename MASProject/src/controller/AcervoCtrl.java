@@ -32,12 +32,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import model.Artista;
-import model.Categoria;
-import model.Material;
-import model.Obra;
-import model.Setor;
-import persistence.ObraArquivo;
+import model.ArtistaMdl;
+import model.CategoriaMdl;
+import model.MaterialMdl;
+import model.ObraMdl;
+import model.SetorMdl;
+import persistence.ObraFile;
 import view.FrmArtistaCad;
 import view.FrmArtistaEdit;
 import view.FrmCategoriaCad;
@@ -76,7 +76,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	private ArquivosCtrl arqController;
 	private ArtistaCtrl pAController;
-	private List<Obra> obras;// Variavel caminho imagem criada para gravar e
+	private List<ObraMdl> obras;// Variavel caminho imagem criada para gravar e
 								// carregar na hora de procurar obra
 
 	public AcervoCtrl(JPanel frmAcervo, JLabel imagem, JLabel lblStatus, JLabel lblValor, JComboBox<String> cbSetor,
@@ -92,7 +92,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		this.frmAcervo = frmAcervo;
 		this.btnGravar = btnGravar;
 		this.idObra = idObra;
-		this.obras = new ArrayList<Obra>();
+		this.obras = new ArrayList<ObraMdl>();
 		this.imagem = imagem;
 		this.lblValor = lblValor;
 		this.nomeArtista = nomeArtista;
@@ -137,7 +137,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 		this.frmAcervo = frmAcervo;
 		this.idObra = idObra;
-		this.obras = new ArrayList<Obra>();
+		this.obras = new ArrayList<ObraMdl>();
 		this.imagem = imagem;
 		this.nomeArtista = nomeArtista;
 		this.nomeObra = nomeObra;
@@ -181,19 +181,19 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 				String text = s.replaceAll(".*:", "");
 				acervo.add(text);
 				if (s.contains("---")) {
-					Artista artista = new Artista();
+					ArtistaMdl artista = new ArtistaMdl();
 					artista.setNome(acervo.get(1));
-					Obra obra = new Obra();
+					ObraMdl obra = new ObraMdl();
 					obra.setId(acervo.get(0));
 					obra.setNomeObra(acervo.get(2));
 					obra.setDescricaoObra(acervo.get(3));
-					Categoria c = new Categoria();
+					CategoriaMdl c = new CategoriaMdl();
 					c.setNome(acervo.get(4));
 					obra.setDataComposicao(acervo.get(5));
 					obra.setImagem(acervo.get(6));
-					Material material = new Material();
+					MaterialMdl material = new MaterialMdl();
 					material.setNome(acervo.get(7));
-					Setor setor = new Setor();
+					SetorMdl setor = new SetorMdl();
 					setor.setNome(acervo.get(8));
 					obra.setPreco(acervo.get(9));
 					obra.setProprietario(Boolean.parseBoolean(acervo.get(10)));
@@ -212,10 +212,10 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	}
 
-	public void atualizaDados(List<Obra> listObras) {
+	public void atualizaDados(List<ObraMdl> listObras) {
 		File f = new File("../MASProject/dados/acervo");
 		f.delete();
-		ObraArquivo obraImpl = new ObraArquivo();
+		ObraFile obraImpl = new ObraFile();
 		if (listObras.isEmpty()) {
 			File arq = new File("../MASProject/dados/", "acervo");
 			try {
@@ -225,7 +225,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 				e.printStackTrace();
 			}
 		} else {
-			for (Obra obra : listObras) {
+			for (ObraMdl obra : listObras) {
 				try {
 					obraImpl.escreveArquivo("../MASProject/dados/", "acervo", "", obra);
 				} catch (IOException e) {
@@ -237,18 +237,18 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	}
 
 	public void editarAcervo(String nomeObra) {
-		Artista artista = new Artista();
-		Obra o = new Obra();
-		Categoria categoria = new Categoria();
-		Material material = new Material();
-		Setor setor = new Setor();
-		Obra obra = new Obra();
+		ArtistaMdl artista = new ArtistaMdl();
+		ObraMdl o = new ObraMdl();
+		CategoriaMdl categoria = new CategoriaMdl();
+		MaterialMdl material = new MaterialMdl();
+		SetorMdl setor = new SetorMdl();
+		ObraMdl obra = new ObraMdl();
 
 		if (nomeObra.isEmpty() || nomeObra == null || nomeObra == "") {
 			JOptionPane.showMessageDialog(null, "Escolha uma obra para ser Editada");
 			limpaCamposEditar();
 		} else {
-			for (Obra ob : obras) {
+			for (ObraMdl ob : obras) {
 				if (nomeObra.equalsIgnoreCase(ob.getNome())) {
 					obra = ob;
 				}
@@ -359,12 +359,12 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	public void gravarAcervo() {
 		gerarId();
-		Obra obra = new Obra();
-		ObraArquivo obraImpl = new ObraArquivo();
-		Artista artista = new Artista();
-		Categoria categoria = new Categoria();
-		Material material = new Material();
-		Setor setor = new Setor();
+		ObraMdl obra = new ObraMdl();
+		ObraFile obraImpl = new ObraFile();
+		ArtistaMdl artista = new ArtistaMdl();
+		CategoriaMdl categoria = new CategoriaMdl();
+		MaterialMdl material = new MaterialMdl();
+		SetorMdl setor = new SetorMdl();
 		obra.setProprietario(false);
 		if (nomeArtista.getText().isEmpty()) {
 			msgVazio.setVisible(true);
@@ -521,13 +521,13 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		// pAController = new ArtistaPesqCtrl(btnEditarArtista, dataAquisicao,
 		// cbCategoria);
 		ArrayList<String> listString = new ArrayList<>();
-		ArrayList<Artista> listArtista = new ArrayList<>();
+		ArrayList<ArtistaMdl> listArtista = new ArrayList<>();
 		String[] possibilities = pAController.getArtista();
 		for (String s : possibilities) {
 			String text = s.replaceAll(".*:", "");
 			listString.add(text);
 			if (s.contains("---")) {
-				Artista artista = new Artista();
+				ArtistaMdl artista = new ArtistaMdl();
 				artista.setNome(listString.get(1));
 				listArtista.add(artista);
 				listString.clear();
@@ -545,7 +545,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		obras.clear();
 		lerAcervo();
 		cbObras.addItem("");
-		for (Obra o : obras) {
+		for (ObraMdl o : obras) {
 			System.out.println(o.getNome());
 
 			cbObras.addItem(o.getNome());
@@ -572,7 +572,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		String s = (String) JOptionPane.showInputDialog(frmAcervo, "Escolha o artista:\n", "Pesquisar o Artista",
 				JOptionPane.INFORMATION_MESSAGE, null, possibilities, possibilities[0]);
 		if (s != null && s.length() > 0) {
-			for (Obra o : obras) {
+			for (ObraMdl o : obras) {
 				if (s.equalsIgnoreCase(o.getArtista().getNome())) {
 					artistaNome = s;
 				}
@@ -592,7 +592,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		String linha = new String();
 		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
-		ArrayList<Categoria> listCategorias = new ArrayList<>();
+		ArrayList<CategoriaMdl> listCategorias = new ArrayList<>();
 
 		try {
 			arqController.leArquivo("../MASProject/dados/", "categorias");
@@ -602,7 +602,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 				String text = s.replaceAll(".*:", "");
 				listString.add(text);
 				if (s.contains("------")) {
-					Categoria c = new Categoria();
+					CategoriaMdl c = new CategoriaMdl();
 					c.setNome(listString.get(1));
 					listCategorias.add(c);
 					listString.clear();
@@ -613,7 +613,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 		cbCategoria.removeAllItems();
 		cbCategoria.addItem("");
-		for (Categoria c : listCategorias) {
+		for (CategoriaMdl c : listCategorias) {
 			cbCategoria.addItem(c.getNome());
 		}
 	}
@@ -622,7 +622,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		String linha = new String();
 		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
-		ArrayList<Material> listMateriais = new ArrayList<>();
+		ArrayList<MaterialMdl> listMateriais = new ArrayList<>();
 
 		try {
 			arqController.leArquivo("../MASProject/dados/", "materiais");
@@ -632,7 +632,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 				String text = s.replaceAll(".*:", "");
 				listString.add(text);
 				if (s.contains("---")) {
-					Material m = new Material();
+					MaterialMdl m = new MaterialMdl();
 					m.setId(listString.get(0));
 					m.setNome(listString.get(1));
 					m.setCategoria(listString.get(2));
@@ -646,7 +646,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		cbMaterial.removeAllItems();
 		cbMaterial.addItem("");
 
-		for (Material m : listMateriais) {
+		for (MaterialMdl m : listMateriais) {
 			cbMaterial.addItem(m.getNome());
 		}
 	}
@@ -655,7 +655,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		String linha = new String();
 		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
-		ArrayList<Setor> listSetores = new ArrayList<>();
+		ArrayList<SetorMdl> listSetores = new ArrayList<>();
 
 		try {
 			arqController.leArquivo("../MASProject/dados/", "setores");
@@ -670,7 +670,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 				String text = s.replaceAll(".*:", "");
 				listString.add(text);
 				if (s.contains("---")) {
-					Setor setor = new Setor();
+					SetorMdl setor = new SetorMdl();
 					setor.setNome(listString.get(1));
 					listSetores.add(setor);
 					listString.clear();
@@ -679,7 +679,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		for (Setor s : listSetores) {
+		for (SetorMdl s : listSetores) {
 			cbSetor.addItem(s.getNome());
 			cbSetorT.addItem(s.getNome());
 		}
@@ -689,7 +689,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		String linha = new String();
 		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
-		ArrayList<Setor> listSetores = new ArrayList<>();
+		ArrayList<SetorMdl> listSetores = new ArrayList<>();
 
 		try {
 			arqController.leArquivo("../MASProject/dados/", "setores");
@@ -700,7 +700,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 				String text = s.replaceAll(".*:", "");
 				listString.add(text);
 				if (s.contains("---")) {
-					Setor setor = new Setor();
+					SetorMdl setor = new SetorMdl();
 					setor.setNome(listString.get(1));
 					listSetores.add(setor);
 					listString.clear();
@@ -710,7 +710,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			e.printStackTrace();
 		}
 		cbSetor.addItem("");
-		for (Setor s : listSetores) {
+		for (SetorMdl s : listSetores) {
 			cbSetor.addItem(s.getNome());
 		}
 	}
@@ -944,10 +944,10 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	public void procurarObraPorId() {
 		String idObra = JOptionPane.showInputDialog(null, "Qual é o Id da obra?");
 		if (idObra != null) {
-			Obra obra = new Obra();
+			ObraMdl obra = new ObraMdl();
 			obras.clear();
 			lerAcervo();
-			for (Obra o : obras) {
+			for (ObraMdl o : obras) {
 				if (o.getId().equalsIgnoreCase(idObra)) {
 					obra = o;
 				}
@@ -987,7 +987,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		cbObras.removeAllItems();
 		cbObras.addItem("");
 		limpaCamposEditar();
-		for (Obra o : obras) {
+		for (ObraMdl o : obras) {
 			if (nomeArtista.equalsIgnoreCase(o.getArtista().getNome())) {
 				this.nomeArtista.setText(nomeArtista);
 				cbObras.addItem(o.getNome());
@@ -996,8 +996,8 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	}
 
 	public void procurarObra(String itemPesquisado) {
-		Obra obra = new Obra();
-		for (Obra o : obras) {
+		ObraMdl obra = new ObraMdl();
+		for (ObraMdl o : obras) {
 			if (o.getNome().equalsIgnoreCase(itemPesquisado)) {
 				obra = o;
 			}
@@ -1011,7 +1011,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 	}
 
-	public void preencheCampos(Obra obra) {
+	public void preencheCampos(ObraMdl obra) {
 		dataAquisicao.setText(obra.getDataComposicao());
 		nomeArtista.setText(obra.getArtista().getNome());
 		idObra.setText(obra.getId());
