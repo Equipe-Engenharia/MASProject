@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import controller.VisitanteCtrl;
+import javax.swing.ButtonGroup;
 
 public class FrmVisitanteEdit extends JFrame {
 
@@ -31,6 +32,8 @@ public class FrmVisitanteEdit extends JFrame {
 	private JCheckBox checkPT, checkING, checkESP;
 	private JButton btnPesquisar, btnEditar, btnApagar;
 	private MaskFormatter maskData;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -100,10 +103,12 @@ public class FrmVisitanteEdit extends JFrame {
 		contentPane.add(lblSexo);
 
 		rdbtnMasculino = new JRadioButton("Masculino");
+		buttonGroup_1.add(rdbtnMasculino);
 		rdbtnMasculino.setBounds(31, 121, 96, 23);
 		contentPane.add(rdbtnMasculino);
 
 		rdbtnFeminino = new JRadioButton("Feminino");
+		buttonGroup_1.add(rdbtnFeminino);
 		rdbtnFeminino.setBounds(31, 141, 101, 23);
 		contentPane.add(rdbtnFeminino);
 
@@ -112,14 +117,17 @@ public class FrmVisitanteEdit extends JFrame {
 		contentPane.add(lblIdiomas);
 
 		checkPT = new JCheckBox("Portugu\u00EAs ");
+		buttonGroup.add(checkPT);
 		checkPT.setBounds(176, 121, 110, 23);
 		contentPane.add(checkPT);
 
 		checkING = new JCheckBox("Ingl\u00EAs");
+		buttonGroup.add(checkING);
 		checkING.setBounds(176, 141, 81, 23);
 		contentPane.add(checkING);
 
 		checkESP = new JCheckBox("Espanhol");
+		buttonGroup.add(checkESP);
 		checkESP.setBounds(176, 161, 101, 23);
 		contentPane.add(checkESP);
 

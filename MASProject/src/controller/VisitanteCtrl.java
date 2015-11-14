@@ -280,7 +280,7 @@ public class VisitanteCtrl implements ComponentListener {
 							}else if (("Feminino").equalsIgnoreCase(visitantes.get(i).getSexo())){
 								rdbtnFeminino.setSelected(true);
 							}
-							if (("Português").equalsIgnoreCase(visitantes.get(i).getIdioma().toString())){
+							if (("Português").equalsIgnoreCase(visitantes.get(i).getIdioma().toString())){ // BUG: NAO SELECIONA O IDIOMA PORTUGUES!
 								checkPT.setSelected(true);
 							} else if (("Inglês").equalsIgnoreCase(visitantes.get(i).getIdioma().toString())){	
 								checkING.setSelected(true);

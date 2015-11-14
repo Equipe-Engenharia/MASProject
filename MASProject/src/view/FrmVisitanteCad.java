@@ -18,6 +18,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 public class FrmVisitanteCad extends JFrame {
 
@@ -30,6 +31,8 @@ public class FrmVisitanteCad extends JFrame {
 	private JCheckBox checkPT, checkING, checkESP;
 	private JButton btnGravar;
 	private MaskFormatter maskData;
+	private final ButtonGroup idiomas = new ButtonGroup();
+	private final ButtonGroup sexo = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -103,10 +106,12 @@ public class FrmVisitanteCad extends JFrame {
 		contentPane.add(lblSexo);
 
 		rdbtnMasculino = new JRadioButton("Masculino");
+		sexo.add(rdbtnMasculino);
 		rdbtnMasculino.setBounds(31, 121, 96, 23);
 		contentPane.add(rdbtnMasculino);
 
 		rdbtnFeminino = new JRadioButton("Feminino");
+		sexo.add(rdbtnFeminino);
 		rdbtnFeminino.setBounds(31, 141, 101, 23);
 		contentPane.add(rdbtnFeminino);
 
@@ -115,14 +120,17 @@ public class FrmVisitanteCad extends JFrame {
 		contentPane.add(lblIdiomas);
 
 		checkPT = new JCheckBox("Portugu\u00EAs ");
+		idiomas.add(checkPT);
 		checkPT.setBounds(176, 121, 110, 23);
 		contentPane.add(checkPT);
 
 		checkING = new JCheckBox("Ingl\u00EAs");
+		idiomas.add(checkING);
 		checkING.setBounds(176, 141, 81, 23);
 		contentPane.add(checkING);
 
 		checkESP = new JCheckBox("Espanhol");
+		idiomas.add(checkESP);
 		checkESP.setBounds(176, 161, 101, 23);
 		contentPane.add(checkESP);
 
