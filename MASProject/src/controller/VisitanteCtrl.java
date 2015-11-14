@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import model.Visitante;
-import persistence.VisitanteArquivo;
+import model.VisitanteMdl;
+import persistence.VisitanteFile;
 
 public class VisitanteCtrl implements ComponentListener {
 	
@@ -32,11 +32,11 @@ public class VisitanteCtrl implements ComponentListener {
 	private JComboBox<String> cbNacional;
 	private JRadioButton rdbtnMasculino, rdbtnFeminino;
 	private JCheckBox checkPT, checkING, checkESP;
-	private List<Visitante> visitantes;
+	private List<VisitanteMdl> visitantes;
 	private static int contador = 1;
 	private boolean validar;
-	private ArquivosCtrl arquivo = new ArquivosCtrl();
-	private VisitanteArquivo formatar = new VisitanteArquivo();
+	private ArquivosCtrl arquivos = new ArquivosCtrl();
+	private VisitanteFile arquivo = new VisitanteFile();
 
 	public VisitanteCtrl(JPanel form, JTextField txtId, JTextField txtNome, JTextField txtDataNasc, JComboBox<String> cbNacional,
 			JRadioButton rdbtnMasculino, JRadioButton rdbtnFeminino, JCheckBox checkING, JCheckBox checkPT,
@@ -51,7 +51,7 @@ public class VisitanteCtrl implements ComponentListener {
 		this.checkING = checkING;
 		this.checkPT = checkPT;
 		this.checkESP = checkESP;
-		this.visitantes = new ArrayList<Visitante>();
+		this.visitantes = new ArrayList<VisitanteMdl>();
 		
 		lerArquivo();
 	}
@@ -171,11 +171,11 @@ public class VisitanteCtrl implements ComponentListener {
 
 	public void preencherComboBoxNacional() {
 		String linha = new String();
-		arquivo = new ArquivosCtrl();
+		arquivos = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		try {
-			arquivo.leArquivo("../MASProject/dados/", "nacionalidades");
-			linha = arquivo.getBuffer();
+			arquivos.leArquivo("../MASProject/dados/", "nacionalidades");
+			linha = arquivos.getBuffer();
 			String[] nacionalidades = linha.split(";");
 			for (String s : nacionalidades) {
 				cbNacional.addItem(s);
@@ -192,21 +192,21 @@ public class VisitanteCtrl implements ComponentListener {
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();	
 		try {
-			arquivo.leArquivo("../MASProject/dados/", "visitante");
-			linha = arquivo.getBuffer();
+			arquivos.leArquivo("../MASProject/dados/", "visitante");
+			linha = arquivos.getBuffer();
 			String[] listaVisitante = linha.split(";");
 			for (String s : listaVisitante) {
 				String text = s.replaceAll(".*: ", "");
 				list.add(text);
 				if (s.contains("---")) {
-					Visitante visitante = new Visitante();
+					VisitanteMdl visitante = new VisitanteMdl();
 					visitante.setId(list.get(0));
 					visitante.setNome(list.get(1));
 					visitante.setDataNasc(list.get(2));
 					visitante.setNacionalidade(list.get(3));
 					visitante.setSexo(list.get(4));
 					visitante.setIdiomas(list.get(5));
-					visitantes.add(visitante);				//PROBLEMA AO ADCIONAR NA LISTA - IMPEDE O FUNCIONAMENTO DO CRUD
+					visitantes.add(visitante);
 					list.clear();
 				}
 			}
@@ -215,12 +215,12 @@ public class VisitanteCtrl implements ComponentListener {
 		}
 	}
 
-	public void atualizaDados(List<Visitante> listVisitantes) {
+	public void atualizaDados(List<VisitanteMdl> listVisitantes) {
 		File f = new File("../MASProject/dados/visitante");
 		f.delete();
-		for (Visitante visitante : listVisitantes) {
+		for (VisitanteMdl visitante : listVisitantes) {
 			try {
-				formatar.escreveArquivo("../MASProject/dados/", "visitante", "", visitante);
+				arquivo.escreveArquivo("../MASProject/dados/", "visitante", "", visitante);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -229,7 +229,7 @@ public class VisitanteCtrl implements ComponentListener {
 
 	public void pesquisar() {
 
-		ArrayList<Visitante> lista = new ArrayList<>();
+		ArrayList<VisitanteMdl> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
 
@@ -248,7 +248,7 @@ public class VisitanteCtrl implements ComponentListener {
 				for (int i = 0; i < visitantes.size(); i++) {
 					boolean filtro = txtNome.getText().equalsIgnoreCase(visitantes.get(i).getNome());
 					if (filtro == true) {
-						Visitante item = new Visitante();
+						VisitanteMdl item = new VisitanteMdl();
 						item.setId(visitantes.get(i).getId());
 						item.setNome(visitantes.get(i).getNome());
 						item.setNacionalidade(visitantes.get(i).getNacionalidade());
@@ -304,7 +304,7 @@ public class VisitanteCtrl implements ComponentListener {
 	}
 
 	public void editar() {
-		Visitante visitante = new Visitante();
+		VisitanteMdl visitante = new VisitanteMdl();
 		validar = false;
 		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < visitantes.size(); i++) {
@@ -382,8 +382,8 @@ public class VisitanteCtrl implements ComponentListener {
 	
 	
 	public void gravar() {
-		new VisitanteArquivo();
-		Visitante visitante = new Visitante();
+		new VisitanteFile();
+		VisitanteMdl visitante = new VisitanteMdl();
 		validar = false;
 		if (!txtNome.getText().isEmpty()) {
 			for (int i = 0; i < visitantes.size(); i++) {	
