@@ -51,6 +51,7 @@ public class VisitanteCtrl implements ComponentListener {
 		this.checkING = checkING;
 		this.checkPT = checkPT;
 		this.checkESP = checkESP;
+		this.visitantes = new ArrayList<Visitante>();
 		
 		lerArquivo();
 	}
@@ -67,12 +68,13 @@ public class VisitanteCtrl implements ComponentListener {
 	public void limpaCampos() {
 		txtId.setText(null);
 		txtNome.setText(null);
+		txtDataNasc.setText(null);
 		cbNacional.setSelectedIndex(0);
 		rdbtnMasculino.setSelected(false);
 		rdbtnFeminino.setSelected(false);
 		checkING.setSelected(false);
 		checkPT.setSelected(false);
-		this.checkESP.setSelected(false);	
+		checkESP.setSelected(false);	
 	}
 	
 
@@ -188,8 +190,7 @@ public class VisitanteCtrl implements ComponentListener {
 
 	public void lerArquivo() {
 		String linha = new String();
-		ArrayList<String> list = new ArrayList<>();
-	
+		ArrayList<String> list = new ArrayList<>();	
 		try {
 			arquivo.leArquivo("../MASProject/dados/", "visitante");
 			linha = arquivo.getBuffer();
@@ -205,7 +206,7 @@ public class VisitanteCtrl implements ComponentListener {
 					visitante.setNacionalidade(list.get(3));
 					visitante.setSexo(list.get(4));
 					visitante.setIdiomas(list.get(5));
-					//visitantes.add(visitante);				//PROBLEMA AO ADCIONAR NA LISTA - IMPEDE O FUNCIONAMENTO DO CRUD
+					visitantes.add(visitante);				//PROBLEMA AO ADCIONAR NA LISTA - IMPEDE O FUNCIONAMENTO DO CRUD
 					list.clear();
 				}
 			}
@@ -411,6 +412,8 @@ public class VisitanteCtrl implements ComponentListener {
 				visitantes.add(visitante);
 				msg("save", txtNome.getText());
 				atualizaDados(visitantes);
+				limpaCampos();
+				gerarId();
 			}
 		} else {
 			msg("errornull", txtNome.getText());
