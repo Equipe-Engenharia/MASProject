@@ -307,7 +307,7 @@ public class CategoriaCtrl implements ComponentListener {
 				categorias.add(categoria);
 				msg("save", txtNome.getText());
 				atualizaDados(categorias);
-				txtNome.setText(null);
+				limpaCampos();
 				gerarId();
 			}
 		} else {

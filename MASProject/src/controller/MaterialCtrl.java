@@ -360,7 +360,7 @@ public class MaterialCtrl implements ComponentListener {
 				materiais.add(material);
 				msg("save", txtNome.getText());
 				atualizaDados(materiais);
-				txtNome.setText(null);
+				limpaCampos();
 				gerarId();
 			}
 		} else {

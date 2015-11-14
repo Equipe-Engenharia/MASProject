@@ -306,7 +306,7 @@ public class SetorCtrl implements ComponentListener {
 				setores.add(setor);
 				msg("save", txtNome.getText());
 				atualizaDados(setores);
-				txtNome.setText(null);
+				limpaCampos();
 				gerarId();
 			}
 		} else {

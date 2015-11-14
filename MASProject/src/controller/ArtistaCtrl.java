@@ -31,7 +31,6 @@ public class ArtistaCtrl implements ComponentListener {
 	private boolean validar;
 	private ArquivosCtrl arquivo = new ArquivosCtrl();
 	ArtistaArquivo formatar = new ArtistaArquivo();
-	private ArquivosCtrl arqController; //possivelmente essa linha sai, usar somente o "arquivo" logo acima
 	private String[] artista;
 
 	public ArtistaCtrl(JPanel form, JTextField txtId, JTextField txtNome) {
@@ -63,30 +62,6 @@ public class ArtistaCtrl implements ComponentListener {
 	public void limpaCampos() {
 		txtId.setText(null);
 		txtNome.setText(null);
-	}
-	
-	private String[] preencherComboBoxArtista(){
-		String linha = new String();
-		String nArtista[] = null; 
-		StringBuffer nomeArtista;
-		arqController = new ArquivosCtrl();
-		try {
-			arqController.leArquivo("../MASProject/dados", "artistas");
-			linha = arqController.getBuffer();
-			nArtista = linha.split(";");
-			nomeArtista = new StringBuffer();
-			for(String nome : nArtista){
-				if(nome.contains("Artista")){
-					nomeArtista.append(nome.substring(10));
-					nomeArtista.append(";");
-				}
-			}
-			linha = nomeArtista.toString();
-			nArtista = linha.split(";");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return nArtista;
 	}
 
 	public void msg(String tipo, String mensagem) {
@@ -176,6 +151,34 @@ public class ArtistaCtrl implements ComponentListener {
 					new ImageIcon("../MASProject/icons/warning.png"));
 		}
 	}
+	
+	
+	// PREENCHE COMBOBOX /////////////////////
+	
+	private String[] preencherComboBoxArtista(){
+		String linha = new String();
+		String nArtista[] = null; 
+		StringBuffer nomeArtista;
+		arquivo = new ArquivosCtrl();
+		try {
+			arquivo.leArquivo("../MASProject/dados", "artistas");
+			linha = arquivo.getBuffer();
+			nArtista = linha.split(";");
+			nomeArtista = new StringBuffer();
+			for(String nome : nArtista){
+				if(nome.contains("Artista")){
+					nomeArtista.append(nome.substring(10));
+					nomeArtista.append(";");
+				}
+			}
+			linha = nomeArtista.toString();
+			nArtista = linha.split(";");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return nArtista;
+	}
+	
 
 	// CRUD //////////////////////////
 
@@ -340,7 +343,7 @@ public class ArtistaCtrl implements ComponentListener {
 			artistas.add(artista);
 			msg("save", txtNome.getText());
 			atualizaDados(artistas);
-			txtNome.setText(null);
+			limpaCampos();
 			gerarId();
 			}
 		} else {
