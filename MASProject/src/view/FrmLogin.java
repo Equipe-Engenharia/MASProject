@@ -9,20 +9,20 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.LoginCtrl;
-import javax.swing.JPasswordField;
 
 public class FrmLogin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtId, txtNivel, txtUsuario;
+	private JTextField txtId, txtUsuario;
 	private JLabel lblId, lblUsuario;
-	private JButton btnCadastrar, btnEntrar;
+	private JButton btnNovo, btnEntrar;
 	private JLabel lblSenha;
 	private JPasswordField pwdSenha;
 	private JCheckBox chckbxAdm, chckbxOpera;
@@ -50,6 +50,7 @@ public class FrmLogin extends JFrame {
 	 */
 	
 	public FrmLogin() {
+		setType(Type.UTILITY);
 		setTitle("Login de Acesso");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -62,61 +63,53 @@ public class FrmLogin extends JFrame {
 
 		lblId = new JLabel("ID");
 		lblId.setVisible(false);
-		lblId.setBounds(118, 32, 61, 16);
+		lblId.setBounds(36, 34, 61, 16);
 		contentPane.add(lblId);
 
 		txtId = new JTextField();
 		txtId.setEnabled(false);
 		txtId.setEditable(false);
 		txtId.setVisible(false);
-		txtId.setBounds(180, 30, 178, 20);
+		txtId.setBounds(98, 32, 178, 20);
 		txtId.setHorizontalAlignment(SwingConstants.CENTER);
 		txtId.setColumns(10);
 		contentPane.add(txtId);
 		
-		txtNivel = new JTextField();
-		txtNivel.setEnabled(false);
-		txtNivel.setEditable(false);
-		txtNivel.setVisible(false);
-		txtNivel.setBounds(370, 26, 124, 28);
-		contentPane.add(txtNivel);
-		txtNivel.setColumns(10);
-		
 		lblUsuario = new JLabel("Usuário");
-		lblUsuario.setBounds(118, 69, 61, 16);
+		lblUsuario.setBounds(36, 71, 61, 16);
 		contentPane.add(lblUsuario);
 
 		txtUsuario = new JTextField();
 		txtUsuario.setToolTipText("Digite aqui o usuário…");
-		txtUsuario.setBounds(180, 63, 178, 28);
+		txtUsuario.setBounds(98, 65, 178, 28);
 		contentPane.add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
 		lblSenha = new JLabel("Senha");
-		lblSenha.setBounds(118, 109, 61, 16);
+		lblSenha.setBounds(36, 111, 61, 16);
 		contentPane.add(lblSenha);
 		
 		pwdSenha = new JPasswordField();
 		pwdSenha.setToolTipText("Digite aqui a senha…");
-		pwdSenha.setBounds(180, 103, 178, 28);
+		pwdSenha.setBounds(98, 105, 178, 28);
 		contentPane.add(pwdSenha);
 		
 		chckbxAdm = new JCheckBox("Administrativo");
 		buttonGroup.add(chckbxAdm);
 		chckbxAdm.setVisible(false);
-		chckbxAdm.setBounds(386, 105, 128, 23);
+		chckbxAdm.setBounds(366, 32, 128, 23);
 		contentPane.add(chckbxAdm);
 		
 		chckbxOpera = new JCheckBox("Operacional");
 		buttonGroup.add(chckbxOpera);
 		chckbxOpera.setVisible(false);
-		chckbxOpera.setBounds(386, 128, 128, 23);
+		chckbxOpera.setBounds(366, 55, 128, 23);
 		contentPane.add(chckbxOpera);
 		
-		btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.setBounds(286, 166, 97, 34);
-		btnCadastrar.setIcon(new ImageIcon("../MASProject/icons/add.png"));
-		contentPane.add(btnCadastrar);
+		btnNovo = new JButton("Novo");
+		btnNovo.setBounds(286, 166, 97, 34);
+		btnNovo.setIcon(new ImageIcon("../MASProject/icons/add.png"));
+		contentPane.add(btnNovo);
 
 		btnEntrar = new JButton("Entrar");
 		btnEntrar.setBounds(397, 166, 97, 34);
@@ -128,6 +121,7 @@ public class FrmLogin extends JFrame {
 		txtUsuario.addMouseListener(controle.limpaCampo);
 		txtUsuario.addActionListener(controle.entrar);
 		pwdSenha.addActionListener(controle.entrar);
+		btnNovo.addActionListener(controle.cadastrar);
 		btnEntrar.addActionListener(controle.entrar);
 	}
 }

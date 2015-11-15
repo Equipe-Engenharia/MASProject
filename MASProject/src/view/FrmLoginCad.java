@@ -2,19 +2,19 @@ package view;
 
 import java.awt.EventQueue;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.LoginCtrl;
-import javax.swing.JPasswordField;
-import javax.swing.JCheckBox;
-import javax.swing.ButtonGroup;
 
 public class FrmLoginCad extends JFrame {
 
@@ -50,6 +50,7 @@ public class FrmLoginCad extends JFrame {
 	 */
 	
 	public FrmLoginCad() {
+		setType(Type.UTILITY);
 		setTitle("Login de Acesso");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -62,46 +63,46 @@ public class FrmLoginCad extends JFrame {
 
 		lblId = new JLabel("ID");
 		lblId.setVisible(true);
-		lblId.setBounds(118, 32, 61, 16);
+		lblId.setBounds(36, 34, 61, 16);
 		contentPane.add(lblId);
 
 		txtId = new JTextField();
 		txtId.setEnabled(false);
 		txtId.setEditable(false);
 		txtId.setVisible(true);
-		txtId.setBounds(180, 30, 178, 20);
+		txtId.setBounds(98, 32, 178, 20);
 		txtId.setHorizontalAlignment(SwingConstants.CENTER);
 		txtId.setColumns(10);
 		contentPane.add(txtId);
 		
 		lblUsuario = new JLabel("Usuário");
-		lblUsuario.setBounds(118, 69, 61, 16);
+		lblUsuario.setBounds(36, 71, 61, 16);
 		contentPane.add(lblUsuario);
 
 		txtUsuario = new JTextField();
 		txtUsuario.setToolTipText("Digite aqui o usuário…");
-		txtUsuario.setBounds(180, 63, 178, 28);
+		txtUsuario.setBounds(98, 65, 178, 28);
 		contentPane.add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
 		lblSenha = new JLabel("Senha");
-		lblSenha.setBounds(118, 109, 61, 16);
+		lblSenha.setBounds(36, 111, 61, 16);
 		contentPane.add(lblSenha);
 		
 		pwdSenha = new JPasswordField();
 		pwdSenha.setToolTipText("Digite aqui a senha…");
-		pwdSenha.setBounds(180, 103, 178, 28);
+		pwdSenha.setBounds(98, 105, 178, 28);
 		contentPane.add(pwdSenha);
 		
 		chckbxAdm = new JCheckBox("Administrativo");
 		buttonGroup.add(chckbxAdm);
-		chckbxAdm.setBounds(397, 32, 128, 23);
+		chckbxAdm.setBounds(366, 32, 128, 23);
 		contentPane.add(chckbxAdm);
 		
 		chckbxOpera = new JCheckBox("Operacional");
 		chckbxOpera.setSelected(true);
 		buttonGroup.add(chckbxOpera);
-		chckbxOpera.setBounds(397, 55, 128, 23);
+		chckbxOpera.setBounds(366, 55, 128, 23);
 		contentPane.add(chckbxOpera);
 		
 		btnCadastrar = new JButton("Cadastrar");
@@ -115,7 +116,7 @@ public class FrmLoginCad extends JFrame {
 		contentPane.add(btnEditar);
 
 		btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.setBounds(397, 100, 97, 34);
+		btnPesquisar.setBounds(288, 100, 97, 34);
 		btnPesquisar.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnPesquisar);
 

@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 
 import model.LoginMdl;
 import persistence.LoginFile;
+import view.FrmLogin;
+import view.FrmLoginCad;
 
 public class LoginCtrl implements ComponentListener {
 
@@ -375,6 +377,7 @@ public class LoginCtrl implements ComponentListener {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void gravar() {
 		new LoginFile();
 		LoginMdl usuario = new LoginMdl();
@@ -389,7 +392,7 @@ public class LoginCtrl implements ComponentListener {
 			if(!(validar == true)){	
 				usuario.setId(txtId.getText());
 				usuario.setUsuario(txtUsuario.getText());
-				usuario.setSenha(pwdSenha.getPassword().toString());
+				usuario.setSenha(pwdSenha.getText());
 				if(chckbxAdm.isSelected()){
 					usuario.setNivel(chckbxAdm.getText());
 				}else if(chckbxOpera.isSelected()){
@@ -408,6 +411,20 @@ public class LoginCtrl implements ComponentListener {
 
 	// CONTROLE BOTAO //////////////////////////////
 
+	public ActionListener cadastrar = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			FrmLoginCad frmCad = new FrmLoginCad();
+			frmCad.setVisible(true);
+			frmCad.setLocationRelativeTo(null);
+			
+			FrmLogin frmLog = new FrmLogin();
+			frmLog.setVisible(false);
+			frmLog.dispose();
+		}
+	};
+	
 	public ActionListener entrar = new ActionListener() {
 
 		@Override
