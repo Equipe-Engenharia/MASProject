@@ -93,7 +93,7 @@ public class LoginCtrl implements ComponentListener {
 
 		case "errornull":
 			JOptionPane.showMessageDialog(null, 
-					"ATENÇÃO!\nCampo Vazio.\nPor favor, digite o Usuário e a Senha.", 
+					"ATENÇÃO!\nCampo Vazio.\n\nPor favor, digite o Usuário e a Senha.", 
 					"Erro", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
@@ -232,7 +232,8 @@ public class LoginCtrl implements ComponentListener {
 
 	public void entrar() {
 		
-		if (!txtUsuario.getText().isEmpty() && pwdSenha.getPassword() != null) {
+		if (!txtUsuario.getText().isEmpty() 
+				&& pwdSenha.getPassword().length != 0) {
 			for (int i = 0; i < usuarios.size(); i++) {
 				if (txtUsuario.getText().equalsIgnoreCase(usuarios.get(i).getUsuario())
 						&& validar(usuarios.get(i).getSenha()) == true) {
@@ -323,21 +324,31 @@ public class LoginCtrl implements ComponentListener {
 		}
 	}
 	
+	
+	@SuppressWarnings("deprecation")
 	public void editar() {
 		LoginMdl usuario = new LoginMdl();
 		validar = false;
-		if (!txtId.getText().isEmpty()) {
+		if (!txtId.getText().isEmpty()
+				&& pwdSenha.getPassword().length != 0) {
 			for (int i = 0; i < usuarios.size(); i++) {
-				if (!txtId.getText().equalsIgnoreCase(usuarios.get(i).getId()) && txtUsuario.getText().equalsIgnoreCase(usuarios.get(i).getUsuario())) {				
+				if (!txtId.getText().equalsIgnoreCase(usuarios.get(i).getId()) 
+						&& txtUsuario.getText().equalsIgnoreCase(usuarios.get(i).getUsuario())) {				
 					msg("erroredit",usuarios.get(i).getUsuario());
 					validar = true;
 				} 
 			}
 			if(!(validar == true)){
 				for (int i = 0; i < usuarios.size(); i++) {
-					if (txtUsuario.getText().equalsIgnoreCase(usuarios.get(i).getId())) {
+					if (txtId.getText().equalsIgnoreCase(usuarios.get(i).getId())) {
 						usuario.setId(txtId.getText());
 						usuario.setUsuario(txtUsuario.getText());
+						usuario.setSenha(pwdSenha.getText().toString());
+						if(chckbxAdm.isSelected()){
+							usuario.setNivel(chckbxAdm.getText());
+						}else if(chckbxOpera.isSelected()){
+							usuario.setNivel(chckbxOpera.getText());
+						}
 						usuarios.set(i, usuario);
 						atualizaDados(usuarios);
 						msg("edit", txtUsuario.getText());
@@ -346,14 +357,15 @@ public class LoginCtrl implements ComponentListener {
 				}
 			}
 		} else {
-			msg("errorsearch", txtUsuario.getText());
+			msg("errornull", txtUsuario.getText());
 		}
 	}
 
 	public void excluir() {
 		if (!txtUsuario.getText().isEmpty()) {
 			for (int i = 0; i < usuarios.size(); i++) {
-				if (txtId.getText().equalsIgnoreCase(usuarios.get(i).getId()) && txtUsuario.getText().equalsIgnoreCase(usuarios.get(i).getUsuario())) {
+				if (txtId.getText().equalsIgnoreCase(usuarios.get(i).getId()) 
+						&& txtUsuario.getText().equalsIgnoreCase(usuarios.get(i).getUsuario())) {
 					usuarios.remove(i);
 					validar = true;
 				}
@@ -377,12 +389,15 @@ public class LoginCtrl implements ComponentListener {
 		}
 	}
 
+	
 	@SuppressWarnings("deprecation")
 	public void gravar() {
+		gerarId();
 		new LoginFile();
 		LoginMdl usuario = new LoginMdl();
 		validar = false;
-		if (!txtUsuario.getText().isEmpty()) {
+		if (!txtUsuario.getText().isEmpty()
+				&& pwdSenha.getPassword().length != 0) {
 			for (int i = 0; i < usuarios.size(); i++) {
 				if (txtUsuario.getText().equalsIgnoreCase(usuarios.get(i).getUsuario())){
 					msg("erroredit", usuarios.get(i).getUsuario());
@@ -392,7 +407,7 @@ public class LoginCtrl implements ComponentListener {
 			if(!(validar == true)){	
 				usuario.setId(txtId.getText());
 				usuario.setUsuario(txtUsuario.getText());
-				usuario.setSenha(pwdSenha.getText());
+				usuario.setSenha(pwdSenha.getText().toString());
 				if(chckbxAdm.isSelected()){
 					usuario.setNivel(chckbxAdm.getText());
 				}else if(chckbxOpera.isSelected()){
