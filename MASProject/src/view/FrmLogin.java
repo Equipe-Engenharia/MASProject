@@ -53,6 +53,7 @@ public class FrmLogin extends JFrame {
 		setType(Type.UTILITY);
 		setTitle("Login de Acesso");
 		setResizable(false);
+		//setUndecorated(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
@@ -107,6 +108,7 @@ public class FrmLogin extends JFrame {
 		contentPane.add(chckbxOpera);
 		
 		btnNovo = new JButton("Novo");
+		btnNovo.setVisible(false);
 		btnNovo.setBounds(286, 166, 97, 34);
 		btnNovo.setIcon(new ImageIcon("../MASProject/icons/add.png"));
 		contentPane.add(btnNovo);
@@ -116,7 +118,7 @@ public class FrmLogin extends JFrame {
 		btnEntrar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
 		contentPane.add(btnEntrar);
 
-		LoginCtrl controle = new LoginCtrl(contentPane, txtId, txtUsuario, pwdSenha, chckbxAdm, chckbxOpera);
+		LoginCtrl controle = new LoginCtrl(contentPane, txtId, txtUsuario, pwdSenha, chckbxAdm, chckbxOpera, btnNovo);
 
 		txtUsuario.addMouseListener(controle.limpaCampo);
 		txtUsuario.addActionListener(controle.entrar);

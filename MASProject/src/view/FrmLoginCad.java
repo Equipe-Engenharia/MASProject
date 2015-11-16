@@ -51,7 +51,7 @@ public class FrmLoginCad extends JFrame {
 	
 	public FrmLoginCad() {
 		setType(Type.UTILITY);
-		setTitle("Login de Acesso");
+		setTitle("Administrar Usuários");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
@@ -125,7 +125,7 @@ public class FrmLoginCad extends JFrame {
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
 		
-		LoginCtrl controle = new LoginCtrl(contentPane, txtId, txtUsuario, pwdSenha, chckbxAdm, chckbxOpera);
+		LoginCtrl controle = new LoginCtrl(contentPane, txtId, txtUsuario, pwdSenha, chckbxAdm, chckbxOpera, btnCadastrar);
 		
 		controle.gerarId();
 		txtUsuario.addMouseListener(controle.limpaCampo);

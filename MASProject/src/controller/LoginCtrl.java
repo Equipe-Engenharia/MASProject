@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -32,34 +33,43 @@ public class LoginCtrl implements ComponentListener {
 	private JTextField txtId, txtUsuario;
 	private JPasswordField pwdSenha;
 	private JCheckBox chckbxAdm, chckbxOpera;
+	private JButton btnCadastrar;
 	private List<LoginMdl> usuarios;
 	private static int contador = 1;
 	private boolean validar;
 	private ArquivosCtrl arquivos = new ArquivosCtrl();
 	private LoginFile arquivo = new LoginFile();
+	private SessionCtrl session = new SessionCtrl();
 
-	public LoginCtrl (JPanel form, JTextField txtId, JTextField txtUsuario, JPasswordField pwdSenha, JCheckBox chckbxAdm, JCheckBox chckbxOpera) {
+	public LoginCtrl (JPanel form, JTextField txtId, JTextField txtUsuario, JPasswordField pwdSenha, 
+			JCheckBox chckbxAdm, JCheckBox chckbxOpera, JButton btnCadastrar) {
 
 		this.txtId = txtId;
 		this.txtUsuario = txtUsuario;
 		this.pwdSenha = pwdSenha;
 		this.chckbxAdm = chckbxAdm;
 		this.chckbxOpera = chckbxOpera;
+		this.btnCadastrar = btnCadastrar;
 		this.usuarios = new ArrayList<LoginMdl>();
 
 		lerArquivo();
 	}
 	
+	
 	// METODOS DE SUPORTE ////////////////////////
 
+	
 	public void gerarId(){
+		
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String NewId = (dateFormat.format(date));
 		txtId.setText("USR" + NewId);
 	}
+	
 
 	public void limpaCampos() {
+		
 		txtId.setText(null);
 		txtUsuario.setText(null);
 		pwdSenha.setText(null);
@@ -95,6 +105,13 @@ public class LoginCtrl implements ComponentListener {
 			JOptionPane.showMessageDialog(null, 
 					"ATENÇÃO!\nCampo Vazio.\n\nPor favor, digite o Usuário e a Senha.", 
 					"Erro", 
+					JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/warning.png"));
+			break;
+		case "errorsession":
+			JOptionPane.showMessageDialog(null, 
+					"ACESSO NEGADO!\n\nPor favor, solicite a autorização de um administrador.", 
+					"Bloqueado", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
@@ -188,10 +205,13 @@ public class LoginCtrl implements ComponentListener {
 					new ImageIcon("../MASProject/icons/warning.png"));
 		}
 	}
+	
 
 	// CRUD //////////////////////////
+	
 
 	public void lerArquivo() {
+		
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 	
@@ -217,7 +237,9 @@ public class LoginCtrl implements ComponentListener {
 		}
 	}
 
+
 	public void atualizaDados(List<LoginMdl> lista) {
+		
 		File f = new File("../MASProject/dados/usuarios");
 		f.delete();	
 		for (LoginMdl usuario : lista) {
@@ -232,6 +254,7 @@ public class LoginCtrl implements ComponentListener {
 
 	public void entrar() {
 		
+		String n = "";
 		if (!txtUsuario.getText().isEmpty() 
 				&& pwdSenha.getPassword().length != 0) {
 			for (int i = 0; i < usuarios.size(); i++) {
@@ -240,9 +263,14 @@ public class LoginCtrl implements ComponentListener {
 					txtId.setText(usuarios.get(i).getId());
 					if (("Administrativo").equalsIgnoreCase(usuarios.get(i).getNivel())){
 						chckbxAdm.setSelected(true);
+						btnCadastrar.setVisible(true);
+						n = chckbxAdm.getText();
 					} else if (("Operacional").equalsIgnoreCase(usuarios.get(i).getNivel())){
 						chckbxOpera.setSelected(true);
+						btnCadastrar.setVisible(false);
+						n = chckbxOpera.getText();
 					}
+					session.registrar(txtId.getText(), txtUsuario.getText(), n);			
 					msg("pwd", txtUsuario.getText());
 					validar = true;
 				} 			
@@ -255,6 +283,28 @@ public class LoginCtrl implements ComponentListener {
 			msg("errornull", txtUsuario.getText());
 		}
 		validar = false;
+	}
+	
+	
+	public void acesso() {
+
+		if (!txtUsuario.getText().isEmpty() 
+				&& pwdSenha.getPassword().length != 0) {
+			session.lerSession();
+			if (("Administrativo").equalsIgnoreCase(session.registrar(txtId.getText(), txtUsuario.getText(), chckbxAdm.getText()))){	
+				
+				FrmLogin frame = new FrmLogin();
+		        frame.dispose(); //NAO FECHA O FRMLOGIN!
+		        
+		        FrmLoginCad frmCad = new FrmLoginCad();
+				frmCad.setVisible(true);
+				frmCad.setLocationRelativeTo(null);
+			} else {
+				msg("errorsession", "");
+			}
+		} else {
+			msg("errornull", "");
+		}
 	}
 
 	
@@ -327,6 +377,7 @@ public class LoginCtrl implements ComponentListener {
 	
 	@SuppressWarnings("deprecation")
 	public void editar() {
+		
 		LoginMdl usuario = new LoginMdl();
 		validar = false;
 		if (!txtId.getText().isEmpty()
@@ -362,6 +413,7 @@ public class LoginCtrl implements ComponentListener {
 	}
 
 	public void excluir() {
+		
 		if (!txtUsuario.getText().isEmpty()) {
 			for (int i = 0; i < usuarios.size(); i++) {
 				if (txtId.getText().equalsIgnoreCase(usuarios.get(i).getId()) 
@@ -392,11 +444,12 @@ public class LoginCtrl implements ComponentListener {
 	
 	@SuppressWarnings("deprecation")
 	public void gravar() {
+		
 		gerarId();
 		new LoginFile();
 		LoginMdl usuario = new LoginMdl();
 		validar = false;
-		if (!txtUsuario.getText().isEmpty()
+		if (!txtUsuario.getText().isEmpty() 
 				&& pwdSenha.getPassword().length != 0) {
 			for (int i = 0; i < usuarios.size(); i++) {
 				if (txtUsuario.getText().equalsIgnoreCase(usuarios.get(i).getUsuario())){
@@ -423,20 +476,16 @@ public class LoginCtrl implements ComponentListener {
 			msg("errornull", txtUsuario.getText());
 		}
 	}
+	
 
 	// CONTROLE BOTAO //////////////////////////////
+	
 
 	public ActionListener cadastrar = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			FrmLoginCad frmCad = new FrmLoginCad();
-			frmCad.setVisible(true);
-			frmCad.setLocationRelativeTo(null);
-			
-			FrmLogin frmLog = new FrmLogin();
-			frmLog.setVisible(false);
-			frmLog.dispose();
+			acesso();
 		}
 	};
 	
