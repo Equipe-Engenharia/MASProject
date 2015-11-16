@@ -121,7 +121,7 @@ public void lerSession() {
 			if (("Administrativo").equalsIgnoreCase(logon.get(0).getNivel())){
 				open = true;
 			} else {
-				msg("errorsession", logon.get(0).getNivel());
+				//msg("errorsession", logon.get(0).getNivel());
 				open = false;
 			}
 			return open;

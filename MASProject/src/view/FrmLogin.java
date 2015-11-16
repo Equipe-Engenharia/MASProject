@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -15,6 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.LoginCtrl;
+import controller.SessionCtrl;
 
 public class FrmLogin extends JFrame {
 
@@ -125,5 +128,32 @@ public class FrmLogin extends JFrame {
 		pwdSenha.addActionListener(controle.entrar);
 		btnNovo.addActionListener(controle.cadastrar);
 		btnEntrar.addActionListener(controle.entrar);
+		
+		
+	///   PASSAR PARA O CONTROLLER LOGINCTRL  ////////////////
+		
+		pwdSenha.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				SessionCtrl session = new SessionCtrl();
+				if (session.acesso() == false){
+					dispose();
+				}
+			} 
+		});
+		
+		btnEntrar.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				SessionCtrl session = new SessionCtrl();
+				if (session.acesso() == false){
+					dispose();
+				}
+			} 
+		});
+		
+		btnNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) { 
+				dispose();	
+			} 
+		});
 	}
 }
