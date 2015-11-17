@@ -13,9 +13,8 @@ import com.toedter.calendar.JCalendar;
 
 public class FrmCalendario extends JDialog {
 
-	public FrmCalendario(FrmExp kk, boolean modal) {
+	public FrmCalendario() {
 		Cal();
-		this.setLocationRelativeTo(kk);
 	}
 	public void Cal()
 	{
