@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.event.MouseEvent;
@@ -18,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
@@ -55,33 +57,33 @@ public class FrmAcervoEdit extends JFrame {
 		setResizable(false);
 		setTitle("Excluir/Alterar Acervo");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 615, 674);
+		setBounds(100, 100, 1088, 680);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
 
 		JLabel lblArtista = new JLabel("Artista");
-		lblArtista.setBounds(113, 15, 52, 14);
+		lblArtista.setBounds(106, 91, 52, 14);
 		contentPane.add(lblArtista);
 
 		txtArtist = new JTextField();
-		txtArtist.setBounds(166, 15, 352, 20);
+		txtArtist.setBounds(159, 88, 342, 20);
 		txtArtist.setEditable(false);
 		contentPane.add(txtArtist);
 		txtArtist.setColumns(10);
 
 		btnPesquisaArtist = new JButton("");
 		btnPesquisaArtist.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		btnPesquisaArtist.setBounds(522, 11, 29, 28);
+		btnPesquisaArtist.setBounds(502, 84, 29, 28);
 		contentPane.add(btnPesquisaArtist);
 
-		JLabel lblId = new JLabel("Procurar pelo ID da Obra");
-		lblId.setBounds(20, 55, 200, 14);
+		JLabel lblId = new JLabel("Procurar pelo ID");
+		lblId.setBounds(54, 36, 107, 14);
 		contentPane.add(lblId);
 
 		JTextField idObra2 = new JTextField();
-		idObra2.setBounds(166, 55, 126, 20);
+		idObra2.setBounds(162, 33, 150, 20);
 		idObra2.setEditable(false);
 		idObra2.setColumns(10);
 		contentPane.add(idObra2);
@@ -89,32 +91,32 @@ public class FrmAcervoEdit extends JFrame {
 
 		JButton btnPesquisaId = new JButton("");
 		btnPesquisaId.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		btnPesquisaId.setBounds(302, 48, 29, 28);
+		btnPesquisaId.setBounds(315, 29, 29, 28);
 		contentPane.add(btnPesquisaId);
 
 		JLabel msgGravado = new JLabel("Dados Alterados com sucesso");
 		msgGravado.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
-		msgGravado.setBounds(28, 500, 230, 23);
+		msgGravado.setBounds(810, 504, 230, 23);
 		msgGravado.setVisible(false);
 		contentPane.add(msgGravado);
 
 		JLabel msgVazio = new JLabel("");
 		msgVazio.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		msgVazio.setBounds(43, 500, 192, 23);
+		msgVazio.setBounds(50, 669, 192, 23);
 		msgVazio.setVisible(false);
 		contentPane.add(msgVazio);
 
 		JButton btnPesquisaObra = new JButton("");
 		btnPesquisaObra.setIcon(new ImageIcon("../MASProject/icons/search.png"));
-		btnPesquisaObra.setBounds(522, 85, 29, 28);
+		btnPesquisaObra.setBounds(502, 122, 29, 28);
 		contentPane.add(btnPesquisaObra);
 
 		JLabel lblNomeDaObra = new JLabel("Nome da Obra");
-		lblNomeDaObra.setBounds(67, 88, 98, 14);
+		lblNomeDaObra.setBounds(60, 168, 98, 14);
 		contentPane.add(lblNomeDaObra);
 
 		final JTextField txtNovaObra = new JTextField("Editar nome da Obra");
-		txtNovaObra.setBounds(166, 111, 352, 20);
+		txtNovaObra.setBounds(159, 165, 342, 20);
 		txtNovaObra.addMouseListener(new MouseListener() {
 
 			@Override
@@ -147,57 +149,60 @@ public class FrmAcervoEdit extends JFrame {
 			}
 		});
 		contentPane.add(txtNovaObra);
+		
+		JLabel lblPesqObra = new JLabel("Procurar por Obra");
+		lblPesqObra.setBounds(41, 129, 117, 14);
+		contentPane.add(lblPesqObra);
 
 		JComboBox<String> cbObras = new JComboBox<String>();
-
-		cbObras.setBounds(166, 88, 352, 20);
+		cbObras.setBounds(159, 126, 342, 20);
 		contentPane.add(cbObras);
 
 		JLabel lblNewLabel = new JLabel("Data de Composição");
-		lblNewLabel.setBounds(28, 150, 139, 14);
+		lblNewLabel.setBounds(519, 168, 139, 14);
 		contentPane.add(lblNewLabel);
 
 		maskData = new MaskFormatter("##/##/####");
 		ftxtData = new JFormattedTextField(maskData);
-		ftxtData.setBounds(168, 150, 86, 20);
+		ftxtData.setBounds(659, 165, 98, 20);
 		contentPane.add(ftxtData);
 		ftxtData.setColumns(10);
 		ftxtData.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JLabel lblCategoriaDaObra = new JLabel("Categoria da Obra");
-		lblCategoriaDaObra.setBounds(44, 182, 122, 14);
+		JLabel lblCategoriaDaObra = new JLabel("Categoria");
+		lblCategoriaDaObra.setBounds(85, 208, 73, 14);
 		contentPane.add(lblCategoriaDaObra);
 
 		cbCategoria = new JComboBox<String>();
-		cbCategoria.setBounds(167, 182, 133, 20);
+		cbCategoria.setBounds(159, 205, 133, 20);
 		contentPane.add(cbCategoria);
 
-		JLabel lblMaterial = new JLabel("Material da Obra");
-		lblMaterial.setBounds(49, 249, 122, 14);
+		JLabel lblMaterial = new JLabel("Material");
+		lblMaterial.setBounds(96, 246, 62, 14);
 		contentPane.add(lblMaterial);
 
 		cbMaterial = new JComboBox<String>();
-		cbMaterial.setBounds(166, 249, 133, 20);
+		cbMaterial.setBounds(159, 243, 133, 20);
 		contentPane.add(cbMaterial);
 
 		JLabel lblNewLabel_1 = new JLabel("Descrição da Obra");
-		lblNewLabel_1.setBounds(28, 330, 139, 14);
+		lblNewLabel_1.setBounds(60, 322, 139, 14);
 		contentPane.add(lblNewLabel_1);
 
 		JEditorPane edtDescricao = new JEditorPane();
-		edtDescricao.setBounds(28, 346, 558, 81);
+		edtDescricao.setBounds(60, 338, 962, 106);
 		contentPane.add(edtDescricao);
 
 		JLabel lblStatus = new JLabel("Status");
-		lblStatus.setBounds(125, 291, 46, 14);
+		lblStatus.setBounds(318, 246, 54, 14);
 		contentPane.add(lblStatus);
 
 		cbStatus = new JComboBox<String>();
-		cbStatus.setBounds(167, 288, 133, 20);
+		cbStatus.setBounds(368, 243, 133, 20);
 		contentPane.add(cbStatus);
 
-		JLabel lblValor = new JLabel("Valor da Aquisição :");
-		lblValor.setBounds(28, 446, 150, 23);
+		JLabel lblValor = new JLabel("Valor da Aquisição");
+		lblValor.setBounds(60, 469, 150, 23);
 		contentPane.add(lblValor);
 
 		maskValor = new DecimalFormat("#,###,###.00");
@@ -206,43 +211,43 @@ public class FrmAcervoEdit extends JFrame {
 		formatter.setAllowsInvalid(false);
 		txtValor = new JFormattedTextField(maskValor);
 		txtValor.setHorizontalAlignment(SwingConstants.RIGHT);
-		txtValor.setBounds(150, 448, 110, 20);
+		txtValor.setBounds(182, 471, 110, 20);
 		txtValor.setColumns(10);
 		contentPane.add(txtValor);
 
 		JLabel Setor = new JLabel("Setor");
-		Setor.setBounds(127, 218, 46, 14);
+		Setor.setBounds(318, 208, 46, 14);
 		contentPane.add(Setor);
 
 		cbSetor = new JComboBox<String>();
-		cbSetor.setBounds(167, 215, 133, 20);
+		cbSetor.setBounds(368, 205, 133, 20);
 		contentPane.add(cbSetor);
 
 		JLabel lblSelecImagem = new JLabel("");
 		lblSelecImagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
 		lblSelecImagem.setBackground(SystemColor.inactiveCaption);
 		lblSelecImagem.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSelecImagem.setBounds(397, 137, 189, 147);
-		lblSelecImagem.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		lblSelecImagem.setBounds(772, 114, 250, 155);
+		lblSelecImagem.setBorder(new LineBorder(Color.GRAY));
 		contentPane.add(lblSelecImagem);
 
 		btnPesquisarImagem = new JButton("");
 		btnPesquisarImagem.setIcon(new ImageIcon("../MASProject/icons/add.png"));
-		btnPesquisarImagem.setBounds(440, 299, 46, 30);
+		btnPesquisarImagem.setBounds(843, 280, 46, 30);
 		contentPane.add(btnPesquisarImagem);
 
 		btnExcluirImagem = new JButton("");
 		btnExcluirImagem.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		btnExcluirImagem.setBounds(497, 299, 46, 30);
+		btnExcluirImagem.setBounds(899, 280, 46, 30);
 		contentPane.add(btnExcluirImagem);
 
 		JButton btnExcluir = new JButton("Excluir Obra");
 		btnExcluir.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		btnExcluir.setBounds(457, 594, 122, 34);
+		btnExcluir.setBounds(905, 582, 117, 34);
 
 		JButton btnGravar = new JButton("Gravar Alterações");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnGravar.setBounds(298, 594, 122, 34);
+		btnGravar.setBounds(772, 583, 107, 34);
 		btnGravar.setEnabled(false);
 		btnGravar.setToolTipText("Carregue Uma Obra Para Editar");
 		contentPane.add(btnGravar);

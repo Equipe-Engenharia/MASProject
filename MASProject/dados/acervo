@@ -24,3 +24,16 @@ Valor :
 Obra Propria :false
 Status :Exposição
 ---------------------------
+ID Obra :ACV151117-002006
+Nome do Artista :Bruno Martins
+Nome da obra :Teste de Cadastro
+Descrição :Teste de descrisão
+Categoria : Gravura
+Data :17/11/2015
+Imagem :../MASProject/imagens/ACV151117-002006.png
+Material : Vidro
+Setor : Branco
+Valor :10.000,00
+Obra Propria :true
+Status :Exposição
+---------------------------

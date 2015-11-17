@@ -62,12 +62,9 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	private JComboBox<String> cbStatusT;
 	private JComboBox<String> cbSetor;
 
+	//TODOS OS BOTOES
 	private JButton btnGravar, btnPesqArtist, btnNovoArtista, btnEditarArtista, btnNovaCategoria, btnNovoMaterial,
-			btnEditarMaterial, btnNovoSetor, btnEditarCategoria, btnEditarSetor, btnNovoSetorT, btnEditarSetorT; // passar
-																													// o
-																													// resto
-																													// dos
-	// botoes
+			btnEditarMaterial, btnNovoSetor, btnEditarCategoria, btnEditarSetor, btnNovoSetorT, btnEditarSetorT;
 
 	private String artistaNome;
 	private String caminhoImagem;
@@ -76,9 +73,8 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	private ArquivosCtrl arqController;
 	private ArtistaCtrl pAController;
-	private List<ObraMdl> obras;// Variavel caminho imagem criada para gravar e
-								// carregar na hora de procurar obra
-
+	private List<ObraMdl> obras;//VARIAVEL CAMINHO IMAGEM CRIADA PARA GRAVAR E CARREGAR NA HORA DE PROCURAR OBRA
+	
 	public AcervoCtrl(JPanel frmAcervo, JLabel imagem, JLabel lblStatus, JLabel lblValor, JComboBox<String> cbSetor,
 			JComboBox<String> cbSetorT, JComboBox<String> cbStatus, JComboBox<String> cbStatusT,
 			JComboBox<String> cbCategoria, JComboBox<String> cbObras, JComboBox<String> cbMaterial,
@@ -164,11 +160,17 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		this.msgGravar = msgGravar;
 		this.msgVazio = msgVazio;
 		this.caminhoImagem = "../MASProject/icons/painting.png";
+		
 		lerAcervo();
 	}
-	// MANIPULA CRUD ///////////////////////////////////////////////
+	
+	
+	
+	// CRUD ///////////////////////////////////////////////
 
+	
 	public void lerAcervo() {
+		
 		String linha = new String();
 		ArrayList<String> acervo = new ArrayList<>();
 
@@ -209,10 +211,11 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
+	
 
 	public void atualizaDados(List<ObraMdl> listObras) {
+		
 		File f = new File("../MASProject/dados/acervo");
 		f.delete();
 		ObraFile obraImpl = new ObraFile();
@@ -233,17 +236,17 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 				}
 			}
 		}
-
 	}
 
+	
 	public void editarAcervo(String nomeObra) {
+		
 		ArtistaMdl artista = new ArtistaMdl();
 		ObraMdl o = new ObraMdl();
 		CategoriaMdl categoria = new CategoriaMdl();
 		MaterialMdl material = new MaterialMdl();
 		SetorMdl setor = new SetorMdl();
 		ObraMdl obra = new ObraMdl();
-
 		if (nomeObra.isEmpty() || nomeObra == null || nomeObra == "") {
 			JOptionPane.showMessageDialog(null, "Escolha uma obra para ser Editada");
 			limpaCamposEditar();
@@ -283,9 +286,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 					}
 					if (txtNovaObra.getText().isEmpty()
 							|| txtNovaObra.getText().equalsIgnoreCase("Editar nome da Obra")) {
-
 					}
-
 					obras.get(i).setArtista(artista);
 					obras.get(i).setCategoria(categoria);
 					obras.get(i).setSetor(setor);
@@ -326,8 +327,10 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			preencherComboBoxObras();
 		}
 	}
+	
 
 	public void excluirObraAcervo(String nomeObra) {
+		
 		if (nomeObra.isEmpty() || nomeObra == null || nomeObra == "") {
 			JOptionPane.showMessageDialog(null, "Escolha uma obra para ser Excluida");
 			limpaCamposEditar();
@@ -356,8 +359,10 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			}, delay, interval);
 		}
 	}
+	
 
 	public void gravarAcervo() {
+		
 		gerarId();
 		ObraMdl obra = new ObraMdl();
 		ObraFile obraImpl = new ObraFile();
@@ -421,14 +426,19 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	}
 
 	// METODOS DE SUPORTE ///////////////////////////////////////////
+	
+	
 	public void copiaImg() {
+		
 		try {
 			String tipo = caminhoImagem.replaceAll(".*\\.", "");
 			System.out.println(tipo);
 			String l = caminhoImagem;
 			String i = "../MASProject/imagens/" + idObra.getText() + "." + tipo;
 			caminhoImagem = i;
+			@SuppressWarnings("resource")
 			FileInputStream fisDe = new FileInputStream(l);
+			@SuppressWarnings("resource")
 			FileOutputStream fisPara = new FileOutputStream(i);
 			FileChannel fcPara = fisDe.getChannel();
 			FileChannel fcDe = fisPara.getChannel();
@@ -441,14 +451,18 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 	}
 
+	
 	public void gerarId() {
+		
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String id = (dateFormat.format(date));
 		idObra.setText("ACV" + id);
 	}
 
+	
 	public void limpaCampos() {
+		
 		imagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
 		imagem.setBackground(SystemColor.inactiveCaption);
 		imagem.setHorizontalAlignment(SwingConstants.CENTER);
@@ -462,7 +476,9 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		cbSetor.setSelectedIndex(0);
 	}
 
+	
 	public void limpaCamposEditar() {
+		
 		imagem.setBackground(SystemColor.inactiveCaption);
 		imagem.setHorizontalAlignment(SwingConstants.CENTER);
 		ImageIcon img = new ImageIcon("../MASProject/icons/painting.png");
@@ -481,10 +497,12 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		cbSetor.setSelectedIndex(0);
 		cbObras.setSelectedIndex(0);
 	}
+	
 
 	public void procuraImagem() {
-		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos de imagem (jpg, png, gif)", "jpg", "png",
-				"gif");
+		
+		FileNameExtensionFilter filtro = new FileNameExtensionFilter(
+				"Arquivos de imagem (jpg, png, gif)", "jpg", "png","gif");
 		String diretorioBase = System.getProperty("user.home") + "/Desktop";
 		File dir = new File(diretorioBase);
 
@@ -503,21 +521,25 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			imagem.setIcon(new ImageIcon(newImg));
 			caminhoImagem = caminhoArquivo;
 		}
-
 	}
+	
 
 	public String getNomeArtista() {
+		
 		return artistaNome;
 	}
+	
 
 	public void setNomeArtista(String nomeArtista) {
+		
 		this.artistaNome = nomeArtista;
 		recarregarCbObras(nomeArtista);
 	}
+	
 
-	// alterei o nome pesquisarArtistaEditar por editarArtista
-	public void editarArtista() {
-		//
+	
+	public void editarArtista() { // ALTEREI O NOME pesquisarArtistaEditar POR editarArtista
+
 		// pAController = new ArtistaPesqCtrl(btnEditarArtista, dataAquisicao,
 		// cbCategoria);
 		ArrayList<String> listString = new ArrayList<>();
@@ -538,10 +560,13 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			possibilities2[i] = listArtista.get(i).getNome();
 		}
 	}
+	
+	
 
 	// PREENCHIMENTO COMBOBOX ////////////////////////////////
 
 	public void preencherComboBoxObras() {
+		
 		obras.clear();
 		lerAcervo();
 		cbObras.addItem("");
@@ -553,8 +578,8 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 	}
 
-	public void pesquisarArtista() { // Abre um JOptionPane com uma comboBox -
-										// Vitor
+	public void pesquisarArtista() { // ABRE UM JOptionPane COM UMA ComboBox - VITOR
+		
 		pAController = new ArtistaCtrl();
 		Object[] possibilities = pAController.getArtista();
 		String s = (String) JOptionPane.showInputDialog(frmAcervo, "Escolha o artista:\n", "Pesquisar o Artista",
@@ -565,8 +590,10 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			return;
 		}
 	}
+	
 
 	public void pesquisarArtistaEditar() {
+		
 		pAController = new ArtistaCtrl();
 		Object[] possibilities = pAController.getArtista();
 		String s = (String) JOptionPane.showInputDialog(frmAcervo, "Escolha o artista:\n", "Pesquisar o Artista",
@@ -587,13 +614,14 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			}
 		}
 	}
+	
 
 	public void preencherComboBoxCategoria() {
+		
 		String linha = new String();
 		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<CategoriaMdl> listCategorias = new ArrayList<>();
-
 		try {
 			arqController.leArquivo("../MASProject/dados/", "categorias");
 			linha = arqController.getBuffer();
@@ -617,13 +645,14 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			cbCategoria.addItem(c.getNome());
 		}
 	}
+	
 
 	public void preencherComboBoxMaterial() {
+		
 		String linha = new String();
 		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<MaterialMdl> listMateriais = new ArrayList<>();
-
 		try {
 			arqController.leArquivo("../MASProject/dados/", "materiais");
 			linha = arqController.getBuffer();
@@ -645,18 +674,18 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 		cbMaterial.removeAllItems();
 		cbMaterial.addItem("");
-
 		for (MaterialMdl m : listMateriais) {
 			cbMaterial.addItem(m.getNome());
 		}
 	}
+	
 
 	public void preencherComboBoxSetores() {
+		
 		String linha = new String();
 		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<SetorMdl> listSetores = new ArrayList<>();
-
 		try {
 			arqController.leArquivo("../MASProject/dados/", "setores");
 			linha = arqController.getBuffer();
@@ -685,7 +714,9 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 	}
 
+	
 	public void preencherComboBoxSetoresAlteraDel() {
+		
 		String linha = new String();
 		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
@@ -714,8 +745,10 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			cbSetor.addItem(s.getNome());
 		}
 	}
+	
 
 	public void preencherComboStatusProprio() {
+		
 		String linha = new String();
 		arqController = new ArquivosCtrl();
 		try {
@@ -724,7 +757,6 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			String[] proprio = linha.split(";");
 			cbStatus.removeAllItems();
 			cbStatus.addItem("");
-
 			for (String s : proprio) {
 				cbStatus.addItem(s);
 			}
@@ -732,8 +764,10 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void preencherComboStatusTerceiro() {
+		
 		String linha = new String();
 		arqController = new ArquivosCtrl();
 		try {
@@ -750,12 +784,13 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void preencherComboStatusTerceiroEditar() {
+		
 		String linha = new String();
 		arqController = new ArquivosCtrl();
 		cbStatus.removeAllItems();
-
 		try {
 			arqController.leArquivo("../MASProject/dados", "status_obra_terceiros");
 			linha = arqController.getBuffer();
@@ -768,11 +803,14 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			e.printStackTrace();
 		}
 	}
+	
 
 	// CHAMADA DE TELA ////////////////////////////////////////////
+	
 
 	@SuppressWarnings("static-access")
 	private void abrirTelaNovoArtista() {
+		
 		FrmArtistaCad newArtista = new FrmArtistaCad();
 		newArtista.setVisible(true);
 		newArtista.setDefaultCloseOperation(newArtista.DISPOSE_ON_CLOSE);
@@ -781,6 +819,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	@SuppressWarnings("static-access")
 	private void abrirTelaEditarArtista() {
+		
 		FrmArtistaEdit editArtista = new FrmArtistaEdit();
 		editArtista.setVisible(true);
 		editArtista.setDefaultCloseOperation(editArtista.DISPOSE_ON_CLOSE);
@@ -789,6 +828,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	@SuppressWarnings("static-access")
 	private void abrirTelaNovaCategoria() {
+		
 		FrmCategoriaCad newCategoria = new FrmCategoriaCad();
 		newCategoria.setVisible(true);
 		newCategoria.setDefaultCloseOperation(newCategoria.DISPOSE_ON_CLOSE);
@@ -797,26 +837,27 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	@SuppressWarnings("static-access")
 	private void abrirTelaEditarCategoria() {
+		
 		FrmCategoriaEdit editCategoria = new FrmCategoriaEdit();
 		editCategoria.setVisible(true);
 		editCategoria.setDefaultCloseOperation(editCategoria.DISPOSE_ON_CLOSE);
 		editCategoria.setResizable(false);
-
 	}
 
 	@SuppressWarnings("static-access")
 	private void abrirTelaNovoMaterial() {
+		
 		FrmMaterialCad newMaterial = new FrmMaterialCad();
 		newMaterial.setVisible(true);
 		newMaterial.setDefaultCloseOperation(newMaterial.DISPOSE_ON_CLOSE);
 		newMaterial.setResizable(false);
 		if (newMaterial.isActive()) {
-
 		}
 	}
 
 	@SuppressWarnings("static-access")
 	private void abrirTelaEditarMaterial() {
+		
 		FrmMaterialEdit editMaterial = new FrmMaterialEdit();
 		editMaterial.setVisible(true);
 		editMaterial.setDefaultCloseOperation(editMaterial.DISPOSE_ON_CLOSE);
@@ -825,6 +866,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	@SuppressWarnings("static-access")
 	private void abrirTelaNovoSetor() {
+		
 		FrmSetorCad newSetor = new FrmSetorCad();
 		newSetor.setVisible(true);
 		newSetor.setDefaultCloseOperation(newSetor.DISPOSE_ON_CLOSE);
@@ -833,15 +875,17 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	@SuppressWarnings("static-access")
 	private void abrirTelaEditarSetor() {
+		
 		FrmSetorEdit editSetor = new FrmSetorEdit();
 		editSetor.setVisible(true);
 		editSetor.setDefaultCloseOperation(editSetor.DISPOSE_ON_CLOSE);
 		editSetor.setResizable(false);
-
 	}
 
+	
 	// CONTROLE BOTAO /////////////////////////////////////////
 
+	
 	public ActionListener novaCategoria = new ActionListener() {
 
 		@Override
@@ -879,6 +923,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 	};
 	public ActionListener pesquisaArtistaEditar = new ActionListener() {
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			pesquisarArtistaEditar();
@@ -942,6 +987,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	};
 
 	public void procurarObraPorId() {
+		
 		String idObra = JOptionPane.showInputDialog(null, "Qual é o Id da obra?");
 		if (idObra != null) {
 			ObraMdl obra = new ObraMdl();
@@ -963,8 +1009,10 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			limpaCamposEditar();
 		}
 	}
+	
 
 	public ActionListener gravarAcervo = new ActionListener() {
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			gravarAcervo();
@@ -972,6 +1020,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	};
 
 	public ActionListener remover_imagem = new ActionListener() {
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			imagem.setIcon(new ImageIcon("../MASProject/icons/painting.png"));
@@ -982,6 +1031,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	// EVENTOS COMBOBOX
 
 	public void recarregarCbObras(String nomeArtista) {
+		
 		obras.clear();
 		lerAcervo();
 		cbObras.removeAllItems();
@@ -994,8 +1044,10 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			}
 		}
 	}
+	
 
 	public void procurarObra(String itemPesquisado) {
+		
 		ObraMdl obra = new ObraMdl();
 		for (ObraMdl o : obras) {
 			if (o.getNome().equalsIgnoreCase(itemPesquisado)) {
@@ -1010,8 +1062,10 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			preencheCampos(obra);
 		}
 	}
+	
 
 	public void preencheCampos(ObraMdl obra) {
+		
 		dataAquisicao.setText(obra.getDataComposicao());
 		nomeArtista.setText(obra.getArtista().getNome());
 		idObra.setText(obra.getId());
@@ -1088,10 +1142,10 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String action = e.getActionCommand(); // verifica qual botao foi
-												// pressionado na tela
-		if (action.equals(btnPesqArtist.getText())) { // compara com o texto do
-														// botao
+		
+		String action = e.getActionCommand(); // VERIFICA QUAL BOTAO FOI PRESSIONADO NA TELA
+		
+		if (action.equals(btnPesqArtist.getText())) { // COMPARA COM O TEXTO DO BOTAO
 			pesquisarArtista();
 		} else if (action.equals(btnNovoArtista.getText())) {
 			abrirTelaNovoArtista();
@@ -1115,5 +1169,4 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			abrirTelaEditarSetor();
 		}
 	}
-
 }
