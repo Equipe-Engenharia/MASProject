@@ -2,6 +2,7 @@ package view;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -75,6 +76,7 @@ public class FrmSetorCad extends JFrame {
 		txtId.setColumns(10);
 
 		btnGravar = new JButton("Gravar");
+		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.setBounds(397, 166, 97, 34);
 		contentPane.add(btnGravar);
 
