@@ -41,9 +41,12 @@ public class SetorCtrl implements ComponentListener {
 		lerArquivo();
 	}
 	
+	
 	// METODOS DE SUPORTE ////////////////////////
+	
 
 	public void gerarId(){
+		
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String NewId = (dateFormat.format(date));
@@ -51,6 +54,7 @@ public class SetorCtrl implements ComponentListener {
 	}
 
 	public void limpaCampos() {
+		
 		txtId.setText(null);
 		txtNome.setText(null);		
 	}
@@ -142,13 +146,15 @@ public class SetorCtrl implements ComponentListener {
 					new ImageIcon("../MASProject/icons/warning.png"));
 		}
 	}
+	
 
 	// CRUD //////////////////////////
+	
 
 	public void lerArquivo() {
+		
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
-	
 		try {
 			arquivos.leArquivo("../MASProject/dados/", "setores");
 			linha = arquivos.getBuffer();
@@ -168,8 +174,10 @@ public class SetorCtrl implements ComponentListener {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void atualizaDados(List<SetorMdl> lista) {
+		
 		File f = new File("../MASProject/dados/setores");
 		f.delete();	
 		for (SetorMdl setor : lista) {
@@ -180,26 +188,26 @@ public class SetorCtrl implements ComponentListener {
 			}
 		}
 	}
+	
 
 	public void pesquisar() {
 
 		ArrayList<SetorMdl> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
-
 			for (int i = 0; i < setores.size(); i++) {
 				if (txtNome.getText().equalsIgnoreCase(setores.get(i).getId())) {
 					txtId.setText(setores.get(i).getId());
 					txtNome.setText(setores.get(i).getNome());
 					validar = true;
-				} else if (txtNome.getText().equalsIgnoreCase(setores.get(i).getNome())) {
+				} else if (setores.get(i).getNome().toLowerCase().startsWith(txtNome.getText().toLowerCase())) {
 					validar = true;
 				}
 			}
 			if (validar == true) {
 				for (int i = 0; i < setores.size(); i++) {
 
-					boolean filtro = txtNome.getText().equalsIgnoreCase(setores.get(i).getNome());
+					boolean filtro = setores.get(i).getNome().toLowerCase().startsWith(txtNome.getText().toLowerCase());
 					if (filtro == true) {
 						SetorMdl item = new SetorMdl();
 						item.setId(setores.get(i).getId());
@@ -235,7 +243,9 @@ public class SetorCtrl implements ComponentListener {
 		}
 	}
 	
+	
 	public void editar() {
+		
 		SetorMdl setor = new SetorMdl();
 		validar = false;
 		if (!txtId.getText().isEmpty()) {
@@ -262,10 +272,13 @@ public class SetorCtrl implements ComponentListener {
 		}
 	}
 
+	
 	public void excluir() {
+		
 		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < setores.size(); i++) {
-				if (txtId.getText().equalsIgnoreCase(setores.get(i).getId()) && txtNome.getText().equalsIgnoreCase(setores.get(i).getNome())) {
+				if (txtId.getText().equalsIgnoreCase(setores.get(i).getId()) 
+						&& txtNome.getText().equalsIgnoreCase(setores.get(i).getNome())) {
 					setores.remove(i);
 					validar = true;
 				}
@@ -288,8 +301,10 @@ public class SetorCtrl implements ComponentListener {
 			pesquisar();
 		}
 	}
+	
 
 	public void gravar() {
+		
 		new SetorFile();
 		SetorMdl setor = new SetorMdl();
 		validar = false;
@@ -313,13 +328,16 @@ public class SetorCtrl implements ComponentListener {
 			msg("errornull", txtNome.getText());
 		}
 	}
+	
 
 	// CONTROLE BOTAO //////////////////////////////
+	
 
 	public ActionListener pesquisar = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			pesquisar();
 		}
 	};
@@ -328,6 +346,7 @@ public class SetorCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 				excluir();
 		}
 	};
@@ -336,6 +355,7 @@ public class SetorCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			editar();
 		}
 	};
@@ -344,6 +364,7 @@ public class SetorCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			gravar();
 		}
 	};
@@ -371,6 +392,7 @@ public class SetorCtrl implements ComponentListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			
 			if (contador == 1) {
 				txtNome.setText(null);
 				contador += 1;

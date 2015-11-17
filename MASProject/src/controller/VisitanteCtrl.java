@@ -56,16 +56,21 @@ public class VisitanteCtrl implements ComponentListener {
 		lerArquivo();
 	}
 
+	
 	// METODOS DE SUPORTE ////////////////////////
+	
 
 	public void gerarId() { // USO DESTE METODO NO GRAVARMATERIAL E FRMMATERIAL (CAD E EDIT)
+		
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String NewId = (dateFormat.format(date));
 		txtId.setText("VST" + NewId);
 	}
 
+	
 	public void limpaCampos() {
+		
 		txtId.setText(null);
 		txtNome.setText(null);
 		txtDataNasc.setText(null);
@@ -168,8 +173,10 @@ public class VisitanteCtrl implements ComponentListener {
 
 
 	// PREENCHE COMBOBOX /////////////////////
+	
 
 	public void preencherComboBoxNacional() {
+		
 		String linha = new String();
 		arquivos = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
@@ -185,10 +192,13 @@ public class VisitanteCtrl implements ComponentListener {
 			e.printStackTrace();
 		}
 	}
+	
 
 	// CRUD //////////////////////////
+	
 
 	public void lerArquivo() {
+		
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();	
 		try {
@@ -214,8 +224,10 @@ public class VisitanteCtrl implements ComponentListener {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void atualizaDados(List<VisitanteMdl> listVisitantes) {
+		
 		File f = new File("../MASProject/dados/visitante");
 		f.delete();
 		for (VisitanteMdl visitante : listVisitantes) {
@@ -233,21 +245,20 @@ public class VisitanteCtrl implements ComponentListener {
 		ArrayList<VisitanteMdl> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
-
 			for (int i = 0; i < visitantes.size(); i++) {
 				if (txtNome.getText().equalsIgnoreCase(visitantes.get(i).getId())) {
 					txtId.setText(visitantes.get(i).getId());
 					txtNome.setText(visitantes.get(i).getNome());
 					cbNacional.getModel().setSelectedItem(visitantes.get(i).getNacionalidade());
 					validar = true;
-				} else if (txtNome.getText().equalsIgnoreCase(visitantes.get(i).getNome())) {
+				} else if (visitantes.get(i).getNome().toLowerCase().startsWith(txtNome.getText().toLowerCase())) {
 					validar = true;
 					cbNacional.getModel().setSelectedItem(visitantes.get(i).getNacionalidade());
 				}
 			}
 			if (validar == true) {
 				for (int i = 0; i < visitantes.size(); i++) {
-					boolean filtro = txtNome.getText().equalsIgnoreCase(visitantes.get(i).getNome());
+					boolean filtro = visitantes.get(i).getNome().toLowerCase().startsWith(txtNome.getText().toLowerCase());
 					if (filtro == true) {
 						VisitanteMdl item = new VisitanteMdl();
 						item.setId(visitantes.get(i).getId());
@@ -280,7 +291,7 @@ public class VisitanteCtrl implements ComponentListener {
 							}else if (("Feminino").equalsIgnoreCase(visitantes.get(i).getSexo())){
 								rdbtnFeminino.setSelected(true);
 							}
-							if (("Português").equalsIgnoreCase(visitantes.get(i).getIdioma().toString())){ // BUG: NAO SELECIONA O IDIOMA PORTUGUES!
+							if (("Português").equalsIgnoreCase(visitantes.get(i).getIdioma().toString())){
 								checkPT.setSelected(true);
 							} else if (("Inglês").equalsIgnoreCase(visitantes.get(i).getIdioma().toString())){	
 								checkING.setSelected(true);
@@ -304,6 +315,7 @@ public class VisitanteCtrl implements ComponentListener {
 		
 
 	public void editar() {
+		
 		VisitanteMdl visitante = new VisitanteMdl();
 		validar = false;
 		if (!txtId.getText().isEmpty()) {
@@ -345,8 +357,10 @@ public class VisitanteCtrl implements ComponentListener {
 			msg("errorsearch", txtNome.getText());
 		}
 	}
+	
 
 	public void excluir() {
+		
 		validar = false;
 		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < visitantes.size(); i++) {
@@ -382,12 +396,14 @@ public class VisitanteCtrl implements ComponentListener {
 	
 	
 	public void gravar() {
+		
 		new VisitanteFile();
 		VisitanteMdl visitante = new VisitanteMdl();
 		validar = false;
 		if (!txtNome.getText().isEmpty()) {
 			for (int i = 0; i < visitantes.size(); i++) {	
-				if (txtNome.getText().equalsIgnoreCase(visitantes.get(i).getNome()) && cbNacional.getSelectedItem().toString().equalsIgnoreCase(visitantes.get(i).getNacionalidade())) {
+				if (txtNome.getText().equalsIgnoreCase(visitantes.get(i).getNome()) 
+						&& cbNacional.getSelectedItem().toString().equalsIgnoreCase(visitantes.get(i).getNacionalidade())) {
 					msg("erroredit", visitantes.get(i).getNome());
 					validar = true;
 				}
@@ -422,11 +438,13 @@ public class VisitanteCtrl implements ComponentListener {
 	
 
 	// CONTROLE BOTAO //////////////////////////////
+	
 
 	public ActionListener pesquisar = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			pesquisar();
 		}
 	};
@@ -435,6 +453,7 @@ public class VisitanteCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 				excluir();
 		}
 	};
@@ -443,6 +462,7 @@ public class VisitanteCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			editar();
 		}
 	};
@@ -451,11 +471,14 @@ public class VisitanteCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			gravar();
 		}
 	};
 
+	
 	// CONTROLE MOUSE ///////////////////////////////
+	
 
 	public MouseListener limpaCampo = new MouseListener() {
 
@@ -478,6 +501,7 @@ public class VisitanteCtrl implements ComponentListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			
 			if (contador == 1) {
 				txtNome.setText(null);
 				contador += 1;
@@ -487,25 +511,17 @@ public class VisitanteCtrl implements ComponentListener {
 
 	@Override
 	public void componentResized(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void componentShown(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void componentHidden(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }

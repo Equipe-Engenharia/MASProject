@@ -116,12 +116,12 @@ public class FrmVisitanteEdit extends JFrame {
 		lblIdiomas.setBounds(156, 101, 190, 14);
 		contentPane.add(lblIdiomas);
 
-		checkPT = new JCheckBox("Portugu\u00EAs ");
+		checkPT = new JCheckBox("Português");
 		buttonGroup.add(checkPT);
 		checkPT.setBounds(176, 121, 110, 23);
 		contentPane.add(checkPT);
 
-		checkING = new JCheckBox("Ingl\u00EAs");
+		checkING = new JCheckBox("Inglês");
 		buttonGroup.add(checkING);
 		checkING.setBounds(176, 141, 81, 23);
 		contentPane.add(checkING);
