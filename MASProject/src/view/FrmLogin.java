@@ -126,8 +126,8 @@ public class FrmLogin extends JFrame {
 		txtUsuario.addMouseListener(controle.limpaCampo);
 		txtUsuario.addActionListener(controle.entrar);
 		pwdSenha.addActionListener(controle.entrar);
-		btnNovo.addActionListener(controle.cadastrar);
 		btnEntrar.addActionListener(controle.entrar);
+		btnNovo.addActionListener(controle.cadastrar);
 		
 		
 	///   PASSAR PARA O CONTROLLER LOGINCTRL  ////////////////

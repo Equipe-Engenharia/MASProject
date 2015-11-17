@@ -48,6 +48,7 @@ public class MaterialCtrl implements ComponentListener {
 	// METODOS DE SUPORTE ////////////////////////
 
 	public void gerarId() { // USO DESTE METODO NO GRAVARMATERIAL E FRMMATERIAL (CAD E EDIT)
+		
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String NewId = (dateFormat.format(date));
@@ -55,6 +56,7 @@ public class MaterialCtrl implements ComponentListener {
 	}
 
 	public void limpaCampos() {
+		
 		txtId.setText(null);
 		txtNome.setText(null);
 		cbCategoria.setSelectedIndex(0);
@@ -152,12 +154,13 @@ public class MaterialCtrl implements ComponentListener {
 
 	// PREENCHE COMBOBOX /////////////////////
 
+	
 	public void preencherComboBoxCategoria() {
+		
 		String linha = new String();
 		arquivos = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
 		ArrayList<CategoriaMdl> listCategorias = new ArrayList<>();
-
 		try {
 			arquivos.leArquivo("../MASProject/dados/", "categorias");
 			linha = arquivos.getBuffer();
@@ -180,12 +183,14 @@ public class MaterialCtrl implements ComponentListener {
 		}
 	}
 
+	
 	// CRUD //////////////////////////
 
+	
 	public void lerArquivo() {
+		
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
-	
 		try {
 			arquivos.leArquivo("../MASProject/dados/", "materiais");
 			linha = arquivos.getBuffer();
@@ -206,8 +211,10 @@ public class MaterialCtrl implements ComponentListener {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void atualizaDados(List<MaterialMdl> listMateriais) {
+		
 		File f = new File("../MASProject/dados/materiais");
 		f.delete();
 		for (MaterialMdl material : listMateriais) {
@@ -231,14 +238,14 @@ public class MaterialCtrl implements ComponentListener {
 					txtNome.setText(materiais.get(i).getNome());
 					cbCategoria.getModel().setSelectedItem(materiais.get(i).getCategoria());
 					validar = true;
-				} else if (txtNome.getText().equalsIgnoreCase(materiais.get(i).getNome())) {
+				} else if (materiais.get(i).getNome().toLowerCase().startsWith(txtNome.getText().toLowerCase())) {
 					validar = true;
 					cbCategoria.getModel().setSelectedItem(materiais.get(i).getCategoria());
 				}
 			}
 			if (validar == true) {
 				for (int i = 0; i < materiais.size(); i++) {
-					boolean filtro = txtNome.getText().equalsIgnoreCase(materiais.get(i).getNome());
+					boolean filtro = materiais.get(i).getNome().toLowerCase().startsWith(txtNome.getText().toLowerCase());
 					if (filtro == true) {
 						MaterialMdl item = new MaterialMdl();
 						item.setId(materiais.get(i).getId());
@@ -277,8 +284,10 @@ public class MaterialCtrl implements ComponentListener {
 			msg("errorsearch", txtNome.getText());
 		}
 	}
+	
 
 	public void editar() {
+		
 		MaterialMdl material = new MaterialMdl();
 		validar = false;
 		if (!txtId.getText().isEmpty()) {
@@ -308,7 +317,9 @@ public class MaterialCtrl implements ComponentListener {
 		}
 	}
 
+	
 	public void excluir() {
+		
 		validar = false;
 		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < materiais.size(); i++) {
@@ -341,14 +352,17 @@ public class MaterialCtrl implements ComponentListener {
 			pesquisar();
 		}
 	}
+	
 
 	public void gravar() {
+		
 		new MaterialFile();
 		MaterialMdl material = new MaterialMdl();
 		validar = false;
 		if (!txtNome.getText().isEmpty()) {
 			for (int i = 0; i < materiais.size(); i++) {	
-				if (txtNome.getText().equalsIgnoreCase(materiais.get(i).getNome()) && cbCategoria.getSelectedItem().toString().equalsIgnoreCase(materiais.get(i).getCategoria())) {
+				if (txtNome.getText().equalsIgnoreCase(materiais.get(i).getNome()) 
+						&& cbCategoria.getSelectedItem().toString().equalsIgnoreCase(materiais.get(i).getCategoria())) {
 					msg("erroredit", materiais.get(i).getNome());
 					validar = true;
 				}
@@ -367,13 +381,16 @@ public class MaterialCtrl implements ComponentListener {
 			msg("errornull", txtNome.getText());
 		}
 	}
+	
 
 	// CONTROLE BOTAO //////////////////////////////
+	
 
 	public ActionListener pesquisar = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			pesquisar();
 		}
 	};
@@ -382,6 +399,7 @@ public class MaterialCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 				excluir();
 		}
 	};
@@ -390,6 +408,7 @@ public class MaterialCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			editar();
 		}
 	};
@@ -398,6 +417,7 @@ public class MaterialCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			gravar();
 		}
 	};
@@ -425,6 +445,7 @@ public class MaterialCtrl implements ComponentListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			
 			if (contador == 1) {
 				txtNome.setText(null);
 				contador += 1;

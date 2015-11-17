@@ -43,12 +43,16 @@ public class ArtistaCtrl implements ComponentListener {
 	}
 	
 	public ArtistaCtrl(){
+		
 		this.artista = preencherComboBoxArtista();
 	}
 
+	
 	// METODOS DE SUPORTE ////////////////////////
 
+	
 	public void gerarId() {
+		
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String NewId = (dateFormat.format(date));
@@ -56,10 +60,12 @@ public class ArtistaCtrl implements ComponentListener {
 	}
 	
 	public String[] getArtista(){
+		
 		return artista;
 	}
 
 	public void limpaCampos() {
+		
 		txtId.setText(null);
 		txtNome.setText(null);
 	}
@@ -155,7 +161,9 @@ public class ArtistaCtrl implements ComponentListener {
 	
 	// PREENCHE COMBOBOX /////////////////////
 	
+	
 	private String[] preencherComboBoxArtista(){
+		
 		String linha = new String();
 		String nArtista[] = null; 
 		StringBuffer nomeArtista;
@@ -182,7 +190,9 @@ public class ArtistaCtrl implements ComponentListener {
 
 	// CRUD //////////////////////////
 
+	
 	public void lerArquivo() {
+		
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 	
@@ -218,6 +228,7 @@ public class ArtistaCtrl implements ComponentListener {
 		}
 	}
 
+	
 	public void pesquisar() {
 
 		ArrayList<ArtistaMdl> lista = new ArrayList<>();
@@ -229,14 +240,14 @@ public class ArtistaCtrl implements ComponentListener {
 					txtId.setText(artistas.get(i).getId());
 					txtNome.setText(artistas.get(i).getNome());
 					validar = true;
-				} else if (txtNome.getText().equalsIgnoreCase(artistas.get(i).getNome())) {
+				} else if (artistas.get(i).getNome().toLowerCase().startsWith(txtNome.getText().toLowerCase())) {
 					validar = true;
 				}
 			}
 			if (validar == true) {
 				for (int i = 0; i < artistas.size(); i++) {
 
-					boolean filtro = txtNome.getText().equalsIgnoreCase(artistas.get(i).getNome());
+					boolean filtro = artistas.get(i).getNome().toLowerCase().startsWith(txtNome.getText().toLowerCase());
 					if (filtro == true) {
 						ArtistaMdl item = new ArtistaMdl();
 						item.setId(artistas.get(i).getId());
@@ -272,7 +283,9 @@ public class ArtistaCtrl implements ComponentListener {
 		}
 	}
 
+	
 	public void editar() {
+		
 		ArtistaMdl artista = new ArtistaMdl();
 		validar = false;
 		if (!txtId.getText().isEmpty()) {
@@ -299,7 +312,9 @@ public class ArtistaCtrl implements ComponentListener {
 		}
 	}
 
+	
 	public void excluir() {
+		
 		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < artistas.size(); i++) {
 				if (txtId.getText().equalsIgnoreCase(artistas.get(i).getId()) && txtNome.getText().equalsIgnoreCase(artistas.get(i).getNome())) {
@@ -325,8 +340,10 @@ public class ArtistaCtrl implements ComponentListener {
 			pesquisar();
 		}
 	}
+	
 
 	public void gravar() {
+		
 		new ArtistaFile();
 		ArtistaMdl artista = new ArtistaMdl();
 		validar = false;
@@ -350,13 +367,16 @@ public class ArtistaCtrl implements ComponentListener {
 			msg("errornull", txtNome.getText());
 		}
 	}
+	
 
 	// CONTROLE BOTAO //////////////////////////////
+	
 
 	public ActionListener pesquisar = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			pesquisar();
 		}
 	};
@@ -365,6 +385,7 @@ public class ArtistaCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 				excluir();
 		}
 	};
@@ -381,6 +402,7 @@ public class ArtistaCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			gravar();
 		}
 	};
@@ -408,6 +430,7 @@ public class ArtistaCtrl implements ComponentListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			
 			if (contador == 1) {
 				txtNome.setText(null);
 				contador += 1;

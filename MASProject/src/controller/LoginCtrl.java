@@ -324,14 +324,14 @@ public class LoginCtrl implements ComponentListener {
 						chckbxOpera.setSelected(true);
 					}
 					validar = true;
-				} else if (txtUsuario.getText().equalsIgnoreCase(usuarios.get(i).getUsuario())) {
+				} else if (usuarios.get(i).getUsuario().toLowerCase().startsWith(txtUsuario.getText().toLowerCase())) {
 					validar = true;
 				}
 			}
 			if (validar == true) {
 				for (int i = 0; i < usuarios.size(); i++) {
 
-					boolean filtro = txtUsuario.getText().equalsIgnoreCase(usuarios.get(i).getUsuario());
+					boolean filtro = usuarios.get(i).getUsuario().toLowerCase().startsWith(txtUsuario.getText().toLowerCase());
 					if (filtro == true) {
 						LoginMdl item = new LoginMdl();
 						item.setId(usuarios.get(i).getId());

@@ -43,8 +43,10 @@ public class CategoriaCtrl implements ComponentListener {
 	}
 	
 	// METODOS DE SUPORTE ////////////////////////
+	
 
 	public void gerarId(){
+		
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String NewId = (dateFormat.format(date));
@@ -52,6 +54,7 @@ public class CategoriaCtrl implements ComponentListener {
 	}
 
 	public void limpaCampos() {
+		
 		txtId.setText(null);
 		txtNome.setText(null);	
 	}
@@ -144,12 +147,14 @@ public class CategoriaCtrl implements ComponentListener {
 		}
 	}
 
+	
 	// CRUD //////////////////////////
+	
 
 	public void lerArquivo() {
+		
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
-	
 		try {
 			arquivos.leArquivo("../MASProject/dados/", "categorias");
 			linha = arquivos.getBuffer();
@@ -169,6 +174,7 @@ public class CategoriaCtrl implements ComponentListener {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void atualizaDados(List<CategoriaMdl> listCategorias) {
 		File f = new File("../MASProject/dados/categorias");
@@ -182,25 +188,25 @@ public class CategoriaCtrl implements ComponentListener {
 		}
 	}
 
+	
 	public void pesquisar() {
 
 		ArrayList<CategoriaMdl> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
-
 			for (int i = 0; i < categorias.size(); i++) {
 				if (txtNome.getText().equalsIgnoreCase(categorias.get(i).getId())) {
 					txtId.setText(categorias.get(i).getId());
 					txtNome.setText(categorias.get(i).getNome());
 					validar = true;
-				} else if (txtNome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {
+				} else if (categorias.get(i).getNome().toLowerCase().startsWith(txtNome.getText().toLowerCase())) {
 					validar = true;
 				}
 			}
 			if (validar == true) {
 				for (int i = 0; i < categorias.size(); i++) {
 
-					boolean filtro = txtNome.getText().equalsIgnoreCase(categorias.get(i).getNome());
+					boolean filtro = categorias.get(i).getNome().toLowerCase().startsWith(txtNome.getText().toLowerCase());
 					if (filtro == true) {
 						CategoriaMdl item = new CategoriaMdl();
 						item.setId(categorias.get(i).getId());
@@ -235,8 +241,10 @@ public class CategoriaCtrl implements ComponentListener {
 			msg("errorsearch", txtNome.getText());
 		}
 	}
+	
 
 	public void editar() {
+		
 		CategoriaMdl categoria = new CategoriaMdl();
 		validar = false;
 		if (!txtId.getText().isEmpty()) {
@@ -263,7 +271,9 @@ public class CategoriaCtrl implements ComponentListener {
 		}
 	}
 
+	
 	public void excluir() {
+		
 		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < categorias.size(); i++) {
 				if (txtId.getText().equalsIgnoreCase(categorias.get(i).getId()) && txtNome.getText().equalsIgnoreCase(categorias.get(i).getNome())) {
@@ -289,8 +299,10 @@ public class CategoriaCtrl implements ComponentListener {
 			pesquisar();
 		}
 	}
+	
 
 	public void gravar() {
+		
 		new CategoriaFile();
 		CategoriaMdl categoria = new CategoriaMdl();
 		validar = false;
@@ -314,13 +326,16 @@ public class CategoriaCtrl implements ComponentListener {
 			msg("errornull", txtNome.getText());
 		}
 	}
+	
 
 	// CONTROLE BOTAO //////////////////////////////
+	
 
 	public ActionListener pesquisar = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			pesquisar();
 		}
 	};
@@ -329,6 +344,7 @@ public class CategoriaCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 				excluir();
 		}
 	};
@@ -337,6 +353,7 @@ public class CategoriaCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			editar();
 		}
 	};
@@ -345,6 +362,7 @@ public class CategoriaCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			gravar();
 		}
 	};
@@ -372,6 +390,7 @@ public class CategoriaCtrl implements ComponentListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			
 			if (contador == 1) {
 				txtId.setText(null);
 				txtNome.setText(null);
