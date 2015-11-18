@@ -1,6 +1,7 @@
 package view;
 
-import java.awt.BorderLayout;
+import java.text.ParseException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,8 +10,6 @@ import javax.swing.border.EmptyBorder;
 
 import controller.ExposicaoCtrl;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTable;
@@ -23,23 +22,27 @@ public class FrmExposicaoCad extends JFrame {
 
 	private JLabel lblIdExposio, lblTtuloDaExposio, lblDataInicio, lblDataFim, lblDescrio, lblArtista, lblTema;
 	private JPanel contentPane;
-	private JButton btnCalendario, btnCalenIni, btnPesqArtista, btnCalenFim, btnGravar, btnLimpar;
+	private JButton  btnCalenIni, btnPesqArtista, btnCalenFim, btnGravar, btnLimpar;
 	private JTextField txtID, txtTitulo, txtDataIni, txtDataFim, txtDescri, txtNomeArtista, txtTema;
 	private JTable tableLista;
 
 	public static void main(String[] args) {
-		new FrmExposicaoCad().setVisible(true);
+		try {
+			new FrmExposicaoCad().setVisible(true);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public FrmExposicaoCad() {
+	public FrmExposicaoCad() throws ParseException {
 		setTitle("Nova Exposi\u00E7\u00E3o");
 		setResizable(false);
 		FrmExp();
 		setLocationRelativeTo(null);
 	}
 
-	public void FrmExp() {
-		btnCalendario = new JButton();
+	public void FrmExp() throws ParseException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 909, 680);
 		contentPane = new JPanel();
@@ -71,6 +74,7 @@ public class FrmExposicaoCad extends JFrame {
 		lblTtuloDaExposio = new JLabel("T\u00EDtulo da Exposi\u00E7\u00E3o");
 		lblTtuloDaExposio.setBounds(33, 61, 114, 14);
 		contentPane.add(lblTtuloDaExposio);
+		
 
 		txtDataIni = new JTextField();
 		txtDataIni.setBounds(157, 110, 86, 20);
@@ -84,12 +88,14 @@ public class FrmExposicaoCad extends JFrame {
 		lblDataFim = new JLabel("Data Fim");
 		lblDataFim.setBounds(319, 113, 61, 14);
 		contentPane.add(lblDataFim);
-
+		
 		txtDataFim = new JTextField();
 		txtDataFim.setBounds(373, 110, 86, 20);
 		contentPane.add(txtDataFim);
 		txtDataFim.setColumns(10);
 
+		
+		
 	    btnCalenFim = new JButton("");
 		btnCalenFim.setIcon(new ImageIcon(
 				FrmExposicaoCad.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
@@ -142,10 +148,10 @@ public class FrmExposicaoCad extends JFrame {
 		btnLimpar.setBounds(676, 618, 89, 23);
 		contentPane.add(btnLimpar);
 		
-		ExposicaoCtrl expCtrl = new ExposicaoCtrl();
+		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim, txtNomeArtista);
 
-		btnCalenIni.addActionListener(expCtrl.abreCalendario);
-		btnCalenFim.addActionListener(expCtrl.abreCalendario);
+		btnCalenIni.addActionListener(expCtrl.abreCalendario1);
+		btnCalenFim.addActionListener(expCtrl.abreCalendario2);
 		btnPesqArtista.addActionListener(expCtrl.pesquisaArtista);
 
 	}
