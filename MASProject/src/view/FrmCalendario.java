@@ -1,11 +1,9 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -15,9 +13,8 @@ import com.toedter.calendar.JCalendar;
 
 public class FrmCalendario extends JDialog {
 
-	public FrmCalendario(FrmExp kk, boolean modal) {
+	public FrmCalendario() {
 		Cal();
-		this.setLocationRelativeTo(kk);
 	}
 	public void Cal()
 	{
