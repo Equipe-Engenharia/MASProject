@@ -22,7 +22,6 @@ public class FrmCalendario extends JDialog {
 	public FrmCalendario() {
 		setTitle("Calend\u00E1rio");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		
 		Cal();
 	}
 

@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import controller.ExposicaoCtrl;
@@ -13,6 +14,8 @@ import controller.ExposicaoCtrl;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTable;
+import javax.swing.border.MatteBorder;
+import java.awt.Color;
 
 public class FrmExposicaoCad extends JFrame {
 	/**
@@ -25,6 +28,11 @@ public class FrmExposicaoCad extends JFrame {
 	private JButton  btnCalenIni, btnPesqArtista, btnCalenFim, btnGravar, btnLimpar;
 	private JTextField txtID, txtTitulo, txtDataIni, txtDataFim, txtDescri, txtNomeArtista, txtTema;
 	private JTable tableLista;
+	//em testes
+	private JScrollPane scrollPane;
+	private String [] colunas = {"Nome da Obra", "Artista", "Setor"}; //Cabecalho do JTable
+	private Object [][] dados = {{"Mona Lisa", "L da Vinci", "Setor Branco"}};//Conteudo teste do JTable
+
 
 	public static void main(String[] args) {
 		try {
@@ -44,16 +52,16 @@ public class FrmExposicaoCad extends JFrame {
 
 	public void FrmExp() throws ParseException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 909, 680);
+		setBounds(100, 100, 937, 680);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		btnCalenIni = new JButton("");
+		btnCalenIni.setBounds(251, 107, 29, 23);
 		btnCalenIni.setIcon(new ImageIcon(
 				FrmExposicaoCad.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
-		btnCalenIni.setBounds(251, 107, 29, 23);
 		contentPane.add(btnCalenIni);
 
 		lblIdExposio = new JLabel("ID. Exposi\u00E7\u00E3o");
@@ -61,8 +69,8 @@ public class FrmExposicaoCad extends JFrame {
 		contentPane.add(lblIdExposio);
 
 		txtID = new JTextField();
-		txtID.setEditable(false);
 		txtID.setBounds(157, 27, 226, 20);
+		txtID.setEditable(false);
 		contentPane.add(txtID);
 		txtID.setColumns(10);
 
@@ -75,7 +83,6 @@ public class FrmExposicaoCad extends JFrame {
 		lblTtuloDaExposio.setBounds(33, 61, 114, 14);
 		contentPane.add(lblTtuloDaExposio);
 		
-
 		txtDataIni = new JTextField();
 		txtDataIni.setBounds(157, 110, 86, 20);
 		contentPane.add(txtDataIni);
@@ -94,12 +101,10 @@ public class FrmExposicaoCad extends JFrame {
 		contentPane.add(txtDataFim);
 		txtDataFim.setColumns(10);
 
-		
-		
 	    btnCalenFim = new JButton("");
+	    btnCalenFim.setBounds(469, 107, 29, 23);
 		btnCalenFim.setIcon(new ImageIcon(
 				FrmExposicaoCad.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
-		btnCalenFim.setBounds(469, 107, 29, 23);
 		contentPane.add(btnCalenFim);
 
 		lblDescrio = new JLabel("Descri\u00E7\u00E3o");
@@ -112,41 +117,49 @@ public class FrmExposicaoCad extends JFrame {
 		txtDescri.setColumns(10);
 
 		lblArtista = new JLabel("Artista");
-		lblArtista.setBounds(88, 385, 46, 14);
+		lblArtista.setBounds(88, 352, 46, 14);
 		contentPane.add(lblArtista);
 
 		txtNomeArtista = new JTextField();
-		txtNomeArtista.setBounds(157, 382, 262, 20);
+		txtNomeArtista.setBounds(157, 349, 262, 20);
 		contentPane.add(txtNomeArtista);
 		txtNomeArtista.setColumns(10);
 
 		btnPesqArtista = new JButton("");
-		btnPesqArtista.setBounds(429, 379, 29, 23);
+		btnPesqArtista.setBounds(429, 346, 29, 23);
 		btnPesqArtista.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnPesqArtista);
 
 		txtTema = new JTextField();
-		txtTema.setBounds(155, 156, 303, 20);
+		txtTema.setBounds(157, 156, 303, 20);
 		contentPane.add(txtTema);
 		txtTema.setColumns(10);
 
 		lblTema = new JLabel("Tema");
 		lblTema.setBounds(97, 159, 37, 14);
 		contentPane.add(lblTema);
-
-		tableLista = new JTable();
-		tableLista.setColumnSelectionAllowed(true);
-		tableLista.setCellSelectionEnabled(true);
-		tableLista.setBounds(157, 429, 417, 157);
-		contentPane.add(tableLista);
+		
 		
 		btnGravar = new JButton("Gravar");
-		btnGravar.setBounds(775, 618, 89, 23);
+		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
+		btnGravar.setBounds(756, 607, 108, 34);
 		contentPane.add(btnGravar);
 		
 		btnLimpar = new JButton("Limpar");
-		btnLimpar.setBounds(676, 618, 89, 23);
+		btnLimpar.setIcon(new ImageIcon("../MASProject/icons/clear.png"));
+		btnLimpar.setBounds(622, 607, 108, 34);
 		contentPane.add(btnLimpar);
+		
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(157, 413, 707, 166);
+		contentPane.add(scrollPane);
+		
+		tableLista = new JTable(dados, colunas); //JTable recebe o cabecalho e os campos de conteúdos
+		scrollPane.setViewportView(tableLista);
+		tableLista.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		tableLista.setColumnSelectionAllowed(false);
+		tableLista.setCellSelectionEnabled(false);
 		
 		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim, txtNomeArtista);
 
