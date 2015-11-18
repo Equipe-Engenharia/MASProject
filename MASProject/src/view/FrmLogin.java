@@ -24,10 +24,9 @@ public class FrmLogin extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtId, txtUsuario;
-	private JLabel lblId, lblUsuario;
+	private JLabel lblId, lblUsuario, lblSenha;
 	private JButton btnNovo, btnEntrar;
-	private JLabel lblSenha;
-	private JPasswordField pwdSenha;
+	private JPasswordField pwdSenha, pwdSenha2;
 	private JCheckBox chckbxAdm, chckbxOpera;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
@@ -121,7 +120,7 @@ public class FrmLogin extends JFrame {
 		btnEntrar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
 		contentPane.add(btnEntrar);
 
-		LoginCtrl controle = new LoginCtrl(contentPane, txtId, txtUsuario, pwdSenha, chckbxAdm, chckbxOpera, btnNovo);
+		LoginCtrl controle = new LoginCtrl(contentPane, txtId, txtUsuario, pwdSenha, pwdSenha2, chckbxAdm, chckbxOpera, btnNovo);
 
 		txtUsuario.addMouseListener(controle.limpaCampo);
 		txtUsuario.addActionListener(controle.entrar);

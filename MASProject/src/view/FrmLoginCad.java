@@ -21,10 +21,9 @@ public class FrmLoginCad extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtId, txtUsuario;
-	private JLabel lblId, lblUsuario;
+	private JLabel lblId, lblUsuario, lblSenha, lblSenha2;
 	private JButton btnCadastrar, btnEditar, btnPesquisar, btnApagar;
-	private JLabel lblSenha;
-	private JPasswordField pwdSenha;
+	private JPasswordField pwdSenha, pwdSenha2;
 	private JCheckBox chckbxAdm, chckbxOpera;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
@@ -63,46 +62,55 @@ public class FrmLoginCad extends JFrame {
 
 		lblId = new JLabel("ID");
 		lblId.setVisible(true);
-		lblId.setBounds(36, 34, 61, 16);
+		lblId.setBounds(35, 21, 61, 16);
 		contentPane.add(lblId);
 
 		txtId = new JTextField();
 		txtId.setEnabled(false);
 		txtId.setEditable(false);
 		txtId.setVisible(true);
-		txtId.setBounds(98, 32, 178, 20);
+		txtId.setBounds(128, 19, 149, 20);
 		txtId.setHorizontalAlignment(SwingConstants.CENTER);
 		txtId.setColumns(10);
 		contentPane.add(txtId);
 		
 		lblUsuario = new JLabel("Usuário");
-		lblUsuario.setBounds(36, 71, 61, 16);
+		lblUsuario.setBounds(35, 56, 61, 16);
 		contentPane.add(lblUsuario);
 
 		txtUsuario = new JTextField();
 		txtUsuario.setToolTipText("Digite aqui o usuário…");
-		txtUsuario.setBounds(98, 65, 178, 28);
-		contentPane.add(txtUsuario);
+		txtUsuario.setBounds(128, 50, 149, 28);
 		txtUsuario.setColumns(10);
+		contentPane.add(txtUsuario);
 		
-		lblSenha = new JLabel("Senha");
-		lblSenha.setBounds(36, 111, 61, 16);
+		lblSenha = new JLabel("Nova Senha");
+		lblSenha.setBounds(35, 94, 91, 16);
 		contentPane.add(lblSenha);
 		
 		pwdSenha = new JPasswordField();
 		pwdSenha.setToolTipText("Digite aqui a senha…");
-		pwdSenha.setBounds(98, 105, 178, 28);
+		pwdSenha.setBounds(128, 88, 149, 28);
 		contentPane.add(pwdSenha);
+		
+		lblSenha2 = new JLabel("Repita a Senha");
+		lblSenha2.setBounds(35, 132, 91, 16);
+		contentPane.add(lblSenha2);
+		
+		pwdSenha2 = new JPasswordField();
+		pwdSenha2.setToolTipText("Digite aqui a senha…");
+		pwdSenha2.setBounds(128, 126, 149, 28);
+		contentPane.add(pwdSenha2);
 		
 		chckbxAdm = new JCheckBox("Administrativo");
 		buttonGroup.add(chckbxAdm);
-		chckbxAdm.setBounds(366, 32, 128, 23);
+		chckbxAdm.setBounds(366, 98, 128, 23);
 		contentPane.add(chckbxAdm);
 		
 		chckbxOpera = new JCheckBox("Operacional");
 		chckbxOpera.setSelected(true);
 		buttonGroup.add(chckbxOpera);
-		chckbxOpera.setBounds(366, 55, 128, 23);
+		chckbxOpera.setBounds(366, 121, 128, 23);
 		contentPane.add(chckbxOpera);
 		
 		btnCadastrar = new JButton("Cadastrar");
@@ -116,7 +124,7 @@ public class FrmLoginCad extends JFrame {
 		contentPane.add(btnEditar);
 
 		btnPesquisar = new JButton("Pesquisar");
-		btnPesquisar.setBounds(288, 100, 97, 34);
+		btnPesquisar.setBounds(288, 47, 97, 34);
 		btnPesquisar.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnPesquisar);
 
@@ -125,7 +133,7 @@ public class FrmLoginCad extends JFrame {
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
 		
-		LoginCtrl controle = new LoginCtrl(contentPane, txtId, txtUsuario, pwdSenha, chckbxAdm, chckbxOpera, btnCadastrar);
+		LoginCtrl controle = new LoginCtrl(contentPane, txtId, txtUsuario, pwdSenha, pwdSenha2, chckbxAdm, chckbxOpera, btnCadastrar);
 		
 		controle.gerarId();
 		txtUsuario.addMouseListener(controle.limpaCampo);

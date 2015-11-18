@@ -846,12 +846,21 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 
 	@SuppressWarnings("static-access")
 	private void abrirTelaNovoMaterial() {
-		
-		FrmMaterialCad newMaterial = new FrmMaterialCad();
-		newMaterial.setVisible(true);
-		newMaterial.setDefaultCloseOperation(newMaterial.DISPOSE_ON_CLOSE);
-		newMaterial.setResizable(false);
-		if (newMaterial.isActive()) {
+
+		SessionCtrl session = new SessionCtrl();
+		if (session.acesso() != false){
+			FrmMaterialCad newMaterial = new FrmMaterialCad();
+			newMaterial.setVisible(true);
+			newMaterial.setDefaultCloseOperation(newMaterial.DISPOSE_ON_CLOSE);
+			newMaterial.setResizable(false);
+			if (newMaterial.isActive()) {
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, 
+					"ACESSO NEGADO!\n\nPor favor, solicite a autorização de um administrador.", 
+					"Bloqueado", 
+					JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/warning.png"));
 		}
 	}
 

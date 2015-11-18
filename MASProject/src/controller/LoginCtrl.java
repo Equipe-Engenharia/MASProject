@@ -24,14 +24,13 @@ import javax.swing.JTextField;
 
 import model.LoginMdl;
 import persistence.LoginFile;
-import view.FrmLogin;
 import view.FrmLoginCad;
 
 public class LoginCtrl implements ComponentListener {
 
 	private JPanel form;
 	private JTextField txtId, txtUsuario;
-	private JPasswordField pwdSenha;
+	private JPasswordField pwdSenha, pwdSenha2;
 	private JCheckBox chckbxAdm, chckbxOpera;
 	private JButton btnCadastrar;
 	private List<LoginMdl> usuarios;
@@ -41,12 +40,13 @@ public class LoginCtrl implements ComponentListener {
 	private LoginFile arquivo = new LoginFile();
 	private SessionCtrl session = new SessionCtrl();
 
-	public LoginCtrl (JPanel form, JTextField txtId, JTextField txtUsuario, JPasswordField pwdSenha, 
+	public LoginCtrl (JPanel form, JTextField txtId, JTextField txtUsuario, JPasswordField pwdSenha, JPasswordField pwdSenha2, 
 			JCheckBox chckbxAdm, JCheckBox chckbxOpera, JButton btnCadastrar) {
 
 		this.txtId = txtId;
 		this.txtUsuario = txtUsuario;
 		this.pwdSenha = pwdSenha;
+		this.pwdSenha2 = pwdSenha2;
 		this.chckbxAdm = chckbxAdm;
 		this.chckbxOpera = chckbxOpera;
 		this.btnCadastrar = btnCadastrar;
@@ -73,6 +73,7 @@ public class LoginCtrl implements ComponentListener {
 		txtId.setText(null);
 		txtUsuario.setText(null);
 		pwdSenha.setText(null);
+		pwdSenha2.setText(null);
 		chckbxAdm.setSelected(false);
 		chckbxOpera.setSelected(false);
 	}
@@ -196,6 +197,13 @@ public class LoginCtrl implements ComponentListener {
 					JOptionPane.PLAIN_MESSAGE, 
 					new ImageIcon("../MASProject/icons/warning.png"));
 			break;
+		case "errorpwd2":
+			JOptionPane.showMessageDialog(null, 
+					"A senha e a confirmação estão diferentes para o usuário '" + mensagem + "' !\n\nVerifique sua digitação e tente novamente.",
+					"Erro", 
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"));
+			break;
 		default:
 			JOptionPane.showMessageDialog(null, 
 					"OOPS!\n\nQue feio, Ed Stark perdeu a cabeça, e algo não deveria ter acontecido…\n\nTermo: " + mensagem
@@ -293,8 +301,8 @@ public class LoginCtrl implements ComponentListener {
 			session.lerSession();
 			if (("Administrativo").equalsIgnoreCase(session.registrar(txtId.getText(), txtUsuario.getText(), chckbxAdm.getText()))){	
 				
-				FrmLogin frame = new FrmLogin();
-		        frame.dispose(); //NAO FECHA O FRMLOGIN!
+				//FrmLogin frame = new FrmLogin();
+		        //frame.dispose(); //NAO FECHA O FRMLOGIN!
 		        
 		        FrmLoginCad frmCad = new FrmLoginCad();
 				frmCad.setVisible(true);
@@ -313,7 +321,6 @@ public class LoginCtrl implements ComponentListener {
 		ArrayList<LoginMdl> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!txtUsuario.getText().isEmpty() || !txtId.getText().isEmpty()) {
-
 			for (int i = 0; i < usuarios.size(); i++) {
 				if (txtUsuario.getText().equalsIgnoreCase(usuarios.get(i).getId())) {
 					txtId.setText(usuarios.get(i).getId());
@@ -457,20 +464,24 @@ public class LoginCtrl implements ComponentListener {
 					validar = true;
 				}
 			}
-			if(!(validar == true)){	
-				usuario.setId(txtId.getText());
-				usuario.setUsuario(txtUsuario.getText());
-				usuario.setSenha(pwdSenha.getText().toString());
-				if(chckbxAdm.isSelected()){
-					usuario.setNivel(chckbxAdm.getText());
-				}else if(chckbxOpera.isSelected()){
-					usuario.setNivel(chckbxOpera.getText());
+			if(!(validar == true)){
+				if(pwdSenha.getText().equals(pwdSenha2.getText())){
+					usuario.setId(txtId.getText());
+					usuario.setUsuario(txtUsuario.getText());
+					usuario.setSenha(pwdSenha.getText().toString());
+					if(chckbxAdm.isSelected()){
+						usuario.setNivel(chckbxAdm.getText());
+					}else if(chckbxOpera.isSelected()){
+						usuario.setNivel(chckbxOpera.getText());
+					}
+					usuarios.add(usuario);
+					msg("save", txtUsuario.getText());
+					atualizaDados(usuarios);
+					limpaCampos();
+					gerarId();
+				} else {
+					msg("errorpwd2", txtUsuario.getText());
 				}
-				usuarios.add(usuario);
-				msg("save", txtUsuario.getText());
-				atualizaDados(usuarios);
-				limpaCampos();
-				gerarId();
 			}
 		} else {
 			msg("errornull", txtUsuario.getText());
@@ -485,6 +496,7 @@ public class LoginCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			acesso();
 		}
 	};
@@ -493,6 +505,7 @@ public class LoginCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			entrar();
 		}
 	};
@@ -501,6 +514,7 @@ public class LoginCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			pesquisar();
 		}
 	};
@@ -509,6 +523,7 @@ public class LoginCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 				excluir();
 		}
 	};
@@ -517,6 +532,7 @@ public class LoginCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			editar();
 		}
 	};
@@ -525,11 +541,14 @@ public class LoginCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			gravar();
 		}
 	};
+	
 
 	// CONTROLE MOUSE ///////////////////////////////
+	
 
 	public MouseListener limpaCampo = new MouseListener() {
 
@@ -552,6 +571,7 @@ public class LoginCtrl implements ComponentListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			
 			if (contador == 1) {
 				txtUsuario.setText(null);
 				contador += 1;
