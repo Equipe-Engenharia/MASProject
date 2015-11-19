@@ -32,6 +32,8 @@ public class FrmObraArtistaSelec extends JDialog{
 	private JButton btnEnviarObras;
 	private String nomeArtista;
 	private ArtistaCtrl aController;
+	private final JScrollPane scrollSelecionada = new JScrollPane();
+	private JScrollPane scrollSelecionar;
 	/**
 	 * Create the dialog.
 	 */
@@ -47,14 +49,6 @@ public class FrmObraArtistaSelec extends JDialog{
 		
 		aController = new ArtistaCtrl();
 		String artistas[] = aController.preencherComboBoxArtista();
-		listObras = new JList<Object>(artistas);
-		listObras.setBounds(12, 71, 146, 98);
-		contentPanel.add(listObras);
-		
-//		Object name[] = {"R2", "Darth Vader"}; //teste do JList
-		listObrasSelecionadas = new JList<Object>();
-		listObrasSelecionadas.setBounds(279, 71, 139, 98);
-		contentPanel.add(listObrasSelecionadas);
 		
 		btnMoveObj = new JButton(">>");
 		btnMoveObj.setBounds(190, 71, 62, 36);
@@ -82,6 +76,18 @@ public class FrmObraArtistaSelec extends JDialog{
 				getRootPane().setDefaultButton(btnEnviarObras);
 			}
 		}
+		scrollSelecionada.setBounds(278, 71, 146, 98);
+		contentPanel.add(scrollSelecionada);
+		
+//		Object name[] = {"R2", "Darth Vader"}; //teste do JList
+		listObrasSelecionadas = new JList<Object>();
+		scrollSelecionada.setViewportView(listObrasSelecionadas);
+		
+		scrollSelecionar = new JScrollPane();
+		scrollSelecionar.setBounds(12, 71, 146, 98);
+		contentPanel.add(scrollSelecionar);
+		listObras = new JList<Object>(artistas);
+		scrollSelecionar.setViewportView(listObras);
 		
 		ObraArtistaCtrl oAController = new ObraArtistaCtrl(listObras,
 				listObrasSelecionadas, btnEnviarObras, btnMoveObj,
