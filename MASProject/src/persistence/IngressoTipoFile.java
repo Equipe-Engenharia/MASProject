@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import controller.ArquivosICtrl;
-import model.IngressoMdl;;
+import model.IngressoTipoMdl;;
 
-public class IngressoFile implements ArquivosICtrl {
+public class IngressoTipoFile implements ArquivosICtrl {
 
 	private StringBuffer buffer;
 
@@ -48,21 +48,11 @@ public class IngressoFile implements ArquivosICtrl {
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID       : " + ((IngressoMdl) object).getId());
+		buffer.append("ID       : " + ((IngressoTipoMdl) object).getId());
 		buffer.append("\r\n");
-		buffer.append("Data     : " + ((IngressoMdl) object).getData());
+		buffer.append("Ingresso : " + ((IngressoTipoMdl) object).getTipo());
 		buffer.append("\r\n");
-		buffer.append("Hora     : " + ((IngressoMdl) object).getHora());
-		buffer.append("\r\n");
-		buffer.append("Bilhete  : " + ((IngressoMdl) object).getBilhete());
-		buffer.append("\r\n");
-		buffer.append("Exposição: " + ((IngressoMdl) object).getExpo());
-		buffer.append("\r\n");
-		buffer.append("Visitante: " + ((IngressoMdl) object).getVisitante());
-		buffer.append("\r\n");
-		buffer.append("Ingresso : " + ((IngressoMdl) object).getIngresso());
-		buffer.append("\r\n");
-		buffer.append("Valor    : " + ((IngressoMdl) object).getValor());
+		buffer.append("Valor    : " + ((IngressoTipoMdl) object).getValor());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");

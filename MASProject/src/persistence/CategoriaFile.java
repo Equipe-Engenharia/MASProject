@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import controller.ArquivosICtrl;
-import model.ExposicaoMdl;
+import model.CategoriaMdl;
 
 public class CategoriaFile implements ArquivosICtrl {
 	
@@ -47,9 +47,9 @@ public class CategoriaFile implements ArquivosICtrl {
 			Object object) throws IOException {
 		
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID        : "+((ExposicaoMdl) object).getId());
+		buffer.append("ID        : "+((CategoriaMdl) object).getId());
 		buffer.append("\r\n");
-		buffer.append("Categoria : "+((ExposicaoMdl) object).getNome());
+		buffer.append("Categoria : "+((CategoriaMdl) object).getNome());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");

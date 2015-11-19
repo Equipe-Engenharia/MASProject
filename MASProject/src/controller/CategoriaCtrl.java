@@ -19,14 +19,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import model.ExposicaoMdl;
+import model.CategoriaMdl;
 import persistence.CategoriaFile;
 
 public class CategoriaCtrl implements ComponentListener {
 
 	private JPanel form;
 	private JTextField txtId, txtNome;
-	private List<ExposicaoMdl> categorias;
+	private List<CategoriaMdl> categorias;
 	private static int contador = 1;
 	private boolean validar;
 	private ArquivosCtrl arquivos = new ArquivosCtrl();
@@ -36,7 +36,7 @@ public class CategoriaCtrl implements ComponentListener {
 
 		this.txtId = txtId;
 		this.txtNome = txtNome;
-		this.categorias = new ArrayList<ExposicaoMdl>();
+		this.categorias = new ArrayList<CategoriaMdl>();
 
 		
 		lerArquivo();
@@ -163,7 +163,7 @@ public class CategoriaCtrl implements ComponentListener {
 				String text = s.replaceAll(".*: ", "");
 				list.add(text);
 				if (s.contains("---")) {
-					ExposicaoMdl categoria = new ExposicaoMdl();
+					CategoriaMdl categoria = new CategoriaMdl();
 					categoria.setId(list.get(0));
 					categoria.setNome(list.get(1));
 					categorias.add(categoria);
@@ -176,10 +176,10 @@ public class CategoriaCtrl implements ComponentListener {
 	}
 	
 
-	public void atualizaDados(List<ExposicaoMdl> listCategorias) {
+	public void atualizaDados(List<CategoriaMdl> listCategorias) {
 		File f = new File("../MASProject/dados/categorias");
 		f.delete();	
-		for (ExposicaoMdl categoria : listCategorias) {
+		for (CategoriaMdl categoria : listCategorias) {
 			try {
 				arquivo.escreveArquivo("../MASProject/dados/", "categorias", "", categoria);
 			} catch (IOException e) {
@@ -191,7 +191,7 @@ public class CategoriaCtrl implements ComponentListener {
 	
 	public void pesquisar() {
 
-		ArrayList<ExposicaoMdl> lista = new ArrayList<>();
+		ArrayList<CategoriaMdl> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!txtNome.getText().isEmpty() || !txtId.getText().isEmpty()) {
 			for (int i = 0; i < categorias.size(); i++) {
@@ -208,7 +208,7 @@ public class CategoriaCtrl implements ComponentListener {
 
 					boolean filtro = categorias.get(i).getNome().toLowerCase().startsWith(txtNome.getText().toLowerCase());
 					if (filtro == true) {
-						ExposicaoMdl item = new ExposicaoMdl();
+						CategoriaMdl item = new CategoriaMdl();
 						item.setId(categorias.get(i).getId());
 						item.setNome(categorias.get(i).getNome());
 						lista.add(item);
@@ -245,7 +245,7 @@ public class CategoriaCtrl implements ComponentListener {
 
 	public void editar() {
 		
-		ExposicaoMdl categoria = new ExposicaoMdl();
+		CategoriaMdl categoria = new CategoriaMdl();
 		validar = false;
 		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < categorias.size(); i++) {
@@ -304,7 +304,7 @@ public class CategoriaCtrl implements ComponentListener {
 	public void gravar() {
 		
 		new CategoriaFile();
-		ExposicaoMdl categoria = new ExposicaoMdl();
+		CategoriaMdl categoria = new CategoriaMdl();
 		validar = false;
 		if (!txtNome.getText().isEmpty()) {
 			for (int i = 0; i < categorias.size(); i++) {

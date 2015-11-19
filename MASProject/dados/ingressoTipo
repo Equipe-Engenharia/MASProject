@@ -1,4 +1,16 @@
-Inteira
-Meia
-Estudante
-Franca
+ID       : VND151119-122324
+Ingresso : Inteira
+Valor    : 20
+---------------------------
+ID       : VND151119-122324
+Ingresso : Meia
+Valor    : 10
+---------------------------
+ID       : VND151119-122324
+Ingresso : Estudante
+Valor    : 10
+---------------------------
+ID       : VND151119-122324
+Ingresso : Franca
+Valor    : 0
+---------------------------

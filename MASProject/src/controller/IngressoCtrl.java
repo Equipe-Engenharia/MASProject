@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 
 import model.ExposicaoMdl;
 import model.IngressoMdl;
+import model.IngressoTipoMdl;
 import persistence.IngressoFile;
 
 public class IngressoCtrl implements ComponentListener {
@@ -252,14 +253,14 @@ public class IngressoCtrl implements ComponentListener {
 		try {
 			arquivos.leArquivo("../MASProject/dados/", "exposicao");
 			linha = arquivos.getBuffer();
-			String[] categorias = linha.split(";");
-			for (String s : categorias) {
+			String[] expo = linha.split(";");
+			for (String s : expo) {
 				String text = s.replaceAll(".*: ", "");
 				listString.add(text);
 				if (s.contains("---")) {
-					ExposicaoMdl c = new ExposicaoMdl();
-					c.setNome(listString.get(1));
-					listExpo.add(c);
+					ExposicaoMdl e = new ExposicaoMdl();
+					e.setNome(listString.get(1));
+					listExpo.add(e);
 					listString.clear();
 				}
 			}
@@ -280,10 +281,14 @@ public class IngressoCtrl implements ComponentListener {
 		try {
 			arquivos.leArquivo("../MASProject/dados/", "ingressoTipo");
 			linha = arquivos.getBuffer();
-			String[] nacionalidades = linha.split(";");
-			for (String s : nacionalidades) {
+			String[] ingresso = linha.split(";");
+			for (String s : ingresso) {
+				String text = s.replaceAll(".*: ", "");
+				listString.add(text);
+				if (s.contains("---")) {
 				cbIngresso.addItem(s);
 				listString.clear();
+			}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
