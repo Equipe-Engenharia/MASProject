@@ -1,23 +1,21 @@
 package view;
 
+import java.awt.Color;
 import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 import controller.ExposicaoCtrl;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.border.MatteBorder;
-import java.awt.Color;
-import javax.swing.DropMode;
-import javax.swing.JTextArea;
 
 public class FrmExposicaoCad extends JFrame {
 	/**
@@ -43,6 +41,7 @@ public class FrmExposicaoCad extends JFrame {
 																					// JTable
 
 	public static void main(String[] args) {
+		
 
 		try {
 			new FrmExposicaoCad().setVisible(true);
@@ -165,7 +164,7 @@ public class FrmExposicaoCad extends JFrame {
 		tableLista.setColumnSelectionAllowed(false);
 		tableLista.setCellSelectionEnabled(false);
 
-		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim, txtNomeArtista, txtID, tableLista);
+		
 		
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(157, 222, 707, 87);
@@ -173,10 +172,16 @@ public class FrmExposicaoCad extends JFrame {
 		
 		txtAreaDescri = new JTextArea();
 		scrollPane_1.setViewportView(txtAreaDescri);
-		expCtrl.gerarId();
+		
+		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim, txtNomeArtista, txtID, tableLista,txtTitulo,txtTema,txtAreaDescri);
+		
+		
 		btnCalenIni.addActionListener(expCtrl.abreCalendario1);
 		btnCalenFim.addActionListener(expCtrl.abreCalendario2);
 		btnPesqArtista.addActionListener(expCtrl.pesquisaArtista);
+		btnGravar.addActionListener(expCtrl.gravarExpo);
+		
+		expCtrl.gerarId();
 
 	}
 }
