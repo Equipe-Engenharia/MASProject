@@ -31,7 +31,7 @@ public class FrmExposicaoCad extends JFrame {
 	//em testes
 	private JScrollPane scrollPane;
 	private String [] colunas = {"Nome da Obra", "Artista", "Setor"}; //Cabecalho do JTable
-	private Object [][] dados = {{"Mona Lisa", "L da Vinci", "Setor Branco"}};//Conteudo teste do JTable
+	private Object [][] dados = {{"Teste Obra", "Teste Artista", "Teste Setor"}};//Conteudo teste do JTable
 
 
 	public static void main(String[] args) {
@@ -155,13 +155,14 @@ public class FrmExposicaoCad extends JFrame {
 		scrollPane.setBounds(157, 413, 707, 166);
 		contentPane.add(scrollPane);
 		
-		tableLista = new JTable(dados, colunas); //JTable recebe o cabecalho e os campos de conteúdos
+		tableLista = new JTable(dados, colunas); //JTable recebe o cabecalho e os campos de conteï¿½dos
 		scrollPane.setViewportView(tableLista);
 		tableLista.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		tableLista.setColumnSelectionAllowed(false);
 		tableLista.setCellSelectionEnabled(false);
 		
-		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim, txtNomeArtista);
+		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim, 
+				txtNomeArtista, tableLista);
 
 		btnCalenIni.addActionListener(expCtrl.abreCalendario1);
 		btnCalenFim.addActionListener(expCtrl.abreCalendario2);

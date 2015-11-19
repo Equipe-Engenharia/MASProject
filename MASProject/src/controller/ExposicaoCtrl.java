@@ -6,11 +6,15 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.SimpleDateFormat;
 
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import com.toedter.calendar.JCalendar;
 
 import view.FrmCalendario;
+import view.FrmObraArtistaSelec;
 
 public class ExposicaoCtrl {
 
@@ -18,17 +22,21 @@ public class ExposicaoCtrl {
 	private static  JTextField txtDataIni;
 	private static  JTextField txtDataFim;
 	private JTextField txtNomeArtista;
+	private JTable tObras;
 	private static int flag;
 
-	public ExposicaoCtrl(JTextField txtDataI, JTextField txtDataF, JTextField txtNomeArtista) {
-		ExposicaoCtrl.txtDataIni = txtDataI; //neste caso nao se usa this, porque o metodo que utiliza a variavel é estatico
+	public ExposicaoCtrl(JTextField txtDataI, JTextField txtDataF, JTextField txtNomeArtista,
+			JTable tObras) {
+		ExposicaoCtrl.txtDataIni = txtDataI; //neste caso nao se usa this, porque o metodo que utiliza a variavel ï¿½ estatico
 		ExposicaoCtrl.txtDataFim = txtDataF;
 		this.txtNomeArtista = txtNomeArtista;
+		this.tObras = tObras;
 	}
 
 	public ExposicaoCtrl(JCalendar calendar) {
 		ExposicaoCtrl.calendar = calendar;
 	}
+	
    
 	
 	/*As flags funcionam para quando se tem mais de uma chamada de 
@@ -85,8 +93,12 @@ public class ExposicaoCtrl {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
+			JDialog frmOASelec = new FrmObraArtistaSelec(txtNomeArtista.getText());
+			frmOASelec.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			frmOASelec.setLocationRelativeTo(null);
+			frmOASelec.setModal(true);
+			frmOASelec.setVisible(true);
+//			tObras = new JTable();
 		}
 	};
 
