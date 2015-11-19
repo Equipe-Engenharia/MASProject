@@ -47,9 +47,6 @@ public class FrmObraArtistaSelec extends JDialog{
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		aController = new ArtistaCtrl();
-		String artistas[] = aController.preencherComboBoxArtista();
-		
 		btnMoveObj = new JButton(">>");
 		btnMoveObj.setBounds(190, 71, 62, 36);
 		contentPanel.add(btnMoveObj);
@@ -86,12 +83,16 @@ public class FrmObraArtistaSelec extends JDialog{
 		scrollSelecionar = new JScrollPane();
 		scrollSelecionar.setBounds(12, 71, 146, 98);
 		contentPanel.add(scrollSelecionar);
-		listObras = new JList<Object>(artistas);
+		
+		listObras = new JList<Object>();
 		scrollSelecionar.setViewportView(listObras);
+		listObras.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		ObraArtistaCtrl oAController = new ObraArtistaCtrl(listObras,
 				listObrasSelecionadas, btnEnviarObras, btnMoveObj,
 				btnUndoMove, this.nomeArtista);
 		
+		addWindowListener(oAController.carregarObras);
+		btnMoveObj.addActionListener(oAController.enviarObraSelecionada);
 	}
 }

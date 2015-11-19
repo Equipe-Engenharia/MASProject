@@ -162,7 +162,7 @@ public class ArtistaCtrl implements ComponentListener {
 	// PREENCHE COMBOBOX /////////////////////
 	
 	
-	public String[] preencherComboBoxArtista(){
+	private String[] preencherComboBoxArtista(){
 		
 		String linha = new String();
 		String nArtista[] = null; 
