@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
+import javax.swing.DropMode;
+import javax.swing.JTextArea;
 
 public class FrmExposicaoCad extends JFrame {
 	/**
@@ -25,16 +27,23 @@ public class FrmExposicaoCad extends JFrame {
 
 	private JLabel lblIdExposio, lblTtuloDaExposio, lblDataInicio, lblDataFim, lblDescrio, lblArtista, lblTema;
 	private JPanel contentPane;
-	private JButton  btnCalenIni, btnPesqArtista, btnCalenFim, btnGravar, btnLimpar;
-	private JTextField txtID, txtTitulo, txtDataIni, txtDataFim, txtDescri, txtNomeArtista, txtTema;
+	private JButton btnCalenIni, btnPesqArtista, btnCalenFim, btnGravar, btnLimpar;
+	private JTextField txtID, txtTitulo, txtDataIni, txtDataFim, txtNomeArtista, txtTema;
 	private JTable tableLista;
-	//em testes
+	// em testes
 	private JScrollPane scrollPane;
-	private String [] colunas = {"Nome da Obra", "Artista", "Setor"}; //Cabecalho do JTable
-	private Object [][] dados = {{"Teste Obra", "Teste Artista", "Teste Setor"}};//Conteudo teste do JTable
-
+	private String[] colunas = { "Nome da Obra", "Artista", "Setor" }; // Cabecalho
+																		// do
+																		// JTable
+	private Object[][] dados = { { "Teste Obra", "Teste Artista", "Teste Setor" } };// Conteudo
+	private JTextArea txtAreaDescri;
+	private JScrollPane scrollPane_1;
+																					// teste
+																					// do
+																					// JTable
 
 	public static void main(String[] args) {
+
 		try {
 			new FrmExposicaoCad().setVisible(true);
 		} catch (ParseException e) {
@@ -69,6 +78,7 @@ public class FrmExposicaoCad extends JFrame {
 		contentPane.add(lblIdExposio);
 
 		txtID = new JTextField();
+		txtID.setEnabled(false);
 		txtID.setBounds(157, 27, 226, 20);
 		txtID.setEditable(false);
 		contentPane.add(txtID);
@@ -82,7 +92,7 @@ public class FrmExposicaoCad extends JFrame {
 		lblTtuloDaExposio = new JLabel("T\u00EDtulo da Exposi\u00E7\u00E3o");
 		lblTtuloDaExposio.setBounds(33, 61, 114, 14);
 		contentPane.add(lblTtuloDaExposio);
-		
+
 		txtDataIni = new JTextField();
 		txtDataIni.setBounds(157, 110, 86, 20);
 		contentPane.add(txtDataIni);
@@ -95,14 +105,14 @@ public class FrmExposicaoCad extends JFrame {
 		lblDataFim = new JLabel("Data Fim");
 		lblDataFim.setBounds(319, 113, 61, 14);
 		contentPane.add(lblDataFim);
-		
+
 		txtDataFim = new JTextField();
 		txtDataFim.setBounds(373, 110, 86, 20);
 		contentPane.add(txtDataFim);
 		txtDataFim.setColumns(10);
 
-	    btnCalenFim = new JButton("");
-	    btnCalenFim.setBounds(469, 107, 29, 23);
+		btnCalenFim = new JButton("");
+		btnCalenFim.setBounds(469, 107, 29, 23);
 		btnCalenFim.setIcon(new ImageIcon(
 				FrmExposicaoCad.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
 		contentPane.add(btnCalenFim);
@@ -110,11 +120,6 @@ public class FrmExposicaoCad extends JFrame {
 		lblDescrio = new JLabel("Descri\u00E7\u00E3o");
 		lblDescrio.setBounds(73, 222, 61, 14);
 		contentPane.add(lblDescrio);
-
-		txtDescri = new JTextField();
-		txtDescri.setBounds(155, 219, 709, 81);
-		contentPane.add(txtDescri);
-		txtDescri.setColumns(10);
 
 		lblArtista = new JLabel("Artista");
 		lblArtista.setBounds(88, 352, 46, 14);
@@ -138,32 +143,37 @@ public class FrmExposicaoCad extends JFrame {
 		lblTema = new JLabel("Tema");
 		lblTema.setBounds(97, 159, 37, 14);
 		contentPane.add(lblTema);
-		
-		
+
 		btnGravar = new JButton("Gravar");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.setBounds(756, 607, 108, 34);
 		contentPane.add(btnGravar);
-		
+
 		btnLimpar = new JButton("Limpar");
 		btnLimpar.setIcon(new ImageIcon("../MASProject/icons/clear.png"));
 		btnLimpar.setBounds(622, 607, 108, 34);
 		contentPane.add(btnLimpar);
-		
-		
+
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(157, 413, 707, 166);
 		contentPane.add(scrollPane);
-		
-		tableLista = new JTable(dados, colunas); //JTable recebe o cabecalho e os campos de conte�dos
+
+		tableLista = new JTable(dados, colunas); // JTable recebe o cabecalho e
+													// os campos de conte�dos
 		scrollPane.setViewportView(tableLista);
 		tableLista.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		tableLista.setColumnSelectionAllowed(false);
 		tableLista.setCellSelectionEnabled(false);
-		
-		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim, 
-				txtNomeArtista, tableLista);
 
+		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim, txtNomeArtista, txtID, tableLista);
+		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(157, 222, 707, 87);
+		contentPane.add(scrollPane_1);
+		
+		txtAreaDescri = new JTextArea();
+		scrollPane_1.setViewportView(txtAreaDescri);
+		expCtrl.gerarId();
 		btnCalenIni.addActionListener(expCtrl.abreCalendario1);
 		btnCalenFim.addActionListener(expCtrl.abreCalendario2);
 		btnPesqArtista.addActionListener(expCtrl.pesquisaArtista);

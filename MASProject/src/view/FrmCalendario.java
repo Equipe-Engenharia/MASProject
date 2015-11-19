@@ -3,13 +3,14 @@ package view;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JCalendar;
 
 import controller.ExposicaoCtrl;
 
-import javax.swing.JButton;
 
 public class FrmCalendario extends JDialog {
 	/**
@@ -20,6 +21,16 @@ public class FrmCalendario extends JDialog {
 	private JComponent contentPane;
 
 	public FrmCalendario() {
+		try {
+		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		            break;
+		        }
+		    }
+		} catch (Exception e) {
+		    // If Nimbus is not available, you can set the GUI to another look and feel.
+		}
 		setTitle("Calend\u00E1rio");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		Cal();
@@ -28,13 +39,14 @@ public class FrmCalendario extends JDialog {
 	public void Cal() {
 		
 		contentPane = new JPanel();
-		setBounds(100, 100, 447, 272);
+		setBounds(100, 100, 452, 245);
 
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		calendar = new JCalendar();
+		calendar.getDayChooser().setWeekOfYearVisible(false);
 		calendar.setBounds(5, 5, 424, 225);
 		contentPane.add(calendar);
  

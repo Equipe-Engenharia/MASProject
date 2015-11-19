@@ -28,6 +28,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import javax.swing.JScrollPane;
 
 public class FrmAcervoCad extends JFrame {
 
@@ -41,14 +42,19 @@ public class FrmAcervoCad extends JFrame {
 	private JComboBox<String> cbCategoria, cbSetor, cbSetorT, cbStatus, cbStatusT;
 	private JButton btnPesquisarImagem, btnExcluirImagem, btnPesquisaArtist, btnNovoArtista, btnEditarArtista,
 			btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, btnNovoSetor, btnEditarSetor,
-			btnNovoSetorT, btnEditarSetorT, btnGravar, btnFechar; // DEIXAR OS BOTOES EM PRIVATE
+			btnNovoSetorT, btnEditarSetorT, btnGravar, btnFechar; // DEIXAR OS
+																	// BOTOES EM
+																	// PRIVATE
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
-	 * @return 
+	 * 
+	 * @return
 	 */
-	
+
 	public static void main(String[] args) {
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -64,12 +70,15 @@ public class FrmAcervoCad extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	
+
 	public FrmAcervoCad() throws ParseException {
 		setResizable(false);
 		setTitle("Registro de Acervo");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // QUANDO FOR IMPLEMENTADO O MENU, ALTERAR PARA DISPOSE_ON_CLOSE
-		setBounds(100, 100, 1088, 680); // 
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // QUANDO FOR
+														// IMPLEMENTADO O MENU,
+														// ALTERAR PARA
+														// DISPOSE_ON_CLOSE
+		setBounds(100, 100, 1088, 680); //
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -164,11 +173,6 @@ public class FrmAcervoCad extends JFrame {
 		lblNewLabel_1.setBounds(63, 299, 139, 14);
 		contentPane.add(lblNewLabel_1);
 
-		JEditorPane editDescricao = new JEditorPane();
-		editDescricao.setForeground(UIManager.getColor("TableHeader.foreground"));
-		editDescricao.setBounds(63, 315, 962, 106);
-		contentPane.add(editDescricao);
-
 		btnNovaCategoria = new JButton("Nova Categoria");
 		btnNovaCategoria.setToolTipText("Não encontrou a categoria?");
 		btnNovaCategoria.setBounds(317, 178, 126, 29);
@@ -188,7 +192,7 @@ public class FrmAcervoCad extends JFrame {
 		contentPane.add(btnEditarMaterial);
 
 		JTabbedPane abas = new JTabbedPane(JTabbedPane.TOP);
-		abas.setBounds(50, 444, 558, 179);
+		abas.setBounds(63, 450, 558, 179);
 		contentPane.add(abas);
 
 		JPanel panel_proprio = new JPanel();
@@ -289,12 +293,20 @@ public class FrmAcervoCad extends JFrame {
 		btnFechar.setBounds(905, 582, 117, 34);
 		contentPane.add(btnFechar);
 
-		// botão de pesquisar artista e o Jpanel passados como parametro -
-		// Vitor
-		final AcervoCtrl ctrlAcervo = new AcervoCtrl(contentPane, idObra, lblSelecImagem, cbSetor, cbSetorT, cbStatus,
-				cbStatusT, cbCategoria, cbMaterial, txtArtist, txtObra, ftxtData, editDescricao, msgGravado, msgVazio,
-				txtValor, btnPesquisaArtist, btnNovoArtista, btnEditarArtista, btnNovaCategoria, btnEditarCategoria,
-				btnNovoMaterial, btnEditarMaterial, btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT);
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(63, 316, 962, 106);
+		contentPane.add(scrollPane);
+		
+				JEditorPane editDescricao = new JEditorPane();
+				scrollPane.setViewportView(editDescricao);
+				editDescricao.setForeground(UIManager.getColor("TableHeader.foreground"));
+				
+						// botão de pesquisar artista e o Jpanel passados como parametro -
+						// Vitor
+						final AcervoCtrl ctrlAcervo = new AcervoCtrl(contentPane, idObra, lblSelecImagem, cbSetor, cbSetorT, cbStatus,
+								cbStatusT, cbCategoria, cbMaterial, txtArtist, txtObra, ftxtData, editDescricao, msgGravado, msgVazio,
+								txtValor, btnPesquisaArtist, btnNovoArtista, btnEditarArtista, btnNovaCategoria, btnEditarCategoria,
+								btnNovoMaterial, btnEditarMaterial, btnNovoSetor, btnEditarSetor, btnNovoSetorT, btnEditarSetorT);
 
 		btnPesquisarImagem.addActionListener(ctrlAcervo.inserir_imagem);
 		btnExcluirImagem.addActionListener(ctrlAcervo.remover_imagem);
@@ -312,6 +324,8 @@ public class FrmAcervoCad extends JFrame {
 		btnGravar.addActionListener(ctrlAcervo.gravarAcervo);
 		btnFechar.addActionListener(ctrlAcervo.fecharTela);
 
+		// Colocar esses Listeners no
+		// Controller*****************************************************
 		cbMaterial.addFocusListener(new FocusListener() {
 
 			@Override
