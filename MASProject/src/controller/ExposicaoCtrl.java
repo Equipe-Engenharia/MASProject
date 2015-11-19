@@ -2,28 +2,171 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
+import com.toedter.calendar.JCalendar;
 
 import view.FrmCalendario;
+import view.FrmObraArtistaSelec;
 
 public class ExposicaoCtrl {
 
-	public ActionListener abreCalendario = new ActionListener() {
-		
+	private static JCalendar calendar;
+	private static JTextField txtDataIni, txtDataFim, txtNomeArtista, txtId;
+	private JTable tObras;
+	private static int flag;
+
+	public ExposicaoCtrl(JTextField txtDataI, JTextField txtDataF, JTextField txtNomeArtista, JTextField txtId,
+			JTable tObras) {
+		ExposicaoCtrl.txtDataIni = txtDataI; // neste caso nao se usa this,
+												// porque o metodo que utiliza a
+												// variavel � estatico
+		ExposicaoCtrl.txtDataFim = txtDataF;
+		this.txtNomeArtista = txtNomeArtista;
+		this.tObras = tObras;
+		this.txtId = txtId;
+	}
+
+	public ExposicaoCtrl(JCalendar calendar) {
+		ExposicaoCtrl.calendar = calendar;
+	}
+
+	/*
+	 * As flags funcionam para quando se tem mais de uma chamada de calendario
+	 * na mesma tela, ajuda no tratamento de retorno
+	 */
+	public static int getFlag() {
+		return flag;
+	}
+
+	public void setFlag(int n) {
+		flag = n;
+	}
+
+	public static void leCalendario() {
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		String data = formato.format(calendar.getDate()); // le data selecionada
+															// pelo usuario
+		insereDataTextField(data);
+
+	}
+
+	public void gerarId() {
+		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
+		Date date = new Date();
+		String id = (dateFormat.format(date));
+		txtId.setText("EXP" + id);
+	}
+
+	public static void insereDataTextField(String data) {
+		switch (getFlag()) {
+		// tratamento das flags
+		case 1:
+			txtDataIni.setText(null);
+			txtDataIni.setText(data);
+			break;
+		case 2:
+			txtDataFim.setText(null);
+			txtDataFim.setText(data);
+			break;
+		}
+	}
+
+	public void chamaCalendario() {
+		FrmCalendario frmCal = new FrmCalendario();
+		frmCal.setVisible(true);
+	}
+
+	public ActionListener abreCalendario1 = new ActionListener() {
+
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
-			FrmCalendario frmCal = new FrmCalendario();
-			frmCal.setVisible(true);
+			chamaCalendario();
+			setFlag(1);
 		}
 	};
+
+	public ActionListener abreCalendario2 = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			chamaCalendario();
+			setFlag(2);
+		}
+	};
+
 	public ActionListener pesquisaArtista = new ActionListener() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			JDialog frmOASelec = new FrmObraArtistaSelec(txtNomeArtista.getText());
+			frmOASelec.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			frmOASelec.setLocationRelativeTo(null);
+			frmOASelec.setModal(true);
+			frmOASelec.setVisible(true);
+			// tObras = new JTable();
 		}
 	};
-	
+
+	// public ActionListener leCalendario = new ActionListener() {
+	//
+	// @Override
+	// public void actionPerformed(ActionEvent e) {
+	// leCalendario();
+	// }
+	// };
+
+	// Este listener trata a busca da data selecionada ao fechar a tela
+	public WindowListener fechaTela = new WindowListener() {
+
+		@Override
+		public void windowOpened(WindowEvent e) {
+			// TODO Auto-generated method stub
+			gerarId();
+		}
+
+		@Override
+		public void windowIconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+			// leCalendario();
+		}
+
+		@Override
+		public void windowClosed(WindowEvent e) {
+			leCalendario();
+		}
+
+		@Override
+		public void windowActivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+	};
 
 }
