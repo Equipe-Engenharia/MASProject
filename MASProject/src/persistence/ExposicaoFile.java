@@ -1,0 +1,93 @@
+package persistence;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
+import controller.ArquivosICtrl;
+import model.ExposicaoMdl;
+
+public class ExposicaoFile implements ArquivosICtrl {
+
+	StringBuffer buffer;
+
+	public String getBuffer() {
+		return buffer.toString();
+	}
+
+	@Override
+	public void leArquivo(String diretorio, String arquivo) throws IOException {
+		File arq = new File(diretorio, arquivo);
+		if (arq.exists()) {
+			FileInputStream leFluxo = new FileInputStream(arq);
+			InputStreamReader leDados = new InputStreamReader(leFluxo);
+			BufferedReader bufferLeitura = new BufferedReader(leDados);
+			String linha = bufferLeitura.readLine();
+			buffer = new StringBuffer();
+			while (linha != null) {
+				// System.out.println(linha);
+				buffer.append(linha);
+				buffer.append(";");
+				linha = bufferLeitura.readLine();
+			}
+			bufferLeitura.close();
+			leDados.close();
+			leFluxo.close();
+		} else {
+			throw new IOException("Arquivo inexistente");
+		}
+	}
+
+	@Override
+	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("ID      : " + ((ExposicaoMdl) object).getId());
+		buffer.append("\r\n");
+		buffer.append("Titulo : " + ((ExposicaoMdl) object).getTitulo());
+		buffer.append("\r\n");
+		buffer.append("Data de inicio : " + ((ExposicaoMdl) object).getDataIni());
+		buffer.append("\r\n");
+		buffer.append("Data final: " + ((ExposicaoMdl) object).getDataFim());
+		buffer.append("\r\n");
+		buffer.append("Tema: " + ((ExposicaoMdl) object).getTema());
+		buffer.append("\r\n");
+		buffer.append("Descricao: " + ((ExposicaoMdl) object).getDescricao());
+		buffer.append("\r\n");
+		buffer.append("Itens da Exposicao: " + ((ExposicaoMdl) object).getObrasExp());
+		buffer.append("\r\n");
+		buffer.append("---------------------------");
+		buffer.append("\r\n");
+		File arq = new File(diretorio, arquivo);
+		boolean arquivoExiste;
+		if (arq.exists()) {
+			arquivoExiste = true;
+		} else {
+			arq.createNewFile();
+			arquivoExiste = false;
+		}
+		FileWriter escreveArquivo = new FileWriter(arq, arquivoExiste);
+		PrintWriter gravaDados = new PrintWriter(escreveArquivo);
+		gravaDados.write(buffer.toString());
+		gravaDados.flush();
+		gravaDados.close();
+		escreveArquivo.close();
+
+	}
+
+	@Override
+	public void leDiretorio(String diretorio) throws IOException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void excluiDadosArquivo(String diretorio, String arquivo, String[] registro) throws IOException {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -259,7 +259,7 @@ public class IngressoCtrl implements ComponentListener {
 				listString.add(text);
 				if (s.contains("---")) {
 					ExposicaoMdl e = new ExposicaoMdl();
-					e.setNome(listString.get(1));
+					e.setTitulo(listString.get(1));
 					listExpo.add(e);
 					listString.clear();
 				}
@@ -268,7 +268,7 @@ public class IngressoCtrl implements ComponentListener {
 			e.printStackTrace();
 		}
 		for (ExposicaoMdl c : listExpo) {
-			cbExpo.addItem(c.getNome());
+		cbExpo.addItem(c.getTitulo());
 		}
 	}
 	
