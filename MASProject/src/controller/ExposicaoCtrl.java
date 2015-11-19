@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JCalendar;
 
@@ -39,9 +41,12 @@ public class ExposicaoCtrl {
 	private JTextField txtTema;
 	private JTextArea txtAreaDescri;
 	private ExposicaoFile arquivo = new ExposicaoFile();
+	private DefaultTableModel tableModel;
+	private DefaultTableColumnModel tableColumnModel;
 
 	public ExposicaoCtrl(JTextField txtDataI, JTextField txtDataF, JTextField txtNomeArtista, JTextField txtId,
-			JTable tObras, JTextField txtTitulo, JTextField txtTema, JTextArea txtAreaDescri) {
+			JTable tObras, JTextField txtTitulo, JTextField txtTema, JTextArea txtAreaDescri,
+			DefaultTableModel tableModel, DefaultTableColumnModel tableColumnModel) {
 		
 		
 		ExposicaoCtrl.txtDataIni = txtDataI; // neste caso nao se usa this,porque o metodo que utiliza a variavel � estatico
@@ -53,7 +58,8 @@ public class ExposicaoCtrl {
 		this.txtTema = txtTema;
 		this.txtAreaDescri = txtAreaDescri;
 		this.expos = new ArrayList<ExposicaoMdl>();
-		
+		this.tableModel = tableModel;
+		this.tableColumnModel = tableColumnModel;
 	}
 
 	public ExposicaoCtrl(JCalendar calendar) {

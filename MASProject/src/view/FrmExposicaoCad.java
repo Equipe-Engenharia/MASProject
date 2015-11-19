@@ -14,6 +14,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.DefaultTableModel;
 
 import controller.ExposicaoCtrl;
 
@@ -27,7 +29,10 @@ public class FrmExposicaoCad extends JFrame {
 	private JPanel contentPane;
 	private JButton btnCalenIni, btnPesqArtista, btnCalenFim, btnGravar, btnLimpar;
 	private JTextField txtID, txtTitulo, txtDataIni, txtDataFim, txtNomeArtista, txtTema;
+	
 	private JTable tableLista;
+	private DefaultTableModel tableModel = new DefaultTableModel();
+	private DefaultTableColumnModel tableColumnModel = new DefaultTableColumnModel();
 	// em testes
 	private JScrollPane scrollPane;
 	private String[] colunas = { "Nome da Obra", "Artista", "Setor" }; // Cabecalho
@@ -157,7 +162,7 @@ public class FrmExposicaoCad extends JFrame {
 		scrollPane.setBounds(157, 413, 707, 166);
 		contentPane.add(scrollPane);
 
-		tableLista = new JTable(dados, colunas); // JTable recebe o cabecalho e
+		tableLista = new JTable(tableModel, tableColumnModel); // JTable recebe o cabecalho e
 													// os campos de conte�dos
 		scrollPane.setViewportView(tableLista);
 		tableLista.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
@@ -173,7 +178,10 @@ public class FrmExposicaoCad extends JFrame {
 		txtAreaDescri = new JTextArea();
 		scrollPane_1.setViewportView(txtAreaDescri);
 		
-		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim, txtNomeArtista, txtID, tableLista,txtTitulo,txtTema,txtAreaDescri);
+		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, 
+				txtDataFim, txtNomeArtista, txtID, tableLista,
+				txtTitulo,txtTema,txtAreaDescri, tableModel,
+				tableColumnModel);
 		
 		
 		btnCalenIni.addActionListener(expCtrl.abreCalendario1);
