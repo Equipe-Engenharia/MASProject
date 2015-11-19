@@ -286,7 +286,7 @@ public class IngressoCtrl implements ComponentListener {
 				String text = s.replaceAll(".*: ", "");
 				listString.add(text);
 				if (s.contains("---")) {
-				cbIngresso.addItem(s);
+				cbIngresso.addItem(listString.get(1));
 				listString.clear();
 			}
 			}
