@@ -125,6 +125,29 @@ public class IngressoCtrl implements ComponentListener {
 	
 	public void calculaValor(){
 		
+		String linha = new String();
+		arquivos = new ArquivosCtrl();
+		ArrayList<String> listString = new ArrayList<>();
+		try {
+			arquivos.leArquivo("../MASProject/dados/", "ingressoTipo");
+			linha = arquivos.getBuffer();
+			String[] list = linha.split(";");
+			for (String s : list) {
+				String text = s.replaceAll(".*: ", "");
+				listString.add(text);
+				if (s.contains("---")) {
+					IngressoTipoMdl tipo = new IngressoTipoMdl();
+					tipo.setId(listString.get(0));
+					tipo.setTipo(listString.get(1));
+					tipo.setValor(listString.get(2));
+				listString.clear();
+			}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
+		
 		String opt = cbIngresso.getSelectedItem().toString();
 		
 		switch (opt){
