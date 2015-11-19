@@ -4,7 +4,7 @@ public class ObraMdl {
 	private String id;
 	private ArtistaMdl artista;
 	private String nome;
-	private CategoriaMdl categoria;
+	private ExposicaoMdl categoria;
 	private MaterialMdl material;
 	private String descricao;
 	private String imagem;
@@ -33,10 +33,10 @@ public class ObraMdl {
 	public void setNomeObra(String nome) {
 		this.nome = nome;
 	}
-	public CategoriaMdl getCategoria() {
+	public ExposicaoMdl getCategoria() {
 		return categoria;
 	}
-	public void setCategoria(CategoriaMdl categoria) {
+	public void setCategoria(ExposicaoMdl categoria) {
 		this.categoria = categoria;
 	}
 	public MaterialMdl getMaterial() {

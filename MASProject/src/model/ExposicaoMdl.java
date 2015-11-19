@@ -1,6 +1,6 @@
 package model;
 
-public class CategoriaMdl {
+public class ExposicaoMdl {
 
 	private String id;
 	private String nome;

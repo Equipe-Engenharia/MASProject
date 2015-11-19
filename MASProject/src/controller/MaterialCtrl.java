@@ -18,7 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import model.CategoriaMdl;
+import model.ExposicaoMdl;
 import model.MaterialMdl;
 import persistence.MaterialFile;
 
@@ -160,7 +160,7 @@ public class MaterialCtrl implements ComponentListener {
 		String linha = new String();
 		arquivos = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
-		ArrayList<CategoriaMdl> listCategorias = new ArrayList<>();
+		ArrayList<ExposicaoMdl> listCategorias = new ArrayList<>();
 		try {
 			arquivos.leArquivo("../MASProject/dados/", "categorias");
 			linha = arquivos.getBuffer();
@@ -169,7 +169,7 @@ public class MaterialCtrl implements ComponentListener {
 				String text = s.replaceAll(".*: ", "");
 				listString.add(text);
 				if (s.contains("---")) {
-					CategoriaMdl c = new CategoriaMdl();
+					ExposicaoMdl c = new ExposicaoMdl();
 					c.setNome(listString.get(1));
 					listCategorias.add(c);
 					listString.clear();
@@ -178,7 +178,7 @@ public class MaterialCtrl implements ComponentListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		for (CategoriaMdl c : listCategorias) {
+		for (ExposicaoMdl c : listCategorias) {
 			cbCategoria.addItem(c.getNome());
 		}
 	}

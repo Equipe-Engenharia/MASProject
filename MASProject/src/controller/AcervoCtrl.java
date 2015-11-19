@@ -33,7 +33,7 @@ import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import model.ArtistaMdl;
-import model.CategoriaMdl;
+import model.ExposicaoMdl;
 import model.MaterialMdl;
 import model.ObraMdl;
 import model.SetorMdl;
@@ -189,7 +189,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 					obra.setId(acervo.get(0));
 					obra.setNomeObra(acervo.get(2));
 					obra.setDescricaoObra(acervo.get(3));
-					CategoriaMdl c = new CategoriaMdl();
+					ExposicaoMdl c = new ExposicaoMdl();
 					c.setNome(acervo.get(4));
 					obra.setDataComposicao(acervo.get(5));
 					obra.setImagem(acervo.get(6));
@@ -243,7 +243,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		
 		ArtistaMdl artista = new ArtistaMdl();
 		ObraMdl o = new ObraMdl();
-		CategoriaMdl categoria = new CategoriaMdl();
+		ExposicaoMdl categoria = new ExposicaoMdl();
 		MaterialMdl material = new MaterialMdl();
 		SetorMdl setor = new SetorMdl();
 		ObraMdl obra = new ObraMdl();
@@ -367,7 +367,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		ObraMdl obra = new ObraMdl();
 		ObraFile obraImpl = new ObraFile();
 		ArtistaMdl artista = new ArtistaMdl();
-		CategoriaMdl categoria = new CategoriaMdl();
+		ExposicaoMdl categoria = new ExposicaoMdl();
 		MaterialMdl material = new MaterialMdl();
 		SetorMdl setor = new SetorMdl();
 		obra.setProprietario(false);
@@ -621,7 +621,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		String linha = new String();
 		arqController = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
-		ArrayList<CategoriaMdl> listCategorias = new ArrayList<>();
+		ArrayList<ExposicaoMdl> listCategorias = new ArrayList<>();
 		try {
 			arqController.leArquivo("../MASProject/dados/", "categorias");
 			linha = arqController.getBuffer();
@@ -630,7 +630,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 				String text = s.replaceAll(".*:", "");
 				listString.add(text);
 				if (s.contains("------")) {
-					CategoriaMdl c = new CategoriaMdl();
+					ExposicaoMdl c = new ExposicaoMdl();
 					c.setNome(listString.get(1));
 					listCategorias.add(c);
 					listString.clear();
@@ -641,7 +641,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		}
 		cbCategoria.removeAllItems();
 		cbCategoria.addItem("");
-		for (CategoriaMdl c : listCategorias) {
+		for (ExposicaoMdl c : listCategorias) {
 			cbCategoria.addItem(c.getNome());
 		}
 	}
@@ -847,7 +847,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 	@SuppressWarnings("static-access")
 	private void abrirTelaNovoMaterial() {
 
-		SessionCtrl session = new SessionCtrl();
+		SessionCtrl session = new SessionCtrl(); // TESTE PARA ACESSO POR NIVEL DO USUARIO - RETIRAR NA VERSAO FINAL
 		if (session.acesso() != false){
 			FrmMaterialCad newMaterial = new FrmMaterialCad();
 			newMaterial.setVisible(true);
