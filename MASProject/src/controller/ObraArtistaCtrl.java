@@ -20,7 +20,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import model.ObraMdl;
-import model.TableExposicaoModel;
+
 
 //Author: Vitor Fagundes Arantes
 public class ObraArtistaCtrl implements ActionListener, ListSelectionListener,
@@ -35,9 +35,10 @@ WindowListener{
 	private String nomeArtista;
 	private JLabel lblStatus;
 	private JPanel contentPanel;
-	private Object obra[][];
+	private Object obra[];
 	private String obras[];
-	private TableExposicaoModel tableModel;
+//	private TableExposicaoModel tableModel;
+	private DefaultTableModel tableModel;
 	private JTable tableObras;
 	
 	public ObraArtistaCtrl(JList<String> listObras, JList<String> listObrasSelecionadas,
@@ -45,7 +46,8 @@ WindowListener{
 			String nomeArtista, JButton btnAddAll, JButton btnRemoveAll,
 			DefaultListModel<String> listModelObras, 
 			DefaultListModel<String> listModelObrasSelecionadas,
-			JLabel lblStatus, JPanel contentPanel) {
+			JLabel lblStatus, JPanel contentPanel, DefaultTableModel tableModel,
+			JTable tableObras) {
 		
 		this.listObras = listObras;
 		this.listObrasSelecionadas = listObrasSelecionadas;
@@ -59,12 +61,9 @@ WindowListener{
 		this.listModelObrasSelecionadas = listModelObrasSelecionadas;
 		this.lblStatus = lblStatus;
 		this.contentPanel = contentPanel;
-		initObrasModel();
-	}
-	
-	public ObraArtistaCtrl(TableExposicaoModel tableModel, JTable tableObras){
 		this.tableModel = tableModel;
 		this.tableObras = tableObras;
+		initObrasModel();
 	}
 	
 	public ObraArtistaCtrl(){}
@@ -104,14 +103,18 @@ WindowListener{
 			return;
 		}
 		//senão cria um novo vetor de objetos e seta os nomes das obras da JList direita
-		obra = new Object[tamanho][1];
+		obra = new Object[tamanho];
 		//captura todos os itens da JList direita
 		for(int i = 0; i < tamanho; i++){
-			obra[i][0] = (listModelObrasSelecionadas.getElementAt(i));
+			obra[i] = (listModelObrasSelecionadas.getElementAt(i));
+			System.out.println(obra[i]);
 		}
+		tableModel.addColumn("Obra", obra);
+		//tableModel.addColumn("Artista", nomeArtista);
+		tableObras.setModel(tableModel);
 	}
 	
-	public Object[][] getObras(){
+	public Object[] getObras(){
 		return obra;
 	}
 

@@ -28,7 +28,7 @@ import com.toedter.calendar.JCalendar;
 
 import model.ExposicaoMdl;
 import model.ObraMdl;
-import model.TableExposicaoModel;
+
 import persistence.ExposicaoFile;
 import view.FrmCalendario;
 import view.FrmObraArtistaSelec;
@@ -38,20 +38,21 @@ public class ExposicaoCtrl implements TableModelListener{
 	private static JCalendar calendar;
 	private static JTextField txtDataIni, txtDataFim, txtNomeArtista, txtId;
 	private JTextField txtTitulo;
-	private static JTable tObras;
+	private JTable tObras;
 	private static int flag;
 	private boolean validar;
 	private List <ExposicaoMdl> expos;
 	private JTextField txtTema;
 	private JTextArea txtAreaDescri;
 	private ExposicaoFile arquivo = new ExposicaoFile();
-	private static TableExposicaoModel tableModel;
+//	private TableExposicaoModel tableModel;
+	private DefaultTableModel tableModel;
 	
 	
 
 	public ExposicaoCtrl(JTextField txtDataI, JTextField txtDataF, JTextField txtNomeArtista, JTextField txtId,
 			JTable tObras, JTextField txtTitulo, JTextField txtTema, JTextArea txtAreaDescri,
-			TableExposicaoModel tableModel) {
+			DefaultTableModel tableModel) {
 		
 		
 		ExposicaoCtrl.txtDataIni = txtDataI; // neste caso nao se usa this,porque o metodo que utiliza a variavel � estatico
@@ -70,10 +71,6 @@ public class ExposicaoCtrl implements TableModelListener{
 		ExposicaoCtrl.calendar = calendar;
 	}
 	
-	public ExposicaoCtrl(TableExposicaoModel tableModel){
-		this.tableModel = tableModel;
-	}
-
 	/*
 	 * As flags funcionam para quando se tem mais de uma chamada de calendario
 	 * na mesma tela, ajuda no tratamento de retorno
@@ -94,12 +91,6 @@ public class ExposicaoCtrl implements TableModelListener{
 
 	}
 	
-	public static void leObras(){
-		tableModel = new TableExposicaoModel();
-		tableModel.fireTableDataChanged();
-		tObras.setModel(tableModel);
-	}
-
 	public void gerarId() {
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
@@ -128,7 +119,7 @@ public class ExposicaoCtrl implements TableModelListener{
 	}
 	
 	public void chamaSelecaoObras(){
-		JDialog frmOASelec = new FrmObraArtistaSelec(txtNomeArtista.getText());
+		JDialog frmOASelec = new FrmObraArtistaSelec(txtNomeArtista.getText(), tableModel, tObras);
 		frmOASelec.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmOASelec.setLocationRelativeTo(null);
 		frmOASelec.setModal(true);
@@ -215,7 +206,6 @@ public void atualizaDados(List<ExposicaoMdl> listExpo) {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			chamaSelecaoObras();
-			leObras();
 		}
 	};
 

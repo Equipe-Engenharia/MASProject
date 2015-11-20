@@ -8,8 +8,10 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JList;
 import javax.swing.JLabel;
 
@@ -38,11 +40,16 @@ public class FrmObraArtistaSelec extends JDialog{
 	
 	private final JScrollPane scrollSelecionada = new JScrollPane();
 	private JScrollPane scrollSelecionar;
+	
+	private DefaultTableModel tableModel;
+	private JTable tableObras;
 	/**
 	 * Create the dialog.
 	 */
-	public FrmObraArtistaSelec(String nomeArtista) {
+	public FrmObraArtistaSelec(String nomeArtista, DefaultTableModel tableModel, JTable tableObras) {
 		this.nomeArtista = nomeArtista;
+		this.tableModel = tableModel;
+		this.tableObras = tableObras;
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Obras do artista: " + this.nomeArtista);
 		setBounds(100, 100, 496, 334);
@@ -112,7 +119,7 @@ public class FrmObraArtistaSelec extends JDialog{
 		ObraArtistaCtrl oAController = new ObraArtistaCtrl(listObras, listObrasSelecionadas, 
 				btnEnviarObras, btnMoveObra, btnUndoMoveObra, nomeArtista, 
 				btnAdicionarTodos, btnRemoverTodos, listModelObras, 
-				listModelObrasSelecionadas, lblStatus, contentPanel);
+				listModelObrasSelecionadas, lblStatus, contentPanel, this.tableModel, this.tableObras);
 		
 		//AÇÕES DOS BOTÕES
 		btnMoveObra.addActionListener(oAController);

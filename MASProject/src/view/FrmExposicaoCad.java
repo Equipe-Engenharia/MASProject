@@ -19,7 +19,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 
-import model.TableExposicaoModel;
 import controller.ExposicaoCtrl;
 
 public class FrmExposicaoCad extends JFrame {
@@ -34,7 +33,8 @@ public class FrmExposicaoCad extends JFrame {
 	private JTextField txtID, txtTitulo, txtDataIni, txtDataFim, txtNomeArtista, txtTema;
 	
 	private JTable tableLista;
-	private TableExposicaoModel tableModel;
+	private DefaultTableModel tableModel = new DefaultTableModel();
+//	private TableExposicaoModel tableModel = new TableExposicaoModel();
 	
 	// em testes
 	private JScrollPane scrollPane;
@@ -165,7 +165,7 @@ public class FrmExposicaoCad extends JFrame {
 		scrollPane.setBounds(157, 413, 707, 166);
 		contentPane.add(scrollPane);
 		
-		tableLista = new JTable(); 
+		tableLista = new JTable(tableModel); 
 		scrollPane.setViewportView(tableLista);
 		tableLista.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		tableLista.setColumnSelectionAllowed(false);
