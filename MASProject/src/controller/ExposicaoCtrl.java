@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JCalendar;
 
@@ -27,7 +28,7 @@ import persistence.ExposicaoFile;
 import view.FrmCalendario;
 import view.FrmObraArtistaSelec;
 
-public class ExposicaoCtrl {
+public class ExposicaoCtrl{
 
 	private static JCalendar calendar;
 	private static JTextField txtDataIni, txtDataFim, txtNomeArtista, txtId;
@@ -39,10 +40,11 @@ public class ExposicaoCtrl {
 	private JTextField txtTema;
 	private JTextArea txtAreaDescri;
 	private ExposicaoFile arquivo = new ExposicaoFile();
+	private DefaultTableModel tableModel;
 
 	public ExposicaoCtrl(JTextField txtDataI, JTextField txtDataF, JTextField txtNomeArtista, JTextField txtId,
-			JTable tObras, JTextField txtTitulo, JTextField txtTema, JTextArea txtAreaDescri) {
-		
+			JTable tObras, JTextField txtTitulo, JTextField txtTema, JTextArea txtAreaDescri,
+			DefaultTableModel tableModel) {
 		
 		ExposicaoCtrl.txtDataIni = txtDataI; // neste caso nao se usa this,porque o metodo que utiliza a variavel � estatico
 		ExposicaoCtrl.txtDataFim = txtDataF;
@@ -53,13 +55,13 @@ public class ExposicaoCtrl {
 		this.txtTema = txtTema;
 		this.txtAreaDescri = txtAreaDescri;
 		this.expos = new ArrayList<ExposicaoMdl>();
-		
+		this.tableModel = tableModel;
 	}
 
 	public ExposicaoCtrl(JCalendar calendar) {
 		ExposicaoCtrl.calendar = calendar;
 	}
-
+	
 	/*
 	 * As flags funcionam para quando se tem mais de uma chamada de calendario
 	 * na mesma tela, ajuda no tratamento de retorno
@@ -79,7 +81,7 @@ public class ExposicaoCtrl {
 		insereDataTextField(data);
 
 	}
-
+	
 	public void gerarId() {
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
@@ -103,12 +105,19 @@ public class ExposicaoCtrl {
 
 	public void chamaCalendario() {
 		FrmCalendario frmCal = new FrmCalendario();
+		frmCal.setLocationRelativeTo(null);
 		frmCal.setVisible(true);
 	}
 	
-	
+	public void chamaSelecaoObras(){
+		JDialog frmOASelec = new FrmObraArtistaSelec(txtNomeArtista.getText(), tableModel, tObras);
+		frmOASelec.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmOASelec.setLocationRelativeTo(null);
+		frmOASelec.setModal(true);
+		frmOASelec.setVisible(true);
+	}
+
 	//CRUD
-	
 	public void gravarExposicao(){
 		ExposicaoMdl exposicao = new ExposicaoMdl();
 		 new ExposicaoFile();
@@ -140,7 +149,7 @@ public class ExposicaoCtrl {
 		
 	}
 	
-public void limpaCampos() {
+	public void limpaCampos() {
 		//txtId.setText(null);
 		txtTitulo.setText(null);
 		txtDataIni.setText(null);
@@ -148,10 +157,9 @@ public void limpaCampos() {
 		txtTema.setText(null);
 		txtAreaDescri.setText(null);
 		//tObras.setSelected  //limapar a jTable
-		
 	}
 
-public void atualizaDados(List<ExposicaoMdl> listExpo) {
+	public void atualizaDados(List<ExposicaoMdl> listExpo) {
 		File f = new File("../MASProject/dados/exposicoes");
 		f.delete();
 		for (ExposicaoMdl exposicao : listExpo) {
@@ -185,42 +193,31 @@ public void atualizaDados(List<ExposicaoMdl> listExpo) {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JDialog frmOASelec = new FrmObraArtistaSelec(txtNomeArtista.getText());
-			frmOASelec.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			frmOASelec.setLocationRelativeTo(null);
-			frmOASelec.setModal(true);
-			frmOASelec.setVisible(true);
-			// tObras = new JTable();
+			chamaSelecaoObras();
 		}
 	};
-
-	
 
 	// Este listener trata a busca da data selecionada ao fechar a tela
 	public WindowListener fechaTela = new WindowListener() {
 
 		@Override
 		public void windowOpened(WindowEvent e) {
-			// TODO Auto-generated method stub
 			gerarId();
 		}
 
 		@Override
 		public void windowIconified(WindowEvent e) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void windowDeiconified(WindowEvent e) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void windowDeactivated(WindowEvent e) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
@@ -236,7 +233,6 @@ public void atualizaDados(List<ExposicaoMdl> listExpo) {
 		@Override
 		public void windowActivated(WindowEvent e) {
 			// TODO Auto-generated method stub
-
 		}
 	};
 	
@@ -337,6 +333,4 @@ public void atualizaDados(List<ExposicaoMdl> listExpo) {
 					new ImageIcon("../MASProject/icons/warning.png"));
 		}
 	}
-
-	
 }
