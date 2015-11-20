@@ -2,8 +2,6 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -14,17 +12,12 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import model.ObraMdl;
-
-
 //Author: Vitor Fagundes Arantes
-public class ObraArtistaCtrl implements ActionListener, ListSelectionListener,
-WindowListener{
+public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 	private JList<String> listObras;
 	private JList<String> listObrasSelecionadas;
 	private DefaultListModel<String> listModelObras;
@@ -114,7 +107,7 @@ WindowListener{
 		if(tableObras.getColumnCount() <= 0){
 			tableModel.addColumn("Obra", obra);
 		}else{
-			//arrumar aqui
+			//arrumar aqui, ao invés de adicionar o vetor, adiciona somente o primeiro indice
 			tableModel.addRow(obra);
 		}
 		tableObras.setModel(tableModel);
@@ -241,28 +234,4 @@ WindowListener{
 			return;
 		}
 	}
-
-	@Override
-	public void windowActivated(WindowEvent e) {
-	}
-
-	@Override
-	public void windowClosed(WindowEvent e) {
-	}
-
-	@Override
-	public void windowClosing(WindowEvent e) {
-	}
-
-	@Override
-	public void windowDeactivated(WindowEvent e) {}
-
-	@Override
-	public void windowDeiconified(WindowEvent e) {}
-
-	@Override
-	public void windowIconified(WindowEvent e) {}
-
-	@Override
-	public void windowOpened(WindowEvent e) {}
 }

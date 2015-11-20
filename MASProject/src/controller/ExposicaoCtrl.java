@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -20,8 +19,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JCalendar;
@@ -119,10 +116,8 @@ public class ExposicaoCtrl{
 		frmOASelec.setModal(true);
 		frmOASelec.setVisible(true);
 	}
-	
-	
+
 	//CRUD
-	
 	public void gravarExposicao(){
 		ExposicaoMdl exposicao = new ExposicaoMdl();
 		 new ExposicaoFile();
@@ -154,7 +149,7 @@ public class ExposicaoCtrl{
 		
 	}
 	
-public void limpaCampos() {
+	public void limpaCampos() {
 		//txtId.setText(null);
 		txtTitulo.setText(null);
 		txtDataIni.setText(null);
@@ -162,10 +157,9 @@ public void limpaCampos() {
 		txtTema.setText(null);
 		txtAreaDescri.setText(null);
 		//tObras.setSelected  //limapar a jTable
-		
 	}
 
-public void atualizaDados(List<ExposicaoMdl> listExpo) {
+	public void atualizaDados(List<ExposicaoMdl> listExpo) {
 		File f = new File("../MASProject/dados/exposicoes");
 		f.delete();
 		for (ExposicaoMdl exposicao : listExpo) {
@@ -203,33 +197,27 @@ public void atualizaDados(List<ExposicaoMdl> listExpo) {
 		}
 	};
 
-	
-
 	// Este listener trata a busca da data selecionada ao fechar a tela
 	public WindowListener fechaTela = new WindowListener() {
 
 		@Override
 		public void windowOpened(WindowEvent e) {
-			// TODO Auto-generated method stub
 			gerarId();
 		}
 
 		@Override
 		public void windowIconified(WindowEvent e) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void windowDeiconified(WindowEvent e) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void windowDeactivated(WindowEvent e) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
@@ -245,7 +233,6 @@ public void atualizaDados(List<ExposicaoMdl> listExpo) {
 		@Override
 		public void windowActivated(WindowEvent e) {
 			// TODO Auto-generated method stub
-
 		}
 	};
 	

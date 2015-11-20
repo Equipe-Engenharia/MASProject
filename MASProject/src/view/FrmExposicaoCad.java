@@ -14,9 +14,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ExposicaoCtrl;
@@ -34,14 +31,9 @@ public class FrmExposicaoCad extends JFrame {
 	
 	private JTable tableLista;
 	private DefaultTableModel tableModel = new DefaultTableModel();
-//	private TableExposicaoModel tableModel = new TableExposicaoModel();
 	
 	// em testes
 	private JScrollPane scrollPane;
-	private String[] colunas = { "Nome da Obra", "Artista", "Setor" }; // Cabecalho
-																		// do
-																		// JTable
-	private Object[][] dados = { { "Teste Obra", "Teste Artista", "Teste Setor" } };// Conteudo
 	private JTextArea txtAreaDescri;
 	private JScrollPane scrollPane_1;
 																					// teste

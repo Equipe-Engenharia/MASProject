@@ -129,6 +129,7 @@ public class FrmObraArtistaSelec extends JDialog{
 		btnAdicionarTodos.addActionListener(oAController);
 		btnRemoverTodos.addActionListener(oAController);
 		btnEnviarObras.addActionListener(oAController);
+		//REALIZA A AÇÃO ANTERIOR E DEPOIS FECHA - SOMENTE PRA TESTE
 		btnEnviarObras.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -138,7 +139,5 @@ public class FrmObraArtistaSelec extends JDialog{
 		//AÇÕES DAS JLISTS
 		listObras.addListSelectionListener(oAController);
 		listObrasSelecionadas.addListSelectionListener(oAController);
-		//AÇÃO DA TELA
-		addWindowListener(oAController);
 	}
 }
