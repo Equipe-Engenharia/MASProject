@@ -2,6 +2,8 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -127,6 +129,12 @@ public class FrmObraArtistaSelec extends JDialog{
 		btnAdicionarTodos.addActionListener(oAController);
 		btnRemoverTodos.addActionListener(oAController);
 		btnEnviarObras.addActionListener(oAController);
+		btnEnviarObras.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		//AÇÕES DAS JLISTS
 		listObras.addListSelectionListener(oAController);
 		listObrasSelecionadas.addListSelectionListener(oAController);

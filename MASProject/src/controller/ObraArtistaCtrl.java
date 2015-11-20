@@ -109,8 +109,14 @@ WindowListener{
 			obra[i] = (listModelObrasSelecionadas.getElementAt(i));
 			System.out.println(obra[i]);
 		}
-		tableModel.addColumn("Obra", obra);
-		//tableModel.addColumn("Artista", nomeArtista);
+		
+		//verifica a situação da JTable
+		if(tableObras.getColumnCount() <= 0){
+			tableModel.addColumn("Obra", obra);
+		}else{
+			//arrumar aqui
+			tableModel.addRow(obra);
+		}
 		tableObras.setModel(tableModel);
 	}
 	

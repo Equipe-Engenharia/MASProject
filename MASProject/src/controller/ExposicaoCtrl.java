@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -21,19 +22,16 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JCalendar;
 
 import model.ExposicaoMdl;
-import model.ObraMdl;
-
 import persistence.ExposicaoFile;
 import view.FrmCalendario;
 import view.FrmObraArtistaSelec;
 
-public class ExposicaoCtrl implements TableModelListener{
+public class ExposicaoCtrl{
 
 	private static JCalendar calendar;
 	private static JTextField txtDataIni, txtDataFim, txtNomeArtista, txtId;
@@ -45,15 +43,11 @@ public class ExposicaoCtrl implements TableModelListener{
 	private JTextField txtTema;
 	private JTextArea txtAreaDescri;
 	private ExposicaoFile arquivo = new ExposicaoFile();
-//	private TableExposicaoModel tableModel;
 	private DefaultTableModel tableModel;
-	
-	
 
 	public ExposicaoCtrl(JTextField txtDataI, JTextField txtDataF, JTextField txtNomeArtista, JTextField txtId,
 			JTable tObras, JTextField txtTitulo, JTextField txtTema, JTextArea txtAreaDescri,
 			DefaultTableModel tableModel) {
-		
 		
 		ExposicaoCtrl.txtDataIni = txtDataI; // neste caso nao se usa this,porque o metodo que utiliza a variavel � estatico
 		ExposicaoCtrl.txtDataFim = txtDataF;
@@ -352,11 +346,4 @@ public void atualizaDados(List<ExposicaoMdl> listExpo) {
 					new ImageIcon("../MASProject/icons/warning.png"));
 		}
 	}
-
-	@Override
-	public void tableChanged(TableModelEvent e) {
-		
-	}
-
-	
 }
