@@ -1,27 +1,30 @@
-ID       : VND151119-122324
-Data     : 19/11/2015
-Hora     : 12:23
+ID       : VND151120-125107
+Data     : 20/11/2015
+Hora     : 12:51
+Bilhete  : 1
+Exposição: Noite Van Gogh
+Visitante: Fernando M. Oliveira
+Ingresso : Inteira
+Pagamento: Dinheiro
+Valor    : 20
+---------------------------
+ID       : VND151120-125323
+Data     : 20/11/2015
+Hora     : 12:53
 Bilhete  : 2
-Exposição: Escultura
-Visitante: fe
-Ingresso : 12:23
-Valor    : 40
+Exposição: Noite Van Gogh
+Visitante: Denys Wylliam da Silva
+Ingresso : Inteira
+Pagamento: Cartão
+Valor    : 60
 ---------------------------
-ID       : VND151119-123813
-Data     : 19/11/2015
-Hora     : 12:38
+ID       : VND151120-130335
+Data     : 20/11/2015
+Hora     : 13:03
 Bilhete  : 3
-Exposição: Escultura
-Visitante: fe
-Ingresso : 12:38
-Valor    : 0
----------------------------
-ID       : VND151119-123843
-Data     : 19/11/2015
-Hora     : 12:38
-Bilhete  : 4
-Exposição: Escultura
-Visitante: fe
-Ingresso : 12:38
-Valor    : 40
+Exposição: Noite Van Gogh
+Visitante: Fernando M. Oliveira
+Ingresso : Meia
+Pagamento: Cartão
+Valor    : 10
 ---------------------------

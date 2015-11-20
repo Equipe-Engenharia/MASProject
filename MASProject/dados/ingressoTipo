@@ -2,15 +2,19 @@ ID       : VND151119-122324
 Ingresso : Inteira
 Valor    : 20
 ---------------------------
-ID       : VND151119-122324
+ID       : VND151119-122325
 Ingresso : Meia
 Valor    : 10
 ---------------------------
-ID       : VND151119-122324
+ID       : VND151119-122326
 Ingresso : Estudante
 Valor    : 10
 ---------------------------
-ID       : VND151119-122324
+ID       : VND151119-122327
 Ingresso : Franca
 Valor    : 0
+---------------------------
+ID       : VND151119-122324
+Ingresso : Especial
+Valor    : 50
 ---------------------------

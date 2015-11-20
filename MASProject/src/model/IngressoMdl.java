@@ -10,6 +10,7 @@ public class IngressoMdl {
 	private String visitante;
 	private String ingresso;
 	private String valor;
+	private String pagamento;
 	
 	public String getId(){
 		return id;
@@ -66,6 +67,14 @@ public class IngressoMdl {
 	
 	public void setIngresso(String ingresso){
 		this.ingresso = ingresso;
+	}
+	
+	public String getPagamento(){
+		return pagamento;
+	}
+	
+	public void setPagamento(String pagamento){
+		this.pagamento = pagamento;
 	}
 	
 	public String getValor(){

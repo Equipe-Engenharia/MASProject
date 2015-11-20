@@ -62,6 +62,8 @@ public class IngressoFile implements ArquivosICtrl {
 		buffer.append("\r\n");
 		buffer.append("Ingresso : " + ((IngressoMdl) object).getIngresso());
 		buffer.append("\r\n");
+		buffer.append("Pagamento: " + ((IngressoMdl) object).getPagamento());
+		buffer.append("\r\n");
 		buffer.append("Valor    : " + ((IngressoMdl) object).getValor());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
