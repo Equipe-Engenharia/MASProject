@@ -123,5 +123,7 @@ public class FrmObraArtistaSelec extends JDialog{
 		//AÇÕES DAS JLISTS
 		listObras.addListSelectionListener(oAController);
 		listObrasSelecionadas.addListSelectionListener(oAController);
+		//AÇÃO DA TELA
+		addWindowListener(oAController);
 	}
 }

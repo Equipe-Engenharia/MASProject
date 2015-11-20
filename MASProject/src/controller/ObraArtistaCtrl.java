@@ -13,14 +13,18 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import model.ObraMdl;
+import model.TableExposicaoModel;
 
 //Author: Vitor Fagundes Arantes
-public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
+public class ObraArtistaCtrl implements ActionListener, ListSelectionListener,
+WindowListener{
 	private JList<String> listObras;
 	private JList<String> listObrasSelecionadas;
 	private DefaultListModel<String> listModelObras;
@@ -31,8 +35,10 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 	private String nomeArtista;
 	private JLabel lblStatus;
 	private JPanel contentPanel;
-	private ObraMdl[] obra;
+	private Object obra[][];
 	private String obras[];
+	private TableExposicaoModel tableModel;
+	private JTable tableObras;
 	
 	public ObraArtistaCtrl(JList<String> listObras, JList<String> listObrasSelecionadas,
 			JButton btnEnviarObras, JButton btnMoveObra, JButton btnUndoMoveObra,
@@ -55,6 +61,13 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 		this.contentPanel = contentPanel;
 		initObrasModel();
 	}
+	
+	public ObraArtistaCtrl(TableExposicaoModel tableModel, JTable tableObras){
+		this.tableModel = tableModel;
+		this.tableObras = tableObras;
+	}
+	
+	public ObraArtistaCtrl(){}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -91,12 +104,15 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 			return;
 		}
 		//senão cria um novo vetor de objetos e seta os nomes das obras da JList direita
-		obra = new ObraMdl[tamanho];
+		obra = new Object[tamanho][1];
 		//captura todos os itens da JList direita
 		for(int i = 0; i < tamanho; i++){
-			obra[i] = new ObraMdl();
-			obra[i].setNomeObra(listModelObrasSelecionadas.getElementAt(i));
+			obra[i][0] = (listModelObrasSelecionadas.getElementAt(i));
 		}
+	}
+	
+	public Object[][] getObras(){
+		return obra;
 	}
 
 	private void removeAllItems() {
@@ -216,4 +232,28 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 			return;
 		}
 	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {}
+
+	@Override
+	public void windowIconified(WindowEvent e) {}
+
+	@Override
+	public void windowOpened(WindowEvent e) {}
 }

@@ -14,9 +14,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 
+import model.TableExposicaoModel;
 import controller.ExposicaoCtrl;
 
 public class FrmExposicaoCad extends JFrame {
@@ -31,8 +34,8 @@ public class FrmExposicaoCad extends JFrame {
 	private JTextField txtID, txtTitulo, txtDataIni, txtDataFim, txtNomeArtista, txtTema;
 	
 	private JTable tableLista;
-	private DefaultTableModel tableModel = new DefaultTableModel();
-	private DefaultTableColumnModel tableColumnModel = new DefaultTableColumnModel();
+	private TableExposicaoModel tableModel;
+	
 	// em testes
 	private JScrollPane scrollPane;
 	private String[] colunas = { "Nome da Obra", "Artista", "Setor" }; // Cabecalho
@@ -161,15 +164,12 @@ public class FrmExposicaoCad extends JFrame {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(157, 413, 707, 166);
 		contentPane.add(scrollPane);
-
-		tableLista = new JTable(tableModel, tableColumnModel); // JTable recebe o cabecalho e
-													// os campos de conte�dos
+		
+		tableLista = new JTable(); 
 		scrollPane.setViewportView(tableLista);
 		tableLista.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		tableLista.setColumnSelectionAllowed(false);
 		tableLista.setCellSelectionEnabled(false);
-
-		
 		
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(157, 222, 707, 87);
@@ -180,8 +180,7 @@ public class FrmExposicaoCad extends JFrame {
 		
 		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, 
 				txtDataFim, txtNomeArtista, txtID, tableLista,
-				txtTitulo,txtTema,txtAreaDescri, tableModel,
-				tableColumnModel);
+				txtTitulo,txtTema,txtAreaDescri, tableModel);
 		
 		
 		btnCalenIni.addActionListener(expCtrl.abreCalendario1);

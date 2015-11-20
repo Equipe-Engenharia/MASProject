@@ -19,34 +19,39 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JCalendar;
 
 import model.ExposicaoMdl;
+import model.ObraMdl;
+import model.TableExposicaoModel;
 import persistence.ExposicaoFile;
 import view.FrmCalendario;
 import view.FrmObraArtistaSelec;
 
-public class ExposicaoCtrl {
+public class ExposicaoCtrl implements TableModelListener{
 
 	private static JCalendar calendar;
 	private static JTextField txtDataIni, txtDataFim, txtNomeArtista, txtId;
 	private JTextField txtTitulo;
-	private JTable tObras;
+	private static JTable tObras;
 	private static int flag;
 	private boolean validar;
 	private List <ExposicaoMdl> expos;
 	private JTextField txtTema;
 	private JTextArea txtAreaDescri;
 	private ExposicaoFile arquivo = new ExposicaoFile();
-	private DefaultTableModel tableModel;
-	private DefaultTableColumnModel tableColumnModel;
+	private static TableExposicaoModel tableModel;
+	
+	
 
 	public ExposicaoCtrl(JTextField txtDataI, JTextField txtDataF, JTextField txtNomeArtista, JTextField txtId,
 			JTable tObras, JTextField txtTitulo, JTextField txtTema, JTextArea txtAreaDescri,
-			DefaultTableModel tableModel, DefaultTableColumnModel tableColumnModel) {
+			TableExposicaoModel tableModel) {
 		
 		
 		ExposicaoCtrl.txtDataIni = txtDataI; // neste caso nao se usa this,porque o metodo que utiliza a variavel � estatico
@@ -59,11 +64,14 @@ public class ExposicaoCtrl {
 		this.txtAreaDescri = txtAreaDescri;
 		this.expos = new ArrayList<ExposicaoMdl>();
 		this.tableModel = tableModel;
-		this.tableColumnModel = tableColumnModel;
 	}
 
 	public ExposicaoCtrl(JCalendar calendar) {
 		ExposicaoCtrl.calendar = calendar;
+	}
+	
+	public ExposicaoCtrl(TableExposicaoModel tableModel){
+		this.tableModel = tableModel;
 	}
 
 	/*
@@ -84,6 +92,12 @@ public class ExposicaoCtrl {
 															// pelo usuario
 		insereDataTextField(data);
 
+	}
+	
+	public static void leObras(){
+		tableModel = new TableExposicaoModel();
+		tableModel.fireTableDataChanged();
+		tObras.setModel(tableModel);
 	}
 
 	public void gerarId() {
@@ -109,7 +123,16 @@ public class ExposicaoCtrl {
 
 	public void chamaCalendario() {
 		FrmCalendario frmCal = new FrmCalendario();
+		frmCal.setLocationRelativeTo(null);
 		frmCal.setVisible(true);
+	}
+	
+	public void chamaSelecaoObras(){
+		JDialog frmOASelec = new FrmObraArtistaSelec(txtNomeArtista.getText());
+		frmOASelec.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmOASelec.setLocationRelativeTo(null);
+		frmOASelec.setModal(true);
+		frmOASelec.setVisible(true);
 	}
 	
 	
@@ -191,12 +214,8 @@ public void atualizaDados(List<ExposicaoMdl> listExpo) {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JDialog frmOASelec = new FrmObraArtistaSelec(txtNomeArtista.getText());
-			frmOASelec.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			frmOASelec.setLocationRelativeTo(null);
-			frmOASelec.setModal(true);
-			frmOASelec.setVisible(true);
-			// tObras = new JTable();
+			chamaSelecaoObras();
+			leObras();
 		}
 	};
 
@@ -342,6 +361,11 @@ public void atualizaDados(List<ExposicaoMdl> listExpo) {
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
 		}
+	}
+
+	@Override
+	public void tableChanged(TableModelEvent e) {
+		
 	}
 
 	
