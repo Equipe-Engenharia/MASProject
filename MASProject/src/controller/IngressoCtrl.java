@@ -210,10 +210,11 @@ public class IngressoCtrl implements ComponentListener {
 	}
 
 	public void formataTabela(){
+		
+		//VETOR DAS LINHAS DA TABELA
+		List<String[]> linhas = new ArrayList<>(); 
 
-		List<String[]> linhas = new ArrayList<>(); //VETOR DAS LINHAS DA TABELA
-
-		//CONFIGURA AS LINHAS DA TABELA CONFORME OS DADOS DA BASE, SELECIONANDO SOMENTE AS COLUNAS CONFIGURADAS
+		//CARREGA AS LINHAS NA TABELA COM OS DADOS DA COMPRA (SOMENTE AS COLUNAS CONFIGURADAS)
 		for (int i = 0; i < compra.size(); i++) {
 
 			String[] item = { 
@@ -226,8 +227,11 @@ public class IngressoCtrl implements ComponentListener {
 			};
 			linhas.add(item);
 		}
+		
+		//CONFIGURA O ALINHAMENTO DOS TÍTULOS DAS COLUNAS DA TABELA
+		((DefaultTableCellRenderer) tbCompra.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 
-		//CONFIGURA O ALINHAMENTO PARA AS LINHAS DA TABELA
+		//CONFIGURA O ALINHAMENTO PARA AS COLUNAS DA TABELA
 		DefaultTableCellRenderer esquerda = new DefaultTableCellRenderer();  
 		DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();  
 		DefaultTableCellRenderer direita = new DefaultTableCellRenderer();  
@@ -254,13 +258,13 @@ public class IngressoCtrl implements ComponentListener {
 			}  
 		};
 
-		//DEFINE COMO SELEÇÃO A LINHA INTEIRO
+		//DEFINE COMO SELEÇÃO TODA A LINHA
 		tbCompra.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		//DEFINE O MODEL DA TABELA
 		tbCompra.setModel(model);
 
-		//APLICA O ALINHAMENTO NAS LINHAS
+		//DEFINE O ALINHAMENTO DAS COLUNAS
 		tbCompra.getColumnModel().getColumn(0).setCellRenderer(esquerda);  
 		tbCompra.getColumnModel().getColumn(1).setCellRenderer(esquerda);
 		tbCompra.getColumnModel().getColumn(2).setCellRenderer(centralizado);

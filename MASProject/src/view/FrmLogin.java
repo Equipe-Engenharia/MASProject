@@ -3,6 +3,7 @@ package view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -136,6 +137,14 @@ public class FrmLogin extends JFrame {
 				SessionCtrl session = new SessionCtrl();
 				if (session.acesso() == false){
 					dispose();
+					try {
+						FrmIngresso frm = new FrmIngresso();
+						frm.setVisible(true);
+						frm.setLocationRelativeTo(null);
+					} catch (ParseException e1) {
+						e1.printStackTrace();
+					}
+					
 				}
 			} 
 		});
@@ -145,6 +154,14 @@ public class FrmLogin extends JFrame {
 				SessionCtrl session = new SessionCtrl();
 				if (session.acesso() == false){
 					dispose();
+					try {
+						FrmIngresso frm = new FrmIngresso();
+						frm.setVisible(true);
+						frm.setLocationRelativeTo(null);
+					} catch (ParseException e1) {
+						e1.printStackTrace();
+					}
+					
 				}
 			} 
 		});
