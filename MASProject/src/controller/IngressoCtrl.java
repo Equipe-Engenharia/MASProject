@@ -208,6 +208,7 @@ public class IngressoCtrl implements ComponentListener {
 			}
 		}
 	}
+	
 
 	public void formataTabela(){
 		
@@ -573,18 +574,18 @@ public class IngressoCtrl implements ComponentListener {
 				//CARREGADO PARA O ARRAY OS IDs DOS VISITANTES COM OS NOMES QUE COINCIDEM COM A DIGITAÇÃO
 				String[] filtro = new String[lista.size()];
 				for (int i = 0; i < lista.size(); i++) {
-					filtro[i] = lista.get(i).getId();
-					pesquisa = lista.get(i).getId();					
+					filtro[i] = lista.get(i).getId() + " : " + lista.get(i).getNome();
+					pesquisa = lista.get(i).getId();
 				}
 				if (filtro != null && filtro.length > 1) {
 					//INFORMA AO USUÁRIO UMA LISTA DOS ID's DOS USUÁRIOS E PEDE RETORNO
-					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
+					pesquisa = (String) JOptionPane.showInputDialog(form, "Selecione:\n", "Registros Localizados",
 							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
 				} 
 				if (pesquisa == "0" || pesquisa != null){
 					//SE FOR ESCOLHIDO UM ID, PREENCHE O CAMPO COM O NOME
 					for (int i = 0; i < visitantes.size(); i++) {
-						if (pesquisa.equalsIgnoreCase(visitantes.get(i).getId())) {
+						if (pesquisa.replaceAll(" : .*", "").equalsIgnoreCase(visitantes.get(i).getId())) {
 							txtPesquisa.setText(visitantes.get(i).getNome());
 						}
 					}
@@ -905,7 +906,7 @@ public class IngressoCtrl implements ComponentListener {
 
 			if(e.getClickCount() == 2){  
 				removeLinha();
-			}  
+			}
 		}
 	};
 

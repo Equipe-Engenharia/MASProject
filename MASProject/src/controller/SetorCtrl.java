@@ -217,15 +217,15 @@ public class SetorCtrl implements ComponentListener {
 				}
 				String[] filtro = new String[lista.size()];
 				for (int i = 0; i < lista.size(); i++) {
-					filtro[i] = lista.get(i).getId();
+					filtro[i] = lista.get(i).getId() + " : " + lista.get(i).getNome();
 					pesquisa = lista.get(i).getId();
 				}
 				if (filtro != null && filtro.length > 1) {
-					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
+					pesquisa = (String) JOptionPane.showInputDialog(form, "Selecione:\n", "Registros Localizados",
 							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
 				}
 				for (int i = 0; i < setores.size(); i++) {
-					if (pesquisa.equalsIgnoreCase(setores.get(i).getId())) {
+					if (pesquisa.replaceAll(" : .*", "").equalsIgnoreCase(setores.get(i).getId())) {
 						txtId.setText(setores.get(i).getId());
 						txtNome.setText(setores.get(i).getNome());
 					}

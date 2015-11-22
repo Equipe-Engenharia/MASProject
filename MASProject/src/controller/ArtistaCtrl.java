@@ -257,15 +257,14 @@ public class ArtistaCtrl implements ComponentListener {
 				}
 				String[] filtro = new String[lista.size()];
 				for (int i = 0; i < lista.size(); i++) {
-					filtro[i] = lista.get(i).getId();
-					pesquisa = lista.get(i).getId();
+					filtro[i] = lista.get(i).getId() + " : " + lista.get(i).getNome();					
 				}
 				if (filtro != null && filtro.length > 1) {
 					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
 							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
 				}
 				for (int i = 0; i < artistas.size(); i++) {
-					if (pesquisa.equalsIgnoreCase(artistas.get(i).getId())) {
+					if (pesquisa.replaceAll(" : .*", "").equalsIgnoreCase(artistas.get(i).getId())) {
 						txtId.setText(artistas.get(i).getId());
 						txtNome.setText(artistas.get(i).getNome());
 					}

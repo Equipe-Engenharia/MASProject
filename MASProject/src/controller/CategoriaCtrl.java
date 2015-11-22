@@ -216,15 +216,15 @@ public class CategoriaCtrl implements ComponentListener {
 				}
 				String[] filtro = new String[lista.size()];
 				for (int i = 0; i < lista.size(); i++) {
-					filtro[i] = lista.get(i).getId();
+					filtro[i] = lista.get(i).getId() + " : " + lista.get(i).getNome();
 					pesquisa = lista.get(i).getId();
 				}
 				if (filtro != null && filtro.length > 1) {
-					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
+					pesquisa = (String) JOptionPane.showInputDialog(form, "Selecione:\n", "Registros Localizados",
 							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
 				}
 				for (int i = 0; i < categorias.size(); i++) {
-					if (pesquisa.equalsIgnoreCase(categorias.get(i).getId())) {
+					if (pesquisa.replaceAll(" : .*", "").equalsIgnoreCase(categorias.get(i).getId())) {
 						txtId.setText(categorias.get(i).getId());
 						txtNome.setText(categorias.get(i).getNome());
 					}

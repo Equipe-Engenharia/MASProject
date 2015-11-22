@@ -256,16 +256,16 @@ public class MaterialCtrl implements ComponentListener {
 				}
 				String[] filtro = new String[lista.size()];
 				for (int i = 0; i < lista.size(); i++) {
-					filtro[i] = lista.get(i).getId();
+					filtro[i] = lista.get(i).getId() + " : " + lista.get(i).getNome();
 					pesquisa = lista.get(i).getId();					
 				}
 				if (filtro != null && filtro.length > 1) {
-					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
+					pesquisa = (String) JOptionPane.showInputDialog(form, "Selecione:\n", "Registros Localizados",
 							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
 				} 
 				if (pesquisa == "0" || pesquisa != null){
 				for (int i = 0; i < materiais.size(); i++) {
-					if (pesquisa.equalsIgnoreCase(materiais.get(i).getId())) {
+					if (pesquisa.replaceAll(" : .*", "").equalsIgnoreCase(materiais.get(i).getId())) {
 						txtId.setText(materiais.get(i).getId());
 						txtNome.setText(materiais.get(i).getNome());
 						cbCategoria.getModel().setSelectedItem(materiais.get(i).getCategoria());

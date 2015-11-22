@@ -272,16 +272,16 @@ public class VisitanteCtrl implements ComponentListener {
 				}
 				String[] filtro = new String[lista.size()];
 				for (int i = 0; i < lista.size(); i++) {
-					filtro[i] = lista.get(i).getId();
+					filtro[i] = lista.get(i).getId() + " : " + lista.get(i).getNome();
 					pesquisa = lista.get(i).getId();					
 				}
 				if (filtro != null && filtro.length > 1) {
-					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
+					pesquisa = (String) JOptionPane.showInputDialog(form, "Selecione:\n", "Registros Localizados",
 							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
 				} 
 				if (pesquisa == "0" || pesquisa != null){
 					for (int i = 0; i < visitantes.size(); i++) {
-						if (pesquisa.equalsIgnoreCase(visitantes.get(i).getId())) {
+						if (pesquisa.replaceAll(" : .*", "").equalsIgnoreCase(visitantes.get(i).getId())) {
 							txtId.setText(visitantes.get(i).getId());
 							txtNome.setText(visitantes.get(i).getNome());
 							txtDataNasc.setText(visitantes.get(i).getDataNasc());

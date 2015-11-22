@@ -299,6 +299,7 @@ public class FrmIngresso extends JFrame {
 		
 		txtPesquisa.addActionListener(controle.pesquisar);
 		txtPesquisa.addKeyListener(controle.tecla);
+		txtPesquisa.addKeyListener(controle.tecla);
 		txtQtd.addActionListener(controle.incluir);
 		txtQtd.addMouseListener(controle.limpaCampo);
 		txtQtd.addKeyListener(controle.tecla);
