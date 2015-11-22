@@ -29,7 +29,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -40,7 +39,6 @@ import model.IngressoMdl;
 import model.IngressoTipoMdl;
 import model.VisitanteMdl;
 import persistence.IngressoFile;
-import view.FrmIngresso;
 import view.FrmVisitanteCad;
 
 public class IngressoCtrl implements ComponentListener {
@@ -750,10 +748,21 @@ public class IngressoCtrl implements ComponentListener {
 		@Override  
 		public void keyTyped(KeyEvent e) {
 			
-			String caracteres="0987654321";
-			if(!caracteres.contains(e.getKeyChar()+"")){
-				e.consume();
+			//SELECIONA O CAMPO COM FOCO E BLOQUEIA CARACTERES NÃO AUTORIZADOS
+			if(txtPesquisa.hasFocus()){
+				String caracteres="0987654321";
+				if(caracteres.contains(e.getKeyChar()+"")){
+					e.consume();
+				}
 			}
+			
+			if(txtQtd.hasFocus() || ftxtDinheiro.hasFocus()){
+				String caracteres="0987654321";
+				if(!caracteres.contains(e.getKeyChar()+"")){
+					e.consume();
+				}
+			}
+			
 			txtQtd.setText(null);
 		}
 
