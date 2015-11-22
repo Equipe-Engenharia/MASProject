@@ -24,7 +24,9 @@ public class FrmVisitanteCad extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtId, txtNome, txtDataNasc;
+	private JTextField txtId;
+	public JTextField txtNome;
+	private JTextField txtDataNasc;
 	private JLabel lblNomeDoVisitante, lblNacionalidade, lblSexo, lblIdiomas, lblData;
 	private JComboBox<String> cbNacional;
 	private JRadioButton rdbtnMasculino, rdbtnFeminino;

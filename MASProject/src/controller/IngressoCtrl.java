@@ -659,19 +659,31 @@ public class IngressoCtrl implements ComponentListener {
 			break;
 		case "errorsave":
 			Object[] options = { "Confirmar", "Cancelar" };  
-			int r = JOptionPane.showOptionDialog(null, "ATENÇÃO!\n\nO visitante '" + mensagem 
+			int cadastro = JOptionPane.showOptionDialog(null, "ATENÇÃO!\n\nO visitante '" + mensagem 
 					+ "' não existe na base de dados!\n\nDeseja realizar o cadastro do visitante?",
 					"Não Localizado", 
 					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
-					new ImageIcon("../MASProject/icons/warning.png"), options, options[0]);
-			if (r == 0) {
+					new ImageIcon("../MASProject/icons/warning.png"), options, options[1]);
+			if (cadastro == 0) {
 				try {
 					FrmVisitanteCad frmCad = new FrmVisitanteCad();
 					frmCad.setVisible(true);
 					frmCad.setLocationRelativeTo(null);
+					frmCad.txtNome.setText(txtPesquisa.getText());
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
+			}
+			break;
+		case "system":
+			Object[] exit = { "Confirmar", "Cancelar" };  
+			int fechar = JOptionPane.showOptionDialog(null, "ATENÇÃO!\n\nChamada para o " + mensagem 
+					+ " do sistema!\n\nDeseja encerrar a aplicação?",
+					"Não Localizado", 
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"), exit, exit[1]);
+			if (fechar == 0) {
+				validar = true;
 			}
 			break;		
 		default:
@@ -782,7 +794,10 @@ public class IngressoCtrl implements ComponentListener {
 			case KeyEvent.VK_RIGHT:
 				break;
 			case KeyEvent.VK_ESCAPE:
+				msg("system","Fechamento");
+				if(validar != false){
 				System.exit(0);
+				}
 				break;
 			case KeyEvent.VK_DELETE:
 				removeLinha();

@@ -129,7 +129,7 @@ public class FrmLogin extends JFrame {
 		btnNovo.addActionListener(controle.cadastrar);
 		
 		
-	///   PASSAR PARA O CONTROLLER LOGINCTRL  ////////////////
+	///   PASSAR PARA O CONTROLLER LoginCtrl  ////////////////
 		
 		pwdSenha.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
