@@ -104,7 +104,7 @@ public class IngressoCtrl implements ComponentListener {
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String NewId = (dateFormat.format(date));
-		txtId.setText("VND" + NewId);
+		txtId.setText("PDV" + NewId);
 	}
 
 
