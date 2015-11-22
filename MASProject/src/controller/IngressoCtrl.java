@@ -280,7 +280,7 @@ public class IngressoCtrl implements ComponentListener {
 
 	public void atualizaTabela(){
 
-		//SE FOR CADASTRADO UM NOVO VISITANTE, ESTA E LINHAS ATUALIZAM A BASE DE DADOS
+		//SE FOR CADASTRADO UM NOVO VISITANTE, ATUALIZAR A BASE DE DADOS
 		visitantes.clear();
 		lerVisitante();
 
@@ -350,6 +350,7 @@ public class IngressoCtrl implements ComponentListener {
 
 	public void atualizaValor(){
 
+		//FILTRA CARREGA ARRAY COM A BASE DE DADOS DO VALOR DOS INGRESSOS POR TIPO
 		String linha = new String();
 		arquivos = new ArquivosCtrl();		
 		ArrayList<String> listString = new ArrayList<>();
@@ -372,11 +373,14 @@ public class IngressoCtrl implements ComponentListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//PRECORRE O ARRAY DOS DADOS
 		for (int i = 0; i < tipo.size(); i++) {
+			//CARREGA O VALOR DO INGRESSO ESCOLHIDO PARA O PREÇO UNITÁRIO
 			if (cbIngresso.getSelectedItem().toString().equals(tipo.get(i).getTipo())) {
 				ftxtValorUnit.setValue(Integer.parseInt(tipo.get(i).getValor()));
 			}
 		}
+		//ATUALIZA O VALOR CONFORME A QUANTIDADE
 		if(!txtQtd.getText().isEmpty()){	
 			int qtd = Integer.parseInt(txtQtd.getText());
 			Object unit = ftxtValorUnit.getValue();
@@ -386,6 +390,7 @@ public class IngressoCtrl implements ComponentListener {
 				ftxtTotal.setValue(total);
 			}
 		} else {
+			//POR PADRÃO A QUANTIDADE É "1"
 			txtQtd.setText("1");
 			atualizaValor();
 		}
@@ -426,6 +431,7 @@ public class IngressoCtrl implements ComponentListener {
 
 	public void preencherComboBoxExpo() {
 
+		//FILTRA E CARREGA O ARRAY COM A BASE DE DADOS EXPOSIÇÃO
 		String linha = new String();
 		arquivos = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
@@ -455,6 +461,7 @@ public class IngressoCtrl implements ComponentListener {
 
 	public void preencherComboBoxIngresso() {
 
+		//FILTRA E CARREGA O ARRAY COM A BASE DE DADOS DO TIPOS DE INGRESSO
 		String linha = new String();
 		arquivos = new ArquivosCtrl();
 		ArrayList<String> listString = new ArrayList<>();
@@ -481,6 +488,7 @@ public class IngressoCtrl implements ComponentListener {
 
 	public void lerArquivo() {
 
+		//FILTRA E CARREGA O ARRAY COM A BASE DE DADOS DOS INGRESSOS COMPRADOS
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 		try {
@@ -514,6 +522,7 @@ public class IngressoCtrl implements ComponentListener {
 
 	public void atualizaDados(List<IngressoMdl> listingressos) {
 
+		//REALIZA A GRAVAÇÃO NO ARQUIVO TXT
 		File f = new File("../MASProject/dados/ingresso");
 		f.delete();
 		for (IngressoMdl ingresso : listingressos) {
@@ -528,6 +537,7 @@ public class IngressoCtrl implements ComponentListener {
 
 	public void pesquisar() {
 
+		//LIMPA O ARRAY DOS VISITANTES PARA RECARREGAR COM OS DADOS ATUAIS DO ARQUIVO TXT
 		visitantes.clear();
 		lerVisitante();
 		ArrayList<VisitanteMdl> lista = new ArrayList<>();
@@ -538,11 +548,13 @@ public class IngressoCtrl implements ComponentListener {
 					txtId.setText(visitantes.get(i).getId());
 					txtPesquisa.setText(visitantes.get(i).getNome());
 					validar = true;
+					//VERIFICA OS REGISTROS QUE COMEÇAM COM O TEXTO DIGITADO
 				} else if (visitantes.get(i).getNome().toLowerCase().startsWith(txtPesquisa.getText().toLowerCase())) {
 					validar = true;
 				}
 			}
 			if (validar == true) {
+				//CARREGA O ARRAY DOS VISITANTES OS NOMES INICIADOS COM O TEXTO DIGITADO
 				for (int i = 0; i < visitantes.size(); i++) {
 					boolean filtro = visitantes.get(i).getNome().toLowerCase().startsWith(txtPesquisa.getText().toLowerCase());
 					if (filtro == true) {
@@ -552,16 +564,19 @@ public class IngressoCtrl implements ComponentListener {
 						lista.add(item);
 					}
 				}
+				//CARREGADO PARA O ARRAY OS IDs DOS VISITANTES COM OS NOMES QUE COINCIDEM COM A DIGITAÇÃO
 				String[] filtro = new String[lista.size()];
 				for (int i = 0; i < lista.size(); i++) {
 					filtro[i] = lista.get(i).getId();
 					pesquisa = lista.get(i).getId();					
 				}
 				if (filtro != null && filtro.length > 1) {
+					//INFORMA AO USUÁRIO UMA LISTA DOS ID's DOS USUÁRIOS E PEDE RETORNO
 					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
 							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
 				} 
 				if (pesquisa == "0" || pesquisa != null){
+					//SE FOR ESCOLHIDO UM ID, PREENCHE O CAMPO COM O NOME
 					for (int i = 0; i < visitantes.size(); i++) {
 						if (pesquisa.equalsIgnoreCase(visitantes.get(i).getId())) {
 							txtPesquisa.setText(visitantes.get(i).getNome());
@@ -583,10 +598,12 @@ public class IngressoCtrl implements ComponentListener {
 
 
 	public void gravar() {
-
+		
+		// VERIFICA SE O ARQUIVO TXT EXISTE (E CRIA UM CASO NEGATIVO)
 		new IngressoFile();
+		//INICIALIZA VARIÁVEL COM O MODELO
 		IngressoMdl ingresso = new IngressoMdl();
-
+		//VERIFICA SE A TABELA ESTA CARREGADA (SE POSITIVO TRANSFERE PARA O MODELO)
 		if (tbCompra.getRowCount() > 0){
 			for(int i = 0; i < compra.size(); i++){			
 				ingressos.add(compra.get(i));
@@ -594,11 +611,15 @@ public class IngressoCtrl implements ComponentListener {
 			}
 			compra.clear();		
 			msg("save", "");
+			//LIMPA AS LINHAS E ATUALIZA A TABELA
 			((DefaultTableModel) tbCompra.getModel()).setNumRows(0); 
 			tbCompra.updateUI();
 			validar = true;
+			//CASO A TABELA ESTEJA VAZIA, VERIFICA SE O CAMPO VISITANTE E QTD ESTÃO PREENCHIDOS
 		} else if (!txtPesquisa.getText().isEmpty() && !txtQtd.getText().isEmpty()) {
+			//PRECORRE O ARRAY VISITANTES PARA ENCONTRAR O NOME DIGITADO NO CAMPO
 			for (int i = 0; i < visitantes.size(); i++) {
+				//CARREGA O MODELO COM OS DADOS DOS CAMPOS DA TELA
 				if (txtPesquisa.getText().equals(visitantes.get(i).getNome())) {
 					ingresso.setId(txtId.getText());
 					ingresso.setData(txtData.getText());
@@ -611,7 +632,8 @@ public class IngressoCtrl implements ComponentListener {
 					ingresso.setValor(ftxtSubtotal.getText()); 
 					ingresso.setPagamento(pagamento.getSelection().getActionCommand());				
 					ingressos.add(ingresso);
-					msg("save", cbExpo.getSelectedItem().toString());				
+					msg("save", cbExpo.getSelectedItem().toString());
+					//ENVIA A ARRAY DO MODELO CARREGADO PARA ESCRITA NO ARQUIVO TXT
 					atualizaDados(ingressos);
 					validar = true;
 				} 
