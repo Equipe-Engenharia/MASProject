@@ -308,6 +308,7 @@ public class FrmIngresso extends JFrame {
 		ftxtDinheiro.addKeyListener(controle.tecla);
 		cbIngresso.addActionListener(controle.valor);
 		tbCompra.addMouseListener(controle.limpaCampo);
+		tbCompra.addKeyListener(controle.tecla);
 		rdbtnDinheiro.addActionListener(controle.valor);
 		rdbtnCard.addActionListener(controle.valor);
 		btnPesquisar.addActionListener(controle.pesquisar);

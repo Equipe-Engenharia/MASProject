@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -39,6 +40,7 @@ import model.IngressoMdl;
 import model.IngressoTipoMdl;
 import model.VisitanteMdl;
 import persistence.IngressoFile;
+import view.FrmIngresso;
 import view.FrmVisitanteCad;
 
 public class IngressoCtrl implements ComponentListener {
@@ -329,20 +331,22 @@ public class IngressoCtrl implements ComponentListener {
 	
 	public void removeLinha(){
 
-		//ATUALIZA A BASE DE DADOS EXCLUINDO O REGISTRO PELO BILHETE COMO FILTRO
-		for(int i = 0; i < compra.size(); i ++){
-			if((tbCompra.getValueAt(tbCompra.getSelectedRow(), 2).toString()).equals(compra.get(i).getBilhete())){
-				compra.remove(i);
+		if(tbCompra.getRowCount() > 0){
+			//ATUALIZA A BASE DE DADOS EXCLUINDO O REGISTRO PELO BILHETE COMO FILTRO
+			for(int i = 0; i < compra.size(); i ++){
+				if((tbCompra.getValueAt(tbCompra.getSelectedRow(), 2).toString()).equals(compra.get(i).getBilhete())){
+					compra.remove(i);
+				}
+				//RECUPERA O BILHETE ATUAL PARA RETORNAR DEPOIS QUE O BILHETE EXCLUIDO FOR REUSADO
+				altera = txtBilhete.getText();
 			}
-			//RECUPERA O BILHETE ATUAL PARA RETORNAR DEPOIS QUE O BILHETE EXCLUIDO FOR REUSADO
-			altera = txtBilhete.getText();
+			//RETORNA O BILHETE PARA USO NO SISTEMA
+			txtBilhete.setText(tbCompra.getValueAt(tbCompra.getSelectedRow(), 2).toString());
+
+			//ATUALIZA A TABELA, REMOVENDO O DADO
+			((DefaultTableModel) tbCompra.getModel()).removeRow(tbCompra.getSelectedRow());
+			tbCompra.updateUI(); 
 		}
-		//RETORNA O BILHETE PARA USO NO SISTEMA
-		txtBilhete.setText(tbCompra.getValueAt(tbCompra.getSelectedRow(), 2).toString());
-		
-		//ATUALIZA A TABELA, REMOVENDO O DADO
-		((DefaultTableModel) tbCompra.getModel()).removeRow(tbCompra.getSelectedRow());
-		tbCompra.updateUI(); 
 	}
 
 
@@ -745,7 +749,7 @@ public class IngressoCtrl implements ComponentListener {
 
 		@Override  
 		public void keyTyped(KeyEvent e) {
-
+			
 			String caracteres="0987654321";
 			if(!caracteres.contains(e.getKeyChar()+"")){
 				e.consume();
@@ -754,7 +758,30 @@ public class IngressoCtrl implements ComponentListener {
 		}
 
 		@Override
-		public void keyPressed(KeyEvent e) {	 
+		public void keyPressed(KeyEvent e) {
+
+			int keyCode=e.getKeyCode();
+
+			switch (keyCode) {
+
+			case KeyEvent.VK_UP:
+				break;
+			case KeyEvent.VK_DOWN:
+				break;
+			case KeyEvent.VK_LEFT:
+				break;
+			case KeyEvent.VK_RIGHT:
+				break;
+			case KeyEvent.VK_ESCAPE:
+				System.exit(0);
+				break;
+			case KeyEvent.VK_DELETE:
+				removeLinha();
+				break;
+			case 8: //MAC OSX: DELETE
+				removeLinha();
+				break;
+			}
 		}
 
 		@Override
