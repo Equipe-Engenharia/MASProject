@@ -48,23 +48,25 @@ public class IngressoFile implements ArquivosICtrl {
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID       : " + ((IngressoMdl) object).getId());
+		buffer.append("ID        : " + ((IngressoMdl) object).getId());
 		buffer.append("\r\n");
-		buffer.append("Data     : " + ((IngressoMdl) object).getData());
+		buffer.append("Data      : " + ((IngressoMdl) object).getData());
 		buffer.append("\r\n");
-		buffer.append("Hora     : " + ((IngressoMdl) object).getHora());
+		buffer.append("Hora      : " + ((IngressoMdl) object).getHora());
 		buffer.append("\r\n");
-		buffer.append("Bilhete  : " + ((IngressoMdl) object).getBilhete());
+		buffer.append("Bilhete   : " + ((IngressoMdl) object).getBilhete());
 		buffer.append("\r\n");
-		buffer.append("Exposição: " + ((IngressoMdl) object).getExpo());
+		buffer.append("Exposição : " + ((IngressoMdl) object).getExpo());
 		buffer.append("\r\n");
-		buffer.append("Visitante: " + ((IngressoMdl) object).getVisitante());
+		buffer.append("Visitante : " + ((IngressoMdl) object).getVisitante());
 		buffer.append("\r\n");
-		buffer.append("Ingresso : " + ((IngressoMdl) object).getIngresso());
+		buffer.append("Ingresso  : " + ((IngressoMdl) object).getIngresso());
 		buffer.append("\r\n");
-		buffer.append("Pagamento: " + ((IngressoMdl) object).getPagamento());
+		buffer.append("Quantidade: " + ((IngressoMdl) object).getQtd());
 		buffer.append("\r\n");
-		buffer.append("Valor    : " + ((IngressoMdl) object).getValor());
+		buffer.append("Valor     : " + ((IngressoMdl) object).getValor());
+		buffer.append("\r\n");
+		buffer.append("Pagamento : " + ((IngressoMdl) object).getPagamento());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");

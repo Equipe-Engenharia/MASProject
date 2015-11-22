@@ -6,9 +6,10 @@ public class IngressoMdl {
 	private String data;
 	private String hora;
 	private String bilhete;
-	private String expo;
+	private String exposicao;
 	private String visitante;
 	private String ingresso;
+	private String quantidade;
 	private String valor;
 	private String pagamento;
 	
@@ -46,11 +47,11 @@ public class IngressoMdl {
 	}
 	
 	public String getExpo(){
-		return expo;
+		return exposicao;
 	}
 	
-	public void setExpo(String expo){
-		this.expo = expo;
+	public void setExpo(String exposicao){
+		this.exposicao = exposicao;
 	}
 	
 	public String getVisitante(){
@@ -69,12 +70,12 @@ public class IngressoMdl {
 		this.ingresso = ingresso;
 	}
 	
-	public String getPagamento(){
-		return pagamento;
+	public String getQtd(){
+		return quantidade;
 	}
 	
-	public void setPagamento(String pagamento){
-		this.pagamento = pagamento;
+	public void setQtd(String quantidade){
+		this.quantidade = quantidade;
 	}
 	
 	public String getValor(){
@@ -83,5 +84,13 @@ public class IngressoMdl {
 	
 	public void setValor(String valor){
 		this.valor = valor;
+	}
+	
+	public String getPagamento(){
+		return pagamento;
+	}
+	
+	public void setPagamento(String pagamento){
+		this.pagamento = pagamento;
 	}
 }

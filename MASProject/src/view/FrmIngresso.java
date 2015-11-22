@@ -1,10 +1,10 @@
 package view;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,37 +12,32 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
 import controller.IngressoCtrl;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.ButtonGroup;
-import javax.swing.ListSelectionModel;
 
 public class FrmIngresso extends JFrame {
 
 	static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JLabel lblId, lblData, lblHora, lblPesquisa, lblBilhete, lblVisita, lblExpo, lblQtd, lblValorUnit, lblValor, lblDinheiro, lblTroco;
+	private JLabel lblId, lblData, lblHora, lblPesquisa, lblBilhete, lblVisita, lblExpo, lblQtd, lblValorUnit, lblSubtotal, lblTotal, lblDinheiro, lblTroco;
 	private JTextField txtId, txtData, txtHora, txtBilhete, txtPesquisa, txtQtd;
-	private JFormattedTextField  ftxtValorUnit, ftxtValor, ftxtDinheiro, ftxtTroco;
+	private JFormattedTextField  ftxtValorUnit, ftxtSubtotal, ftxtDinheiro, ftxtTotal, ftxtTroco;
 	private MaskFormatter maskData;
-	private DecimalFormat maskValor, maskValorUnit, maskDinheiro, maskTroco;
+	private DecimalFormat maskValor, maskValorUnit, maskDinheiro, maskTotal, maskTroco;
 	private JComboBox<String> cbIngresso, cbExpo;
 	private JButton btnPesquisar, btnIncluir, btnCancelar, btnGravar;
 	private JRadioButton rdbtnDinheiro, rdbtnCard;
 	private JScrollPane spCompra;
 	private JTable tbCompra;
 	private final ButtonGroup pagamento = new ButtonGroup();
-	private String[] colunas = { "Exposição", "Visitante", "Entrada", "Qtd", "Valor"};
-	private Object[][] dados = { { "Noite Van Gogh", "Fernando M. Oliveira", "Inteira", "1", "R$ 20,00" } };
 	
 	/**
 	 * Launch the application.
@@ -104,24 +99,32 @@ public class FrmIngresso extends JFrame {
 		contentPane.add(lblVisita);
 		
 		lblQtd = new JLabel("Quantidade");
-		lblQtd.setBounds(59, 330, 72, 16);
+		lblQtd.setBounds(250, 330, 72, 16);
 		contentPane.add(lblQtd);
 		
 		lblValorUnit = new JLabel("Valor Unitário");
-		lblValorUnit.setBounds(38, 369, 89, 16);
+		lblValorUnit.setBounds(38, 330, 89, 16);
 		contentPane.add(lblValorUnit);
 		
-		lblValor = new JLabel("Valor Total");
-		lblValor.setBounds(59, 406, 68, 16);
-		contentPane.add(lblValor);
+		lblSubtotal = new JLabel("Subtotal");
+		lblSubtotal.setBounds(75, 369, 52, 16);
+		contentPane.add(lblSubtotal);
 		
 		lblDinheiro = new JLabel("Dinheiro");
 		lblDinheiro.setBounds(261, 369, 61, 16);
 		contentPane.add(lblDinheiro);
 		
+		lblTotal = new JLabel("Total");
+		lblTotal.setBounds(95, 406, 32, 16);
+		contentPane.add(lblTotal);
+		
 		lblTroco = new JLabel("Troco");
 		lblTroco.setBounds(279, 406, 43, 16);
 		contentPane.add(lblTroco);
+		
+		JLabel lblPagamento = new JLabel("Tipo de Pagamento");
+		lblPagamento.setBounds(461, 330, 120, 16);
+		contentPane.add(lblPagamento);
 		
 		txtId = new JTextField();
 		txtId.setEnabled(false);
@@ -170,7 +173,7 @@ public class FrmIngresso extends JFrame {
 		
 		txtQtd = new JTextField();
 		txtQtd.setToolTipText("Digite a quantidade dos ingressos");
-		txtQtd.setBounds(144, 324, 98, 28);
+		txtQtd.setBounds(325, 324, 98, 28);
 		txtQtd.setHorizontalAlignment(SwingConstants.CENTER);
 		txtQtd.setColumns(10);
 		contentPane.add(txtQtd);
@@ -183,21 +186,21 @@ public class FrmIngresso extends JFrame {
 		ftxtValorUnit.setHorizontalAlignment(SwingConstants.RIGHT);
 		ftxtValorUnit.setEnabled(false);
 		ftxtValorUnit.setEditable(false);
-		ftxtValorUnit.setBounds(144, 363, 98, 28);
+		ftxtValorUnit.setBounds(144, 324, 98, 28);
 		ftxtValorUnit.setColumns(10);
 		contentPane.add(ftxtValorUnit);
 		
 		maskValor = new DecimalFormat("R$ #,###,##0.00");
-		NumberFormatter total = new NumberFormatter(maskValor);
-		total.setFormat(maskValor);
-		total.setAllowsInvalid(false);
-		ftxtValor = new JFormattedTextField(maskValor);
-		ftxtValor.setHorizontalAlignment(SwingConstants.RIGHT);
-		ftxtValor.setEnabled(false);
-		ftxtValor.setEditable(false);
-		ftxtValor.setBounds(144, 400, 98, 28);
-		ftxtValor.setColumns(10);
-		contentPane.add(ftxtValor);
+		NumberFormatter subtotal = new NumberFormatter(maskValor);
+		subtotal.setFormat(maskValor);
+		subtotal.setAllowsInvalid(false);
+		ftxtSubtotal = new JFormattedTextField(maskValor);
+		ftxtSubtotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		ftxtSubtotal.setEnabled(false);
+		ftxtSubtotal.setEditable(false);
+		ftxtSubtotal.setBounds(144, 363, 98, 28);
+		ftxtSubtotal.setColumns(10);
+		contentPane.add(ftxtSubtotal);
 		
 		maskDinheiro = new DecimalFormat("#,###,###.00");
 		NumberFormatter dinheiro = new NumberFormatter(maskDinheiro);
@@ -208,6 +211,18 @@ public class FrmIngresso extends JFrame {
 		ftxtDinheiro.setBounds(325, 363, 98, 28);
 		ftxtDinheiro.setColumns(10);
 		contentPane.add(ftxtDinheiro);
+		
+		maskTotal = new DecimalFormat("R$ #,###,##0.00");
+		NumberFormatter total = new NumberFormatter(maskTotal);
+		total.setFormat(maskTotal);
+		total.setAllowsInvalid(false);
+		ftxtTotal = new JFormattedTextField(maskTotal);
+		ftxtTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		ftxtTotal.setEnabled(false);
+		ftxtTotal.setEditable(false);
+		ftxtTotal.setBounds(144, 400, 98, 28);
+		ftxtTotal.setColumns(10);
+		contentPane.add(ftxtTotal);
 		
 		maskTroco = new DecimalFormat("R$ #,###,##0.00");
 		NumberFormatter troco = new NumberFormatter(maskTroco);
@@ -233,24 +248,23 @@ public class FrmIngresso extends JFrame {
 		rdbtnDinheiro.setSelected(true);
 		pagamento.add(rdbtnDinheiro);
 		rdbtnDinheiro.setActionCommand("Dinheiro");
-		rdbtnDinheiro.setBounds(261, 327, 86, 23);
+		rdbtnDinheiro.setBounds(612, 323, 86, 23);
 		contentPane.add(rdbtnDinheiro);
 		
 		rdbtnCard = new JRadioButton("Cartão");
 		pagamento.add(rdbtnCard);
 		rdbtnCard.setActionCommand("Cartão");
-		rdbtnCard.setBounds(345, 326, 86, 23);
+		rdbtnCard.setBounds(612, 348, 86, 23);
 		contentPane.add(rdbtnCard);
 		
 		spCompra = new JScrollPane();
 		spCompra.setBounds(38, 183, 691, 122);
 		contentPane.add(spCompra);
 		
-		tbCompra = new JTable(dados, colunas);
+		tbCompra = new JTable();
 		tbCompra.setToolTipText("Clique para selecionar…");
-		tbCompra.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		spCompra.setViewportView(tbCompra);
-		tbCompra.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		tbCompra.setBorder(null);
 		
 		btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.setBounds(612, 97, 117, 34);
@@ -259,7 +273,7 @@ public class FrmIngresso extends JFrame {
 		
 		btnIncluir = new JButton("Incluir");
 		btnIncluir.setIcon(new ImageIcon("../MASProject/icons/add.png"));
-		btnIncluir.setBounds(464, 321, 117, 34);
+		btnIncluir.setBounds(464, 360, 117, 34);
 		contentPane.add(btnIncluir);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -274,26 +288,32 @@ public class FrmIngresso extends JFrame {
 		
 		IngressoCtrl controle = new IngressoCtrl
 				(contentPane, lblDinheiro, lblTroco, txtId, txtData, txtHora, txtBilhete, txtPesquisa, cbExpo, cbIngresso, tbCompra, 
-						txtQtd, ftxtValorUnit, ftxtValor, ftxtDinheiro, ftxtTroco, rdbtnDinheiro, pagamento);
+						txtQtd, ftxtValorUnit, ftxtSubtotal, ftxtTotal, ftxtDinheiro, ftxtTroco, rdbtnDinheiro, pagamento);
 		
-		controle.gerarId();
-		controle.preencheData();
-		controle.preencheBilhete();
+		controle.atualizaId();
+		controle.atualizaTempo();
+		controle.atualizaBilhete();
 		controle.preencherComboBoxExpo();
 		controle.preencherComboBoxIngresso();
-		controle.calculaValor();
-		txtPesquisa.addMouseListener(controle.limpaCampo);
-		txtQtd.addMouseListener(controle.limpaCampo);
-		ftxtDinheiro.addActionListener(controle.valor);
+		controle.atualizaValor();
+		
 		txtPesquisa.addActionListener(controle.pesquisar);
-		cbIngresso.addActionListener(controle.valor);
-		btnPesquisar.addActionListener(controle.pesquisar);
-		btnCancelar.addActionListener(controle.cancelar);
-		btnGravar.addActionListener(controle.gravar);
+		//txtPesquisa.addKeyListener(controle.tecla);
+		//txtPesquisa.addMouseListener(controle.limpaCampo);
+		txtQtd.addActionListener(controle.incluir);
+		txtQtd.addMouseListener(controle.limpaCampo);
 		txtQtd.addKeyListener(controle.tecla);
 		txtQtd.addFocusListener(controle.move);
+		ftxtDinheiro.addActionListener(controle.valor);
 		ftxtDinheiro.addKeyListener(controle.tecla);
+		cbIngresso.addActionListener(controle.valor);
+		tbCompra.addMouseListener(controle.limpaCampo);
 		rdbtnDinheiro.addActionListener(controle.valor);
 		rdbtnCard.addActionListener(controle.valor);
+		btnPesquisar.addActionListener(controle.pesquisar);
+		btnCancelar.addActionListener(controle.cancelar);
+		btnIncluir.addActionListener(controle.valor);
+		btnIncluir.addActionListener(controle.incluir);
+		btnGravar.addActionListener(controle.gravar);
 	}
 }
