@@ -90,8 +90,8 @@ public class FrmIngresso extends JFrame {
 		lblExpo.setBounds(324, 69, 68, 16);
 		contentPane.add(lblExpo);
 		
-		lblPesquisa = new JLabel("ID/Nome Visitante");
-		lblPesquisa.setBounds(275, 106, 117, 16);
+		lblPesquisa = new JLabel("Nome Visitante");
+		lblPesquisa.setBounds(294, 106, 98, 16);
 		contentPane.add(lblPesquisa);
 		
 		lblVisita = new JLabel("Entrada");
@@ -299,7 +299,6 @@ public class FrmIngresso extends JFrame {
 		
 		txtPesquisa.addActionListener(controle.pesquisar);
 		txtPesquisa.addKeyListener(controle.tecla);
-		//txtPesquisa.addMouseListener(controle.limpaCampo);
 		txtQtd.addActionListener(controle.incluir);
 		txtQtd.addMouseListener(controle.limpaCampo);
 		txtQtd.addKeyListener(controle.tecla);
