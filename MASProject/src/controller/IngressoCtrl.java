@@ -294,6 +294,7 @@ public class IngressoCtrl implements ComponentListener {
 					ingresso.setHora(txtHora.getText());
 					ingresso.setBilhete(txtBilhete.getText());
 					ingresso.setExpo(cbExpo.getSelectedItem().toString());
+					ingresso.setVisitaId(visitantes.get(i).getId());
 					ingresso.setVisitante(txtPesquisa.getText());
 					ingresso.setIngresso(cbIngresso.getSelectedItem().toString());
 					ingresso.setQtd(txtQtd.getText());
@@ -786,10 +787,10 @@ public class IngressoCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			msg("saveconfirm", txtId.getText());
-			if(validar == true){
+			//msg("saveconfirm", txtId.getText());
+			//if(validar == true){
 			gravar();
-			}
+			//}
 		}
 	};
 
