@@ -7,6 +7,7 @@ public class IngressoMdl {
 	private String hora;
 	private String bilhete;
 	private String exposicao;
+	private String visitaId;
 	private String visitante;
 	private String ingresso;
 	private String quantidade;
@@ -52,6 +53,14 @@ public class IngressoMdl {
 	
 	public void setExpo(String exposicao){
 		this.exposicao = exposicao;
+	}
+	
+	public String getVisitaId(){
+		return visitaId;
+	}
+	
+	public void setVisitaId(String visitaId){
+		this.visitaId = visitaId;
 	}
 	
 	public String getVisitante(){

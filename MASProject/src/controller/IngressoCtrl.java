@@ -505,11 +505,12 @@ public class IngressoCtrl implements ComponentListener {
 					ingresso.setHora(list.get(2));
 					ingresso.setBilhete(list.get(3));
 					ingresso.setExpo(list.get(4));
-					ingresso.setVisitante(list.get(5));
-					ingresso.setIngresso(list.get(6));
-					ingresso.setQtd(list.get(7));
-					ingresso.setValor(list.get(8));
-					ingresso.setPagamento(list.get(9));
+					ingresso.setVisitaId(list.get(5));
+					ingresso.setVisitante(list.get(6));
+					ingresso.setIngresso(list.get(7));
+					ingresso.setQtd(list.get(8));
+					ingresso.setValor(list.get(9));
+					ingresso.setPagamento(list.get(10));
 					ingressos.add(ingresso);
 					list.clear();
 				}
@@ -598,57 +599,59 @@ public class IngressoCtrl implements ComponentListener {
 
 
 	public void gravar() {
-		
-		// VERIFICA SE O ARQUIVO TXT EXISTE (E CRIA UM CASO NEGATIVO)
-		new IngressoFile();
-		//INICIALIZA VARIÁVEL COM O MODELO
-		IngressoMdl ingresso = new IngressoMdl();
-		//VERIFICA SE A TABELA ESTA CARREGADA (SE POSITIVO TRANSFERE PARA O MODELO)
-		if (tbCompra.getRowCount() > 0){
-			for(int i = 0; i < compra.size(); i++){			
-				ingressos.add(compra.get(i));
-				atualizaDados(ingressos);
-			}
-			compra.clear();		
-			msg("save", "");
-			//LIMPA AS LINHAS E ATUALIZA A TABELA
-			((DefaultTableModel) tbCompra.getModel()).setNumRows(0); 
-			tbCompra.updateUI();
-			validar = true;
-			//CASO A TABELA ESTEJA VAZIA, VERIFICA SE O CAMPO VISITANTE E QTD ESTÃO PREENCHIDOS
-		} else if (!txtPesquisa.getText().isEmpty() && !txtQtd.getText().isEmpty()) {
-			//PRECORRE O ARRAY VISITANTES PARA ENCONTRAR O NOME DIGITADO NO CAMPO
-			for (int i = 0; i < visitantes.size(); i++) {
-				//CARREGA O MODELO COM OS DADOS DOS CAMPOS DA TELA
-				if (txtPesquisa.getText().equals(visitantes.get(i).getNome())) {
-					ingresso.setId(txtId.getText());
-					ingresso.setData(txtData.getText());
-					ingresso.setHora(txtHora.getText());
-					ingresso.setBilhete(txtBilhete.getText());
-					ingresso.setExpo(cbExpo.getSelectedItem().toString());
-					ingresso.setVisitante(txtPesquisa.getText());
-					ingresso.setIngresso(cbIngresso.getSelectedItem().toString());
-					ingresso.setQtd(txtQtd.getText());
-					ingresso.setValor(ftxtSubtotal.getText()); 
-					ingresso.setPagamento(pagamento.getSelection().getActionCommand());				
-					ingressos.add(ingresso);
-					msg("save", cbExpo.getSelectedItem().toString());
-					//ENVIA A ARRAY DO MODELO CARREGADO PARA ESCRITA NO ARQUIVO TXT
+
+			// VERIFICA SE O ARQUIVO TXT EXISTE (E CRIA UM CASO NEGATIVO)
+			new IngressoFile();
+			//INICIALIZA VARIÁVEL COM O MODELO
+			IngressoMdl ingresso = new IngressoMdl();
+			//VERIFICA SE A TABELA ESTA CARREGADA (SE POSITIVO TRANSFERE PARA O MODELO)
+			if (tbCompra.getRowCount() > 0){
+				for(int i = 0; i < compra.size(); i++){			
+					ingressos.add(compra.get(i));
 					atualizaDados(ingressos);
-					validar = true;
-				} 
+				}
+				compra.clear();		
+				msg("save", "");
+				//LIMPA AS LINHAS E ATUALIZA A TABELA
+				((DefaultTableModel) tbCompra.getModel()).setNumRows(0); 
+				tbCompra.updateUI();
+				validar = true;
+				//CASO A TABELA ESTEJA VAZIA, VERIFICA SE O CAMPO VISITANTE E QTD ESTÃO PREENCHIDOS
+			} else if (!txtPesquisa.getText().isEmpty() && !txtQtd.getText().isEmpty()) {
+				//PRECORRE O ARRAY VISITANTES PARA ENCONTRAR O NOME DIGITADO NO CAMPO
+				for (int i = 0; i < visitantes.size(); i++) {
+					//CARREGA O MODELO COM OS DADOS DOS CAMPOS DA TELA
+					if (txtPesquisa.getText().equals(visitantes.get(i).getNome())) {
+						ingresso.setId(txtId.getText());
+						ingresso.setData(txtData.getText());
+						ingresso.setHora(txtHora.getText());
+						ingresso.setBilhete(txtBilhete.getText());
+						ingresso.setExpo(cbExpo.getSelectedItem().toString());
+						ingresso.setVisitaId(visitantes.get(i).getId());
+						ingresso.setVisitante(txtPesquisa.getText());
+						ingresso.setIngresso(cbIngresso.getSelectedItem().toString());
+						ingresso.setQtd(txtQtd.getText());
+						ingresso.setValor(ftxtSubtotal.getText()); 
+						ingresso.setPagamento(pagamento.getSelection().getActionCommand());				
+						ingressos.add(ingresso);
+						msg("save", cbExpo.getSelectedItem().toString());
+						//ENVIA A ARRAY DO MODELO CARREGADO PARA ESCRITA NO ARQUIVO TXT
+						atualizaDados(ingressos);
+						validar = true;
+					} 
+				}
+				if (validar == false) {
+					msg("errorsave", txtPesquisa.getText());
+				}
+			} else {
+				msg("errornull", txtPesquisa.getText());
 			}
-			if (validar == false) {
-				msg("errorsave", txtPesquisa.getText());
-			}
-		} else {
-			msg("errornull", txtPesquisa.getText());
+			limpaCampos();
+			atualizaId();
+			atualizaTempo();
+			atualizaBilhete();
 		}
-		limpaCampos();
-		atualizaId();
-		atualizaTempo();
-		atualizaBilhete();
-	}
+
 
 
 	// MENSAGENS //////////////////////////////
@@ -679,6 +682,19 @@ public class IngressoCtrl implements ComponentListener {
 					JOptionPane.PLAIN_MESSAGE, 
 					new ImageIcon("../MASProject/icons/confirm.png"));
 			break;
+		case "saveconfirm":
+			Object[] save = { "Confirmar", "Cancelar" };  
+			int confirmar = JOptionPane.showOptionDialog(null, "Confirma o pagamento da compra " + mensagem 
+					+ " ?\n\nApós a confirmação, não será possível Editar/Cancelar esta compra!",
+					"Não Localizado", 
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"), save, save[1]);
+			if (confirmar == 0) {
+				validar = true;
+			} else {
+				validar = false;
+			}
+			break;
 		case "errorsave":
 			Object[] options = { "Confirmar", "Cancelar" };  
 			int cadastro = JOptionPane.showOptionDialog(null, "ATENÇÃO!\n\nO visitante '" + mensagem 
@@ -701,11 +717,13 @@ public class IngressoCtrl implements ComponentListener {
 			Object[] exit = { "Confirmar", "Cancelar" };  
 			int fechar = JOptionPane.showOptionDialog(null, "ATENÇÃO!\n\nChamada para o " + mensagem 
 					+ " do sistema!\n\nDeseja encerrar a aplicação?",
-					"Não Localizado", 
+					"Fechamento do Programa!", 
 					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
 					new ImageIcon("../MASProject/icons/warning.png"), exit, exit[1]);
 			if (fechar == 0) {
 				validar = true;
+			} else {
+				validar = false;
 			}
 			break;		
 		default:
@@ -768,8 +786,10 @@ public class IngressoCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+			msg("saveconfirm", txtId.getText());
+			if(validar == true){
 			gravar();
+			}
 		}
 	};
 
