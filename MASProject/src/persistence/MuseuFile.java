@@ -9,9 +9,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import controller.ArquivosICtrl;
-import model.EmprestimoMdl;
+import model.MuseuMdl;
 
-public class EmprestimoFile implements ArquivosICtrl {
+public class MuseuFile implements ArquivosICtrl {
 	StringBuffer buffer;
 
 	public String getBuffer() {
@@ -37,40 +37,22 @@ public class EmprestimoFile implements ArquivosICtrl {
 			leDados.close();
 			leFluxo.close();
 		} else {
-			//throw new IOException("Arquivo inexistente");
-			File novoArquivo = new File(diretorio, arquivo);
-			novoArquivo.createNewFile();
-			buffer = new StringBuffer();
-			buffer.append("");
+			throw new IOException("Arquivo inexistente");
 		}
 	}
 
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID             : " + ((EmprestimoMdl) object).getId());
+		buffer.append("ID             : " + ((MuseuMdl) object).getId());
 		buffer.append("\r\n");
-		buffer.append("ID Obra        : " + ((EmprestimoMdl) object).getObraId());
+		buffer.append("Nome           : " + ((MuseuMdl) object).getNome());
 		buffer.append("\r\n");
-		buffer.append("Nome Obra      : " + ((EmprestimoMdl) object).getObra());
+		buffer.append("Telefone       : " + ((MuseuMdl) object).getTelefone());
 		buffer.append("\r\n");
-		buffer.append("Artista        : " + ((EmprestimoMdl) object).getArtista());
+		buffer.append("ID Responsável : " + ((MuseuMdl) object).getResponsavelId());
 		buffer.append("\r\n");
-		buffer.append("Destino        : " + ((EmprestimoMdl) object).getDestino());
-		buffer.append("\r\n");
-		buffer.append("Data Inicial   : " + ((EmprestimoMdl) object).getDataInicial());
-		buffer.append("\r\n");
-		buffer.append("Data Final     : " + ((EmprestimoMdl) object).getDataFinal());
-		buffer.append("\r\n");
-		buffer.append("ID Museu       : " + ((EmprestimoMdl) object).getMuseuId());
-		buffer.append("\r\n");
-		buffer.append("Museu          : " + ((EmprestimoMdl) object).getMuseu());
-		buffer.append("\r\n");
-		buffer.append("ID Responsável : " + ((EmprestimoMdl) object).getResponsavelId());
-		buffer.append("\r\n");
-		buffer.append("Responsável    : " + ((EmprestimoMdl) object).getResponsavel());
-		buffer.append("\r\n");
-		buffer.append("Custo          : " + ((EmprestimoMdl) object).getCusto());
+		buffer.append("Responsável    : " + ((MuseuMdl) object).getResponsavel());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");

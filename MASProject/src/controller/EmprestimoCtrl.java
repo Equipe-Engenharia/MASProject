@@ -3,245 +3,764 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
-import model.AcervoMdl;
-import model.ArtistaMdl;
 import model.EmprestimoMdl;
-import model.ObraMdl;
-import persistence.ArtistaFile;
+import model.MuseuMdl;
+import model.EmprestimoObraMdl;
 import persistence.EmprestimoFile;
+import view.FrmAcervoCad;
+import view.FrmLogin;
 
-public class EmprestimoCtrl {
-	private JTextField txtCod,txtDataEmp,txtMuseu,txtRespTec,txtTel,txtDoc,txtNum,txtId;
-	private List<AcervoMdl> acervo;
-	private List<ObraMdl> obra;
-	private JPanel form;
-	private JTextField  txtNome;
-	private List<ArtistaMdl> artistas;
-	private List<EmprestimoMdl> emprestimos;
-	private static int contador = 1;
+public class EmprestimoCtrl implements ComponentListener {
+
+	private JPanel 
+	form;
+	private JTextField 
+	txtId, 
+	txtPesquisa, 
+	txtObra, 
+	txtArtista, 
+	txtTelefone, 
+	txtResponsavel,
+	txtResponsavelId;
+	private JFormattedTextField 
+	ftxtDataFinal, 
+	ftxtDataInicial, 
+	ftxtCusto, 
+	ftxtTotal; 
+	private JComboBox<String> cbMuseu;
+	private JRadioButton rdbtnEntrada, rdbtnSaida;
+	private ButtonGroup btgDestino;
+	private JTable tbEmprestimo;
 	private boolean validar;
-	private ArquivosCtrl arquivos = new ArquivosCtrl();
-	EmprestimoFile arquivo = new EmprestimoFile();
-	private String[] artista;
-	private String[]emprestimo;
+	private List<EmprestimoObraMdl> obras;
+	private List<MuseuMdl> museus;
+	private List<EmprestimoMdl> emprestimos;
+	private List<EmprestimoMdl> tabela;
+	private EmprestimoFile arquivo = new EmprestimoFile();
 	
-	
-	public EmprestimoCtrl(JPanel form, JTextField Cod,JTextField txtDataEmp,JTextField txtMuseu,JTextField txtRespTec,JTextField txtTel,JTextField txtDoc,JTextField txtNum) {
+	public EmprestimoCtrl(
+			JPanel form, 
+			JTextField txtId, 
+			JTextField txtPesquisa, 
+			JTextField txtObra, 
+			JTextField txtArtista, 
+			JRadioButton rdbtnEntrada, 
+			JRadioButton rdbtnSaida, 
+			ButtonGroup btgDestino, 
+			JFormattedTextField ftxtDataInicial, 
+			JFormattedTextField ftxtDataFinal, 
+			JTable tbEmprestimo, 
+			JComboBox<String> cbMuseu, 
+			JTextField txtTelefone, 
+			JTextField txtResponsavel, 
+			JTextField txtResponsavelId, 
+			JFormattedTextField ftxtCusto, 
+			JFormattedTextField ftxtTotal
+			){
+
+		this.form = form;
+		this.txtId = txtId;
+		this.txtPesquisa = txtPesquisa;
+		this.txtObra = txtObra;
+		this.txtArtista = txtArtista;
+		this.rdbtnEntrada = rdbtnEntrada;
+		this.rdbtnSaida = rdbtnSaida;
+		this.btgDestino = btgDestino;
+		this.ftxtDataInicial = ftxtDataInicial;
+		this.ftxtDataFinal = ftxtDataFinal;
+		this.tbEmprestimo = tbEmprestimo;
+		this.cbMuseu = cbMuseu;
+		this.txtTelefone = txtTelefone;
+		this.txtResponsavelId = txtResponsavelId;	
+		this.txtResponsavel = txtResponsavel;
+		this.ftxtCusto = ftxtCusto;
+		this.ftxtTotal = ftxtTotal;
+		this.obras = new ArrayList<EmprestimoObraMdl>();
+		this.museus = new ArrayList<MuseuMdl>();
+		this.emprestimos = new ArrayList<EmprestimoMdl>();
+		this.tabela = new ArrayList<EmprestimoMdl>();
 		
-		
-        this.txtNum=txtNum;
-		this.txtCod = txtCod;
-		this.txtDataEmp=txtDataEmp;
-		this.txtDoc=txtDoc;
-		this.txtMuseu=txtMuseu;
-		this.txtRespTec=txtRespTec;
-		this.txtTel=txtTel;
-		this.acervo = new ArrayList<AcervoMdl>();
-		this.obra = new ArrayList<ObraMdl>();
-		//lerArquivo();
+		lerArquivo();
+		lerAcervo();
+		lerMuseu();
+		atualizarId();
+		atualizarTempo();
+		preencherMuseu();
+		preencherCampos();
+		formataTabela();
 	}
 	
-	public EmprestimoCtrl() {
-		// TODO Auto-generated constructor stub
+	
+	// PREENCHE COMBOBOX /////////////////////
+
+	
+	public void preencherMuseu() {
+
+		cbMuseu.addItem("Selecione…");
+		for(int i = 0; i < museus.size(); i++){	
+			cbMuseu.addItem(museus.get(i).getNome());
+		}
+		cbMuseu.addItem("Adicionar novo…");
+	}
+	
+	
+	public void preencherCampos() {
+
+		for(int i = 0; i < museus.size(); i++)
+			if(cbMuseu.getSelectedItem().toString().equals(museus.get(i).getNome())){
+				txtTelefone.setText(museus.get(i).getTelefone());
+				txtResponsavel.setText(museus.get(i).getResponsavel());
+				txtResponsavelId.setText(museus.get(i).getResponsavelId());
+			} else if (cbMuseu.getSelectedItem() == "Selecione…" || cbMuseu.getSelectedItem() == "Adicionar novo…") {
+				txtTelefone.setText(null);
+				txtResponsavel.setText(null);
+				txtResponsavelId.setText(null);
+			}
 	}
 
-	AcervoCtrl acerv=new AcervoCtrl();
-	EmprestimoCtrl emprest= new EmprestimoCtrl();
 
-	public void gerarId() {
+	// METODOS DE SUPORTE ////////////////////////
+
+
+	public void atualizarId() {
+
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
 		Date date = new Date();
 		String NewId = (dateFormat.format(date));
-		txtCod.setText("Emp" + NewId);
+		txtId.setText("EPT" + NewId);
 	}
-	
-	public String[] preencherComboBoxArtista
-(){
+
+
+	public void limpaCampos() {
+
+		txtPesquisa.setText(null);
+		txtObra.setText(null);
+		txtArtista.setText(null);
+		ftxtDataInicial.setValue(null);
+		ftxtDataFinal.setValue(null);
+		ftxtCusto.setValue(null);
+		if (tabela.isEmpty()) { 
+			rdbtnEntrada.setEnabled(true);
+			rdbtnSaida.setEnabled(true);
+			cbMuseu.setEnabled(true);
+			txtResponsavel.setText(null);
+			txtResponsavelId.setText(null);
+			txtTelefone.setText(null);
+			cbMuseu.setSelectedItem("Selecione…");
+			ftxtTotal.setValue(null);
+		}
+	}
+
+
+	public void lerAcervo() {
+
 		String linha = new String();
-		String nArtista[] = null; 
-		StringBuffer nomeArtista;
-		arquivos = new ArquivosCtrl();
+		ArrayList<String> list = new ArrayList<>();	
 		try {
-			arquivos.leArquivo("../MASProject/dados", "acervo");
-			linha = arquivos.getBuffer();
-			nArtista = linha.split(";");
-			nomeArtista = new StringBuffer();
-			for(String nome : nArtista){
-				if(nome.contains("Nome do Artista")){
-					nomeArtista.append(nome.substring(10));
-					nomeArtista.append(";");
+			//RECUPERA E FILTRA OS DADOS DO ARQUIVO TXT
+			arquivo.leArquivo("../MASProject/dados/", "acervo");
+			linha = arquivo.getBuffer();
+			String[] listaAcervo = linha.split(";");
+			for (String s : listaAcervo) {
+				String text = s.replaceAll(".*:", "");
+				list.add(text);
+				if (s.contains("---")) {
+					//PREENCHE O ARRAY
+					EmprestimoObraMdl obra = new EmprestimoObraMdl();
+					obra.setId(list.get(0));
+					obra.setArtista(list.get(1));
+					obra.setNome(list.get(2));
+					obras.add(obra);
+					list.clear();
 				}
 			}
-			linha = nomeArtista.toString();
-			nArtista = linha.split(";");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-
-		return nArtista;
-		
 	}
+	
+	
+	public void lerMuseu() {
 
-	 public String[] preencherComboBoxObra(JTextField artista)
-{
-		/// Como associar o nome do artista escolhido no textfield"artista" as obras
 		String linha = new String();
-		String nObra[] = null; 
-		StringBuffer nomeObra;
-		arquivos = new ArquivosCtrl();
+		ArrayList<String> listaMuseu = new ArrayList<>();	
 		try {
-			arquivos.leArquivo("../MASProject/dados", "acervo");
-			linha = arquivos.getBuffer();
-			nObra = linha.split(";");
-			nomeObra = new StringBuffer();
-			for(String nome : nObra){
-					
-				if( nome.contains("Nome da Obra")){
-					nomeObra.append(nome.substring(10));
-					nomeObra.append(";");
+			//RECUPERA E FILTRA OS DADOS DO ARQUIVO TXT
+			arquivo.leArquivo("../MASProject/dados/", "museus");
+			linha = arquivo.getBuffer();
+			String[] lista = linha.split(";");
+			for (String s : lista) {
+				String text = s.replaceAll(".*: ", "");
+				listaMuseu.add(text);
+				if (s.contains("---")) {
+					//PREENCHE O ARRAY
+					MuseuMdl museu = new MuseuMdl();
+					museu.setId(listaMuseu.get(0));
+					museu.setNome(listaMuseu.get(1));
+					museu.setTelefone(listaMuseu.get(2));
+					museu.setResponsavelId(listaMuseu.get(3));
+					museu.setResponsavel(listaMuseu.get(4));
+					museus.add(museu);
+					listaMuseu.clear();
 				}
 			}
-		 
-			linha = nomeObra.toString();
-			nObra = linha.split(";");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return nObra;
 	}
-	
 
-	public void atualizaDados(List<EmprestimoMdl> listEmprestimos) {
-		File f = new File("../MASProject/dados/Emprestimos");
-		f.delete();	
-		for (EmprestimoMdl emprestimos : listEmprestimos) {
+
+	public void atualizarTempo(){  
+
+		//ftxtDataInicial.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
+		//ftxtDataFinal.setText(new SimpleDateFormat("dd/MM/yyyy").format(new Date(System.currentTimeMillis())));
+		
+		
+		if(ftxtDataInicial.getValue() != null){
+
+			SimpleDateFormat temp = new SimpleDateFormat("ddMMyyyy");
+
 			try {
-				arquivo.escreveArquivo("../MASProject/dados/", "Emprestimos", "", emprestimos);
+				Date dt1 = temp.parse(ftxtDataInicial.getValue().toString().replace("/","").replace("/",""));
+				Date dt2 = temp.parse(ftxtDataFinal.getValue().toString().replace("/","").replace("/",""));
+				if (dt1.after(dt2)) {   
+					msg("errordate", "");
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+	}  
+	
+
+	public void formataTabela(){
+		
+		//VETOR DAS LINHAS DA TABELA
+		List<String[]> linhas = new ArrayList<>(); 
+
+		//CARREGA AS LINHAS NA TABELA COM OS DADOS DA COMPRA (SOMENTE AS COLUNAS CONFIGURADAS)
+		for (int i = 0; i < tabela.size(); i++) {
+
+			String[] item = {  
+					tabela.get(i).getObra(),
+					tabela.get(i).getResponsavel(), 
+					tabela.get(i).getResponsavelId(), 
+					tabela.get(i).getDataInicial(), 
+					tabela.get(i).getDataFinal(), 
+					tabela.get(i).getCusto()			
+			};
+			linhas.add(item);
+		}
+		
+		//CONFIGURA O ALINHAMENTO DOS TÍTULOS DAS COLUNAS DA TABELA
+		((DefaultTableCellRenderer) tbEmprestimo.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+
+		//CONFIGURA O ALINHAMENTO PARA AS COLUNAS DA TABELA
+		DefaultTableCellRenderer esquerda = new DefaultTableCellRenderer();  
+		DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();  
+		DefaultTableCellRenderer direita = new DefaultTableCellRenderer();  
+
+		esquerda.setHorizontalAlignment(SwingConstants.LEFT);  
+		centralizado.setHorizontalAlignment(SwingConstants.CENTER);  
+		direita.setHorizontalAlignment(SwingConstants.RIGHT);
+
+		//NOMES DAS COLUNAS DA TABELA
+		String[] nomesColunas = {"Obra", "Responsável", "Autorização", "Data Inicial", "Data Final", "Custo"};
+
+		//CRIA UM DefaulTableModel COM OS DADOS (LINHAS E COLUNAS)
+		@SuppressWarnings("serial")
+		DefaultTableModel model = new DefaultTableModel(
+				linhas.toArray(new String[linhas.size()][]), nomesColunas)
+		//TRAVA A EDIÇÃO DAS CELULAS
+		{  		  
+			boolean[] canEdit = new boolean []{    
+					false, false, false, false  
+			};
+			@Override    
+			public boolean isCellEditable(int rowIndex, int columnIndex) {    
+				return canEdit [columnIndex];    
+			}  
+		};
+
+		//DEFINE COMO SELEÇÃO TODA A LINHA
+		tbEmprestimo.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		//DEFINE O MODEL DA TABELA
+		tbEmprestimo.setModel(model);
+
+		//DEFINE O ALINHAMENTO DAS COLUNAS
+		tbEmprestimo.getColumnModel().getColumn(0).setCellRenderer(esquerda); 
+		tbEmprestimo.getColumnModel().getColumn(1).setCellRenderer(esquerda);
+		tbEmprestimo.getColumnModel().getColumn(2).setCellRenderer(centralizado);
+		tbEmprestimo.getColumnModel().getColumn(3).setCellRenderer(centralizado);
+		tbEmprestimo.getColumnModel().getColumn(4).setCellRenderer(centralizado);
+		tbEmprestimo.getColumnModel().getColumn(5).setCellRenderer(direita);
+
+		//CONFIGURA O TAMANHO DAS COLUNAS
+		tbEmprestimo.getColumnModel().getColumn(0).setPreferredWidth(110);
+		tbEmprestimo.getColumnModel().getColumn(1).setPreferredWidth(80);
+		tbEmprestimo.getColumnModel().getColumn(2).setPreferredWidth(85);
+		tbEmprestimo.getColumnModel().getColumn(3).setPreferredWidth(50);
+		tbEmprestimo.getColumnModel().getColumn(4).setPreferredWidth(50);
+		tbEmprestimo.getColumnModel().getColumn(5).setPreferredWidth(60);
+	}
+
+
+	public void atualizaTabela(){
+
+		//SE FOR CADASTRADO UM NOVO REGISTRO, ATUALIZAR A BASE DE DADOS
+		obras.clear();
+		lerAcervo();
+
+		//CARREGA O NOVO REGISTRO NA BASE DE DADOS
+		EmprestimoMdl emprestimo = new EmprestimoMdl();
+		if (!txtObra.getText().isEmpty() 
+				&& ftxtDataInicial.getValue() != null 
+				&& ftxtDataFinal.getValue() != null 
+				&& cbMuseu.getSelectedItem().toString() != "Selecione…" 
+				&& ftxtCusto.getValue() != null) {
+
+			for (int i = 0; i < obras.size(); i++) {
+				if (txtObra.getText().equals(obras.get(i).getNome())) {
+					emprestimo.setId(txtId.getText());
+					emprestimo.setObraId(obras.get(i).getId());
+					emprestimo.setObra(txtObra.getText());
+					emprestimo.setArtista(txtArtista.getText());
+					emprestimo.setDestino(btgDestino.getSelection().getActionCommand());
+					emprestimo.setDataInicial(ftxtDataInicial.getText());
+					emprestimo.setDataFinal(ftxtDataFinal.getText());
+					for (int j = 0; j < museus.size(); j++) { //NECESSÁRIO POIS O ID É DE OUTRA BASE
+						if (cbMuseu.getSelectedItem().toString().equals(museus.get(j).getNome())) {
+							emprestimo.setMuseuId(museus.get(j).getId());
+						}
+					}
+					emprestimo.setMuseu(cbMuseu.getSelectedItem().toString());
+					emprestimo.setResponsavelId(txtResponsavelId.getText());
+					emprestimo.setResponsavel(txtResponsavel.getText());
+					emprestimo.setCusto(ftxtCusto.getValue().toString());			
+					tabela.add(emprestimo);
+					//msg("save", txtObra.getText());
+					validar = true;
+				}
+			}
+			
+			//ATUALIZA TOTAL DO CUSTO
+			int total = 0;
+			for(int t = 0; t < tabela.size(); t++){
+				total = total + Integer.parseInt(tabela.get(t).getCusto().replace("R$ ","").replace(",00",""));	
+			}
+			ftxtTotal.setValue(total);
+			limpaCampos();
+			
+			if (validar == false) {
+				msg("errorsave", txtPesquisa.getText());
+			}
+		} else {
+			msg("errornull", txtPesquisa.getText());
+		}	
+		//CARREGA O REGISTRO PARA A TABELA
+		formataTabela();
+	}
+	
+	
+	public void removeLinha(){
+
+		if(tbEmprestimo.getRowCount() > 0){
+			//ATUALIZA A BASE DE DADOS EXCLUINDO O REGISTRO PELO ID DA OBRA COMO FILTRO
+			for(int i = 0; i < tabela.size(); i ++){
+				if((tbEmprestimo.getValueAt(tbEmprestimo.getSelectedRow(), 0).toString()).equals(tabela.get(i).getObraId())){
+					tabela.remove(i);
+				}
+			}
+
+			//ATUALIZA A TABELA, REMOVENDO O DADO
+			((DefaultTableModel) tbEmprestimo.getModel()).removeRow(tbEmprestimo.getSelectedRow());
+			tbEmprestimo.updateUI();
+			
+			if (tbEmprestimo.getRowCount() == 0) {
+				tabela.clear();
+				limpaCampos();
+			}
+		}
+	}
+	
+
+	// CRUD //////////////////////////
+
+
+	public void lerArquivo() {
+		
+		String linha = new String();
+		ArrayList<String> list = new ArrayList<>();
+		try {
+			// VERIFICA SE O ARQUIVO TXT EXISTE E FAZ LEITURA (E CRIA O TXT CASO NEGATIVO)
+			arquivo.leArquivo("../MASProject/dados/", "emprestimos");
+			//FILTRA E CARREGA O ARRAY COM A BASE DE DADOS DO ARQUIVO TXT
+			linha = arquivo.getBuffer();
+			String[] listaIngresso = linha.split(";");
+			for (String s : listaIngresso) {
+				String text = s.replaceAll(".*: ", "");
+				list.add(text);
+				if (s.contains("---")) {
+					EmprestimoMdl emprestimo = new EmprestimoMdl();
+					emprestimo.setId(list.get(0));
+					emprestimo.setObraId(list.get(1));
+					emprestimo.setObra(list.get(2));
+					emprestimo.setArtista(list.get(3));
+					emprestimo.setDestino(list.get(4));
+					emprestimo.setDataInicial(list.get(5));
+					emprestimo.setDataFinal(list.get(6));
+					emprestimo.setMuseuId(list.get(7));
+					emprestimo.setMuseu(list.get(8));
+					emprestimo.setResponsavelId(list.get(9));
+					emprestimo.setResponsavel(list.get(10));
+					emprestimo.setCusto(list.get(11));
+					emprestimos.add(emprestimo);
+					list.clear();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public void atualizaDados(List<EmprestimoMdl> listemprestimos) {
+
+		//REALIZA A GRAVAÇÃO NO ARQUIVO TXT
+		File f = new File("../MASProject/dados/emprestimos");
+		f.delete();
+		for (EmprestimoMdl emprestimo : listemprestimos) {
+			try {
+				arquivo.escreveArquivo("../MASProject/dados/", "emprestimos", "", emprestimo);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	public void limpaCampos() {
-		txtCod.setText(null);
-		txtNum.setText(null);
-		txtDataEmp.setText(null);
-		txtDoc.setText(null);
-		txtMuseu.setText(null);
-		txtRespTec.setText(null);
-		txtTel.setText(null);
-	}
-	
-	
 
-	public void editar() {
-		
-		//
-		EmprestimoMdl emp=new EmprestimoMdl();
-		validar = false;
-		if (!txtCod.getText().isEmpty()) {
-			for (int i = 0; i < emprestimos.size(); i++) {
-				if (!txtCod.getText().equalsIgnoreCase(emprestimos.get(i).getCodEmp()) ) {				
-					msg("erroredit",emprestimos.get(i).getCodEmp());
+	public void pesquisar() {
+
+		//LIMPA O ARRAY PARA RECARREGAR COM OS DADOS ATUAIS DO ARQUIVO TXT
+		obras.clear();
+		lerAcervo();
+		ArrayList<EmprestimoObraMdl> lista = new ArrayList<>();
+		String pesquisa ="";
+		if (!txtPesquisa.getText().isEmpty()) {
+			for (int i = 0; i < obras.size(); i++) {
+				//VERIFICA SE O ID DIGITADO CONFERE COM ALGUM ID CADASTRADO
+				if (txtPesquisa.getText().equalsIgnoreCase(obras.get(i).getId())) {
+					txtObra.setText(obras.get(i).getNome());
+					txtArtista.setText(obras.get(i).getArtista().toString());
 					validar = true;
-				} 
+					//VERIFICA OS REGISTROS QUE COMEÇAM COM O TEXTO DIGITADO
+				} else if (obras.get(i).getNome().toLowerCase().startsWith(txtPesquisa.getText().toLowerCase())) {
+					validar = true;
+				}
 			}
-			if(!(validar == true)){
-				for (int i = 0; i < emprestimos.size(); i++) {
-					if (txtCod.getText().equalsIgnoreCase(emprestimos.get(i).getCodEmp())) {
-						
-						emp.setCodEmp(txtCod.getText());
-						emp.setDataEmp(txtDataEmp.getText());
-						emp.setDoc(txtDoc.getText());
-						emp.setMuseu(txtMuseu.getText());
-						emp.setNum(txtNum.getText());
-						emp.setRespTec(txtRespTec.getText());
-						emp.setTel(txtTel.getText());
-						emprestimos.set(i, emp);
-						atualizaDados(emprestimos);
-						msg("edit", txtNome.getText());
-						limpaCampos();
+			if (validar == true) {
+				//CARREGA O ARRAY COM OS NOMES INICIADOS COM O TEXTO DIGITADO
+				for (int i = 0; i < obras.size(); i++) {
+					boolean filtro = obras.get(i).getNome().toLowerCase().startsWith(txtPesquisa.getText().toLowerCase());
+					if (filtro == true) {
+						EmprestimoObraMdl item = new EmprestimoObraMdl();
+						item.setId(obras.get(i).getId());
+						item.setNome(obras.get(i).getNome());
+						lista.add(item);
 					}
 				}
+				//CARREGADO PARA O ARRAY OS IDs COM OS NOMES QUE COINCIDEM COM A DIGITAÇÃO
+				String[] filtro = new String[lista.size()];
+				for (int i = 0; i < lista.size(); i++) {
+					filtro[i] = lista.get(i).getId() + " : " + lista.get(i).getNome();
+					pesquisa = lista.get(i).getId();
+				}
+				if (filtro != null && filtro.length > 1) {
+					//INFORMA AO USUÁRIO UMA LISTA DOS ID's DOS USUÁRIOS E PEDE RETORNO
+					pesquisa = (String) JOptionPane.showInputDialog(form, "Selecione:\n", "Registros Localizados",
+							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
+				} 
+				if (pesquisa == "0" || pesquisa != null){
+					//SE FOR ESCOLHIDO UM ID, PREENCHE O CAMPO COM O NOME
+					for (int i = 0; i < obras.size(); i++) {
+						if (pesquisa.replaceAll(" : .*", "").equalsIgnoreCase(obras.get(i).getId())) {
+							txtObra.setText(obras.get(i).getNome());
+							txtArtista.setText(obras.get(i).getArtista().toString());
+							txtPesquisa.setText(null);
+						}
+					}
+				}
+				validar = false;
+			} else {
+				if (pesquisa == "") {
+					msg("errorsave", txtPesquisa.getText());
+					limpaCampos();
+				}
+				validar = false;
 			}
-			
-
 		} else {
-			msg("errorsearch", txtCod.getText());
+			msg("errorsearch", txtPesquisa.getText());
 		}
 	}
 
-	
 
 	public void gravar() {
-		new EmprestimoFile();
-		EmprestimoMdl emprestimo = new EmprestimoMdl();
-		validar = false;
-		if (!txtCod.getText().isEmpty()) {
-			for (int i = 0; i < emprestimos.size(); i++) {
-				if (txtCod.getText().equalsIgnoreCase(emprestimos.get(i).getCodEmp())){
-					msg("erroredit", emprestimos.get(i).getCodEmp());
-					validar = true;
+
+			//INICIALIZA VARIÁVEL COM O MODELO
+			EmprestimoMdl emprestimo = new EmprestimoMdl();
+			//VERIFICA SE A TABELA ESTA CARREGADA (SE POSITIVO TRANSFERE PARA O MODELO)
+			if (tbEmprestimo.getRowCount() > 0){
+				for(int i = 0; i < tabela.size(); i++){			
+					emprestimos.add(tabela.get(i));
+					atualizaDados(emprestimos);
+				}
+				tabela.clear();					
+				msg("save", txtId.getText());
+				//LIMPA AS LINHAS E ATUALIZA A TABELA
+				((DefaultTableModel) tbEmprestimo.getModel()).setNumRows(0); 
+				tbEmprestimo.updateUI();
+				limpaCampos();
+				atualizarId();
+				validar = true;
+				//CASO A TABELA ESTEJA VAZIA, VERIFICA SE OS CAMPOS ESTÃO PREENCHIDOS
+			} else if (!txtObra.getText().isEmpty() 
+					&& ftxtDataInicial.getValue() != null 
+					&& ftxtDataFinal.getValue() != null 
+					&& cbMuseu.getSelectedItem().toString() != "Selecione…" 
+					&& ftxtCusto.getValue() != null) {
+				//PRECORRE O ARRAY PARA ENCONTRAR O NOME DIGITADO NO CAMPO
+				for (int i = 0; i < obras.size(); i++) {
+					//CARREGA O MODELO COM OS DADOS DOS CAMPOS DA TELA
+					if (txtObra.getText().equals(obras.get(i).getNome())) {
+						emprestimo.setId(txtId.getText());
+						emprestimo.setObraId(obras.get(i).getId());
+						emprestimo.setObra(txtObra.getText());
+						emprestimo.setArtista(txtArtista.getText());
+						emprestimo.setDestino(btgDestino.getSelection().getActionCommand());
+						emprestimo.setDataInicial(ftxtDataInicial.getText());
+						emprestimo.setDataFinal(ftxtDataFinal.getText());
+						for (int m = 0; m < museus.size(); m++) { //NECESSÁRIO POIS O ID É DE OUTRA BASE
+							if (cbMuseu.getSelectedItem().toString().equals(museus.get(m).getNome())) {
+								emprestimo.setMuseuId(museus.get(m).getId());
+							}
+						}
+						emprestimo.setMuseu(cbMuseu.getSelectedItem().toString());
+						emprestimo.setResponsavelId(txtResponsavelId.getText());
+						emprestimo.setResponsavel(txtResponsavel.getText());
+						emprestimo.setCusto(ftxtCusto.getValue().toString()); 				
+						emprestimos.add(emprestimo);
+						msg("save", "O ID " + txtId.getText() + " para o " + cbMuseu.getSelectedItem().toString());
+						//ENVIA A ARRAY DO MODELO CARREGADO PARA ESCRITA NO ARQUIVO TXT
+						atualizaDados(emprestimos);
+						limpaCampos();
+						atualizarId();
+						//atualizarTempo();
+						validar = true;
+					} 
+				}
+				if (validar == false) {
+					msg("errorsave", txtPesquisa.getText());
+				}
+			} else {
+				msg("errornull", txtPesquisa.getText());
+			}
+		}
+
+
+
+	// MENSAGENS //////////////////////////////
+
+
+	public void msg(String tipo, String mensagem) {
+
+		switch (tipo) {
+
+		case "errornull":
+			JOptionPane.showMessageDialog(null, 
+					"ATENÇÃO!\nCampo Vazio.\n\nPor favor, complete todos os campos necessários.", 
+					"Erro", 
+					JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/error.png"));
+			break;
+		case "errorsearch":
+			JOptionPane.showMessageDialog(null, 
+					"ATENÇÃO! Por favor, digite para pesquisar!", 
+					"Erro",
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/error.png"));
+			break;
+		case "errordate":
+			JOptionPane.showMessageDialog(null, 
+					"ATENÇÃO! Erro no campo Data.\n\nPor favor, preencha as datas respeitando o Início e o Fim do período.", 
+					"Erro", 
+					JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/error.png"));
+			ftxtDataInicial.setValue(null);
+			ftxtDataFinal.setValue(null);
+			break;
+		case "save":
+			JOptionPane.showMessageDialog(null, 
+					"Registro(s) processado(s)\n\n" + mensagem + "\n\nEmpréstimo registrado com sucesso.", 
+					"Confirmação", 
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/confirm.png"));
+			break;
+		case "saveconfirm":
+			Object[] save = { "Confirmar", "Cancelar" };  
+			int confirmar = JOptionPane.showOptionDialog(null, "Confirma o processamento do empréstimo " + mensagem 
+					+ " ?",
+					"Aguardando Confirmação", 
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"), save, save[1]);
+			if (confirmar == 0) {
+				validar = true;
+			} else {
+				validar = false;
+			}
+			break;
+		case "errorsave":
+			Object[] options = { "Confirmar", "Cancelar" };  
+			int cadastro = JOptionPane.showOptionDialog(null, "ATENÇÃO!\n\nA obra '" + mensagem 
+					+ "' não existe na base de dados!\n\nDeseja realizar o cadastro desta obra no acervo?",
+					"Não Localizado", 
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"), options, options[1]);
+			if (cadastro == 0) {
+				try {
+					FrmAcervoCad frmCad = new FrmAcervoCad();
+					frmCad.setVisible(true);
+					frmCad.setLocationRelativeTo(null);
+					frmCad.txtObra.setText(txtPesquisa.getText());
+				} catch (ParseException e) {
+					e.printStackTrace();
 				}
 			}
-			if(!(validar == true)){	
-			emprestimo.setCodEmp(txtCod.getText());
-			emprestimo.setDataEmp(txtDataEmp.getText());
-			emprestimo.setMuseu(txtMuseu.getText());
-			emprestimo.setTel(txtTel.getText());
-			emprestimo.setRespTec(txtRespTec.getText());
-			emprestimo.setDoc(txtDoc.getText());
-			emprestimo.setNum(txtNum.getText());
-			emprestimos.add(emprestimo);
-			msg("save", txtNome.getText());
-			atualizaDados(emprestimos);
-			limpaCampos();
-			gerarId();
+			break;
+		case "novomuseu":
+			Object[] novo = { "Confirmar", "Cancelar" };  
+			int cadastroMuseu = JOptionPane.showOptionDialog(null, "Gostaria de cadastrar um novo Museu \npara o Empréstimo ID\n\n" + mensagem 
+					+ " ?",
+					"Novo Museu", 
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"), novo, novo[1]);
+			if (cadastroMuseu == 0) {
+				FrmLogin frmCad = new FrmLogin();
+				frmCad.setVisible(true);
+				frmCad.setLocationRelativeTo(null);
+				//frmCad.txtObra.setText(txtPesquisa.getText());
+			} else {
+				limpaCampos();
 			}
-		} else {
-			msg("errornull", txtCod.getText());
+			break;
+		case "system":
+			Object[] exit = { "Confirmar", "Cancelar" };  
+			int fechar = JOptionPane.showOptionDialog(null, "ATENÇÃO!\n\nChamada para o " + mensagem 
+					+ " do sistema!\n\nDeseja encerrar a aplicação?",
+					"Fechamento do Programa!", 
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"), exit, exit[1]);
+			if (fechar == 0) {
+				validar = true;
+			} else {
+				validar = false;
+			}
+			break;		
+		default:
+			JOptionPane.showMessageDialog(null, 
+					"OOPS!\n\nQue feio, Ed Stark perdeu a cabeça, e algo não deveria ter acontecido…\n\nTermo: " + mensagem
+					+ "\n\nVolte ao trabalho duro e conserte isso!!!", 
+					"Erro no Controller", 
+					JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/error.png"));
 		}
 	}
 
-	// CONTROLE BOTAO //////////////////////////////
+
+	// CONTROLE ACTION //////////////////////////////
+
 
 	public ActionListener pesquisar = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+
 			pesquisar();
 		}
 	};
-
-	public ActionListener excluir = new ActionListener() {
+	
+	public ActionListener atualizar = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-				excluir();
+			
+			preencherCampos();
+			if(cbMuseu.getSelectedItem().toString().equals("Adicionar novo…")){
+				msg("novomuseu",txtId.getText());
+			}
 		}
 	};
 
-	public ActionListener editar = new ActionListener() {
+	public ActionListener valor = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			editar();
+		}
+	};
+
+	public ActionListener incluir = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			atualizarTempo();
+			atualizaTabela();
+			if (tabela.size() > 0) { 
+				rdbtnEntrada.setEnabled(false);
+				rdbtnSaida.setEnabled(false);
+				cbMuseu.setEnabled(false);
+			}
+		}
+	};
+
+	public ActionListener cancelar = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			tabela.clear();
+			((DefaultTableModel) tbEmprestimo.getModel()).setNumRows(0);
+			tbEmprestimo.updateUI();
+			limpaCampos();
 		}
 	};
 
@@ -249,9 +768,97 @@ public class EmprestimoCtrl {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			//msg("saveconfirm", txtId.getText());
+			//if(validar == true){
 			gravar();
+			//}
 		}
 	};
+
+
+	// CONTROLE TECLA ///////////////////////////////
+
+
+	public KeyListener tecla = new KeyListener() {  
+
+		@Override  
+		public void keyTyped(KeyEvent e) {
+			
+			//SELECIONA O CAMPO COM FOCO E BLOQUEIA CARACTERES NÃO AUTORIZADOS
+			/*if(txtPesquisa.hasFocus()){
+				String caracteres="0987654321";
+				if(caracteres.contains(e.getKeyChar()+"")){
+					e.consume();
+				}
+			}*/
+			
+			if(txtTelefone.hasFocus() || ftxtCusto.hasFocus()){
+				String caracteres="0987654321";
+				if(!caracteres.contains(e.getKeyChar()+"")){
+					e.consume();
+				}
+			}
+			
+			//txtTelefone.setText(null);
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+
+			int keyCode=e.getKeyCode();
+
+			switch (keyCode) {
+
+			case KeyEvent.VK_UP:
+				break;
+			case KeyEvent.VK_DOWN:
+				break;
+			case KeyEvent.VK_LEFT:
+				break;
+			case KeyEvent.VK_RIGHT:
+				break;
+			case KeyEvent.VK_ESCAPE:
+				msg("system","Fechamento");
+				if(validar != false){
+				System.exit(0);
+				}
+				break;
+			case KeyEvent.VK_DELETE:
+				removeLinha();
+				break;
+			case 8: //MAC OSX: DELETE
+				removeLinha();
+				break;
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+		}
+	};
+
+
+	// CONTROLE FOCO ///////////////////////////////
+
+	public FocusListener move = new FocusListener() {
+
+		@Override
+		public void focusGained(FocusEvent e) {
+			
+			if (ftxtDataInicial.hasFocus()) { 
+				ftxtDataInicial.setText(null);
+			}
+			if (ftxtDataFinal.hasFocus()) { 
+				ftxtDataFinal.setText(null);
+			}
+		}
+
+		@Override
+		public void focusLost(FocusEvent e) {
+		
+		}
+	};
+
 
 	// CONTROLE MOUSE ///////////////////////////////
 
@@ -271,49 +878,31 @@ public class EmprestimoCtrl {
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-
 		}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (contador == 1) {
-				txtNome.setText(null);
-				contador += 1;
+
+			if(e.getClickCount() == 2){  
+				removeLinha();
 			}
 		}
 	};
 
+
+	@Override
 	public void componentHidden(ComponentEvent e) {
 	}
 
+	@Override
 	public void componentMoved(ComponentEvent e) {
 	}
 
+	@Override
 	public void componentResized(ComponentEvent e) {
 	}
 
+	@Override
 	public void componentShown(ComponentEvent e) {
 	}
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

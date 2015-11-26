@@ -1,55 +1,113 @@
 package model;
 
 public class EmprestimoMdl {
-	private String codEmp;
-	private String dataEmp;
+	private String id;
+	private String obraId;
+	private String obraNome;
+	private String artista;
+	private String destino;
+	private String dataInicial;
+	private String dataFinal;
+	private String museuId;
 	private String museu;
-	private String tel;
-	private String respTec;
-	private String doc;
-	private String  num;
-	public String getCodEmp() {
-		return codEmp;
+	private String responsavelId;
+	private String responsavel;
+	private String custo;
+	
+	
+	public String getId() {
+		return id;
 	}
-	public void setCodEmp(String codEmp) {
-		this.codEmp = codEmp;
+	
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getDataEmp() {
-		return dataEmp;
+	
+	public String getObraId() {
+		return obraId;
 	}
-	public void setDataEmp(String dataEmp) {
-		this.dataEmp = dataEmp;
+	
+	public void setObraId(String obraId) {
+		this.obraId = obraId;
 	}
+	
+	public String getObra() {
+		return obraNome;
+	}
+	
+	public void setObra(String obraNome) {
+		this.obraNome = obraNome;
+	}
+	
+	public String getArtista() {
+		return artista;
+	}
+	
+	public void setArtista(String artista) {
+		this.artista = artista;
+	}
+	
+	public String getDestino() {
+		return destino;
+	}
+	
+	public void setDestino(String destino) {
+		this.destino = destino;
+	}
+	
+	public String getDataInicial() {
+		return dataInicial;
+	}
+	
+	public void setDataInicial(String dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+	
+	public String getDataFinal() {
+		return dataFinal;
+	}
+	
+	public void setDataFinal(String dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+	
+	public String getMuseuId() {
+		return museuId;
+	}
+	
+	public void setMuseuId(String idMuseu) {
+		this.museuId = idMuseu;
+	}
+	
 	public String getMuseu() {
 		return museu;
 	}
+	
 	public void setMuseu(String museu) {
 		this.museu = museu;
 	}
-	public String getTel() {
-		return tel;
+	
+	public String getResponsavelId() {
+		return responsavelId;
 	}
-	public void setTel(String tel) {
-		this.tel = tel;
+	
+	public void setResponsavelId(String responsavelId) {
+		this.responsavelId = responsavelId;
 	}
-	public String getRespTec() {
-		return respTec;
+	
+	public String getResponsavel() {
+		return responsavel;
 	}
-	public void setRespTec(String respTec) {
-		this.respTec = respTec;
+	
+	public void setResponsavel(String responsavel) {
+		this.responsavel = responsavel;
 	}
-	public String getDoc() {
-		return doc;
+	
+	public String getCusto() {
+		return custo;
 	}
-	public void setDoc(String doc) {
-		this.doc = doc;
-	}
-	public String getNum() {
-		return num;
-	}
-	public void setNum(String num) {
-		this.num = num;
+	
+	public void setCusto(String custo) {
+		this.custo = custo;
 	}
 }
-
-

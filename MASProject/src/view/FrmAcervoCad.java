@@ -31,7 +31,8 @@ public class FrmAcervoCad extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField idObra, txtArtist, txtObra;
+	public JTextField txtObra;
+	private JTextField idObra, txtArtist;
 	private JFormattedTextField ftxtData, txtValor;
 	private MaskFormatter maskData;
 	private DecimalFormat maskValor;
