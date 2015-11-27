@@ -28,17 +28,11 @@ public class FrmExposicaoCad extends JFrame {
 	private JPanel contentPane;
 	private JButton btnCalenIni, btnPesqArtista, btnCalenFim, btnGravar, btnLimpar;
 	private JTextField txtID, txtTitulo, txtDataIni, txtDataFim, txtNomeArtista, txtTema;
-	
 	private JTable tableLista;
 	private DefaultTableModel tableModel = new DefaultTableModel();
-	
-	// em testes
 	private JScrollPane scrollPane;
 	private JTextArea txtAreaDescri;
 	private JScrollPane scrollPane_1;
-																					// teste
-																					// do
-																					// JTable
 
 	public static void main(String[] args) {
 		

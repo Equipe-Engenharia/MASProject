@@ -293,7 +293,7 @@ public class MaterialCtrl implements ComponentListener {
 		if (!txtId.getText().isEmpty()) {
 			for (int i = 0; i < materiais.size(); i++) {
 				if (!txtId.getText().equalsIgnoreCase(materiais.get(i).getId()) 
-						&& txtNome.getText().equalsIgnoreCase(materiais.get(i).getNome())
+						&& txtNome.getText().equalsIgnoreCase(materiais.get(i).getNome())//O operador NAO "!" deve estar nos outros componentes do IF
 						&& cbCategoria.getSelectedItem().toString().equalsIgnoreCase(materiais.get(i).getCategoria())) {
 					msg("erroredit", materiais.get(i).getNome());
 					validar = true;

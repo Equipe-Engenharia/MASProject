@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableModel;
 
 import controller.ExposicaoCtrl;
 
@@ -30,16 +31,10 @@ public class FrmExposicaoEdit extends JFrame {
 	private JTable tableLista;
 	// em testes
 	private JScrollPane scrollPane;
-	private String[] colunas = { "Nome da Obra", "Artista", "Setor" }; // Cabecalho
-																		// do
-																		// JTable
-	private Object[][] dados = { { "Teste Obra", "Teste Artista", "Teste Setor" } };// Conteudo
 	private JTextArea txtAreaDescri;
 	private JScrollPane scrollPane_1;
 	private JButton btnPesqTitulo, btnPesqId;
-	// teste
-	// do
-	// JTable
+	private DefaultTableModel tableModel = new DefaultTableModel();
 
 	public static void main(String[] args) {
 
@@ -143,13 +138,11 @@ public class FrmExposicaoEdit extends JFrame {
 		contentPane.add(lblTema);
 
 		btnGravar = new JButton("Gravar");
-		btnGravar.setEnabled(false);
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
 		btnGravar.setBounds(756, 607, 108, 34);
 		contentPane.add(btnGravar);
 
 		btnApagar = new JButton("Apagar");
-		btnApagar.setEnabled(false);
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		btnApagar.setBounds(622, 607, 108, 34);
 		contentPane.add(btnApagar);
@@ -158,8 +151,7 @@ public class FrmExposicaoEdit extends JFrame {
 		scrollPane.setBounds(157, 413, 707, 166);
 		contentPane.add(scrollPane);
 
-		tableLista = new JTable(dados, colunas); // JTable recebe o cabecalho e
-													// os campos de conte�dos
+		tableLista = new JTable(tableModel); 
 		scrollPane.setViewportView(tableLista);
 		tableLista.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		tableLista.setColumnSelectionAllowed(false);
@@ -172,8 +164,9 @@ public class FrmExposicaoEdit extends JFrame {
 		txtAreaDescri = new JTextArea();
 		scrollPane_1.setViewportView(txtAreaDescri);
 
-//		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim, txtNomeArtista, txtID, tableLista, txtTitulo,
-//				txtTema, txtAreaDescri, btnApagar, btnGravar);
+		// ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim,
+		// txtNomeArtista, txtID, tableLista, txtTitulo,
+		// txtTema, txtAreaDescri, btnApagar, btnGravar);
 
 		btnPesqId = new JButton("");
 		btnPesqId.setIcon(new ImageIcon("../MASProject/icons/search.png"));
@@ -185,10 +178,15 @@ public class FrmExposicaoEdit extends JFrame {
 		btnPesqTitulo.setBounds(468, 57, 29, 23);
 		contentPane.add(btnPesqTitulo);
 
-//		btnCalenIni.addActionListener(expCtrl.abreCalendario1);
-//		btnCalenFim.addActionListener(expCtrl.abreCalendario2);
-//		btnPesqArtista.addActionListener(expCtrl.pesquisaArtista);
-//		btnGravar.addActionListener(expCtrl.gravarExpo);
+		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim, txtNomeArtista, txtID, tableLista, txtTitulo,
+				txtTema, txtAreaDescri, tableModel);
 
+		// btnCalenIni.addActionListener(expCtrl.abreCalendario1);
+		// btnCalenFim.addActionListener(expCtrl.abreCalendario2);
+		btnPesqArtista.addActionListener(expCtrl.pesquisaArtista);
+		btnGravar.addActionListener(expCtrl.editar);
+		btnPesqId.addActionListener(expCtrl.pesquisar);
+		btnPesqTitulo.addActionListener(expCtrl.pesquisar);
+		btnApagar.addActionListener(expCtrl.excluir);
 	}
 }

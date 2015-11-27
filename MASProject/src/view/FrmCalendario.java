@@ -6,11 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.EmptyBorder;
-
 import com.toedter.calendar.JCalendar;
-
 import controller.ExposicaoCtrl;
-
 
 public class FrmCalendario extends JDialog {
 	/**
@@ -39,7 +36,7 @@ public class FrmCalendario extends JDialog {
 	public void Cal() {
 		
 		contentPane = new JPanel();
-		setBounds(100, 100, 452, 245);
+		setBounds(100, 100, 452, 282);
 
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -49,9 +46,10 @@ public class FrmCalendario extends JDialog {
 		calendar.getDayChooser().setWeekOfYearVisible(false);
 		calendar.setBounds(5, 5, 424, 225);
 		contentPane.add(calendar);
- 
+		
 		ExposicaoCtrl ExpCtrl = new ExposicaoCtrl(calendar);
 		
 		addWindowListener(ExpCtrl.fechaTela);
 	}
+	
 }
