@@ -98,7 +98,7 @@ public class ExposicaoCtrl {
 				exposicao.setDataFim(txtDataFim.getText());
 				exposicao.setTema(txtTema.getText());
 				exposicao.setDescricao(txtAreaDescri.getText());
-				// exposicao.setObrasExp(tObras.get); //Pega itens da
+//				exposicao.setObrasExp(tObras.getModel().toString()); //Pega itens da
 				// Jtable********
 				expos.add(exposicao);
 				msg("save", txtTitulo.getText());
@@ -362,6 +362,7 @@ public class ExposicaoCtrl {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			chamaSelecaoObras();
 		}
 	};

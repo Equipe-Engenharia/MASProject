@@ -106,9 +106,14 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 		//verifica a situação da JTable
 		if(tableObras.getColumnCount() <= 0){
 			tableModel.addColumn("Obra", obra);
+			
 		}else{
-			//arrumar aqui, ao invés de adicionar o vetor, adiciona somente o primeiro indice
-			tableModel.addRow(obra);
+			int linhasOld = tableModel.getRowCount();
+//			System.out.println("Old: " + linhasOld);
+			tableModel.setRowCount(linhasOld + obra.length);
+			for(int i = 0; i < obra.length; i++){
+				tableModel.setValueAt(obra[i], linhasOld + i, 0);
+			}
 		}
 		tableObras.setModel(tableModel);
 	}
