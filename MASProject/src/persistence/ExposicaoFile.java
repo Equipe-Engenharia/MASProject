@@ -45,19 +45,19 @@ public class ExposicaoFile implements ArquivosICtrl {
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID      : " + ((ExposicaoMdl) object).getId());
+		buffer.append(((ExposicaoMdl) object).getId());
 		buffer.append("\r\n");
-		buffer.append("Titulo : " + ((ExposicaoMdl) object).getTitulo());
+		buffer.append(((ExposicaoMdl) object).getTitulo());
 		buffer.append("\r\n");
-		buffer.append("Data de inicio : " + ((ExposicaoMdl) object).getDataIni());
+		buffer.append( ((ExposicaoMdl) object).getDataIni());
 		buffer.append("\r\n");
-		buffer.append("Data final: " + ((ExposicaoMdl) object).getDataFim());
+		buffer.append(((ExposicaoMdl) object).getDataFim());
 		buffer.append("\r\n");
-		buffer.append("Tema: " + ((ExposicaoMdl) object).getTema());
+		buffer.append( ((ExposicaoMdl) object).getTema());
 		buffer.append("\r\n");
-		buffer.append("Descricao: " + ((ExposicaoMdl) object).getDescricao());
+		buffer.append(((ExposicaoMdl) object).getDescricao());
 		buffer.append("\r\n");
-		buffer.append("Itens da Exposicao: " + ((ExposicaoMdl) object).getObrasExp());
+		buffer.append( ((ExposicaoMdl) object).getObrasExp());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");

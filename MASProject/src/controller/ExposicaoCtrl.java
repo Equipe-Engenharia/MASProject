@@ -2,8 +2,6 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -11,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -21,22 +18,16 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
-import com.toedter.calendar.JCalendar;
-
 import model.ExposicaoMdl;
 import persistence.ExposicaoFile;
-import view.FrmCalendario;
 import view.FrmObraArtistaSelec;
 
 public class ExposicaoCtrl {
 
 	private JPanel form;
-	private static JCalendar calendar;
 	private static JTextField txtDataIni, txtDataFim, txtNomeArtista, txtId;
 	private JTextField txtTitulo;
 	private JTable tObras;
-	private static int flag;
 	private boolean validar;
 	private List<ExposicaoMdl> expos;
 	private JTextField txtTema;
@@ -61,34 +52,14 @@ public class ExposicaoCtrl {
 		this.txtAreaDescri = txtAreaDescri;
 		this.expos = new ArrayList<ExposicaoMdl>();
 		this.tableModel = tableModel;
-		
 		lerArquivo();
 	}
 
-	public ExposicaoCtrl(JCalendar calendar) {
-		ExposicaoCtrl.calendar = calendar;
-	}
 
 	/*
 	 * As flags funcionam para quando se tem mais de uma chamada de calendario
 	 * na mesma tela, ajuda no tratamento de retorno
 	 */
-	public static int getFlag() {
-		return flag;
-	}
-
-	public void setFlag(int n) {
-		flag = n;
-	}
-
-	public static void leCalendario() {
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-		String data = formato.format(calendar.getDate()); // le data selecionada
-															// pelo usuario
-		
-		insereDataTextField(data);
-
-	}
 
 	public void gerarId() {
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
@@ -97,26 +68,8 @@ public class ExposicaoCtrl {
 		txtId.setText("EXP" + id);
 	}
 
-	public static void insereDataTextField(String data) {
-		
-		switch (getFlag()) {
-		// tratamento das flags
-		case 1:
-			txtDataIni.setText(null);
-			txtDataIni.setText(data);
-			break;
-		case 2:
-			txtDataFim.setText(null);
-			txtDataFim.setText(data);
-			break;
-		}
-	}
 
-	public void chamaCalendario() {
-		FrmCalendario frmCal = new FrmCalendario();
-		frmCal.setLocationRelativeTo(null);
-		frmCal.setVisible(true);
-	}
+
 
 	public void chamaSelecaoObras() {
 		JDialog frmOASelec = new FrmObraArtistaSelec(txtNomeArtista.getText(), tableModel, tObras);
@@ -177,7 +130,7 @@ public class ExposicaoCtrl {
 					exposicao.setDataFim(list.get(3));
 					exposicao.setTema(list.get(4));
 					exposicao.setDescricao(list.get(5));
-					exposicao.setObrasExp(list.get(6));
+					//exposicao.setObrasExp(list.get(6));
 					expos.add(exposicao);
 					list.clear();
 				}
@@ -188,7 +141,7 @@ public class ExposicaoCtrl {
 
 	}
 
-	public  void pesquisar() {
+	public void pesquisar() {
 		ArrayList<ExposicaoMdl> lista = new ArrayList<>();
 		String pesquisa = "";
 		if (!txtTitulo.getText().isEmpty() || !txtId.getText().isEmpty()) {
@@ -324,7 +277,7 @@ public class ExposicaoCtrl {
 	}
 
 	public void limpaCampos() {
-		// txtId.setText(null);
+		txtId.setText(null);
 		txtTitulo.setText(null);
 		txtDataIni.setText(null);
 		txtDataFim.setText(null);
@@ -344,106 +297,6 @@ public class ExposicaoCtrl {
 			}
 		}
 	}
-
-	public ActionListener abreCalendario1 = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			chamaCalendario();
-			setFlag(1);
-		}
-	};
-
-	public ActionListener abreCalendario2 = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			chamaCalendario();
-			setFlag(2);
-		}
-	};
-
-	public ActionListener pesquisaArtista = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			chamaSelecaoObras();
-		}
-	};
-
-	// Este listener trata a busca da data selecionada ao fechar a tela
-	public WindowListener fechaTela = new WindowListener() {
-
-		@Override
-		public void windowOpened(WindowEvent e) {
-			gerarId();
-		}
-
-		@Override
-		public void windowIconified(WindowEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void windowDeiconified(WindowEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void windowDeactivated(WindowEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void windowClosing(WindowEvent e) {
-			// leCalendario();
-		}
-
-		@Override
-		public void windowClosed(WindowEvent e) {
-			leCalendario();
-		}
-
-		@Override
-		public void windowActivated(WindowEvent e) {
-			// TODO Auto-generated method stub
-		}
-	};
-
-	public ActionListener gravarExpo = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			gravarExposicao();
-		}
-	};
-
-	public ActionListener pesquisar = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			pesquisar();
-		}
-	};
-
-	public ActionListener excluir = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			excluir();
-		}
-	};
-
-	public ActionListener editar = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			editar();
-		}
-	};
 
 	public void msg(String tipo, String mensagem) {
 
@@ -504,4 +357,51 @@ public class ExposicaoCtrl {
 					"Erro no Controller", JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/warning.png"));
 		}
 	}
+
+	public ActionListener pesquisaArtista = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			chamaSelecaoObras();
+		}
+	};
+
+	
+
+	public ActionListener gravarExpo = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			gravarExposicao();
+		}
+	};
+
+	public ActionListener pesquisar = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			pesquisar();
+		}
+	};
+
+	public ActionListener excluir = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			excluir();
+		}
+	};
+
+	public ActionListener editar = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			editar();
+		}
+	};
+
+	
 }

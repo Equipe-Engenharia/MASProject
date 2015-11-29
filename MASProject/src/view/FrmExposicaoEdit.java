@@ -5,6 +5,7 @@ import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import controller.ExposicaoCtrl;
 
@@ -26,7 +28,7 @@ public class FrmExposicaoEdit extends JFrame {
 
 	private JLabel lblIdExposio, lblTtuloDaExposio, lblDataInicio, lblDataFim, lblDescrio, lblArtista, lblTema;
 	private JPanel contentPane;
-	private JButton btnCalenIni, btnPesqArtista, btnCalenFim, btnGravar, btnApagar;
+	private JButton btnPesqArtista, btnGravar, btnApagar;
 	private JTextField txtID, txtTitulo, txtDataIni, txtDataFim, txtNomeArtista, txtTema;
 	private JTable tableLista;
 	// em testes
@@ -34,6 +36,7 @@ public class FrmExposicaoEdit extends JFrame {
 	private JTextArea txtAreaDescri;
 	private JScrollPane scrollPane_1;
 	private JButton btnPesqTitulo, btnPesqId;
+	private MaskFormatter maskData;
 	private DefaultTableModel tableModel = new DefaultTableModel();
 
 	public static void main(String[] args) {
@@ -62,12 +65,6 @@ public class FrmExposicaoEdit extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		btnCalenIni = new JButton("");
-		btnCalenIni.setBounds(251, 107, 29, 23);
-		btnCalenIni.setIcon(new ImageIcon(
-				FrmExposicaoCad.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
-		contentPane.add(btnCalenIni);
-
 		lblIdExposio = new JLabel("ID. Exposi\u00E7\u00E3o");
 		lblIdExposio.setBounds(56, 30, 78, 14);
 		contentPane.add(lblIdExposio);
@@ -85,8 +82,10 @@ public class FrmExposicaoEdit extends JFrame {
 		lblTtuloDaExposio = new JLabel("T\u00EDtulo da Exposi\u00E7\u00E3o");
 		lblTtuloDaExposio.setBounds(33, 61, 114, 14);
 		contentPane.add(lblTtuloDaExposio);
+		
+		maskData = new MaskFormatter("##/##/####");
 
-		txtDataIni = new JTextField();
+		txtDataIni =new JFormattedTextField(maskData);
 		txtDataIni.setBounds(157, 110, 86, 20);
 		contentPane.add(txtDataIni);
 		txtDataIni.setColumns(10);
@@ -99,16 +98,10 @@ public class FrmExposicaoEdit extends JFrame {
 		lblDataFim.setBounds(319, 113, 61, 14);
 		contentPane.add(lblDataFim);
 
-		txtDataFim = new JTextField();
+		txtDataFim = new JFormattedTextField(maskData);
 		txtDataFim.setBounds(373, 110, 86, 20);
 		contentPane.add(txtDataFim);
 		txtDataFim.setColumns(10);
-
-		btnCalenFim = new JButton("");
-		btnCalenFim.setBounds(469, 107, 29, 23);
-		btnCalenFim.setIcon(new ImageIcon(
-				FrmExposicaoCad.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
-		contentPane.add(btnCalenFim);
 
 		lblDescrio = new JLabel("Descri\u00E7\u00E3o");
 		lblDescrio.setBounds(73, 222, 61, 14);
