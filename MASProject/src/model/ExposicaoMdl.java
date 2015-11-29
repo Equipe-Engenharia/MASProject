@@ -1,12 +1,14 @@
 package model;
 
+import java.util.Vector;
+
 public class ExposicaoMdl {
 	private String id;
 	private String titulo;
 	private String dataIni, dataFim;
 	private String tema;
 	private String descricao;
-	private String obrasExp;
+	private Object[] obrasExp;
 
 
 	public String getId() {
@@ -57,12 +59,12 @@ public class ExposicaoMdl {
 		this.descricao = descricao;
 	}
 
-	public String getObrasExp() {
+	public Object[] getObrasExp() {
 		return obrasExp;
 	}
 
-	public void setObrasExp(String obrasExp) {
-		this.obrasExp = obrasExp;
+	public void setObrasExp(Object[] rows) {
+		this.obrasExp = rows;
 	}
 
 	

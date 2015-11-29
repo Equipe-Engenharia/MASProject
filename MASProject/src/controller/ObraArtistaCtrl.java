@@ -133,13 +133,18 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 	}
 
 	private void initObrasModel() {
+		StringBuffer buffer = new StringBuffer();
 		String recebeLinha = bufferObras.toString();
-		obras = recebeLinha.split(";");
-		for(int i = 0; i < obras.length; i++){
-			if(obras[i].equals(nomeArtista)){
-				listModelObras.addElement(obras[i + 1]);
+		String linhas[] = recebeLinha.split(";");
+		for(int i = 0; i < linhas.length; i++){
+			if(linhas[i].equals(nomeArtista)){
+				buffer.append(linhas[i + 1] + ";");
 			}
-			
+		}
+		recebeLinha = buffer.toString();
+		obras = recebeLinha.split(";");
+		for(String s : obras){
+			listModelObras.addElement(s);
 		}
 	}
 	

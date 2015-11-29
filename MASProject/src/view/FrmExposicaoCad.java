@@ -166,6 +166,7 @@ public class FrmExposicaoCad extends JFrame {
 				txtTitulo,txtTema,txtAreaDescri, tableModel);
 		btnPesqArtista.addActionListener(expCtrl.pesquisaArtista);
 		btnGravar.addActionListener(expCtrl.gravarExpo);
+		btnLimpar.addActionListener(expCtrl.limpar);
 		
 		expCtrl.gerarId();
 		tableLista.addKeyListener(expCtrl);

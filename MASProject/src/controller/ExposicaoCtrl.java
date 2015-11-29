@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,6 +22,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import model.ArtistaMdl;
 import model.CategoriaMdl;
@@ -107,8 +109,13 @@ public class ExposicaoCtrl implements KeyListener{
 				exposicao.setDataFim(txtDataFim.getText());
 				exposicao.setTema(txtTema.getText());
 				exposicao.setDescricao(txtAreaDescri.getText());
-//				exposicao.setObrasExp(tObras.getModel().toString()); //Pega itens da
-				// Jtable********
+				Object tableRows[] = new Object[tObras.getRowCount()]; 
+				for(int i = 0; i < tObras.getRowCount(); i++){
+					tableRows[i] = tObras.getValueAt(i, 0);
+				}
+				exposicao.setObrasExp(tableRows); //Pega itens da
+				// Jtable*******
+				
 				expos.add(exposicao);
 				msg("save", txtTitulo.getText());
 				atualizaDados(expos);
@@ -292,7 +299,8 @@ public class ExposicaoCtrl implements KeyListener{
 		txtDataFim.setText(null);
 		txtTema.setText(null);
 		txtAreaDescri.setText(null);
-		// tObras.setSelected //limpar a jTable
+		txtNomeArtista.setText(null);
+		((DefaultTableModel) tObras.getModel()).setNumRows(0);
 	}
 
 	public void atualizaDados(List<ExposicaoMdl> listExpo) {
@@ -465,6 +473,14 @@ public class ExposicaoCtrl implements KeyListener{
 		public void actionPerformed(ActionEvent e) {
 
 			editar();
+		}
+	};
+	
+	public ActionListener limpar = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			limpaCampos();
 		}
 	};
 

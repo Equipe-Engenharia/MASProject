@@ -57,7 +57,7 @@ public class ExposicaoFile implements ArquivosICtrl {
 		buffer.append("\r\n");
 		buffer.append(((ExposicaoMdl) object).getDescricao());
 		buffer.append("\r\n");
-		buffer.append( ((ExposicaoMdl) object).getObrasExp());
+		buffer.append( ((ExposicaoMdl) object).getObrasExp()); //verificar aqui
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");
