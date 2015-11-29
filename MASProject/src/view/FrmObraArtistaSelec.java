@@ -48,7 +48,8 @@ public class FrmObraArtistaSelec extends JDialog{
 	/**
 	 * Create the dialog.
 	 */
-	public FrmObraArtistaSelec(String nomeArtista, DefaultTableModel tableModel, JTable tableObras) {
+	public FrmObraArtistaSelec(String nomeArtista, DefaultTableModel tableModel, JTable tableObras,
+			StringBuffer obras) {
 		this.nomeArtista = nomeArtista;
 		this.tableModel = tableModel;
 		this.tableObras = tableObras;
@@ -121,7 +122,8 @@ public class FrmObraArtistaSelec extends JDialog{
 		ObraArtistaCtrl oAController = new ObraArtistaCtrl(listObras, listObrasSelecionadas, 
 				btnEnviarObras, btnMoveObra, btnUndoMoveObra, nomeArtista, 
 				btnAdicionarTodos, btnRemoverTodos, listModelObras, 
-				listModelObrasSelecionadas, lblStatus, contentPanel, this.tableModel, this.tableObras);
+				listModelObrasSelecionadas, lblStatus, contentPanel, this.tableModel, this.tableObras,
+				obras);
 		
 		//AÇÕES DOS BOTÕES
 		btnMoveObra.addActionListener(oAController);

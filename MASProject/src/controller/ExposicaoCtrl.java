@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -9,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -18,11 +21,17 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import model.ArtistaMdl;
+import model.CategoriaMdl;
 import model.ExposicaoMdl;
+import model.MaterialMdl;
+import model.ObraMdl;
+import model.SetorMdl;
 import persistence.ExposicaoFile;
 import view.FrmObraArtistaSelec;
 
-public class ExposicaoCtrl {
+public class ExposicaoCtrl implements KeyListener{
 
 	private JPanel form;
 	private static JTextField txtDataIni, txtDataFim, txtNomeArtista, txtId;
@@ -71,8 +80,8 @@ public class ExposicaoCtrl {
 
 
 
-	public void chamaSelecaoObras() {
-		JDialog frmOASelec = new FrmObraArtistaSelec(txtNomeArtista.getText(), tableModel, tObras);
+	public void chamaSelecaoObras(StringBuffer obras) {
+		JDialog frmOASelec = new FrmObraArtistaSelec(txtNomeArtista.getText(), tableModel, tObras, obras);
 		frmOASelec.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmOASelec.setLocationRelativeTo(null);
 		frmOASelec.setModal(true);
@@ -297,6 +306,56 @@ public class ExposicaoCtrl {
 			}
 		}
 	}
+	
+	
+	public boolean validaArtista() {
+		if(txtNomeArtista.getText().equals("")){
+			JOptionPane.showMessageDialog(form, "Campo vazio! Digite um nome de artista");
+			return false;
+		}
+		else if(txtNomeArtista.getText().length() > 0){
+			String linha = new String();
+			ArquivosCtrl arqController = new ArquivosCtrl();
+			try {
+				arqController.leArquivo("../MASProject/dados/", "acervo");
+				linha = arqController.getBuffer();
+				String[] linhas = linha.split(";");
+				for(String leLinha : linhas){
+					if(leLinha.contains("Artista")){
+						if(leLinha.substring(17).equals(txtNomeArtista.getText())){
+							return true;
+						}
+							
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	
+	public StringBuffer obterObras(){
+		StringBuffer buffer = new StringBuffer();
+		String linha = new String();
+		ArquivosCtrl arqController = new ArquivosCtrl();
+		try {
+			arqController.leArquivo("../MASProject/dados/", "acervo");
+			linha = arqController.getBuffer();
+			String[] linhas = linha.split(";");
+			for(String leLinha : linhas){
+				if(leLinha.contains("Artista")){
+					buffer.append(leLinha.substring(17) + ";");
+				}
+				if(leLinha.contains("obra")){
+					buffer.append(leLinha.substring(14) + ";");
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return buffer;
+	}
 
 	public void msg(String tipo, String mensagem) {
 
@@ -362,8 +421,13 @@ public class ExposicaoCtrl {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-			chamaSelecaoObras();
+			StringBuffer buffer;
+			if(validaArtista()){
+				buffer = obterObras(); 
+				chamaSelecaoObras(buffer);
+			}else if(txtNomeArtista.getText().length() > 0){
+				JOptionPane.showMessageDialog(form, "Artista não encontrado!");
+			}
 		}
 	};
 
@@ -403,6 +467,34 @@ public class ExposicaoCtrl {
 			editar();
 		}
 	};
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int keyCode = e.getKeyCode();
+		if(keyCode == KeyEvent.VK_DELETE){
+			removeLinhaTable();
+		}
+	}
+
+
+	private void removeLinhaTable() {
+		if(tObras.getSelectedRow() != -1)
+			((DefaultTableModel)tObras.getModel()).removeRow(tObras.getSelectedRow());
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 }

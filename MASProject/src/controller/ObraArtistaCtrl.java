@@ -33,6 +33,7 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 //	private TableExposicaoModel tableModel;
 	private DefaultTableModel tableModel;
 	private JTable tableObras;
+	private StringBuffer bufferObras;
 	
 	public ObraArtistaCtrl(JList<String> listObras, JList<String> listObrasSelecionadas,
 			JButton btnEnviarObras, JButton btnMoveObra, JButton btnUndoMoveObra,
@@ -40,7 +41,7 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 			DefaultListModel<String> listModelObras, 
 			DefaultListModel<String> listModelObrasSelecionadas,
 			JLabel lblStatus, JPanel contentPanel, DefaultTableModel tableModel,
-			JTable tableObras) {
+			JTable tableObras, StringBuffer obras) {
 		
 		this.listObras = listObras;
 		this.listObrasSelecionadas = listObrasSelecionadas;
@@ -56,6 +57,7 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 		this.contentPanel = contentPanel;
 		this.tableModel = tableModel;
 		this.tableObras = tableObras;
+		this.bufferObras = obras;
 		initObrasModel();
 	}
 	
@@ -104,9 +106,10 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 		}
 		
 		//verifica a situação da JTable
+		//se não houver coluna, adiciona uma nova e o conteudo
 		if(tableObras.getColumnCount() <= 0){
 			tableModel.addColumn("Obra", obra);
-			
+			//se já existe uma coluna com linhas, apenas adiciona as novas abaixo
 		}else{
 			int linhasOld = tableModel.getRowCount();
 //			System.out.println("Old: " + linhasOld);
@@ -130,10 +133,13 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 	}
 
 	private void initObrasModel() {
-		ArtistaCtrl aController = new ArtistaCtrl(); //mudar para obras
-		obras = aController.getArtista(); //usando artista para teste
-		for(String s : obras){
-			listModelObras.addElement(s);
+		String recebeLinha = bufferObras.toString();
+		obras = recebeLinha.split(";");
+		for(int i = 0; i < obras.length; i++){
+			if(obras[i].equals(nomeArtista)){
+				listModelObras.addElement(obras[i + 1]);
+			}
+			
 		}
 	}
 	
