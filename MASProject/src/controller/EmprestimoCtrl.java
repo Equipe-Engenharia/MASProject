@@ -10,6 +10,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -33,11 +35,14 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import com.toedter.calendar.JCalendar;
+
 import model.EmprestimoMdl;
 import model.MuseuMdl;
 import model.EmprestimoObraMdl;
 import persistence.EmprestimoFile;
 import view.FrmAcervoCad;
+import view.FrmCalendario;
 import view.FrmLogin;
 
 public class EmprestimoCtrl implements ComponentListener {
@@ -52,16 +57,18 @@ public class EmprestimoCtrl implements ComponentListener {
 	txtTelefone, 
 	txtResponsavel,
 	txtResponsavelId;
-	private JFormattedTextField 
-	ftxtDataFinal, 
+	private static JFormattedTextField 
 	ftxtDataInicial, 
-	ftxtCusto, 
-	ftxtTotal; 
+	ftxtDataFinal;
+	private JFormattedTextField ftxtCusto;
+	private JFormattedTextField ftxtTotal; 
+	private static JCalendar calendar;
 	private JComboBox<String> cbMuseu;
 	private JRadioButton rdbtnEntrada, rdbtnSaida;
 	private ButtonGroup btgDestino;
 	private JTable tbEmprestimo;
 	private boolean validar;
+	private static int flag;
 	private List<EmprestimoObraMdl> obras;
 	private List<MuseuMdl> museus;
 	private List<EmprestimoMdl> emprestimos;
@@ -96,8 +103,8 @@ public class EmprestimoCtrl implements ComponentListener {
 		this.rdbtnEntrada = rdbtnEntrada;
 		this.rdbtnSaida = rdbtnSaida;
 		this.btgDestino = btgDestino;
-		this.ftxtDataInicial = ftxtDataInicial;
-		this.ftxtDataFinal = ftxtDataFinal;
+		EmprestimoCtrl.ftxtDataInicial = ftxtDataInicial;
+		EmprestimoCtrl.ftxtDataFinal = ftxtDataFinal;
 		this.tbEmprestimo = tbEmprestimo;
 		this.cbMuseu = cbMuseu;
 		this.txtTelefone = txtTelefone;
@@ -110,6 +117,7 @@ public class EmprestimoCtrl implements ComponentListener {
 		this.emprestimos = new ArrayList<EmprestimoMdl>();
 		this.tabela = new ArrayList<EmprestimoMdl>();
 		
+		sessao();
 		lerArquivo();
 		lerAcervo();
 		lerMuseu();
@@ -150,6 +158,24 @@ public class EmprestimoCtrl implements ComponentListener {
 
 
 	// METODOS DE SUPORTE ////////////////////////
+	
+	public void sessao() {
+
+		SessaoCtrl log = SessaoCtrl.getInstance();
+
+		if (("Operacional").equalsIgnoreCase(log.getLogon().get(0).getNivel()) ||
+				("Administrativo").equalsIgnoreCase(log.getLogon().get(0).getNivel())
+				){
+
+			log.registrar(
+					log.getLogon().get(0).getId(), 
+					log.getLogon().get(0).getUsuario(), 
+					log.getLogon().get(0).getNivel(),
+					form.getName());
+		} else {
+			msg("", log.getLogon().get(0).getNivel());
+		}
+	}
 
 
 	public void atualizarId() {
@@ -179,6 +205,55 @@ public class EmprestimoCtrl implements ComponentListener {
 			cbMuseu.setSelectedItem("Selecione…");
 			ftxtTotal.setValue(null);
 		}
+	}
+	
+	public EmprestimoCtrl(JCalendar calendar) {
+		
+		EmprestimoCtrl.calendar = calendar;
+	}
+	
+	/*
+	 * AS FLAGS FUNCIONAM PARA QUANDO SE TEM MAIS DE UMA CHAMADA DE CALENDARIO
+	 * NA MESMA TELA (AJUDA NO TRATAMENTO DE RETORNO)
+	 */
+	public static int getFlag() {
+		
+		return flag;
+	}
+
+	public void setFlag(int n) {
+		
+		flag = n;
+	}
+
+	public static void leCalendario() {
+		
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		//LÊ DATA SELECIONADA PELO USUARIO
+		String data = formato.format(calendar.getDate());
+		insereDataTextField(data);
+	}
+	
+	public static void insereDataTextField(String data) {
+		
+		// TRATAMENTO DAS FLAGS
+		switch (getFlag()) {
+		
+		case 1:
+			ftxtDataInicial.setValue(null);
+			ftxtDataInicial.setValue(data);
+			break;
+		case 2:
+			ftxtDataFinal.setValue(null);
+			ftxtDataFinal.setValue(data);
+			break;
+		}
+	}
+
+	public void chamaCalendario() throws ParseException {
+		FrmCalendario frmCal = new FrmCalendario();
+		frmCal.setLocationRelativeTo(null);
+		frmCal.setVisible(true);
 	}
 
 
@@ -669,11 +744,11 @@ public class EmprestimoCtrl implements ComponentListener {
 			break;
 		case "novomuseu":
 			Object[] novo = { "Confirmar", "Cancelar" };  
-			int cadastroMuseu = JOptionPane.showOptionDialog(null, "Gostaria de cadastrar um novo Museu \npara o Empréstimo ID\n\n" + mensagem 
+			int cadastroMuseu = JOptionPane.showOptionDialog(null, "Gostaria de cadastrar um novo Museu \npara o Empréstimo\n\nID " + mensagem 
 					+ " ?",
 					"Novo Museu", 
 					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
-					new ImageIcon("../MASProject/icons/warning.png"), novo, novo[1]);
+					new ImageIcon("../MASProject/icons/question.png"), novo, novo[1]);
 			if (cadastroMuseu == 0) {
 				FrmLogin frmCad = new FrmLogin();
 				frmCad.setVisible(true);
@@ -698,8 +773,8 @@ public class EmprestimoCtrl implements ComponentListener {
 			break;		
 		default:
 			JOptionPane.showMessageDialog(null, 
-					"OOPS!\n\nQue feio, Ed Stark perdeu a cabeça, e algo não deveria ter acontecido…\n\nTermo: " + mensagem
-					+ "\n\nVolte ao trabalho duro e conserte isso!!!", 
+					"ERRO! Algo não deveria ter acontecido…\n\nTermo: " + mensagem
+					+ "\n\nOcorreu no Controller desta Tela.", 
 					"Erro no Controller", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/error.png"));
@@ -751,6 +826,41 @@ public class EmprestimoCtrl implements ComponentListener {
 			}
 		}
 	};
+	
+	public ActionListener apagar = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			removeLinha();
+		}
+	};
+	
+	public ActionListener abreCalInicial = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+				chamaCalendario();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			setFlag(1);
+		}
+	};
+
+	public ActionListener abreCalFinal = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+				chamaCalendario();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			setFlag(2);
+		}
+	};
+	
 
 	public ActionListener cancelar = new ActionListener() {
 
@@ -905,4 +1015,38 @@ public class EmprestimoCtrl implements ComponentListener {
 	@Override
 	public void componentShown(ComponentEvent e) {
 	}
+	
+	
+	// ESTE LISTNER TRATA A BUSCA DA DATA SELECIONADA AO FECHAR A TELA
+		public WindowListener fechaTela = new WindowListener() {
+
+			@Override
+			public void windowOpened(WindowEvent e) {
+			}
+
+			@Override
+			public void windowIconified(WindowEvent e) {
+			}
+
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+			}
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+			}
+
+			@Override
+			public void windowClosed(WindowEvent e) {
+				leCalendario();
+			}
+
+			@Override
+			public void windowActivated(WindowEvent e) {
+			}
+		};
 }
