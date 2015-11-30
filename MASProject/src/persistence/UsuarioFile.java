@@ -38,7 +38,11 @@ public class UsuarioFile implements ArquivosICtrl{
 			leDados.close();
 			leFluxo.close();
 		} else {
-			throw new IOException("Arquivo inexistente");
+			//throw new IOException("Arquivo inexistente");
+			File novoArquivo = new File(diretorio, arquivo);
+			novoArquivo.createNewFile();
+			buffer = new StringBuffer();
+			buffer.append("");
 		}
 	}
 
