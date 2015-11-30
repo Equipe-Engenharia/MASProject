@@ -17,8 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import controller.LoginCtrl;
-import controller.SessionCtrl;
+import controller.UsuarioCtrl;
+import controller.SessaoCtrl;
 
 public class FrmLogin extends JFrame {
 
@@ -59,11 +59,12 @@ public class FrmLogin extends JFrame {
 		//setUndecorated(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
-		setContentPane(contentPane);
+		contentPane = new JPanel();
+		contentPane.setName("USR");
 		contentPane.setLayout(null);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
 
 		lblId = new JLabel("ID");
 		lblId.setVisible(false);
@@ -121,7 +122,7 @@ public class FrmLogin extends JFrame {
 		btnEntrar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
 		contentPane.add(btnEntrar);
 
-		LoginCtrl controle = new LoginCtrl(contentPane, txtId, txtUsuario, pwdSenha, pwdSenha2, chckbxAdm, chckbxOpera, btnNovo);
+		UsuarioCtrl controle = new UsuarioCtrl(contentPane, txtId, txtUsuario, pwdSenha, pwdSenha2, chckbxAdm, chckbxOpera, btnNovo);
 
 		txtUsuario.addMouseListener(controle.limpaCampo);
 		txtUsuario.addActionListener(controle.entrar);
@@ -134,8 +135,8 @@ public class FrmLogin extends JFrame {
 		
 		pwdSenha.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
-				SessionCtrl session = new SessionCtrl();
-				if (session.acesso() == false){
+				SessaoCtrl log = SessaoCtrl.getInstance();
+				if (log.acesso() == false){
 					dispose();
 					try {
 						FrmIngresso frm = new FrmIngresso();
@@ -151,8 +152,8 @@ public class FrmLogin extends JFrame {
 		
 		btnEntrar.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
-				SessionCtrl session = new SessionCtrl();
-				if (session.acesso() == false){
+				SessaoCtrl log = SessaoCtrl.getInstance();
+				if (log.acesso() == false){
 					dispose();
 					try {
 						FrmIngresso frm = new FrmIngresso();

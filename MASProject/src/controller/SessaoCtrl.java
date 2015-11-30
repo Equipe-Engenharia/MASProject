@@ -8,27 +8,38 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import model.LoginMdl;
-import model.SessionMdl;
-import persistence.SessionFile;
 
-public class SessionCtrl {
+import model.UsuarioMdl;
+import model.SessaoMdl;
+import persistence.SessaoFile;
 
-	private List<SessionMdl> logon;
-	private SessionFile session = new SessionFile();
+public class SessaoCtrl {
 
-	public SessionCtrl () {
-
-		new ArrayList<LoginMdl>();
-		this.logon = new ArrayList<SessionMdl>();
-
-	}
+	// Variável estática que conterá a instancia da classe
+	private static SessaoCtrl instance;
 	
+	private List<SessaoMdl> logon;
+	private SessaoFile sessao = new SessaoFile();
+
+	// Construtor privado (suprime o construtor público padrão).
+	private SessaoCtrl() {
+		
+		new ArrayList<UsuarioMdl>();
+		this.setLogon(new ArrayList<SessaoMdl>());
+		
+		lerSession();
+	}
+
+	// Método público estático de acesso único ao objeto!
+	public static SessaoCtrl getInstance() {
+		if (instance == null)
+			instance = new SessaoCtrl();
+		return instance;
+	}
+
 	
 	// METODOS DE SUPORTE ////////////////////////
 
-
-	
 	public void msg(String tipo, String mensagem) {
 
 		switch (tipo) {
@@ -50,30 +61,26 @@ public class SessionCtrl {
 					new ImageIcon("../MASProject/icons/warning.png"));
 		}
 	}
-	
 
-	// CRUD //////////////////////////
-	
-	
 public void lerSession() {
 		
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 	
 		try {
-			session.leArquivo("../MASProject/dados/", "session");
-			linha = session.getBuffer();
+			sessao.leArquivo("../MASProject/dados/", "log");
+			linha = sessao.getBuffer();
 			String[] listaSession = linha.split(";");
 			for (String s : listaSession) {
 				String text = s.replaceAll(".*: ", "");
 				list.add(text);
 				if (s.contains("---")) {
-					SessionMdl log = new SessionMdl();
+					SessaoMdl log = new SessaoMdl();
 					log.setId(list.get(0));
 					log.setUsuario(list.get(1));
 					log.setNivel(list.get(2));
 					log.setHora(list.get(3));
-					logon.add(log);
+					getLogon().add(log);
 					list.clear();
 				}
 			}
@@ -83,13 +90,13 @@ public void lerSession() {
 	}
 
 	
-	public void atualizaSession(List<SessionMdl> lista) {
+	public void atualizaSession(List<SessaoMdl> lista) {
 		
-		File f = new File("../MASProject/dados/session");
+		File f = new File("../MASProject/dados/log");
 		f.delete();	
-		for (SessionMdl logon : lista) {
+		for (SessaoMdl logon : lista) {
 			try {
-				session.escreveArquivo("../MASProject/dados/", "session", "", logon);
+				sessao.escreveArquivo("../MASProject/dados/", "log", "", logon);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -98,19 +105,20 @@ public void lerSession() {
 	
 	
 
-	public String registrar(String id, String usuario, String acesso) {
+	public String registrar(String id, String usuario, String acesso, String tela) {
 		
-		SessionMdl log = new SessionMdl();
+		SessaoMdl log = new SessaoMdl();
 		Date date = new Date();
 
-					logon.clear(); //APAGA A ULTIMA SESSAO
+					getLogon().clear(); //APAGA A ULTIMA SESSAO
 					log.setId(id);
 					log.setUsuario(usuario);
 					log.setNivel(acesso);
 					log.setHora(date.toString());
-					logon.add(log);
-					atualizaSession(logon);
-					return logon.get(0).getNivel();	
+					log.setTela(tela);
+					getLogon().add(log);
+					atualizaSession(getLogon());
+					return getLogon().get(0).getNivel();	
 	}
 	
 	
@@ -118,12 +126,21 @@ public void lerSession() {
 
 			lerSession();
 			boolean open;
-			if (("Administrativo").equalsIgnoreCase(logon.get(0).getNivel())){
+			if (("Administrativo").equalsIgnoreCase(getLogon().get(0).getNivel())){
 				open = true;
 			} else {
 				//msg("errorsession", logon.get(0).getNivel());
 				open = false;
 			}
 			return open;
-		} 
+		}
+
+	public List<SessaoMdl> getLogon() {
+		return logon;
+	}
+
+	public void setLogon(List<SessaoMdl> logon) {
+		this.logon = logon;
+	} 
+	
 }

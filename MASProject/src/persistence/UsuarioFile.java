@@ -9,9 +9,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import controller.ArquivosICtrl;
-import model.SessionMdl;
+import model.UsuarioMdl;
 
-public class SessionFile implements ArquivosICtrl{
+public class UsuarioFile implements ArquivosICtrl{
 	
 	private StringBuffer buffer;
 
@@ -45,13 +45,13 @@ public class SessionFile implements ArquivosICtrl{
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID     : "+((SessionMdl) object).getId());
+		buffer.append("ID     : "+((UsuarioMdl) object).getId());
 		buffer.append("\r\n");
-		buffer.append("Usuário: " + ((SessionMdl) object).getUsuario());
+		buffer.append("Usuario: " + ((UsuarioMdl) object).getUsuario());
 		buffer.append("\r\n");
-		buffer.append("Nível  : " + ((SessionMdl) object).getNivel());
+		buffer.append("Senha  : " + ((UsuarioMdl) object).getSenha());
 		buffer.append("\r\n");
-		buffer.append("Hora   : " + ((SessionMdl) object).getHora());
+		buffer.append("Nível  : " + ((UsuarioMdl) object).getNivel());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");
