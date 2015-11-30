@@ -134,14 +134,12 @@ public class FrmExposicaoCad extends JFrame {
 		
 		btnCalInicial = new JButton("");
 		btnCalInicial.setBounds(255, 109, 29, 23);
-		btnCalInicial.setIcon(new ImageIcon(
-				FrmExposicaoCad.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
+		btnCalInicial.setIcon(new ImageIcon("../MASProject/jcalendar-1.4 (1)/src/com/toedter/calendar/images/JDateChooserColor32.gif"));
 		contentPane.add(btnCalInicial);
 		
 		btnCalFinal = new JButton("");
 		btnCalFinal.setBounds(471, 109, 29, 23);
-		btnCalFinal.setIcon(new ImageIcon(
-				FrmExposicaoCad.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
+		btnCalFinal.setIcon(new ImageIcon("../MASProject/jcalendar-1.4 (1)/src/com/toedter/calendar/images/JDateChooserColor32.gif"));
 		contentPane.add(btnCalFinal);
 
 		btnGravar = new JButton("Gravar");
