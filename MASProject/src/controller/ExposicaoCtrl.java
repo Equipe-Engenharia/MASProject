@@ -14,7 +14,6 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,14 +21,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 
-import model.ArtistaMdl;
-import model.CategoriaMdl;
 import model.ExposicaoMdl;
-import model.MaterialMdl;
-import model.ObraMdl;
-import model.SetorMdl;
 import persistence.ExposicaoFile;
 import view.FrmObraArtistaSelec;
 

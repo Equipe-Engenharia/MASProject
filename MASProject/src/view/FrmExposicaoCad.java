@@ -39,7 +39,6 @@ public class FrmExposicaoCad extends JFrame {
 	private MaskFormatter maskData;
 
 	public static void main(String[] args) {
-		
 
 		try {
 			new FrmExposicaoCad().setVisible(true);
@@ -51,7 +50,6 @@ public class FrmExposicaoCad extends JFrame {
 
 	public FrmExposicaoCad() throws ParseException {
 		setTitle("Nova Exposi\u00E7\u00E3o");
-		setResizable(false);
 		FrmExp();
 		setLocationRelativeTo(null);
 	}
@@ -83,7 +81,7 @@ public class FrmExposicaoCad extends JFrame {
 		lblTtuloDaExposio = new JLabel("T\u00EDtulo da Exposi\u00E7\u00E3o");
 		lblTtuloDaExposio.setBounds(33, 61, 114, 14);
 		contentPane.add(lblTtuloDaExposio);
-		
+
 		maskData = new MaskFormatter("##/##/####");
 
 		txtDataIni = new JFormattedTextField(maskData);
@@ -144,30 +142,28 @@ public class FrmExposicaoCad extends JFrame {
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(157, 413, 707, 166);
 		contentPane.add(scrollPane);
-		
-		tableLista = new JTable(tableModel); 
+
+		tableLista = new JTable(tableModel);
 		scrollPane.setViewportView(tableLista);
 		tableLista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableLista.setSelectionBackground(Color.LIGHT_GRAY);
 		tableLista.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		tableLista.setColumnSelectionAllowed(false);
 		tableLista.setCellSelectionEnabled(false);
-		
-		
+
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(157, 222, 707, 87);
 		contentPane.add(scrollPane_1);
-		
+
 		txtAreaDescri = new JTextArea();
 		scrollPane_1.setViewportView(txtAreaDescri);
-		
-		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, 
-				txtDataFim, txtNomeArtista, txtID, tableLista,
-				txtTitulo,txtTema,txtAreaDescri, tableModel);
+
+		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim, txtNomeArtista, txtID, tableLista, txtTitulo,
+				txtTema, txtAreaDescri, tableModel);
 		btnPesqArtista.addActionListener(expCtrl.pesquisaArtista);
 		btnGravar.addActionListener(expCtrl.gravarExpo);
 		btnLimpar.addActionListener(expCtrl.limpar);
-		
+
 		expCtrl.gerarId();
 		tableLista.addKeyListener(expCtrl);
 
