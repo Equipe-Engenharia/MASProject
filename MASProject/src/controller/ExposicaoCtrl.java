@@ -4,9 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +27,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
+import com.toedter.calendar.JCalendar;
+
 import model.ArtistaMdl;
 import model.CategoriaMdl;
 import model.ExposicaoMdl;
@@ -31,6 +36,7 @@ import model.MaterialMdl;
 import model.ObraMdl;
 import model.SetorMdl;
 import persistence.ExposicaoFile;
+import view.FrmCalendario;
 import view.FrmObraArtistaSelec;
 
 public class ExposicaoCtrl implements KeyListener{
@@ -40,6 +46,8 @@ public class ExposicaoCtrl implements KeyListener{
 	private JTextField txtTitulo;
 	private JTable tObras;
 	private boolean validar;
+	private static int flag;
+	private static JCalendar calendar;
 	private List<ExposicaoMdl> expos;
 	private JTextField txtTema;
 	private JTextArea txtAreaDescri;
@@ -47,7 +55,7 @@ public class ExposicaoCtrl implements KeyListener{
 	private DefaultTableModel tableModel;
 	private ArquivosCtrl arquivos = new ArquivosCtrl();
 
-	public ExposicaoCtrl(JTextField txtDataI, JTextField txtDataF, JTextField txtNomeArtista, JTextField txtId,
+	public ExposicaoCtrl(JPanel form, JTextField txtDataI, JTextField txtDataF, JTextField txtNomeArtista, JTextField txtId,
 			JTable tObras, JTextField txtTitulo, JTextField txtTema, JTextArea txtAreaDescri,
 			DefaultTableModel tableModel) {
 
@@ -55,6 +63,7 @@ public class ExposicaoCtrl implements KeyListener{
 												// this,porque o metodo que
 												// utiliza a variavel � estatico
 		ExposicaoCtrl.txtDataFim = txtDataF;
+		this.form = form;
 		this.txtNomeArtista = txtNomeArtista;
 		this.tObras = tObras;
 		this.txtId = txtId;
@@ -63,7 +72,9 @@ public class ExposicaoCtrl implements KeyListener{
 		this.txtAreaDescri = txtAreaDescri;
 		this.expos = new ArrayList<ExposicaoMdl>();
 		this.tableModel = tableModel;
+		
 		lerArquivo();
+		sessao();
 	}
 
 
@@ -79,8 +90,72 @@ public class ExposicaoCtrl implements KeyListener{
 		txtId.setText("EXP" + id);
 	}
 
+	public void sessao() {
 
+		SessaoCtrl log = SessaoCtrl.getInstance();
 
+		if (("Operacional").equalsIgnoreCase(log.getLogon().get(0).getNivel()) ||
+				("Administrativo").equalsIgnoreCase(log.getLogon().get(0).getNivel())
+				){
+
+			log.registrar(
+					log.getLogon().get(0).getId(), 
+					log.getLogon().get(0).getUsuario(), 
+					log.getLogon().get(0).getNivel(),
+					form.getName());
+		} else {
+			msg("", log.getLogon().get(0).getNivel());
+		}
+	}
+	
+	public ExposicaoCtrl(JCalendar calendar) {
+
+		ExposicaoCtrl.calendar = calendar;
+	}
+	
+	/*
+	 * AS FLAGS FUNCIONAM PARA QUANDO SE TEM MAIS DE UMA CHAMADA DE CALENDARIO
+	 * NA MESMA TELA (AJUDA NO TRATAMENTO DE RETORNO)
+	 */
+	public static int getFlag() {
+		
+		return flag;
+	}
+
+	public void setFlag(int n) {
+		
+		flag = n;
+	}
+
+	public static void leCalendario() {
+		
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		//LÊ DATA SELECIONADA PELO USUARIO
+		String data = formato.format(calendar.getDate());
+		insereDataTextField(data);
+	}
+	
+	public static void insereDataTextField(String data) {
+		
+		// TRATAMENTO DAS FLAGS
+		switch (getFlag()) {
+		
+		case 1:
+			txtDataIni.setText(null);
+			txtDataIni.setText(data);
+			break;
+		case 2:
+			txtDataFim.setText(null);
+			txtDataFim.setText(data);
+			break;
+		}
+	}
+
+	public void chamaCalendario() throws ParseException {
+		FrmCalendario frmCal = new FrmCalendario();
+		frmCal.setLocationRelativeTo(null);
+		frmCal.setVisible(true);
+	}
 
 	public void chamaSelecaoObras(StringBuffer obras) {
 		JDialog frmOASelec = new FrmObraArtistaSelec(txtNomeArtista.getText(), tableModel, tObras, obras);
@@ -483,6 +558,33 @@ public class ExposicaoCtrl implements KeyListener{
 			limpaCampos();
 		}
 	};
+	
+	public ActionListener abreCalInicial = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+				chamaCalendario();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			setFlag(1);
+		}
+	};
+
+	public ActionListener abreCalFinal = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			try {
+				chamaCalendario();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			setFlag(2);
+		}
+	};
+	
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -511,6 +613,37 @@ public class ExposicaoCtrl implements KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
-
 	
+	// ESTE LISTNER TRATA A BUSCA DA DATA SELECIONADA AO FECHAR A TELA
+	public WindowListener fechaTela = new WindowListener() {
+
+		@Override
+		public void windowOpened(WindowEvent e) {
+		}
+
+		@Override
+		public void windowIconified(WindowEvent e) {
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+		}
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+		}
+
+		@Override
+		public void windowClosed(WindowEvent e) {
+			leCalendario();
+		}
+
+		@Override
+		public void windowActivated(WindowEvent e) {
+		}
+	};
 }

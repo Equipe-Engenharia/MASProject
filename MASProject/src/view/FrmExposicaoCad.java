@@ -29,7 +29,7 @@ public class FrmExposicaoCad extends JFrame {
 
 	private JLabel lblIdExposio, lblTtuloDaExposio, lblDataInicio, lblDataFim, lblDescrio, lblArtista, lblTema;
 	private JPanel contentPane;
-	private JButton btnPesqArtista, btnGravar, btnLimpar;
+	private JButton btnPesqArtista, btnCalInicial, btnCalFinal, btnGravar, btnLimpar;
 	private JTextField txtID, txtTitulo, txtDataIni, txtDataFim, txtNomeArtista, txtTema;
 	private JTable tableLista;
 	private DefaultTableModel tableModel = new DefaultTableModel();
@@ -60,6 +60,7 @@ public class FrmExposicaoCad extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 937, 680);
 		contentPane = new JPanel();
+		contentPane.setName("EXP");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -130,6 +131,18 @@ public class FrmExposicaoCad extends JFrame {
 		lblTema = new JLabel("Tema");
 		lblTema.setBounds(97, 159, 37, 14);
 		contentPane.add(lblTema);
+		
+		btnCalInicial = new JButton("");
+		btnCalInicial.setBounds(255, 109, 29, 23);
+		btnCalInicial.setIcon(new ImageIcon(
+				FrmExposicaoCad.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
+		contentPane.add(btnCalInicial);
+		
+		btnCalFinal = new JButton("");
+		btnCalFinal.setBounds(471, 109, 29, 23);
+		btnCalFinal.setIcon(new ImageIcon(
+				FrmExposicaoCad.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
+		contentPane.add(btnCalFinal);
 
 		btnGravar = new JButton("Gravar");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
@@ -161,9 +174,11 @@ public class FrmExposicaoCad extends JFrame {
 		txtAreaDescri = new JTextArea();
 		scrollPane_1.setViewportView(txtAreaDescri);
 		
-		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, 
+		ExposicaoCtrl expCtrl = new ExposicaoCtrl(contentPane, txtDataIni, 
 				txtDataFim, txtNomeArtista, txtID, tableLista,
 				txtTitulo,txtTema,txtAreaDescri, tableModel);
+		btnCalInicial.addActionListener(expCtrl.abreCalInicial);
+		btnCalFinal.addActionListener(expCtrl.abreCalFinal);
 		btnPesqArtista.addActionListener(expCtrl.pesquisaArtista);
 		btnGravar.addActionListener(expCtrl.gravarExpo);
 		btnLimpar.addActionListener(expCtrl.limpar);
