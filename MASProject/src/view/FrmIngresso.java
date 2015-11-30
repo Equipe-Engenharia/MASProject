@@ -27,14 +27,52 @@ public class FrmIngresso extends JFrame {
 
 	static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JLabel lblId, lblData, lblHora, lblPesquisa, lblBilhete, lblVisita, lblExpo, lblQtd, lblValorUnit, lblSubtotal, lblTotal, lblDinheiro, lblTroco;
-	private JTextField txtId, txtData, txtHora, txtBilhete, txtPesquisa, txtQtd;
-	private JFormattedTextField  ftxtValorUnit, ftxtSubtotal, ftxtDinheiro, ftxtTotal, ftxtTroco;
+	private JLabel 
+	lblId, 
+	lblData, 
+	lblHora, 
+	lblPesquisa, 
+	lblBilhete, 
+	lblVisita, 
+	lblExpo, 
+	lblQtd, 
+	lblValorUnit, 
+	lblSubtotal, 
+	lblTotal, 
+	lblDinheiro, 
+	lblTroco;
+	private JTextField 
+	txtId, 
+	txtData, 
+	txtHora, 
+	txtBilhete, 
+	txtPesquisa, 
+	txtQtd;
+	private JFormattedTextField  
+	ftxtValorUnit, 
+	ftxtSubtotal, 
+	ftxtDinheiro, 
+	ftxtTotal, 
+	ftxtTroco;
 	private MaskFormatter maskData;
-	private DecimalFormat maskValor, maskValorUnit, maskDinheiro, maskTotal, maskTroco;
-	private JComboBox<String> cbIngresso, cbExpo;
-	private JButton btnPesquisar, btnIncluir, btnCancelar, btnGravar;
-	private JRadioButton rdbtnDinheiro, rdbtnCard;
+	private DecimalFormat 
+	maskValor, 
+	maskValorUnit, 
+	maskDinheiro, 
+	maskTotal, 
+	maskTroco;
+	private JComboBox<String> 
+	cbIngresso, 
+	cbExpo;
+	private JButton 
+	btnPesquisar, 
+	btnIncluir, 
+	btnApagar, 
+	btnCancelar, 
+	btnGravar;
+	private JRadioButton 
+	rdbtnDinheiro, 
+	rdbtnCard;
 	private JScrollPane spCompra;
 	private JTable tbCompra;
 	private final ButtonGroup pagamento = new ButtonGroup();
@@ -123,7 +161,7 @@ public class FrmIngresso extends JFrame {
 		contentPane.add(lblTroco);
 		
 		JLabel lblPagamento = new JLabel("Tipo de Pagamento");
-		lblPagamento.setBounds(461, 330, 120, 16);
+		lblPagamento.setBounds(598, 316, 120, 16);
 		contentPane.add(lblPagamento);
 		
 		txtId = new JTextField();
@@ -248,13 +286,13 @@ public class FrmIngresso extends JFrame {
 		rdbtnDinheiro.setSelected(true);
 		pagamento.add(rdbtnDinheiro);
 		rdbtnDinheiro.setActionCommand("Dinheiro");
-		rdbtnDinheiro.setBounds(612, 323, 86, 23);
+		rdbtnDinheiro.setBounds(632, 337, 86, 23);
 		contentPane.add(rdbtnDinheiro);
 		
 		rdbtnCard = new JRadioButton("Cartão");
 		pagamento.add(rdbtnCard);
 		rdbtnCard.setActionCommand("Cartão");
-		rdbtnCard.setBounds(612, 348, 86, 23);
+		rdbtnCard.setBounds(632, 362, 86, 23);
 		contentPane.add(rdbtnCard);
 		
 		spCompra = new JScrollPane();
@@ -273,10 +311,15 @@ public class FrmIngresso extends JFrame {
 		
 		btnIncluir = new JButton("Incluir");
 		btnIncluir.setIcon(new ImageIcon("../MASProject/icons/add.png"));
-		btnIncluir.setBounds(464, 360, 117, 34);
+		btnIncluir.setBounds(464, 324, 117, 34);
 		contentPane.add(btnIncluir);
 		
-		btnCancelar = new JButton("Cancelar");
+		btnApagar = new JButton("Apagar");
+		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
+		btnApagar.setBounds(464, 360, 117, 34);
+		contentPane.add(btnApagar);
+		
+		btnCancelar = new JButton("Limpar");
 		btnCancelar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		btnCancelar.setBounds(464, 397, 117, 34);
 		contentPane.add(btnCancelar);
@@ -286,9 +329,26 @@ public class FrmIngresso extends JFrame {
 		btnGravar.setBounds(612, 397, 117, 34);
 		contentPane.add(btnGravar);
 		
-		IngressoCtrl controle = new IngressoCtrl
-				(contentPane, lblDinheiro, lblTroco, txtId, txtData, txtHora, txtBilhete, txtPesquisa, cbExpo, cbIngresso, tbCompra, 
-						txtQtd, ftxtValorUnit, ftxtSubtotal, ftxtTotal, ftxtDinheiro, ftxtTroco, rdbtnDinheiro, pagamento);
+		IngressoCtrl controle = new IngressoCtrl(
+				contentPane, 
+				lblDinheiro, 
+				lblTroco, 
+				txtId, 
+				txtData, 
+				txtHora, 
+				txtBilhete, 
+				txtPesquisa, 
+				cbExpo, 
+				cbIngresso, 
+				tbCompra, 
+				txtQtd, 
+				ftxtValorUnit, 
+				ftxtSubtotal, 
+				ftxtTotal, 
+				ftxtDinheiro, 
+				ftxtTroco, 
+				rdbtnDinheiro, 
+				pagamento);
 		
 		controle.atualizaId();
 		controle.atualizaTempo();
@@ -315,6 +375,7 @@ public class FrmIngresso extends JFrame {
 		btnCancelar.addActionListener(controle.cancelar);
 		btnIncluir.addActionListener(controle.valor);
 		btnIncluir.addActionListener(controle.incluir);
+		btnApagar.addActionListener(controle.apagarr);
 		btnGravar.addActionListener(controle.gravar);
 	}
 }
