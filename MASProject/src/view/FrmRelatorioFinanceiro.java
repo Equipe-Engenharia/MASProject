@@ -29,7 +29,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 	private JInternalFrame internalFrameGrafico;
 	private CategoryDataset dataset;
 	private JFreeChart chart;
-	private ChartPanel chartPanel= new ChartPanel(chart);
+	private ChartPanel chartPanel = new ChartPanel(chart);
 	private JTextField txtDataIni;
 	private JTextField txtDataFim;
 	private JTextField txtGanho;
@@ -186,10 +186,9 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		
 		
 
-		RelatorioFinCtrl relaFinCtrl = new RelatorioFinCtrl(chart);
-		dataset = relaFinCtrl.criaDataset();
-		chart = relaFinCtrl.criaChart(dataset);
-		
+		RelatorioFinCtrl relaFinCtrl = new RelatorioFinCtrl(chart, chartPanel);
+       btnGerar.addActionListener(relaFinCtrl.geraGrafico);	
+       btnSalvarimprimir.addActionListener(relaFinCtrl.salvar);
 		
 	}
 }

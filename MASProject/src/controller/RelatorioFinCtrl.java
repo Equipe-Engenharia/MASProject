@@ -2,8 +2,12 @@ package controller;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
@@ -16,19 +20,31 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class RelatorioFinCtrl {
 	
-	public RelatorioFinCtrl(JFreeChart chart){
+	private JFreeChart chart;
+	private ChartPanel chartPanel;
+	
+	
+	public RelatorioFinCtrl(JFreeChart chart, ChartPanel chartPanel){
+		this.chart = chart;
+		this.chartPanel = chartPanel;
+	}
+	
+	public void criaGrafico(String titulo, List<?> dados, String nomeEixoX, String nomeEixoY){
+		CategoryDataset dataset = criaDataset(dados);
+		chart = criaChart(dataset, titulo, nomeEixoX, nomeEixoY);
+		chartPanel = new ChartPanel(chart);
 		
 	}
 
-	public CategoryDataset criaDataset() {
+	public CategoryDataset criaDataset(List<?> dados) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		// TODO
 
 		return dataset;
 	}
 
-	public JFreeChart criaChart(CategoryDataset dataset) {
-		JFreeChart chart = ChartFactory.createBarChart("Titulo do grafico", "titulo eixo x", "titulo eixo y", dataset,
+	public JFreeChart criaChart(CategoryDataset dataset, String titulo, String nomeEixoX, String nomeEixoY) {
+		JFreeChart chart = ChartFactory.createBarChart(titulo, nomeEixoX , nomeEixoY, dataset,
 				PlotOrientation.VERTICAL, // orientacao
 				true, // se quiser por legenda
 				true, // tooltips?
@@ -69,5 +85,26 @@ public class RelatorioFinCtrl {
 		return chart;
 
 	}
+	
+	private void salvaGrafico() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public ActionListener geraGrafico = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//aqui vem o metodo de fazer coleta
+		}
+	};
+	public ActionListener salvar = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			salvaGrafico();
+		}
+	};
 
 }
