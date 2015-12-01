@@ -321,8 +321,7 @@ public class FrmAcervoCad extends JInternalFrame  {
 		btnEditarSetorT.addActionListener(ctrlAcervo);
 		btnGravar.addActionListener(ctrlAcervo.gravarAcervo);
 
-		// Colocar esses Listeners no
-		// Controller*****************************************************
+	//COLOCAR LISTENERS NO CONTROLLER *********************************************
 		cbMaterial.addFocusListener(new FocusListener() {
 
 			@Override

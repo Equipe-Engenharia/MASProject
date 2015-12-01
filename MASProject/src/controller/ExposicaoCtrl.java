@@ -18,7 +18,6 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,16 +25,10 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 
 import com.toedter.calendar.JCalendar;
 
-import model.ArtistaMdl;
-import model.CategoriaMdl;
 import model.ExposicaoMdl;
-import model.MaterialMdl;
-import model.ObraMdl;
-import model.SetorMdl;
 import persistence.ExposicaoFile;
 import view.FrmCalendario;
 import view.FrmObraArtistaSelec;
@@ -81,10 +74,7 @@ public class ExposicaoCtrl implements KeyListener, ActionListener{
 	}
 
 
-	/*
-	 * As flags funcionam para quando se tem mais de uma chamada de calendario
-	 * na mesma tela, ajuda no tratamento de retorno
-	 */
+
 
 	public void gerarId() {
 		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
