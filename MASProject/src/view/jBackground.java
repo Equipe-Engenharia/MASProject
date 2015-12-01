@@ -1,4 +1,4 @@
-package controller;
+package view;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -15,7 +15,7 @@ public class jBackground extends JDesktopPane {
 
 	protected void paintComponent(Graphics g) {
 		
-		Image img = new ImageIcon(this.getClass().getResource("../MASProject/resources/background.jpg"))  . getImage();
+		Image img = new ImageIcon(this.getClass().getResource("background.jpg")).getImage();
 		
 		try {
 			

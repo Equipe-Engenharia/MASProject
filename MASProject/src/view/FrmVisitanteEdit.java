@@ -1,16 +1,18 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -19,9 +21,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import controller.VisitanteCtrl;
-import javax.swing.ButtonGroup;
 
-public class FrmVisitanteEdit extends JFrame {
+public class FrmVisitanteEdit extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -47,18 +48,25 @@ public class FrmVisitanteEdit extends JFrame {
 			}
 		});
 	}
+	
+	public void setPosicao() throws ParseException {  
+	    Dimension d = this.getDesktopPane().getSize();  
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
+	}
 
 	/**
 	 * Create the frame.
 	 * @throws ParseException 
 	 */
 	public FrmVisitanteEdit() throws ParseException {
+		setClosable(true);
+		setIconifiable(true);
 		setTitle("Editar Visitante");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLocationRelativeTo(null);
+		setLocation(0,0);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		

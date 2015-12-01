@@ -745,7 +745,7 @@ public class AgendamentoCtrl implements ComponentListener {
 			if (cadastroMuseu == 0) {
 				FrmLogin frmCad = new FrmLogin();
 				frmCad.setVisible(true);
-				frmCad.setLocationRelativeTo(null);
+				frmCad.setLocation(0,0);
 				//frmCad.txtObra.setText(txtPesquisa.getText());
 			} else {
 				//limpaCampos();
@@ -828,7 +828,7 @@ public class AgendamentoCtrl implements ComponentListener {
 		}
 	};
 	
-	public ActionListener abreCalInicial = new ActionListener() {
+	public ActionListener abreCal = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -838,19 +838,6 @@ public class AgendamentoCtrl implements ComponentListener {
 				e.printStackTrace();
 			}
 			//setFlag(1);
-		}
-	};
-
-	public ActionListener abreCalFinal = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			try {
-				chamaCalendario();
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			//setFlag(2);
 		}
 	};
 	

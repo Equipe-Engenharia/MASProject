@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.event.FocusEvent;
@@ -12,22 +14,21 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
 import controller.AcervoCtrl;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.JScrollPane;
 
-public class FrmAcervoCad extends JFrame {
+public class FrmAcervoCad extends JInternalFrame  {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -40,7 +41,7 @@ public class FrmAcervoCad extends JFrame {
 	private JComboBox<String> cbCategoria, cbSetor, cbSetorT, cbStatus, cbStatusT;
 	private JButton btnPesquisarImagem, btnExcluirImagem, btnPesquisaArtist, btnNovoArtista, btnEditarArtista,
 			btnNovaCategoria, btnEditarCategoria, btnNovoMaterial, btnEditarMaterial, btnNovoSetor, btnEditarSetor,
-			btnNovoSetorT, btnEditarSetorT, btnGravar, btnFechar; // DEIXAR OS
+			btnNovoSetorT, btnEditarSetorT, btnGravar; // DEIXAR OS
 																	// BOTOES EM
 																	// PRIVATE
 	private JScrollPane scrollPane;
@@ -64,23 +65,27 @@ public class FrmAcervoCad extends JFrame {
 			}
 		});
 	}
+	
+	public void setPosicao() throws ParseException {  
+	    Dimension d = this.getDesktopPane().getSize();  
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
+	}
 
 	/**
 	 * Create the frame.
 	 */
 
 	public FrmAcervoCad() throws ParseException {
+		setClosable(true);
+		setIconifiable(true);
 		setResizable(false);
 		setTitle("Registro de Acervo");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // QUANDO FOR
-														// IMPLEMENTADO O MENU,
-														// ALTERAR PARA
-														// DISPOSE_ON_CLOSE
+		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1088, 680); //
 		contentPane = new JPanel();
+		setLocation(0,0);
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		setLocationRelativeTo(null);
+		contentPane.setLayout(null); 
 
 		JLabel lblId = new JLabel("ID Obra");
 		lblId.setBounds(97, 34, 62, 14);
@@ -283,13 +288,8 @@ public class FrmAcervoCad extends JFrame {
 
 		btnGravar = new JButton("Gravar");
 		btnGravar.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnGravar.setBounds(772, 583, 107, 34);
+		btnGravar.setBounds(918, 583, 107, 34);
 		contentPane.add(btnGravar);
-
-		btnFechar = new JButton("Sair");
-		btnFechar.setIcon(new ImageIcon("../MASProject/icons/out.png"));
-		btnFechar.setBounds(905, 582, 117, 34);
-		contentPane.add(btnFechar);
 
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(63, 316, 962, 106);
@@ -320,7 +320,6 @@ public class FrmAcervoCad extends JFrame {
 		btnNovoSetorT.addActionListener(ctrlAcervo);
 		btnEditarSetorT.addActionListener(ctrlAcervo);
 		btnGravar.addActionListener(ctrlAcervo.gravarAcervo);
-		btnFechar.addActionListener(ctrlAcervo.fecharTela);
 
 		// Colocar esses Listeners no
 		// Controller*****************************************************

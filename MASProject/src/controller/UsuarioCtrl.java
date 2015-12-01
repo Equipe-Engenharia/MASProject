@@ -313,7 +313,7 @@ public class UsuarioCtrl implements ComponentListener {
 		        
 		        FrmUsuario frmCad = new FrmUsuario();
 				frmCad.setVisible(true);
-				frmCad.setLocationRelativeTo(null);
+				frmCad.setLocation(0,0);
 			} else {
 				msg("errorsession", "");
 			}

@@ -173,7 +173,7 @@ public class EmprestimoCtrl implements ComponentListener {
 					log.getLogon().get(0).getNivel(),
 					form.getName());
 		} else {
-			msg("", log.getLogon().get(0).getNivel());
+			msg("errorlog", log.getLogon().get(0).getNivel());
 		}
 	}
 
@@ -735,7 +735,7 @@ public class EmprestimoCtrl implements ComponentListener {
 				try {
 					FrmAcervoCad frmCad = new FrmAcervoCad();
 					frmCad.setVisible(true);
-					frmCad.setLocationRelativeTo(null);
+					frmCad.setLocation(0,0);
 					frmCad.txtObra.setText(txtPesquisa.getText());
 				} catch (ParseException e) {
 					e.printStackTrace();
@@ -752,11 +752,18 @@ public class EmprestimoCtrl implements ComponentListener {
 			if (cadastroMuseu == 0) {
 				FrmLogin frmCad = new FrmLogin();
 				frmCad.setVisible(true);
-				frmCad.setLocationRelativeTo(null);
+				frmCad.setLocation(0,0);
 				//frmCad.txtObra.setText(txtPesquisa.getText());
 			} else {
 				limpaCampos();
 			}
+			break;
+		case "errorlog":
+			JOptionPane.showMessageDialog(null, 
+					"ACESSO NEGADO!\n\nPor favor, faça o login no sistema para acessar este recurso.", 
+					"Acesso não Autorizado",
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/error.png"));
 			break;
 		case "system":
 			Object[] exit = { "Confirmar", "Cancelar" };  

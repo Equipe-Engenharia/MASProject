@@ -4,7 +4,6 @@ import java.awt.EventQueue;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -60,7 +59,6 @@ public class FrmAgendamento extends JFrame {
 	private JTable tbAgenda;
 	private JButton btnPesquisar, btnCal, btnIncluir, btnApagar, btnCancelar, btnGravar;
 	private JScrollPane spTabela;
-	private final ButtonGroup btgDestino = new ButtonGroup();
 	private MaskFormatter maskData;
 	private DecimalFormat maskQtd, maskCusto, maskTotal;
 	
@@ -286,7 +284,7 @@ public class FrmAgendamento extends JFrame {
 		contentPane.add(btnPesquisar);
 		
 		btnCal = new JButton("");
-		btnCal.setBounds(696, 227, 34, 34);
+		btnCal.setBounds(696, 232, 27, 25);
 		btnCal.setIcon(new ImageIcon("../MASProject/jcalendar-1.4 (1)/src/com/toedter/calendar/images/JDateChooserColor32.gif"));
 		contentPane.add(btnCal);
 		
@@ -339,7 +337,7 @@ public class FrmAgendamento extends JFrame {
 		tbAgenda.addMouseListener(controle.limpaCampo);
 		tbAgenda.addKeyListener(controle.tecla);
 		btnPesquisar.addActionListener(controle.pesquisar);
-		btnCal.addActionListener(controle.abreCalInicial);
+		btnCal.addActionListener(controle.abreCal);
 		btnCancelar.addActionListener(controle.cancelar);
 		btnIncluir.addActionListener(controle.incluir);
 		btnApagar.addActionListener(controle.apagar);

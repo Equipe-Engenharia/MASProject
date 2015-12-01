@@ -1,13 +1,15 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -15,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.MaterialCtrl;
 
-public class FrmMaterialEdit extends JFrame {
+public class FrmMaterialEdit extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -39,18 +41,25 @@ public class FrmMaterialEdit extends JFrame {
 			}
 		});
 	}
+	
+	public void setPosicao() throws ParseException {  
+	    Dimension d = this.getDesktopPane().getSize();  
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
+	}
 
 	/**
 	 * Create the frame.
 	 */
 	
 	public FrmMaterialEdit() {
+		setClosable(true);
+		setIconifiable(true);
 		setTitle("Editar/Excluir Material da Obra");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLocationRelativeTo(null);
+		setLocation(0,0);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		

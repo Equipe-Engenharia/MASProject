@@ -742,7 +742,7 @@ public class IngressoCtrl implements ComponentListener {
 				try {
 					FrmVisitanteCad frmCad = new FrmVisitanteCad();
 					frmCad.setVisible(true);
-					frmCad.setLocationRelativeTo(null);
+					frmCad.setLocation(0,0);
 					frmCad.txtNome.setText(txtPesquisa.getText());
 				} catch (ParseException e) {
 					e.printStackTrace();

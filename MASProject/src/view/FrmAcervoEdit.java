@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.event.MouseEvent;
@@ -13,19 +14,18 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
 import controller.AcervoCtrl;
 
-public class FrmAcervoEdit extends JFrame {
+public class FrmAcervoEdit extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -52,16 +52,23 @@ public class FrmAcervoEdit extends JFrame {
 			}
 		});
 	}
+	
+	public void setPosicao() throws ParseException {  
+	    Dimension d = this.getDesktopPane().getSize();  
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
+	}
 
 	public FrmAcervoEdit() throws ParseException {
+		setClosable(true);
+		setIconifiable(true);
 		setResizable(false);
 		setTitle("Excluir/Alterar Acervo");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1088, 680);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		setLocationRelativeTo(null);
+		setLocation(0,0);
 
 		JLabel lblArtista = new JLabel("Artista");
 		lblArtista.setBounds(106, 91, 52, 14);

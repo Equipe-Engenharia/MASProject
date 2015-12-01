@@ -1,26 +1,26 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.text.ParseException;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.MaskFormatter;
-
-import controller.VisitanteCtrl;
-
-import javax.swing.JTextField;
-import javax.swing.JLabel;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
-public class FrmVisitanteCad extends JFrame {
+import controller.VisitanteCtrl;
+
+public class FrmVisitanteCad extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -52,18 +52,25 @@ public class FrmVisitanteCad extends JFrame {
 			}
 		});
 	}
+	
+	public void setPosicao() throws ParseException {  
+	    Dimension d = this.getDesktopPane().getSize();  
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
+	}
 
 	/**
 	 * Create the frame.
 	 * @throws ParseException 
 	 */
 	public FrmVisitanteCad() throws ParseException {
+		setClosable(true);
+		setIconifiable(true);
 		setTitle("Cadastrar Novo Visitante");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLocationRelativeTo(null);
+		setLocation(0,0);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		

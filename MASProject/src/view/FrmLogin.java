@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +10,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -18,9 +19,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.UsuarioCtrl;
-import controller.SessaoCtrl;
 
-public class FrmLogin extends JFrame {
+public class FrmLogin extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -47,19 +47,23 @@ public class FrmLogin extends JFrame {
 			}
 		});
 	}
+	
+	public void setPosicao() throws ParseException {  
+	    Dimension d = this.getDesktopPane().getSize();  
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
+	}
 
 	/**
 	 * Create the frame.
 	 */
 	
 	public FrmLogin() {
-		setType(Type.UTILITY);
 		setTitle("Login de Acesso");
 		setResizable(false);
 		//setUndecorated(true);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 540, 250);
-		setLocationRelativeTo(null);
+		setLocation(0,0);
 		contentPane = new JPanel();
 		contentPane.setName("USR");
 		contentPane.setLayout(null);
@@ -135,35 +139,35 @@ public class FrmLogin extends JFrame {
 		
 		pwdSenha.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
-				SessaoCtrl log = SessaoCtrl.getInstance();
-				if (log.acesso() == false){
+				//SessaoCtrl log = SessaoCtrl.getInstance();
+				//if (log.acesso() == false){
 					dispose();
-					try {
+					/*try {
 						FrmIngresso frm = new FrmIngresso();
 						frm.setVisible(true);
-						frm.setLocationRelativeTo(null);
+						frm.setLocation(0,0);
 					} catch (ParseException e1) {
 						e1.printStackTrace();
 					}
 					
-				}
+				}*/
 			} 
 		});
 		
 		btnEntrar.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
-				SessaoCtrl log = SessaoCtrl.getInstance();
-				if (log.acesso() == false){
+				//SessaoCtrl log = SessaoCtrl.getInstance();
+				//if (log.acesso() == false){
 					dispose();
-					try {
+					/*try {
 						FrmIngresso frm = new FrmIngresso();
 						frm.setVisible(true);
-						frm.setLocationRelativeTo(null);
+						frm.setLocation(0,0);
 					} catch (ParseException e1) {
 						e1.printStackTrace();
 					}
 					
-				}
+				}*/
 			} 
 		});
 		

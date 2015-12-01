@@ -1,12 +1,13 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,7 +21,7 @@ import javax.swing.text.MaskFormatter;
 
 import controller.ExposicaoCtrl;
 
-public class FrmExposicaoEdit extends JFrame {
+public class FrmExposicaoEdit extends JInternalFrame {
 	/**
 	 * 
 	 */
@@ -48,17 +49,24 @@ public class FrmExposicaoEdit extends JFrame {
 			e.printStackTrace();
 		}
 	}
+	
+	public void setPosicao() throws ParseException {  
+	    Dimension d = this.getDesktopPane().getSize();  
+	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
+	}
 
 	public FrmExposicaoEdit() throws ParseException {
 		setTitle("Editar Exposi\u00E7\u00E3o");
 		setResizable(false);
 		FrmExp();
-		setLocationRelativeTo(null);
+		setLocation(0,0);
 
 	}
 
 	public void FrmExp() throws ParseException {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setClosable(true);
+		setIconifiable(true);
+		setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 937, 680);
 		contentPane = new JPanel();
 		contentPane.setName("EXP");

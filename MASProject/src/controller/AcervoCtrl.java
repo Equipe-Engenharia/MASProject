@@ -889,7 +889,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			FrmCategoriaCad formCate = new FrmCategoriaCad();
 			formCate.setVisible(true);
-			formCate.setLocationRelativeTo(null);
+			formCate.setLocation(0,0);
 		}
 	};
 
@@ -899,7 +899,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			FrmMaterialCad frame = new FrmMaterialCad();
 			frame.setVisible(true);
-			frame.setLocationRelativeTo(null);
+			frame.setLocation(0,0);
 		}
 	};
 
@@ -909,7 +909,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			FrmMaterialEdit frame = new FrmMaterialEdit();
 			frame.setVisible(true);
-			frame.setLocationRelativeTo(null);
+			frame.setLocation(null);
 		}
 	};
 
@@ -943,7 +943,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			// TODO Auto-generated method stub
 			FrmCategoriaEdit frame = new FrmCategoriaEdit();
 			frame.setVisible(true);
-			frame.setLocationRelativeTo(null);
+			frame.setLocation(null);
 		}
 	};
 
