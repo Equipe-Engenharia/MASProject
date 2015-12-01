@@ -119,7 +119,7 @@ public class ObraArtistaCtrl extends DefaultTableModel implements ActionListener
 			tableModel.setRowCount(linhasOld + obra.length);
 			for(int i = 0; i < obra.length; i++){
 				tableModel.setValueAt(obra[i], linhasOld + i, 0);
-				tableModel.setValueAt(nomeArtista, linhasOld + i, 1);
+				tableModel.setValueAt(nomeArtista[i], linhasOld + i, 1);
 				tableModel.isCellEditable(i, 0);
 				tableModel.isCellEditable(i, 1);
 			}
