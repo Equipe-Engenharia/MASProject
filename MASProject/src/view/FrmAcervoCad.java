@@ -322,8 +322,7 @@ public class FrmAcervoCad extends JFrame {
 		btnGravar.addActionListener(ctrlAcervo.gravarAcervo);
 		btnFechar.addActionListener(ctrlAcervo.fecharTela);
 
-		// Colocar esses Listeners no
-		// Controller*****************************************************
+	//COLOCAR LISTENERS NO CONTROLLER *********************************************
 		cbMaterial.addFocusListener(new FocusListener() {
 
 			@Override

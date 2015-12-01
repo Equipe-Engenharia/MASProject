@@ -12,7 +12,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -21,46 +20,47 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
-import controller.EmprestimoCtrl;
+//import controller.AgendamentoCtrl;
 
-public class FrmEmprestimo extends JFrame {
+public class FrmAgendamento extends JFrame {
 
 	static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel 
 	lblId, 
-	lblDataInicial, 
-	lblDataFinal, 
+	lblData, 
 	lblPesquisa, 
-	lblObra, 
-	lblArtista, 
-	lblMuseu, 
+	lblVagas, 
+	lblTipo, 
+	lblPeriodo, 
+	lblInstituto, 
 	lblTelefone, 
 	lblResponsavel, 
 	lblIdResponsavel, 
+	lblExpo, 
+	lblQtd, 
 	lblCusto, 
 	lblTotal;
 	private JTextField 
 	txtId, 
 	txtPesquisa, 
-	txtObra, 
-	txtArtista,  
+	txtNome, 
 	txtTelefone, 
 	txtResponsavel, 
 	txtIdResponsavel;
 	private JFormattedTextField 
-	ftxtDataInicial, 
-	ftxtDataFinal, 
+	ftxtData, 
+	ftxtQtd, 
+	ftxtVagas, 
 	ftxtCusto, 
 	ftxtTotal;
-	private JComboBox<String> cbMuseu;
-	private JTable tbEmprestimo;
-	private JRadioButton rdbtnSaida, rdbtnEntrada;
-	private JButton btnPesquisar, btnCalInicial, btnCalFinal, btnIncluir, btnApagar, btnCancelar, btnGravar;
-	private JScrollPane spEmprestimo;
+	private JComboBox<String> cbExpo, cbPeriodo, cbTipo;
+	private JTable tbAgenda;
+	private JButton btnPesquisar, btnCal, btnIncluir, btnApagar, btnCancelar, btnGravar;
+	private JScrollPane spTabela;
 	private final ButtonGroup btgDestino = new ButtonGroup();
 	private MaskFormatter maskData;
-	private DecimalFormat maskCusto, maskTotal;
+	private DecimalFormat maskQtd, maskCusto, maskTotal;
 	
 	/**
 	 * Launch the application.
@@ -70,7 +70,7 @@ public class FrmEmprestimo extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrmEmprestimo frame = new FrmEmprestimo();
+					FrmAgendamento frame = new FrmAgendamento();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -83,13 +83,13 @@ public class FrmEmprestimo extends JFrame {
 	 * Create the frame.
 	 */
 	
-	public FrmEmprestimo() throws ParseException{
-		setTitle("Empréstimo de Obras");
+	public FrmAgendamento() throws ParseException{
+		setTitle("Agendamento");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 768, 480);
 		contentPane = new JPanel();
-		contentPane.setName("EPT");
+		contentPane.setName("AGD");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
@@ -105,48 +105,52 @@ public class FrmEmprestimo extends JFrame {
 		lblPesquisa.setBounds(71, 56, 55, 16);
 		contentPane.add(lblPesquisa);
 		
-		lblObra = new JLabel("Título da Obra");
-		lblObra.setBounds(36, 91, 90, 16);
-		contentPane.add(lblObra);
+		lblInstituto = new JLabel("Instituição");
+		lblInstituto.setBounds(59, 92, 67, 16);
+		contentPane.add(lblInstituto);
 		
-		lblArtista = new JLabel("Artista");
-		lblArtista.setBounds(83, 126, 43, 16);
-		contentPane.add(lblArtista);
+		lblQtd = new JLabel("Qtd. Pessoas");
+		lblQtd.setBounds(310, 129, 88, 16);
+		contentPane.add(lblQtd);
 		
-		JLabel lblDestino = new JLabel("Tipo de Destino");
-		lblDestino.setBounds(529, 19, 100, 16);
-		contentPane.add(lblDestino);
+		lblData = new JLabel("Data");
+		lblData.setBounds(541, 236, 43, 16);
+		contentPane.add(lblData);
 		
-		lblDataInicial = new JLabel("Data Inicial");
-		lblDataInicial.setBounds(504, 91, 78, 16);
-		contentPane.add(lblDataInicial);
+		lblVagas = new JLabel("Vagas Disponíveis");
+		lblVagas.setBounds(506, 21, 129, 16);
+		contentPane.add(lblVagas);
 		
-		lblDataFinal = new JLabel("Data Final");
-		lblDataFinal.setBounds(514, 126, 68, 16);
-		contentPane.add(lblDataFinal);
+		lblTipo = new JLabel("Tipo");
+		lblTipo.setBounds(539, 92, 43, 16);
+		contentPane.add(lblTipo);
 		
-		lblMuseu = new JLabel("Museu");
-		lblMuseu.setBounds(83, 310, 43, 16);
-		contentPane.add(lblMuseu);
+		lblPeriodo = new JLabel("Período");
+		lblPeriodo.setBounds(527, 129, 55, 16);
+		contentPane.add(lblPeriodo);
 		
 		lblTelefone = new JLabel("Telefone");
-		lblTelefone.setBounds(71, 345, 55, 16);
+		lblTelefone.setBounds(71, 129, 55, 16);
 		contentPane.add(lblTelefone);
 		
 		lblResponsavel = new JLabel("Responsável");
-		lblResponsavel.setBounds(48, 380, 78, 16);
+		lblResponsavel.setBounds(48, 166, 78, 16);
 		contentPane.add(lblResponsavel);
 		
 		lblIdResponsavel = new JLabel("Autorização");
-		lblIdResponsavel.setBounds(48, 415, 78, 16);
+		lblIdResponsavel.setBounds(48, 201, 78, 16);
 		contentPane.add(lblIdResponsavel);
 		
+		lblExpo = new JLabel("Exposição");
+		lblExpo.setBounds(58, 236, 68, 16);
+		contentPane.add(lblExpo);
+		
 		lblCusto = new JLabel("Custo");
-		lblCusto.setBounds(310, 310, 43, 16);
+		lblCusto.setBounds(355, 166, 43, 16);
 		contentPane.add(lblCusto);
 		
 		lblTotal = new JLabel("Total");
-		lblTotal.setBounds(321, 345, 32, 16);
+		lblTotal.setBounds(355, 201, 43, 16);
 		contentPane.add(lblTotal);
 		
 		// CAMPOS ////////////////////////		
@@ -161,32 +165,23 @@ public class FrmEmprestimo extends JFrame {
 		
 		txtPesquisa = new JTextField();
 		txtPesquisa.setToolTipText("Digite o nome do visitante ou seu ID para realizar a pesquisa");
-		txtPesquisa.setBounds(138, 50, 294, 28);
+		txtPesquisa.setBounds(138, 50, 310, 28);
 		txtPesquisa.setColumns(10);
 		contentPane.add(txtPesquisa);
 		
-		txtObra = new JTextField();
-		txtObra.setHorizontalAlignment(SwingConstants.CENTER);
-		txtObra.setEnabled(false);
-		txtObra.setEditable(false);
-		txtObra.setBounds(138, 85, 294, 28);
-		txtObra.setColumns(10);
-		contentPane.add(txtObra);
-		
-		txtArtista = new JTextField();
-		txtArtista.setHorizontalAlignment(SwingConstants.CENTER);
-		txtArtista.setEnabled(false);
-		txtArtista.setEditable(false);
-		txtArtista.setToolTipText("");
-		txtArtista.setBounds(138, 120, 294, 28);
-		txtArtista.setColumns(10);
-		contentPane.add(txtArtista);
+		txtNome = new JTextField();
+		txtNome.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNome.setEnabled(false);
+		txtNome.setEditable(false);
+		txtNome.setBounds(138, 86, 356, 28);
+		txtNome.setColumns(10);
+		contentPane.add(txtNome);
 			
 		txtTelefone = new JTextField();
 		txtTelefone.setEnabled(false);
 		txtTelefone.setEditable(false);
 		txtTelefone.setToolTipText("");
-		txtTelefone.setBounds(138, 339, 160, 28);
+		txtTelefone.setBounds(138, 123, 160, 28);
 		txtTelefone.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTelefone.setColumns(10);
 		contentPane.add(txtTelefone);
@@ -195,7 +190,7 @@ public class FrmEmprestimo extends JFrame {
 		txtResponsavel.setHorizontalAlignment(SwingConstants.CENTER);
 		txtResponsavel.setEnabled(false);
 		txtResponsavel.setEditable(false);
-		txtResponsavel.setBounds(138, 374, 160, 28);
+		txtResponsavel.setBounds(138, 160, 160, 28);
 		txtResponsavel.setColumns(10);
 		contentPane.add(txtResponsavel);
 		
@@ -203,31 +198,50 @@ public class FrmEmprestimo extends JFrame {
 		txtIdResponsavel.setHorizontalAlignment(SwingConstants.CENTER);
 		txtIdResponsavel.setEnabled(false);
 		txtIdResponsavel.setEditable(false);
-		txtIdResponsavel.setBounds(138, 409, 160, 28);
+		txtIdResponsavel.setBounds(138, 195, 160, 28);
 		txtIdResponsavel.setColumns(10);
 		contentPane.add(txtIdResponsavel);
 		
 		maskData = new MaskFormatter("##/##/####");
-		ftxtDataInicial = new JFormattedTextField(maskData);
-		ftxtDataInicial.setHorizontalAlignment(SwingConstants.CENTER);
-		ftxtDataInicial.setBounds(584, 85, 98, 28);
-		ftxtDataInicial.setColumns(10);
-		contentPane.add(ftxtDataInicial);
+		ftxtData = new JFormattedTextField(maskData);
+		ftxtData.setHorizontalAlignment(SwingConstants.CENTER);
+		ftxtData.setBounds(586, 230, 98, 28);
+		ftxtData.setColumns(10);
+		contentPane.add(ftxtData);
 		
-		maskData = new MaskFormatter("##/##/####");
-		ftxtDataFinal = new JFormattedTextField(maskData);
-		ftxtDataFinal.setHorizontalAlignment(SwingConstants.CENTER);
-		ftxtDataFinal.setBounds(584, 120, 98, 28);
-		ftxtDataFinal.setColumns(10);
-		contentPane.add(ftxtDataFinal);
+		maskQtd = new DecimalFormat("#,###,###");
+		NumberFormatter qtd = new NumberFormatter(maskQtd);
+		qtd.setFormat(maskQtd);
+		qtd.setAllowsInvalid(false);
+		ftxtQtd = new JFormattedTextField(maskQtd);
+		ftxtQtd.setHorizontalAlignment(SwingConstants.CENTER);
+		ftxtQtd.setToolTipText("");
+		ftxtQtd.setBounds(395, 123, 99, 28);
+		ftxtQtd.setColumns(10);
+		contentPane.add(ftxtQtd);
+		
+		maskQtd = new DecimalFormat("#,###,###");
+		NumberFormatter vaga = new NumberFormatter(maskQtd);
+		vaga.setFormat(maskQtd);
+		vaga.setAllowsInvalid(false);
+		ftxtVagas = new JFormattedTextField(maskQtd);
+		ftxtVagas.setEnabled(false);
+		ftxtVagas.setEditable(false);
+		ftxtVagas.setHorizontalAlignment(SwingConstants.CENTER);
+		ftxtVagas.setToolTipText("");
+		ftxtVagas.setBounds(631, 15, 99, 28);
+		ftxtVagas.setColumns(10);
+		contentPane.add(ftxtVagas);
 		
 		maskCusto = new DecimalFormat("#,###,###.##");
 		NumberFormatter custo = new NumberFormatter(maskCusto);
 		custo.setFormat(maskCusto);
 		custo.setAllowsInvalid(false);
 		ftxtCusto = new JFormattedTextField(maskCusto);
+		ftxtCusto.setEditable(false);
+		ftxtCusto.setEnabled(false);
 		ftxtCusto.setHorizontalAlignment(SwingConstants.RIGHT);
-		ftxtCusto.setBounds(361, 304, 123, 28);
+		ftxtCusto.setBounds(395, 160, 99, 28);
 		ftxtCusto.setColumns(10);
 		contentPane.add(ftxtCusto);
 		
@@ -239,60 +253,49 @@ public class FrmEmprestimo extends JFrame {
 		ftxtTotal.setHorizontalAlignment(SwingConstants.RIGHT);
 		ftxtTotal.setEnabled(false);
 		ftxtTotal.setEditable(false);
-		ftxtTotal.setBounds(361, 339, 123, 28);
+		ftxtTotal.setBounds(395, 195, 100, 28);
 		ftxtTotal.setColumns(10);
 		contentPane.add(ftxtTotal);
 		
-		cbMuseu = new JComboBox<String>();
-		cbMuseu.setBounds(138, 304, 160, 28);
-		contentPane.add(cbMuseu);
+		cbPeriodo = new JComboBox<String>();
+		cbPeriodo.setBounds(584, 123, 146, 28);
+		contentPane.add(cbPeriodo);
 		
+		cbTipo = new JComboBox<String>();
+		cbTipo.setBounds(584, 86, 146, 28);
+		contentPane.add(cbTipo);
 		
-		rdbtnSaida = new JRadioButton("Saída");
-		rdbtnSaida.setSelected(true);
-		btgDestino.add(rdbtnSaida);
-		rdbtnSaida.setActionCommand("saida");
-		rdbtnSaida.setBounds(643, 15, 86, 23);
-		contentPane.add(rdbtnSaida);
+		cbExpo = new JComboBox<String>();
+		cbExpo.setBounds(138, 230, 356, 28);
+		contentPane.add(cbExpo);
 		
-		rdbtnEntrada = new JRadioButton("Entrada");
-		btgDestino.add(rdbtnEntrada);
-		rdbtnEntrada.setActionCommand("entrada");
-		rdbtnEntrada.setBounds(643, 46, 86, 23);
-		contentPane.add(rdbtnEntrada);
+		spTabela = new JScrollPane();
+		spTabela.setBounds(38, 272, 691, 122);
+		contentPane.add(spTabela);
 		
-		spEmprestimo = new JScrollPane();
-		spEmprestimo.setBounds(38, 165, 691, 122);
-		contentPane.add(spEmprestimo);
-		
-		tbEmprestimo = new JTable();
-		tbEmprestimo.setToolTipText("Clique para selecionar…");
-		spEmprestimo.setViewportView(tbEmprestimo);
-		tbEmprestimo.setBorder(null);
+		tbAgenda = new JTable();
+		tbAgenda.setToolTipText("Clique para selecionar…");
+		spTabela.setViewportView(tbAgenda);
+		tbAgenda.setBorder(null);
 		
 		btnPesquisar = new JButton("");
-		btnPesquisar.setBounds(441, 47, 34, 34);
+		btnPesquisar.setBounds(460, 47, 34, 34);
 		btnPesquisar.setIcon(new ImageIcon("../MASProject/icons/search.png"));
 		contentPane.add(btnPesquisar);
 		
-		btnCalInicial = new JButton("");
-		btnCalInicial.setBounds(694, 88, 29, 23);
-		btnCalInicial.setIcon(new ImageIcon("../MASProject/jcalendar-1.4 (1)/src/com/toedter/calendar/images/JDateChooserColor32.gif"));
-		contentPane.add(btnCalInicial);
-		
-		btnCalFinal = new JButton("");
-		btnCalFinal.setBounds(694, 123, 29, 23);
-		btnCalFinal.setIcon(new ImageIcon("../MASProject/jcalendar-1.4 (1)/src/com/toedter/calendar/images/JDateChooserColor32.gif"));
-		contentPane.add(btnCalFinal);
+		btnCal = new JButton("");
+		btnCal.setBounds(696, 227, 34, 34);
+		btnCal.setIcon(new ImageIcon("../MASProject/jcalendar-1.4 (1)/src/com/toedter/calendar/images/JDateChooserColor32.gif"));
+		contentPane.add(btnCal);
 		
 		btnIncluir = new JButton("Incluir");
 		btnIncluir.setIcon(new ImageIcon("../MASProject/icons/add.png"));
-		btnIncluir.setBounds(504, 301, 109, 34);
+		btnIncluir.setBounds(38, 406, 109, 34);
 		contentPane.add(btnIncluir);
 		
 		btnApagar = new JButton("Apagar");
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
-		btnApagar.setBounds(620, 301, 109, 34);
+		btnApagar.setBounds(154, 406, 109, 34);
 		contentPane.add(btnApagar);
 		
 		btnCancelar = new JButton("Limpar");
@@ -305,20 +308,19 @@ public class FrmEmprestimo extends JFrame {
 		btnGravar.setBounds(620, 406, 109, 34);
 		contentPane.add(btnGravar);
 		
-		
-		EmprestimoCtrl controle = new EmprestimoCtrl(
+		/*AgendamentoCtrl controle = new AgendamentoCtrl(
 				contentPane, 
 				txtId, 
 				txtPesquisa, 
-				txtObra, 
-				txtArtista, 
-				rdbtnEntrada, 
-				rdbtnSaida, 
+				txtNome, 
+				ftxtQtd,  
+				ftxtVagas, 
 				btgDestino, 
-				ftxtDataInicial, 
-				ftxtDataFinal, 
-				tbEmprestimo, 
-				cbMuseu, 
+				ftxtData,  
+				tbAgenda, 
+				cbExpo, 
+				cbPeriodo, 
+				cbTipo, 
 				txtTelefone, 
 				txtResponsavel, 
 				txtIdResponsavel, 
@@ -328,21 +330,19 @@ public class FrmEmprestimo extends JFrame {
 		
 		txtPesquisa.addActionListener(controle.pesquisar);
 		txtPesquisa.addKeyListener(controle.tecla);
-		ftxtDataInicial.addFocusListener(controle.move);
-		ftxtDataFinal.addFocusListener(controle.move);
+		ftxtData.addFocusListener(controle.move);
 		ftxtCusto.addActionListener(controle.valor);
 		ftxtCusto.addKeyListener(controle.tecla);
 		ftxtCusto.addActionListener(controle.incluir);
-		cbMuseu.addActionListener(controle.atualizar);
-		tbEmprestimo.addMouseListener(controle.limpaCampo);
-		tbEmprestimo.addKeyListener(controle.tecla);
+		cbPeriodo.addActionListener(controle.atualizar);
+		tbAgenda.addMouseListener(controle.limpaCampo);
+		tbAgenda.addKeyListener(controle.tecla);
 		btnPesquisar.addActionListener(controle.pesquisar);
-		btnCalInicial.addActionListener(controle.abreCalInicial);
-		btnCalFinal.addActionListener(controle.abreCalFinal);
+		btnCal.addActionListener(controle.abreCalInicial);
 		btnCancelar.addActionListener(controle.cancelar);
 		btnIncluir.addActionListener(controle.incluir);
 		btnApagar.addActionListener(controle.apagar);
-		btnGravar.addActionListener(controle.gravar);
+		btnGravar.addActionListener(controle.gravar);*/
 		
 		
 	}

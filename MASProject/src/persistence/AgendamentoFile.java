@@ -7,12 +7,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+
 import controller.ArquivosICtrl;
-import model.MaterialMdl;;
+import model.AgendamentoMdl;
 
-public class MaterialFile implements ArquivosICtrl {
-
-	private StringBuffer buffer;
+public class AgendamentoFile implements ArquivosICtrl {
+	StringBuffer buffer;
 
 	public String getBuffer() {
 		return buffer.toString();
@@ -48,11 +48,29 @@ public class MaterialFile implements ArquivosICtrl {
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID       : " + ((MaterialMdl) object).getId());
+		buffer.append("ID             : " + ((AgendamentoMdl) object).getId());
 		buffer.append("\r\n");
-		buffer.append("Material : " + ((MaterialMdl) object).getNome());
+		buffer.append("ID Expo        : " + ((AgendamentoMdl) object).getExpoId());
 		buffer.append("\r\n");
-		buffer.append("Categoria: " + ((MaterialMdl) object).getCategoria());
+		buffer.append("Nome Expo      : " + ((AgendamentoMdl) object).getExpo());
+		buffer.append("\r\n");
+		buffer.append("ID Instituto   : " + ((AgendamentoMdl) object).getInstitutoId());
+		buffer.append("\r\n");
+		buffer.append("Instituto      : " + ((AgendamentoMdl) object).getNome());
+		buffer.append("\r\n");
+		buffer.append("Tipo           : " + ((AgendamentoMdl) object).getTipo());
+		buffer.append("\r\n");
+		buffer.append("Data           : " + ((AgendamentoMdl) object).getData());
+		buffer.append("\r\n");
+		buffer.append("Período        : " + ((AgendamentoMdl) object).getPeriodo());
+		buffer.append("\r\n");
+		buffer.append("Qtd. Pessoas   : " + ((AgendamentoMdl) object).getQtd());
+		buffer.append("\r\n");
+		buffer.append("ID Responsável : " + ((AgendamentoMdl) object).getResponsavelId());
+		buffer.append("\r\n");
+		buffer.append("Responsável    : " + ((AgendamentoMdl) object).getResponsavel());
+		buffer.append("\r\n");
+		buffer.append("Custo          : " + ((AgendamentoMdl) object).getCusto());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");
@@ -70,16 +88,15 @@ public class MaterialFile implements ArquivosICtrl {
 		gravaDados.flush();
 		gravaDados.close();
 		escreveArquivo.close();
-
 	}
 
 	@Override
 	public void leDiretorio(String diretorio) throws IOException {
-		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void excluiDadosArquivo(String diretorio, String arquivo, String[] registro) throws IOException {
-		// TODO Auto-generated method stub
+
 	}
 }

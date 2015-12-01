@@ -22,35 +22,36 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import model.LoginMdl;
-import persistence.LoginFile;
-import view.FrmLoginCad;
+import model.UsuarioMdl;
+import persistence.UsuarioFile;
+import view.FrmUsuario;
 
-public class LoginCtrl implements ComponentListener {
+public class UsuarioCtrl implements ComponentListener {
 
 	private JPanel form;
 	private JTextField txtId, txtUsuario;
 	private JPasswordField pwdSenha, pwdSenha2;
 	private JCheckBox chckbxAdm, chckbxOpera;
-	private JButton btnCadastrar;
-	private List<LoginMdl> usuarios;
+	//private JButton btnCadastrar;
+	private List<UsuarioMdl> usuarios;
 	private static int contador = 1;
 	private boolean validar;
 	private ArquivosCtrl arquivos = new ArquivosCtrl();
-	private LoginFile arquivo = new LoginFile();
-	private SessionCtrl session = new SessionCtrl();
+	private UsuarioFile arquivo = new UsuarioFile();
+	private SessaoCtrl logon = SessaoCtrl.getInstance();
 
-	public LoginCtrl (JPanel form, JTextField txtId, JTextField txtUsuario, JPasswordField pwdSenha, JPasswordField pwdSenha2, 
+	public UsuarioCtrl (JPanel form, JTextField txtId, JTextField txtUsuario, JPasswordField pwdSenha, JPasswordField pwdSenha2, 
 			JCheckBox chckbxAdm, JCheckBox chckbxOpera, JButton btnCadastrar) {
 
+		this.form = form;
 		this.txtId = txtId;
 		this.txtUsuario = txtUsuario;
 		this.pwdSenha = pwdSenha;
 		this.pwdSenha2 = pwdSenha2;
 		this.chckbxAdm = chckbxAdm;
 		this.chckbxOpera = chckbxOpera;
-		this.btnCadastrar = btnCadastrar;
-		this.usuarios = new ArrayList<LoginMdl>();
+		//this.btnCadastrar = btnCadastrar;
+		this.usuarios = new ArrayList<UsuarioMdl>();
 
 		lerArquivo();
 	}
@@ -231,7 +232,7 @@ public class LoginCtrl implements ComponentListener {
 				String text = s.replaceAll(".*: ", "");
 				list.add(text);
 				if (s.contains("---")) {
-					LoginMdl usuario = new LoginMdl();
+					UsuarioMdl usuario = new UsuarioMdl();
 					usuario.setId(list.get(0));
 					usuario.setUsuario(list.get(1));
 					usuario.setSenha(list.get(2));
@@ -246,11 +247,11 @@ public class LoginCtrl implements ComponentListener {
 	}
 
 
-	public void atualizaDados(List<LoginMdl> lista) {
+	public void atualizaDados(List<UsuarioMdl> lista) {
 		
 		File f = new File("../MASProject/dados/usuarios");
 		f.delete();	
-		for (LoginMdl usuario : lista) {
+		for (UsuarioMdl usuario : lista) {
 			try {
 				arquivo.escreveArquivo("../MASProject/dados/", "usuarios", "", usuario);
 			} catch (IOException e) {
@@ -271,14 +272,14 @@ public class LoginCtrl implements ComponentListener {
 					txtId.setText(usuarios.get(i).getId());
 					if (("Administrativo").equalsIgnoreCase(usuarios.get(i).getNivel())){
 						chckbxAdm.setSelected(true);
-						btnCadastrar.setVisible(true);
+						//btnCadastrar.setVisible(true);
 						n = chckbxAdm.getText();
 					} else if (("Operacional").equalsIgnoreCase(usuarios.get(i).getNivel())){
 						chckbxOpera.setSelected(true);
-						btnCadastrar.setVisible(false);
+						//btnCadastrar.setVisible(false);
 						n = chckbxOpera.getText();
 					}
-					session.registrar(txtId.getText(), txtUsuario.getText(), n);			
+					logon.registrar(txtId.getText(), txtUsuario.getText(), n, form.getName());
 					msg("pwd", txtUsuario.getText());
 					validar = true;
 				} 			
@@ -298,13 +299,19 @@ public class LoginCtrl implements ComponentListener {
 
 		if (!txtUsuario.getText().isEmpty() 
 				&& pwdSenha.getPassword().length != 0) {
-			session.lerSession();
-			if (("Administrativo").equalsIgnoreCase(session.registrar(txtId.getText(), txtUsuario.getText(), chckbxAdm.getText()))){	
+			logon.lerSession();
+			if (("Administrativo").equalsIgnoreCase(
+					logon.registrar(
+							txtId.getText(), 
+							txtUsuario.getText(), 
+							chckbxAdm.getText(), 
+							form.getName()
+							))){	
 				
 				//FrmLogin frame = new FrmLogin();
 		        //frame.dispose(); //NAO FECHA O FRMLOGIN!
 		        
-		        FrmLoginCad frmCad = new FrmLoginCad();
+		        FrmUsuario frmCad = new FrmUsuario();
 				frmCad.setVisible(true);
 				frmCad.setLocationRelativeTo(null);
 			} else {
@@ -318,7 +325,7 @@ public class LoginCtrl implements ComponentListener {
 	
 	public void pesquisar() {
 
-		ArrayList<LoginMdl> lista = new ArrayList<>();
+		ArrayList<UsuarioMdl> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!txtUsuario.getText().isEmpty() || !txtId.getText().isEmpty()) {
 			for (int i = 0; i < usuarios.size(); i++) {
@@ -340,7 +347,7 @@ public class LoginCtrl implements ComponentListener {
 
 					boolean filtro = usuarios.get(i).getUsuario().toLowerCase().startsWith(txtUsuario.getText().toLowerCase());
 					if (filtro == true) {
-						LoginMdl item = new LoginMdl();
+						UsuarioMdl item = new UsuarioMdl();
 						item.setId(usuarios.get(i).getId());
 						item.setUsuario(usuarios.get(i).getUsuario());
 						item.setSenha(usuarios.get(i).getSenha());
@@ -350,15 +357,15 @@ public class LoginCtrl implements ComponentListener {
 				}
 				String[] filtro = new String[lista.size()];
 				for (int i = 0; i < lista.size(); i++) {
-					filtro[i] = lista.get(i).getId();
+					filtro[i] = lista.get(i).getId() + " : " + lista.get(i).getUsuario();
 					pesquisa = lista.get(i).getId();
 				}
 				if (filtro != null && filtro.length > 1) {
-					pesquisa = (String) JOptionPane.showInputDialog(form, "Escolha o ID:\n", "Selecione o ID",
+					pesquisa = (String) JOptionPane.showInputDialog(form, "Selecione:\n", "Registros Localizados",
 							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
 				}
 				for (int i = 0; i < usuarios.size(); i++) {
-					if (pesquisa.equalsIgnoreCase(usuarios.get(i).getId())) {
+					if (pesquisa.replaceAll(" : .*", "").equalsIgnoreCase(usuarios.get(i).getId())) {
 						txtId.setText(usuarios.get(i).getId());
 						txtUsuario.setText(usuarios.get(i).getUsuario());
 						if (("Administrativo").equalsIgnoreCase(usuarios.get(i).getNivel())){
@@ -385,7 +392,7 @@ public class LoginCtrl implements ComponentListener {
 	@SuppressWarnings("deprecation")
 	public void editar() {
 		
-		LoginMdl usuario = new LoginMdl();
+		UsuarioMdl usuario = new UsuarioMdl();
 		validar = false;
 		if (!txtId.getText().isEmpty()
 				&& pwdSenha.getPassword().length != 0) {
@@ -453,8 +460,8 @@ public class LoginCtrl implements ComponentListener {
 	public void gravar() {
 		
 		gerarId();
-		new LoginFile();
-		LoginMdl usuario = new LoginMdl();
+		new UsuarioFile();
+		UsuarioMdl usuario = new UsuarioMdl();
 		validar = false;
 		if (!txtUsuario.getText().isEmpty() 
 				&& pwdSenha.getPassword().length != 0) {

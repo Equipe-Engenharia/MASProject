@@ -9,9 +9,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import controller.ArquivosICtrl;
-import model.SessionMdl;
+import model.SessaoMdl;
 
-public class SessionFile implements ArquivosICtrl{
+public class SessaoFile implements ArquivosICtrl{
 	
 	private StringBuffer buffer;
 
@@ -38,20 +38,26 @@ public class SessionFile implements ArquivosICtrl{
 			leDados.close();
 			leFluxo.close();
 		} else {
-			throw new IOException("Arquivo inexistente");
+			//throw new IOException("Arquivo inexistente");
+			File novoArquivo = new File(diretorio, arquivo);
+			novoArquivo.createNewFile();
+			buffer = new StringBuffer();
+			buffer.append("");
 		}
 	}
 
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID     : "+((SessionMdl) object).getId());
+		buffer.append("ID     : "+((SessaoMdl) object).getId());
 		buffer.append("\r\n");
-		buffer.append("Usuário: " + ((SessionMdl) object).getUsuario());
+		buffer.append("Usuário: " + ((SessaoMdl) object).getUsuario());
 		buffer.append("\r\n");
-		buffer.append("Nível  : " + ((SessionMdl) object).getNivel());
+		buffer.append("Nível  : " + ((SessaoMdl) object).getNivel());
 		buffer.append("\r\n");
-		buffer.append("Hora   : " + ((SessionMdl) object).getHora());
+		buffer.append("Hora   : " + ((SessaoMdl) object).getHora());
+		buffer.append("\r\n");
+		buffer.append("Tela   : " + ((SessaoMdl) object).getTela());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");

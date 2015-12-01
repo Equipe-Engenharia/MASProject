@@ -44,10 +44,24 @@ import view.FrmVisitanteCad;
 public class IngressoCtrl implements ComponentListener {
 
 	private JPanel form;
-	private JLabel lblDinheiro, lblTroco;
-	private JTextField txtId, txtData, txtHora, txtBilhete, txtPesquisa, txtQtd;
-	private JFormattedTextField ftxtValorUnit, ftxtSubtotal, ftxtTotal, ftxtDinheiro, ftxtTroco; 
-	private JComboBox<String> cbExpo, cbIngresso;
+	private JLabel 
+	lblDinheiro, 
+	lblTroco;
+	private JTextField 
+	txtId, txtData, 
+	txtHora, 
+	txtBilhete, 
+	txtPesquisa, 
+	txtQtd;
+	private JFormattedTextField 
+	ftxtValorUnit, 
+	ftxtSubtotal, 
+	ftxtTotal, 
+	ftxtDinheiro, 
+	ftxtTroco; 
+	private JComboBox<String> 
+	cbExpo, 
+	cbIngresso;
 	private JRadioButton rdbtnDinheiro;
 	private ButtonGroup pagamento;
 	private JTable tbCompra;
@@ -61,10 +75,26 @@ public class IngressoCtrl implements ComponentListener {
 	private ArquivosCtrl arquivos = new ArquivosCtrl();
 	private IngressoFile arquivo = new IngressoFile();
 
-	public IngressoCtrl(JPanel form, JLabel lblDinheiro, JLabel lblTroco, JTextField txtId, JTextField txtData, JTextField txtHora, 
-			JTextField txtBilhete, JTextField txtPesquisa, JComboBox<String> cbExpo, JComboBox<String> cbIngresso, 
-			JTable tbCompra, JTextField txtQtd, JFormattedTextField ftxtValorUnit, JFormattedTextField ftxtSubtotal, JFormattedTextField ftxtTotal, 
-			JFormattedTextField ftxtDinheiro, JFormattedTextField ftxtTroco, JRadioButton rdbtnDinheiro, ButtonGroup pagamento) {
+	public IngressoCtrl(
+			JPanel form, 
+			JLabel lblDinheiro, 
+			JLabel lblTroco, 
+			JTextField txtId, 
+			JTextField txtData, 
+			JTextField txtHora, 
+			JTextField txtBilhete,
+			JTextField txtPesquisa, 
+			JComboBox<String> cbExpo, 
+			JComboBox<String> cbIngresso, 
+			JTable tbCompra, 
+			JTextField txtQtd, 
+			JFormattedTextField ftxtValorUnit, 
+			JFormattedTextField ftxtSubtotal, 
+			JFormattedTextField ftxtTotal, 
+			JFormattedTextField ftxtDinheiro, 
+			JFormattedTextField ftxtTroco, 
+			JRadioButton rdbtnDinheiro, 
+			ButtonGroup pagamento) {
 
 		this.form = form;
 		this.lblDinheiro = lblDinheiro;
@@ -772,6 +802,15 @@ public class IngressoCtrl implements ComponentListener {
 		public void actionPerformed(ActionEvent e) {
 
 			atualizaTabela();
+		}
+	};
+	
+	public ActionListener apagarr = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			removeLinha();
 		}
 	};
 

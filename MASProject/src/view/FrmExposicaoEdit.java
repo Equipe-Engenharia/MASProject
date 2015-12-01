@@ -28,7 +28,7 @@ public class FrmExposicaoEdit extends JFrame {
 
 	private JLabel lblIdExposio, lblTtuloDaExposio, lblDataInicio, lblDataFim, lblDescrio, lblArtista, lblTema;
 	private JPanel contentPane;
-	private JButton btnPesqArtista, btnGravar, btnApagar;
+	private JButton btnPesqArtista, btnCalInicial, btnCalFinal, btnGravar, btnApagar;
 	private JTextField txtID, txtTitulo, txtDataIni, txtDataFim, txtNomeArtista, txtTema;
 	private JTable tableLista;
 	// em testes
@@ -61,6 +61,7 @@ public class FrmExposicaoEdit extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 937, 680);
 		contentPane = new JPanel();
+		contentPane.setName("EXP");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -160,6 +161,18 @@ public class FrmExposicaoEdit extends JFrame {
 		// ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim,
 		// txtNomeArtista, txtID, tableLista, txtTitulo,
 		// txtTema, txtAreaDescri, btnApagar, btnGravar);
+		
+		btnCalInicial = new JButton("");
+		btnCalInicial.setBounds(255, 109, 29, 23);
+		btnCalInicial.setIcon(new ImageIcon(
+				FrmExposicaoCad.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
+		contentPane.add(btnCalInicial);
+		
+		btnCalFinal = new JButton("");
+		btnCalFinal.setBounds(471, 109, 29, 23);
+		btnCalFinal.setIcon(new ImageIcon(
+				FrmExposicaoCad.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
+		contentPane.add(btnCalFinal);
 
 		btnPesqId = new JButton("");
 		btnPesqId.setIcon(new ImageIcon("../MASProject/icons/search.png"));
@@ -171,11 +184,11 @@ public class FrmExposicaoEdit extends JFrame {
 		btnPesqTitulo.setBounds(468, 57, 29, 23);
 		contentPane.add(btnPesqTitulo);
 
-		ExposicaoCtrl expCtrl = new ExposicaoCtrl(txtDataIni, txtDataFim, txtNomeArtista, txtID, tableLista, txtTitulo,
+		ExposicaoCtrl expCtrl = new ExposicaoCtrl(contentPane, txtDataIni, txtDataFim, txtNomeArtista, txtID, tableLista, txtTitulo,
 				txtTema, txtAreaDescri, tableModel);
 
-		// btnCalenIni.addActionListener(expCtrl.abreCalendario1);
-		// btnCalenFim.addActionListener(expCtrl.abreCalendario2);
+		btnCalInicial.addActionListener(expCtrl.abreCalInicial);
+		btnCalFinal.addActionListener(expCtrl.abreCalFinal);
 		btnPesqArtista.addActionListener(expCtrl.pesquisaArtista);
 		btnGravar.addActionListener(expCtrl.editar);
 		btnPesqId.addActionListener(expCtrl.pesquisar);

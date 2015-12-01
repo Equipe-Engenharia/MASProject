@@ -14,9 +14,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import controller.LoginCtrl;
+import controller.UsuarioCtrl;
 
-public class FrmLoginCad extends JFrame {
+public class FrmUsuario extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -35,7 +35,7 @@ public class FrmLoginCad extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrmLoginCad frame = new FrmLoginCad();
+					FrmUsuario frame = new FrmUsuario();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,7 +48,7 @@ public class FrmLoginCad extends JFrame {
 	 * Create the frame.
 	 */
 	
-	public FrmLoginCad() {
+	public FrmUsuario() {
 		setType(Type.UTILITY);
 		setTitle("Administrar Usuários");
 		setResizable(false);
@@ -133,7 +133,7 @@ public class FrmLoginCad extends JFrame {
 		btnApagar.setIcon(new ImageIcon("../MASProject/icons/delete.png"));
 		contentPane.add(btnApagar);
 		
-		LoginCtrl controle = new LoginCtrl(contentPane, txtId, txtUsuario, pwdSenha, pwdSenha2, chckbxAdm, chckbxOpera, btnCadastrar);
+		UsuarioCtrl controle = new UsuarioCtrl(contentPane, txtId, txtUsuario, pwdSenha, pwdSenha2, chckbxAdm, chckbxOpera, btnCadastrar);
 		
 		controle.gerarId();
 		txtUsuario.addMouseListener(controle.limpaCampo);

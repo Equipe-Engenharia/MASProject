@@ -9,9 +9,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import controller.ArquivosICtrl;
-import model.LoginMdl;
+import model.UsuarioMdl;
 
-public class LoginFile implements ArquivosICtrl{
+public class UsuarioFile implements ArquivosICtrl{
 	
 	private StringBuffer buffer;
 
@@ -38,20 +38,24 @@ public class LoginFile implements ArquivosICtrl{
 			leDados.close();
 			leFluxo.close();
 		} else {
-			throw new IOException("Arquivo inexistente");
+			//throw new IOException("Arquivo inexistente");
+			File novoArquivo = new File(diretorio, arquivo);
+			novoArquivo.createNewFile();
+			buffer = new StringBuffer();
+			buffer.append("");
 		}
 	}
 
 	@Override
 	public void escreveArquivo(String diretorio, String arquivo, String texto, Object object) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("ID     : "+((LoginMdl) object).getId());
+		buffer.append("ID     : "+((UsuarioMdl) object).getId());
 		buffer.append("\r\n");
-		buffer.append("Usuario: " + ((LoginMdl) object).getUsuario());
+		buffer.append("Usuario: " + ((UsuarioMdl) object).getUsuario());
 		buffer.append("\r\n");
-		buffer.append("Senha  : " + ((LoginMdl) object).getSenha());
+		buffer.append("Senha  : " + ((UsuarioMdl) object).getSenha());
 		buffer.append("\r\n");
-		buffer.append("Nível  : " + ((LoginMdl) object).getNivel());
+		buffer.append("Nível  : " + ((UsuarioMdl) object).getNivel());
 		buffer.append("\r\n");
 		buffer.append("---------------------------");
 		buffer.append("\r\n");

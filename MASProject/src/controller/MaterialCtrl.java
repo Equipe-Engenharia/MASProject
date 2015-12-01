@@ -188,7 +188,6 @@ public class MaterialCtrl implements ComponentListener {
 
 	
 	public void lerArquivo() {
-		
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 		try {

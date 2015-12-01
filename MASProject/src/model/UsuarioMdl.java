@@ -1,11 +1,11 @@
 package model;
 
-public class SessionMdl {
+public class UsuarioMdl {
 
 	private String id;
 	private String usuario;
+	private String senha;
 	private String nivel;
-	private String hora;
 
 	public String getId() {
 		return id;
@@ -23,19 +23,19 @@ public class SessionMdl {
 		this.usuario = usuario;
 	}
 	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
 	public String getNivel() {
 		return nivel;
 	}
 
 	public void setNivel(String nivel) {
 		this.nivel = nivel;
-	}
-	
-	public String getHora() {
-		return hora;
-	}
-
-	public void setHora(String hora) {
-		this.hora = hora;
 	}
 }
