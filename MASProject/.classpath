@@ -6,5 +6,9 @@
 	<classpathentry kind="lib" path="../MASProject/jcalendar-1.4 (1)/lib/jgoodies-common-1.2.0.jar"/>
 	<classpathentry kind="lib" path="../MASProject/jcalendar-1.4 (1)/lib/jgoodies-looks-2.4.1.jar"/>
 	<classpathentry kind="lib" path="../MASProject/jcalendar-1.4 (1)/lib/junit-4.6.jar"/>
+	<classpathentry kind="lib" path="../MASProject/jfreechart-1.0.19/lib/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="../MASProject/jfreechart-1.0.19/lib/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="../MASProject/jfreechart-1.0.19/lib/jfreechart-1.0.19-experimental.jar"/>
+	<classpathentry kind="lib" path="../MASProject/jfreechart-1.0.19/lib/jfreechart-1.0.19-swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
