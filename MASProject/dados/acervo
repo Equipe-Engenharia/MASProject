@@ -37,3 +37,29 @@ Valor :10.000,00
 Obra Propria :true
 Status :Exposição
 ---------------------------
+ID Obra :ACV151130-221604
+Nome do Artista :Vitor
+Nome da obra :Bomba de Hidrogênio
+Descrição :Sem descrição
+Categoria : Pintura
+Data :30/11/2015
+Imagem :../MASProject/imagens/ACV151130-221604.png
+Material : Madeira
+Setor : Preto
+Valor :50,000.00
+Obra Propria :true
+Status :Exposição
+---------------------------
+ID Obra :ACV151130-222714
+Nome do Artista :Vitor
+Nome da obra :No name
+Descrição :-----
+Categoria : Estátua
+Data :01/12/2015
+Imagem :../MASProject/imagens/ACV151130-222714.png
+Material : Gesso
+Setor : Cinza
+Valor :500.00
+Obra Propria :true
+Status :Manutenção
+---------------------------

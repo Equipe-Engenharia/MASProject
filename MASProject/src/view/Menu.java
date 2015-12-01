@@ -47,22 +47,7 @@ public class Menu extends JFrame{
 
 		SessaoCtrl log = SessaoCtrl.getInstance();
 
-		if (log.getLogon().get(0).getNivel() != null){
-			if (("Operacional").equalsIgnoreCase(log.getLogon().get(0).getNivel()) ||
-					("Administrativo").equalsIgnoreCase(log.getLogon().get(0).getNivel())
-					){
-
-				log.registrar(
-						log.getLogon().get(0).getId(), 
-						log.getLogon().get(0).getUsuario(), 
-						log.getLogon().get(0).getNivel(),
-						"MENU");
-
-			} else {
-				log.registrar("000", "000", "000", "MENU");
-				//msg("", log.getLogon().get(0).getNivel());
-			}
-		}
+			log.registrar("000", "000", "000", "MENU");
 	}
 	
 	public Menu() {

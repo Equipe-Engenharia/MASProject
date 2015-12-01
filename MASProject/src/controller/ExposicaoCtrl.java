@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -39,7 +40,7 @@ import persistence.ExposicaoFile;
 import view.FrmCalendario;
 import view.FrmObraArtistaSelec;
 
-public class ExposicaoCtrl implements KeyListener{
+public class ExposicaoCtrl implements KeyListener, ActionListener{
 
 	private JPanel form;
 	private static JTextField txtDataIni, txtDataFim, txtNomeArtista, txtId;
@@ -54,10 +55,11 @@ public class ExposicaoCtrl implements KeyListener{
 	private ExposicaoFile arquivo = new ExposicaoFile();
 	private DefaultTableModel tableModel;
 	private ArquivosCtrl arquivos = new ArquivosCtrl();
+	private JButton btnPesqArtista;
 
 	public ExposicaoCtrl(JPanel form, JTextField txtDataI, JTextField txtDataF, JTextField txtNomeArtista, JTextField txtId,
 			JTable tObras, JTextField txtTitulo, JTextField txtTema, JTextArea txtAreaDescri,
-			DefaultTableModel tableModel) {
+			DefaultTableModel tableModel, JButton btnPesqArtista) {
 
 		ExposicaoCtrl.txtDataIni = txtDataI; // neste caso nao se usa
 												// this,porque o metodo que
@@ -72,6 +74,7 @@ public class ExposicaoCtrl implements KeyListener{
 		this.txtAreaDescri = txtAreaDescri;
 		this.expos = new ArrayList<ExposicaoMdl>();
 		this.tableModel = tableModel;
+		this.btnPesqArtista = btnPesqArtista;
 		
 		lerArquivo();
 		sessao();
@@ -184,9 +187,10 @@ public class ExposicaoCtrl implements KeyListener{
 				exposicao.setDataFim(txtDataFim.getText());
 				exposicao.setTema(txtTema.getText());
 				exposicao.setDescricao(txtAreaDescri.getText());
-				Object tableRows[] = new Object[tObras.getRowCount()]; 
-				for(int i = 0; i < tObras.getRowCount(); i++){
-					tableRows[i] = tObras.getValueAt(i, 0);
+				Object tableRows[][] = new Object[tObras.getRowCount()][tObras.getColumnCount()]; 
+				for(int i = 0; i < tableRows.length; i++){
+					tableRows[i][0] = tObras.getValueAt(i, 0);
+					tableRows[i][1] = tObras.getValueAt(i, 1);
 				}
 				exposicao.setObrasExp(tableRows); //Pega itens da
 				// Jtable*******
@@ -227,7 +231,7 @@ public class ExposicaoCtrl implements KeyListener{
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(form, e.getMessage());
 		}
 
 	}
@@ -500,22 +504,6 @@ public class ExposicaoCtrl implements KeyListener{
 		}
 	}
 
-	public ActionListener pesquisaArtista = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			StringBuffer buffer;
-			if(validaArtista()){
-				buffer = obterObras(); 
-				chamaSelecaoObras(buffer);
-			}else if(txtNomeArtista.getText().length() > 0){
-				JOptionPane.showMessageDialog(form, "Artista não encontrado!");
-			}
-		}
-	};
-
-	
-
 	public ActionListener gravarExpo = new ActionListener() {
 
 		@Override
@@ -589,9 +577,17 @@ public class ExposicaoCtrl implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
+		
 		if(keyCode == KeyEvent.VK_DELETE){
 			removeLinhaTable();
 		}
+		
+		if(keyCode == KeyEvent.VK_ENTER){
+			validaArtista();
+		}
+		
+		
+		
 	}
 
 
@@ -610,32 +606,25 @@ public class ExposicaoCtrl implements KeyListener{
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	// ESTE LISTNER TRATA A BUSCA DA DATA SELECIONADA AO FECHAR A TELA
 	public WindowListener fechaTela = new WindowListener() {
 
 		@Override
-		public void windowOpened(WindowEvent e) {
-		}
+		public void windowOpened(WindowEvent e) {}
 
 		@Override
-		public void windowIconified(WindowEvent e) {
-		}
+		public void windowIconified(WindowEvent e) {}
 
 		@Override
-		public void windowDeiconified(WindowEvent e) {
-		}
+		public void windowDeiconified(WindowEvent e) {}
 
 		@Override
-		public void windowDeactivated(WindowEvent e) {
-		}
+		public void windowDeactivated(WindowEvent e) {}
 
 		@Override
-		public void windowClosing(WindowEvent e) {
-		}
+		public void windowClosing(WindowEvent e) {}
 
 		@Override
 		public void windowClosed(WindowEvent e) {
@@ -643,7 +632,22 @@ public class ExposicaoCtrl implements KeyListener{
 		}
 
 		@Override
-		public void windowActivated(WindowEvent e) {
-		}
+		public void windowActivated(WindowEvent e) {}
 	};
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		if(source == btnPesqArtista){
+			StringBuffer buffer;
+			if(validaArtista()){
+				buffer = obterObras(); 
+				chamaSelecaoObras(buffer);
+				txtNomeArtista.setText(null);
+			}else if(txtNomeArtista.getText().length() > 0){
+				JOptionPane.showMessageDialog(form, "Artista não encontrado!");
+				txtNomeArtista.setText(null);
+			}
+		}
+	}
 }

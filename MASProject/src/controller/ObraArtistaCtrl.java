@@ -17,7 +17,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 //Author: Vitor Fagundes Arantes
-public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
+public class ObraArtistaCtrl extends DefaultTableModel implements ActionListener, ListSelectionListener{
 	private JList<String> listObras;
 	private JList<String> listObrasSelecionadas;
 	private DefaultListModel<String> listModelObras;
@@ -99,9 +99,11 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 		}
 		//senão cria um novo vetor de objetos e seta os nomes das obras da JList direita
 		obra = new Object[tamanho];
+		Object nomeArtista[] = new Object[tamanho];
 		//captura todos os itens da JList direita
 		for(int i = 0; i < tamanho; i++){
 			obra[i] = (listModelObrasSelecionadas.getElementAt(i));
+			nomeArtista[i] = this.nomeArtista;
 			System.out.println(obra[i]);
 		}
 		
@@ -109,6 +111,7 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 		//se não houver coluna, adiciona uma nova e o conteudo
 		if(tableObras.getColumnCount() <= 0){
 			tableModel.addColumn("Obra", obra);
+			tableModel.addColumn("Artista", nomeArtista);
 			//se já existe uma coluna com linhas, apenas adiciona as novas abaixo
 		}else{
 			int linhasOld = tableModel.getRowCount();
@@ -116,9 +119,17 @@ public class ObraArtistaCtrl implements ActionListener, ListSelectionListener{
 			tableModel.setRowCount(linhasOld + obra.length);
 			for(int i = 0; i < obra.length; i++){
 				tableModel.setValueAt(obra[i], linhasOld + i, 0);
+				tableModel.setValueAt(nomeArtista[i], linhasOld + i, 1);
+				tableModel.isCellEditable(i, 0);
+				tableModel.isCellEditable(i, 1);
 			}
 		}
 		tableObras.setModel(tableModel);
+	}
+	
+	@Override
+	public boolean isCellEditable(int row, int column){
+		return false;
 	}
 	
 	public Object[] getObras(){

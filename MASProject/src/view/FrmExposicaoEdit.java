@@ -193,11 +193,11 @@ public class FrmExposicaoEdit extends JInternalFrame {
 		contentPane.add(btnPesqTitulo);
 
 		ExposicaoCtrl expCtrl = new ExposicaoCtrl(contentPane, txtDataIni, txtDataFim, txtNomeArtista, txtID, tableLista, txtTitulo,
-				txtTema, txtAreaDescri, tableModel);
+				txtTema, txtAreaDescri, tableModel, btnPesqArtista);
 
 		btnCalInicial.addActionListener(expCtrl.abreCalInicial);
 		btnCalFinal.addActionListener(expCtrl.abreCalFinal);
-		btnPesqArtista.addActionListener(expCtrl.pesquisaArtista);
+		btnPesqArtista.addActionListener(expCtrl);
 		btnGravar.addActionListener(expCtrl.editar);
 		btnPesqId.addActionListener(expCtrl.pesquisar);
 		btnPesqTitulo.addActionListener(expCtrl.pesquisar);
