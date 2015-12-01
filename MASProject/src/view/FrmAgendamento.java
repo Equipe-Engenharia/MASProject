@@ -20,6 +20,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
+import controller.AgendamentoCtrl;
+
 //import controller.AgendamentoCtrl;
 
 public class FrmAgendamento extends JFrame {
@@ -47,7 +49,7 @@ public class FrmAgendamento extends JFrame {
 	txtNome, 
 	txtTelefone, 
 	txtResponsavel, 
-	txtIdResponsavel;
+	txtResponsavelId;
 	private JFormattedTextField 
 	ftxtData, 
 	ftxtQtd, 
@@ -194,13 +196,13 @@ public class FrmAgendamento extends JFrame {
 		txtResponsavel.setColumns(10);
 		contentPane.add(txtResponsavel);
 		
-		txtIdResponsavel = new JTextField();
-		txtIdResponsavel.setHorizontalAlignment(SwingConstants.CENTER);
-		txtIdResponsavel.setEnabled(false);
-		txtIdResponsavel.setEditable(false);
-		txtIdResponsavel.setBounds(138, 195, 160, 28);
-		txtIdResponsavel.setColumns(10);
-		contentPane.add(txtIdResponsavel);
+		txtResponsavelId = new JTextField();
+		txtResponsavelId.setHorizontalAlignment(SwingConstants.CENTER);
+		txtResponsavelId.setEnabled(false);
+		txtResponsavelId.setEditable(false);
+		txtResponsavelId.setBounds(138, 195, 160, 28);
+		txtResponsavelId.setColumns(10);
+		contentPane.add(txtResponsavelId);
 		
 		maskData = new MaskFormatter("##/##/####");
 		ftxtData = new JFormattedTextField(maskData);
@@ -308,24 +310,23 @@ public class FrmAgendamento extends JFrame {
 		btnGravar.setBounds(620, 406, 109, 34);
 		contentPane.add(btnGravar);
 		
-		/*AgendamentoCtrl controle = new AgendamentoCtrl(
+		AgendamentoCtrl controle = new AgendamentoCtrl(
 				contentPane, 
 				txtId, 
 				txtPesquisa, 
 				txtNome, 
-				ftxtQtd,  
+				txtTelefone, 
+				txtResponsavel, 
+				txtResponsavelId, 
 				ftxtVagas, 
-				btgDestino, 
-				ftxtData,  
-				tbAgenda, 
+				ftxtData, 
+				ftxtQtd, 
+				ftxtCusto, 
+				ftxtTotal, 
 				cbExpo, 
 				cbPeriodo, 
 				cbTipo, 
-				txtTelefone, 
-				txtResponsavel, 
-				txtIdResponsavel, 
-				ftxtCusto, 
-				ftxtTotal
+				tbAgenda
 				);
 		
 		txtPesquisa.addActionListener(controle.pesquisar);
@@ -342,8 +343,6 @@ public class FrmAgendamento extends JFrame {
 		btnCancelar.addActionListener(controle.cancelar);
 		btnIncluir.addActionListener(controle.incluir);
 		btnApagar.addActionListener(controle.apagar);
-		btnGravar.addActionListener(controle.gravar);*/
-		
-		
+		btnGravar.addActionListener(controle.gravar);
 	}
 }
