@@ -16,13 +16,14 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class RelatorioFinCtrl {
 	
-	public RelatorioFinCtrl(){
+	public RelatorioFinCtrl(JFreeChart chart){
 		
 	}
 
 	public CategoryDataset criaDataset() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		// TODO
+
 		return dataset;
 	}
 
