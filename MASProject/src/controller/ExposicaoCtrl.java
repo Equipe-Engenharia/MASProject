@@ -184,9 +184,10 @@ public class ExposicaoCtrl implements KeyListener{
 				exposicao.setDataFim(txtDataFim.getText());
 				exposicao.setTema(txtTema.getText());
 				exposicao.setDescricao(txtAreaDescri.getText());
-				Object tableRows[] = new Object[tObras.getRowCount()]; 
+				Object tableRows[][] = new Object[tObras.getRowCount()][tObras.getColumnCount()]; 
 				for(int i = 0; i < tObras.getRowCount(); i++){
-					tableRows[i] = tObras.getValueAt(i, 0);
+					tableRows[i][0] = tObras.getValueAt(i, 0);
+					tableRows[i][1] = tObras.getValueAt(i, 1);
 				}
 				exposicao.setObrasExp(tableRows); //Pega itens da
 				// Jtable*******
@@ -379,8 +380,6 @@ public class ExposicaoCtrl implements KeyListener{
 	}
 
 	public void atualizaDados(List<ExposicaoMdl> listExpo) {
-		File f = new File("../MASProject/dados/exposicoes");
-		f.delete();
 		for (ExposicaoMdl exposicao : listExpo) {
 			try {
 				arquivo.escreveArquivo("../MASProject/dados/", "exposicoes", "", exposicao);
