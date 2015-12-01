@@ -218,7 +218,7 @@ public class ExposicaoCtrl implements KeyListener{
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(form, e.getMessage());
 		}
 
 	}
