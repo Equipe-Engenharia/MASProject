@@ -8,7 +8,7 @@ public class ExposicaoMdl {
 	private String dataIni, dataFim;
 	private String tema;
 	private String descricao;
-	private Object[][] obrasExp;
+	private static Object[][] obrasExp;
 
 
 	public String getId() {
@@ -64,7 +64,7 @@ public class ExposicaoMdl {
 	}
 
 	public void setObrasExp(Object[][] rows) {
-		this.obrasExp = rows;
+		ExposicaoMdl.obrasExp = rows;
 	}
 
 	

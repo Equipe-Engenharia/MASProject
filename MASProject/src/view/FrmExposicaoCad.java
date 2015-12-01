@@ -113,7 +113,7 @@ public class FrmExposicaoCad extends JFrame {
 		lblArtista.setBounds(88, 352, 46, 14);
 		contentPane.add(lblArtista);
 
-		txtNomeArtista = new JTextField();
+		txtNomeArtista = new JTextField("Digite o nome do artista");
 		txtNomeArtista.setBounds(157, 349, 262, 20);
 		contentPane.add(txtNomeArtista);
 		txtNomeArtista.setColumns(10);
@@ -174,15 +174,17 @@ public class FrmExposicaoCad extends JFrame {
 		
 		ExposicaoCtrl expCtrl = new ExposicaoCtrl(contentPane, txtDataIni, 
 				txtDataFim, txtNomeArtista, txtID, tableLista,
-				txtTitulo,txtTema,txtAreaDescri, tableModel);
+				txtTitulo,txtTema,txtAreaDescri, tableModel, btnPesqArtista);
 		btnCalInicial.addActionListener(expCtrl.abreCalInicial);
 		btnCalFinal.addActionListener(expCtrl.abreCalFinal);
-		btnPesqArtista.addActionListener(expCtrl.pesquisaArtista);
 		btnGravar.addActionListener(expCtrl.gravarExpo);
 		btnLimpar.addActionListener(expCtrl.limpar);
 		
 		expCtrl.gerarId();
 		tableLista.addKeyListener(expCtrl);
+		btnPesqArtista.addActionListener(expCtrl);
+		txtNomeArtista.addKeyListener(expCtrl);
+		
 
 	}
 }
