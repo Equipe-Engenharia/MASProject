@@ -54,11 +54,11 @@ public class SessaoCtrl {
 
 		default:
 			JOptionPane.showMessageDialog(null, 
-					"OOPS!\n\nQue feio, Ed Stark perdeu a cabeça, e algo não deveria ter acontecido…\n\nTermo: " + mensagem
-					+ "\n\nVolte ao trabalho duro e conserte isso!!!", 
+					"ERRO! Algo não deveria ter acontecido…\n\nSessaoCtrl - Termo: " + mensagem
+					+ "\n\nOcorreu no Controller desta Tela.", 
 					"Erro no Controller", 
 					JOptionPane.PLAIN_MESSAGE,
-					new ImageIcon("../MASProject/icons/warning.png"));
+					new ImageIcon("../MASProject/icons/error.png"));
 		}
 	}
 

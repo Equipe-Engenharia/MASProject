@@ -173,7 +173,7 @@ public class EmprestimoCtrl implements ComponentListener {
 					log.getLogon().get(0).getNivel(),
 					form.getName());
 		} else {
-			msg("errorlog", log.getLogon().get(0).getNivel());
+			msg("errorlog", "EmprestimoCtrl: "+ log.getLogon().get(0).getNivel());
 		}
 	}
 
@@ -764,6 +764,7 @@ public class EmprestimoCtrl implements ComponentListener {
 					"Acesso não Autorizado",
 					JOptionPane.PLAIN_MESSAGE, 
 					new ImageIcon("../MASProject/icons/error.png"));
+			//System.exit(0);
 			break;
 		case "system":
 			Object[] exit = { "Confirmar", "Cancelar" };  
