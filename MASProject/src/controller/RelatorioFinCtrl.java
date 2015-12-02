@@ -3,18 +3,14 @@ package controller;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GradientPaint;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -196,7 +192,7 @@ public class RelatorioFinCtrl implements ActionListener {
 		CategoryDataset dataset = criaDataset(dados);
 		chart = criaChart(dataset, titulo, nomeEixoX, nomeEixoY);
 		chartPanel = new ChartPanel(chart);
-		chartPanel.setPreferredSize(new Dimension(internalFrameGrafico.getWidth(), internalFrameGrafico.getHeight()));
+		chartPanel.setPreferredSize(new Dimension(internalFrameGrafico.getContentPane().getWidth(), internalFrameGrafico.getContentPane().getHeight()));
         internalFrameGrafico.setContentPane(chartPanel);
         
 	}
@@ -321,7 +317,6 @@ public class RelatorioFinCtrl implements ActionListener {
 	private void salvaGrafico(/* OutputStream out */) throws IOException {
 
 		if (chart != null) {
-
 			FileNameExtensionFilter filtro = new FileNameExtensionFilter("Pasta de Arquivos","dir");
 			
 			String diretorioBase = System.getProperty("user.home") + "/Desktop";
@@ -337,7 +332,7 @@ public class RelatorioFinCtrl implements ActionListener {
 			int retorno = choose.showOpenDialog(null);
 			if (retorno == JFileChooser.APPROVE_OPTION) {
 				caminhoArquivo = choose.getSelectedFile().getAbsolutePath();
-				OutputStream out = new FileOutputStream(caminhoArquivo+"novoGrafico.png");
+				OutputStream out = new FileOutputStream(caminhoArquivo+"/"+"novoGrafico.png");
 				ChartUtilities.writeChartAsPNG(out, chart, 500, 350);
 			}
 		} else {
