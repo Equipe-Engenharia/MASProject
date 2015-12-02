@@ -186,34 +186,46 @@ public class RelatorioFinCtrl implements ActionListener {
 		internalFrameGrafico.setContentPane(chartPanel);
 	}
 
-	private void filtroGrafico() {
+	private boolean filtroGrafico() {
 		String dataInicio = txtDataInicio.getText();
 		String dataFim = txtDataFim.getText();
 		String categoria = cbCategoria.getSelectedItem().toString();
-		subCategoria = cbSubCategoria.getSelectedItem().toString();
-		String titulo = "Finanças " + categoria + " - Periodo: " + dataInicio + " a " + dataFim;
-		
-		SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
-
 		try{
-			dataIni = (Date) mascara.parse(dataInicio.replace("/", "").replace("/", ""));
-			dataFinal = (Date) mascara.parse(dataFim.replace("/", "").replace("/", ""));
-		}catch(ParseException e){
-			JOptionPane.showMessageDialog(form, "Não foi possível converter a data do arquivo");
-		if (categoria.contains("Visi")) {
-			lerArquivoIngresso();
-			if(ingressos.size() > 0)
-				criaGrafico(titulo, ingressos, "Tipo de ingresso", "Valor do ingresso");
-			else{
-				JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
+			subCategoria = cbSubCategoria.getSelectedItem().toString();
+		}catch(NullPointerException e){
+			subCategoria = "";
+		}
+		
+		String titulo = "Finanças " + categoria + " - Periodo: " + dataInicio + " a " + dataFim;
+			if(!dataInicio.trim().equals("/  /") || !dataFim.trim().equals("/  /")){
+					if(!categoria.equals("") || !subCategoria.equals("")){
+						SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
+						try{
+							dataIni = (Date) mascara.parse(dataInicio.replace("/", "").replace("/", ""));
+							dataFinal = (Date) mascara.parse(dataFim.replace("/", "").replace("/", ""));
+						}catch(ParseException e){
+							JOptionPane.showMessageDialog(form, e.getMessage());
+						}
+						if(validaData(dataInicio)){
+							if (categoria.contains("Visi")) {
+								lerArquivoIngresso();
+								if(ingressos.size() > 0){
+									criaGrafico(titulo, ingressos, "Tipo de ingresso", "Valor do ingresso");
+									return true;
+								}else{
+									JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!"); //verificar
+								}
+							}else if(subCategoria.contains("Manu")){
+									
+							}
+						}
+					}else{
+						JOptionPane.showMessageDialog(form, "Selecione a categoria e subcategoria");
+					}
+			}else{
+				JOptionPane.showMessageDialog(form, "Insira data de inicio e/ou final para continuar!");
 			}
-		}
-		else{
-			if(subCategoria.contains("Manu")){
-				
-			}
-		}
-		}
+		return false;
 	}
 
 
@@ -236,14 +248,17 @@ public class RelatorioFinCtrl implements ActionListener {
 		       IngressoMdl ingresso = new IngressoMdl();
 		       ingresso.setId(list.get(0));
 		       ingresso.setData(list.get(1));
+		       System.out.println(list.get(1));
 		       ingresso.setHora(null);
 		       ingresso.setBilhete(null);
 		       ingresso.setExpo(null);
 		       ingresso.setVisitaId(null);
 		       ingresso.setVisitante(null);
 		       ingresso.setIngresso(list.get(7));
+		       System.out.println(list.get(7));
 		       ingresso.setQtd(null);
 		       ingresso.setValor(list.get(9).substring(3));
+		       System.out.println(list.get(9));
 		       ganhos += Double.parseDouble(list.get(9).substring(3));
 		       ingresso.setPagamento(null);
 		       ingressos.add(ingresso);
@@ -291,14 +306,21 @@ public class RelatorioFinCtrl implements ActionListener {
 		  SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
 		  try {
 		   Date dataAtual = mascara.parse(dataDoArquivo.replace("/", "").replace("/", ""));
-		   if(dataAtual.after(dataIni) && dataAtual.before(dataFinal)){
-		    return true;
+		   if(dataIni.before(dataFinal) || dataIni.compareTo(dataFinal) == 0){
+			   if(dataAtual.after(dataIni) && dataAtual.before(dataFinal) 
+					   || dataAtual.compareTo(dataIni) == 0 || dataAtual.compareTo(dataFinal) == 0){
+				    return true;
+			   }
+		   }
+		   else{
+			   JOptionPane.showMessageDialog(form, "Data inicial é maior do que a data final");
+			   return false;
 		   }
 		  } catch (ParseException e) {
 		   JOptionPane.showMessageDialog(form, "Não foi possível converter a data do arquivo");
 		  }
 		  return false;
-		 }
+	}
 
 	public CategoryDataset criaDataset(List<?> dados) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -456,8 +478,8 @@ public class RelatorioFinCtrl implements ActionListener {
 			carregaComboSubCategoria();
 		}
 		if (source == btnGerar) {
-			filtroGrafico();
-			internalFrameGrafico.pack();
+			if(filtroGrafico())
+				internalFrameGrafico.pack();
 
 		}
 		if (source == btnLimpar) {
@@ -465,13 +487,19 @@ public class RelatorioFinCtrl implements ActionListener {
 		}
 
 		if (source == btnSalvarImprimir) {
-			try {
-				salvaGrafico();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			try{
+				if(!chartPanel.getChart().equals(null)){
+						salvaGrafico();
+						limpaCampos();
+				}else{
+					JOptionPane.showMessageDialog(form, "Não há gráfico para salvar!");
+				} 
+			}catch (IOException e) {
+					JOptionPane.showMessageDialog(form, e.getMessage());
+			}catch (NullPointerException n){
+				JOptionPane.showMessageDialog(form, "Não há gráfico para salvar");
+				return;
 			}
-			limpaCampos();
 		}
 	}
 
