@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -195,14 +196,14 @@ public class RelatorioFinCtrl implements ActionListener {
 		CategoryDataset dataset = criaDataset(dados);
 		chart = criaChart(dataset, titulo, nomeEixoX, nomeEixoY);
 		chartPanel = new ChartPanel(chart);
-
+		chartPanel.setPreferredSize(new Dimension(internalFrameGrafico.getWidth(), internalFrameGrafico.getHeight()));
+        internalFrameGrafico.setContentPane(chartPanel);
+        
 	}
 
 	
 	private void filtroGrafico(){
 		String categoria = cbCategoria.getSelectedItem().toString();
-		String subCategoria = cbSubCategoria.getSelectedItem().toString();
-
 		subCategoria = cbSubCategoria.getSelectedItem().toString();
 		String titulo = "Finanças " + categoria + " - Periodo: " + txtDataInicio.getText() + " a " + txtDataFim.getText();
 		if(categoria.contains("Visi")){
@@ -266,11 +267,11 @@ public class RelatorioFinCtrl implements ActionListener {
 
 	public CategoryDataset criaDataset(List<?> dados) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		Double valor = 0.0;
-//		for(int i = 0; i < dados.size(); i++){
-			valor = Double.parseDouble(((IngressoMdl)dados.get(0)).getValor());
-        	dataset.addValue(valor,"Teste", "Teste"); //sis[i].getCategoria());
-//        }
+		for(int i = 0; i < dados.size(); i++){
+        	dataset.addValue(Double.parseDouble(((IngressoMdl)dados.get(i)).getValor()),
+        			((IngressoMdl)dados.get(i)).getIngresso(), 
+        			"Teste"); //sis[i].getCategoria());
+        }
 
 		return dataset;
 	}
@@ -286,7 +287,7 @@ public class RelatorioFinCtrl implements ActionListener {
 
 		// seleciona o plano de fundo do grafico
 		chart.setBackgroundPaint(Color.white);
-
+		
 		// pega uma referencia para customizacoes
 		CategoryPlot plot = chart.getCategoryPlot();
 		plot.setBackgroundPaint(Color.lightGray);
@@ -319,7 +320,7 @@ public class RelatorioFinCtrl implements ActionListener {
 
 	private void salvaGrafico(/* OutputStream out */) throws IOException {
 
-//		if (chart != null) {
+		if (chart != null) {
 
 			FileNameExtensionFilter filtro = new FileNameExtensionFilter("Pasta de Arquivos","dir");
 			
@@ -339,11 +340,11 @@ public class RelatorioFinCtrl implements ActionListener {
 				OutputStream out = new FileOutputStream(caminhoArquivo+"novoGrafico.png");
 				ChartUtilities.writeChartAsPNG(out, chart, 500, 350);
 			}
-//		} else {
-//			JOptionPane.showMessageDialog(null,
-//					"ATENÇÃO!\nNão há grafico para gravar.\n\nPor favor, complete todos os campos necessários e clique em Gerar gráfico.",
-//					"Erro", JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/error.png"));
-//		}
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"ATENÇÃO!\nNão há grafico para gravar.\n\nPor favor, complete todos os campos necessários e clique em Gerar gráfico.",
+					"Erro", JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/error.png"));
+		}
 	}
 
 	public ActionListener geraGrafico = new ActionListener() {
@@ -354,6 +355,7 @@ public class RelatorioFinCtrl implements ActionListener {
 //			RefineryUtilities.centerFrameOnScreen(internalFrameGrafico);
 //			internalFrameGrafico.setVisible(true);
 			filtroGrafico();
+			
 		}
 	};
 	public ActionListener salvar = new ActionListener() {
@@ -440,6 +442,7 @@ public class RelatorioFinCtrl implements ActionListener {
 		}
 		if(source == btnGerar){
 			filtroGrafico();
+			internalFrameGrafico.pack();
 		}
 	}
 
