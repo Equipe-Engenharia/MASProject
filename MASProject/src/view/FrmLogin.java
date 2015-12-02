@@ -84,12 +84,12 @@ public class FrmLogin extends JInternalFrame {
 		txtId.setColumns(10);
 		contentPane.add(txtId);
 		
-		lblUsuario = new JLabel("Usuário");
+		lblUsuario = new JLabel("UsuÃ¡rio");
 		lblUsuario.setBounds(36, 71, 61, 16);
 		contentPane.add(lblUsuario);
 
 		txtUsuario = new JTextField();
-		txtUsuario.setToolTipText("Digite aqui o usuário…");
+		txtUsuario.setToolTipText("Digite aqui o usuï¿½rioï¿½");
 		txtUsuario.setBounds(98, 65, 178, 28);
 		contentPane.add(txtUsuario);
 		txtUsuario.setColumns(10);
@@ -99,7 +99,7 @@ public class FrmLogin extends JInternalFrame {
 		contentPane.add(lblSenha);
 		
 		pwdSenha = new JPasswordField();
-		pwdSenha.setToolTipText("Digite aqui a senha…");
+		pwdSenha.setToolTipText("Digite aqui a senhaï¿½");
 		pwdSenha.setBounds(98, 105, 178, 28);
 		contentPane.add(pwdSenha);
 		
