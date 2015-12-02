@@ -6,12 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+
+import model.IngressoMdl;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -25,6 +29,8 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import persistence.IngressoFile;
+
 public class RelatorioFinCtrl implements ActionListener {
 	
 	private JFreeChart chart;
@@ -32,6 +38,16 @@ public class RelatorioFinCtrl implements ActionListener {
 	private JComboBox<String> cbCategoria, cbSubCategoria;
 	private JButton btnGerar, btnSalvarImprimir;
 	private JTextField txtDataInicio, txtDataFim, txtGanho, txtDespesa;
+	
+	private String subCategoria;
+	
+	
+	private final String[] categorias = {"", "Visitantes", "Acervo"};
+	private final String[] subCategoriaVisitantes = {"Todos", "Estudantes", "Comum"};
+	private final String[] subCategoriaAcervo = {"Manutenção", "Transporte", "Aquisição"};
+	
+	private ArquivosCtrl arquivos;
+	private List<IngressoMdl> ingressos;
 	
 	public RelatorioFinCtrl(){}
 	
@@ -54,23 +70,22 @@ public class RelatorioFinCtrl implements ActionListener {
 	}
 	
 	private void carregaComboCategoria(){
-		cbCategoria.addItem("");
-		cbCategoria.addItem("Visitante");
-		cbCategoria.addItem("Acervo");
+		for(String category : categorias){
+			cbCategoria.addItem(category);
+		}
 	}
 	
 	private void carregaComboSubCategoria(){
-		if(cbCategoria.getSelectedItem().equals("Visitante")){
+		if(cbCategoria.getSelectedItem().toString().contains("Visi")){
 			cbSubCategoria.removeAllItems();
-			cbSubCategoria.addItem("Todos");
-			cbSubCategoria.addItem("Estudantes");
-			cbSubCategoria.addItem("Comum");
-		}else if(cbCategoria.getSelectedItem().equals("Acervo")){
+			for(String subCategory : subCategoriaVisitantes){
+				cbSubCategoria.addItem(subCategory);
+			}
+		}else if(cbCategoria.getSelectedItem().toString().contains("Ace")){
 			cbSubCategoria.removeAllItems();
-			cbSubCategoria.addItem("Manutenção");
-			cbSubCategoria.addItem("Transporte");
-			cbSubCategoria.addItem("Exposição");
-			cbSubCategoria.addItem("Aquisição");
+			for(String subCategory : subCategoriaAcervo){
+				cbSubCategoria.addItem(subCategory);
+			}
 		}else{
 			return;
 		}
@@ -83,12 +98,69 @@ public class RelatorioFinCtrl implements ActionListener {
 		
 	}
 	
-	public void filtroGrafico(){
+	private void filtroGrafico(){
 		String categoria = cbCategoria.getSelectedItem().toString();
-		String subCategoria = cbSubCategoria.getSelectedItem().toString();
-		
+		subCategoria = cbSubCategoria.getSelectedItem().toString();
+		String titulo = "Finanças " + categoria + " - Periodo: " + txtDataInicio.getText() + " a " + txtDataFim.getText();
+		if(categoria.contains("Visi")){
+			lerArquivoIngresso();
+			criaGrafico(titulo, ingressos, "Não sei ainda", "Não sei ainda");
+		}
+		else{
+			if(subCategoria.contains("Manu")){
+				
+			}else if(subCategoria.contains("Exp")){
+				
+			}else{
+				
+			}
+		}
 		
 	}
+	
+	private void lerArquivoIngresso() { //modificar esse metodo de acordo com a subcategoria
+		arquivos = new ArquivosCtrl();
+		ingressos = new ArrayList<IngressoMdl>();
+		String linha = new String();
+		ArrayList<String> list = new ArrayList<>();
+		try {
+			arquivos.leArquivo("../MASProject/dados/", "ingressoTipo");
+			linha = arquivos.getBuffer();
+			String[] listaIngresso = linha.split(";");
+			if(subCategoria.contains("Tod")){
+				double ganhos = 0.0;
+				for(String s : listaIngresso){
+					String text = s.replaceAll(".*: ", "");
+					list.add(text);
+					if (s.contains("---")) {
+						IngressoMdl ingresso = new IngressoMdl();
+						ingresso.setId(list.get(0));
+						ingresso.setData(null);
+						ingresso.setHora(null);
+						ingresso.setBilhete(null);
+						ingresso.setExpo(null);
+						ingresso.setVisitaId(null);
+						ingresso.setVisitante(null);
+						ingresso.setIngresso(list.get(1));
+						ingresso.setQtd(null);
+						ingresso.setValor(list.get(2));
+						ganhos += Double.parseDouble(list.get(2));
+						ingresso.setPagamento(null);
+						ingressos.add(ingresso);
+						list.clear();
+					}
+				}
+				txtGanho.setText(String.valueOf(ganhos));
+			}else if(subCategoria.contains("Est")){
+				
+			}else{
+				
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	public CategoryDataset criaDataset(List<?> dados) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -166,6 +238,9 @@ public class RelatorioFinCtrl implements ActionListener {
 		Object source = actEvt.getSource();
 		if(source == cbCategoria){
 			carregaComboSubCategoria();
+		}
+		if(source == btnGerar){
+			filtroGrafico();
 		}
 	}
 

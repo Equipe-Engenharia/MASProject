@@ -67,6 +67,8 @@ public class FrmRelatorioFinanceiro extends JFrame {
 	public FrmRelatorioFinanceiro() {
 		setTitle("Relatório Financeiro");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		setBounds(100, 100, 749, 604);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -190,7 +192,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 				chart, chartPanel);
 		
 		cbCategoria.addActionListener(rFinCtrl);
-		btnGerar.addActionListener(rFinCtrl.geraGrafico);
+		btnGerar.addActionListener(rFinCtrl);
 		btnSalvarimprimir.addActionListener(rFinCtrl.salvar);
 	}
 }
