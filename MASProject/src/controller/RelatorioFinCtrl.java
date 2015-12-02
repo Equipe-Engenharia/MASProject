@@ -42,12 +42,9 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-
-
 import com.toedter.calendar.JCalendar;
 
 import view.FrmCalendario;
-
 
 public class RelatorioFinCtrl implements ActionListener {
 
@@ -59,33 +56,27 @@ public class RelatorioFinCtrl implements ActionListener {
 	private JPanel form;
 	private JInternalFrame internalFrameGrafico;
 
-
 	// Fetch, merge, commit
-	
 
 	private JComboBox<String> cbCategoria, cbSubCategoria;
-	private JButton btnGerar, btnSalvarImprimir;
-	
+	private JButton btnGerar, btnSalvarImprimir, btnLimpar;
+
 	private String subCategoria = "";
 	private Date dataIni;
 	private Date dataFinal;
-	
-	private final String[] categorias = {"", "Visitantes", "Acervo"};
-	private final String[] subCategoriaVisitantes = {"Todos", "Estudantes", "Comum", "Especial", "Meia"};
-	private final String[] subCategoriaAcervo = {"Manutenção", "Transporte", "Aquisição"};
-	
+
+	private final String[] categorias = { "", "Visitantes", "Acervo" };
+	private final String[] subCategoriaVisitantes = { "Todos", "Estudantes", "Comum", "Especial", "Meia" };
+	private final String[] subCategoriaAcervo = { "Manutenção", "Transporte", "Aquisição" };
+
 	private ArquivosCtrl arquivos;
 	private List<IngressoMdl> ingressos = new ArrayList<IngressoMdl>();
-	 
 
-	
-	
-	//Fetch, merge, commit
-	public RelatorioFinCtrl(JComboBox<String> cbCategoria, JComboBox<String> cbSubCategoria,
-			 JTextField txtDataInicio, JTextField txtDataFim,
-			JTextField txtGanho, JTextField txtDespesa, JFreeChart chart, ChartPanel chartPanel,
-			JButton btnGerar, JButton btnSalvarImprimir, JInternalFrame internalFrameGrafico){
-		
+	// Fetch, merge, commit
+	public RelatorioFinCtrl(JComboBox<String> cbCategoria, JComboBox<String> cbSubCategoria, JTextField txtDataInicio,
+			JTextField txtDataFim, JTextField txtGanho, JTextField txtDespesa, JFreeChart chart, ChartPanel chartPanel,
+			JButton btnGerar, JButton btnSalvarImprimir, JInternalFrame internalFrameGrafico, JButton btnLimpar) {
+
 		this.chart = chart;
 		this.chartPanel = chartPanel;
 		this.txtDataFim = txtDataFim;
@@ -100,6 +91,7 @@ public class RelatorioFinCtrl implements ActionListener {
 		this.btnGerar = btnGerar;
 		this.btnSalvarImprimir = btnSalvarImprimir;
 		this.internalFrameGrafico = internalFrameGrafico;
+		this.btnLimpar = btnLimpar;
 		carregaComboCategoria();
 	}
 
@@ -108,28 +100,24 @@ public class RelatorioFinCtrl implements ActionListener {
 
 	}
 
-	
-	
-	private void carregaComboCategoria(){
-		for(String category : categorias){
+	private void carregaComboCategoria() {
+		for (String category : categorias) {
 			cbCategoria.addItem(category);
 		}
 	}
 
-	
-	
-	private void carregaComboSubCategoria(){
-		if(cbCategoria.getSelectedItem().toString().contains("Visi")){
+	private void carregaComboSubCategoria() {
+		if (cbCategoria.getSelectedItem().toString().contains("Visi")) {
 			cbSubCategoria.removeAllItems();
-			for(String subCategory : subCategoriaVisitantes){
+			for (String subCategory : subCategoriaVisitantes) {
 				cbSubCategoria.addItem(subCategory);
 			}
-		}else if(cbCategoria.getSelectedItem().toString().contains("Ace")){
-			
-			for(String subCategory : subCategoriaAcervo){
+		} else if (cbCategoria.getSelectedItem().toString().contains("Ace")) {
+
+			for (String subCategory : subCategoriaAcervo) {
 				cbSubCategoria.addItem(subCategory);
 			}
-		}else{
+		} else {
 			return;
 		}
 	}
@@ -193,41 +181,42 @@ public class RelatorioFinCtrl implements ActionListener {
 		CategoryDataset dataset = criaDataset(dados);
 		chart = criaChart(dataset, titulo, nomeEixoX, nomeEixoY);
 		chartPanel = new ChartPanel(chart);
-		chartPanel.setPreferredSize(new Dimension(internalFrameGrafico.getContentPane().getWidth(), internalFrameGrafico.getContentPane().getHeight()));
-        internalFrameGrafico.setContentPane(chartPanel);        
+		chartPanel.setPreferredSize(new Dimension(internalFrameGrafico.getContentPane().getWidth(),
+				internalFrameGrafico.getContentPane().getHeight()));
+		internalFrameGrafico.setContentPane(chartPanel);
 	}
 
-	
-	private void filtroGrafico(){
+	private void filtroGrafico() {
 		String dataInicio = txtDataInicio.getText();
 		String dataFim = txtDataFim.getText();
 		SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
-		try{
+		try {
 			dataIni = (Date) mascara.parse(dataInicio.replace("/", "").replace("/", ""));
 			dataFinal = (Date) mascara.parse(dataFim.replace("/", "").replace("/", ""));
-		}catch(ParseException e){
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		String categoria = cbCategoria.getSelectedItem().toString();
 		subCategoria = cbSubCategoria.getSelectedItem().toString();
-		String titulo = "Finanças " + categoria + " - Periodo: " + txtDataInicio.getText() + " a " + txtDataFim.getText();
-		if(categoria.contains("Visi")){
+		String titulo = "Finanças " + categoria + " - Periodo: " + txtDataInicio.getText() + " a "
+				+ txtDataFim.getText();
+		if (categoria.contains("Visi")) {
 			lerArquivoIngresso();
 			criaGrafico(titulo, ingressos, "Tipo de ingresso", "Valor do ingresso");
-		}
-		else{
-			if(subCategoria.contains("Manu")){
-				
-			}else if(subCategoria.contains("Exp")){
-				
-			}else{
-				
+		} else {
+			if (subCategoria.contains("Manu")) {
+
+			} else if (subCategoria.contains("Exp")) {
+
+			} else {
+
 			}
 		}
-		
+
 	}
-	
-	private void lerArquivoIngresso() { //modificar esse metodo de acordo com a subcategoria
+
+	private void lerArquivoIngresso() { // modificar esse metodo de acordo com a
+										// subcategoria
 		arquivos = new ArquivosCtrl();
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
@@ -235,9 +224,9 @@ public class RelatorioFinCtrl implements ActionListener {
 			arquivos.leArquivo("../MASProject/dados/", "ingresso");
 			linha = arquivos.getBuffer();
 			String[] listaIngresso = linha.split(";");
-			if(subCategoria.contains("Tod")){
+			if (subCategoria.contains("Tod")) {
 				double ganhos = 0.0;
-				for(String s : listaIngresso){
+				for (String s : listaIngresso) {
 					String text = s.replaceAll(".*: ", "");
 					list.add(text);
 					if (s.contains("---")) {
@@ -245,8 +234,9 @@ public class RelatorioFinCtrl implements ActionListener {
 						SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
 						try {
 							Date dataAtual = mascara.parse(data.replace("/", "").replace("/", ""));
-							//se a data do arquivo estiver dentro do intervalo de datas, o vetor de objetos é setado
-							if(dataAtual.after(dataIni) && dataAtual.before(dataFinal)){
+							// se a data do arquivo estiver dentro do intervalo
+							// de datas, o vetor de objetos é setado
+							if (dataAtual.after(dataIni) && dataAtual.before(dataFinal)) {
 								IngressoMdl ingresso = new IngressoMdl();
 								ingresso.setId(list.get(0));
 								ingresso.setData(list.get(1));
@@ -269,18 +259,19 @@ public class RelatorioFinCtrl implements ActionListener {
 					}
 				}
 				txtGanho.setText(String.valueOf(ganhos));
-				
-				//se a subcategoria for de estudante
-			}else if(subCategoria.contains("Est")){
+
+				// se a subcategoria for de estudante
+			} else if (subCategoria.contains("Est")) {
 				double ganhos = 0.0;
-				for(int i = 0; i < listaIngresso.length; i++){
-					if(listaIngresso[i].contains("Est")){
+				for (int i = 0; i < listaIngresso.length; i++) {
+					if (listaIngresso[i].contains("Est")) {
 						String data = listaIngresso[i - 6].toString().substring(12);
 						SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
 						try {
 							Date dataAtual = mascara.parse(data.replace("/", "").replace("/", ""));
-							//se a data do arquivo estiver dentro do intervalo de datas, o vetor de objetos é setado
-							if(dataAtual.after(dataIni) && dataAtual.before(dataFinal)){
+							// se a data do arquivo estiver dentro do intervalo
+							// de datas, o vetor de objetos é setado
+							if (dataAtual.after(dataIni) && dataAtual.before(dataFinal)) {
 								IngressoMdl ingresso = new IngressoMdl();
 								ingresso.setId(null);
 								ingresso.setData(null);
@@ -291,20 +282,20 @@ public class RelatorioFinCtrl implements ActionListener {
 								ingresso.setVisitante(null);
 								ingresso.setIngresso(listaIngresso[i].substring(11));
 								ingresso.setQtd(null);
-								ingresso.setValor(listaIngresso[i+2].substring(15));
-								ganhos += Double.parseDouble(listaIngresso[i+2].substring(15));
+								ingresso.setValor(listaIngresso[i + 2].substring(15));
+								ganhos += Double.parseDouble(listaIngresso[i + 2].substring(15));
 								ingresso.setPagamento(null);
 								ingressos.add(ingresso);
 								list.clear();
 							}
-						}catch(ParseException e){
+						} catch (ParseException e) {
 							e.printStackTrace();
 						}
 					}
 				}
 				txtGanho.setText(String.valueOf(ganhos));
-			}else{
-				
+			} else {
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -312,14 +303,12 @@ public class RelatorioFinCtrl implements ActionListener {
 
 	}
 
-
 	public CategoryDataset criaDataset(List<?> dados) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		for(int i = 0; i < dados.size(); i++){
-        	dataset.addValue(Double.parseDouble(((IngressoMdl)dados.get(i)).getValor()),
-        			((IngressoMdl)dados.get(i)).getIngresso(), 
-        			((IngressoMdl)dados.get(i)).getIngresso()); //sis[i].getCategoria());
-        }
+		for (int i = 0; i < dados.size(); i++) {
+			dataset.addValue(Double.parseDouble(((IngressoMdl) dados.get(i)).getValor()),
+					((IngressoMdl) dados.get(i)).getIngresso(), ((IngressoMdl) dados.get(i)).getIngresso()); // sis[i].getCategoria());
+		}
 
 		return dataset;
 	}
@@ -335,7 +324,7 @@ public class RelatorioFinCtrl implements ActionListener {
 
 		// seleciona o plano de fundo do grafico
 		chart.setBackgroundPaint(Color.white);
-		
+
 		// pega uma referencia para customizacoes
 		CategoryPlot plot = chart.getCategoryPlot();
 		plot.setBackgroundPaint(Color.lightGray);
@@ -366,11 +355,18 @@ public class RelatorioFinCtrl implements ActionListener {
 
 	}
 
+	public void limpaCampos() {
+		txtDataInicio.setText(null);
+		txtDataFim.setText(null);
+		chartPanel.setChart(null);
+
+	}
+
 	private void salvaGrafico(/* OutputStream out */) throws IOException {
 
 		if (chart != null) {
-			FileNameExtensionFilter filtro = new FileNameExtensionFilter("Pasta de Arquivos","dir");
-			
+			FileNameExtensionFilter filtro = new FileNameExtensionFilter("Pasta de Arquivos", "dir");
+
 			String diretorioBase = System.getProperty("user.home") + "/Desktop";
 			File dir = new File(diretorioBase);
 
@@ -384,7 +380,7 @@ public class RelatorioFinCtrl implements ActionListener {
 			int retorno = choose.showOpenDialog(null);
 			if (retorno == JFileChooser.APPROVE_OPTION) {
 				caminhoArquivo = choose.getSelectedFile().getAbsolutePath();
-				OutputStream out = new FileOutputStream(caminhoArquivo+"/"+"novoGrafico.png");
+				OutputStream out = new FileOutputStream(caminhoArquivo + "/" + "novoGrafico.png");
 				ChartUtilities.writeChartAsPNG(out, chart, 500, 350);
 			}
 		} else {
@@ -393,31 +389,6 @@ public class RelatorioFinCtrl implements ActionListener {
 					"Erro", JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/error.png"));
 		}
 	}
-
-	public ActionListener geraGrafico = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-//			internalFrameGrafico.pack();
-//			RefineryUtilities.centerFrameOnScreen(internalFrameGrafico);
-//			internalFrameGrafico.setVisible(true);
-			filtroGrafico();
-			
-		}
-	};
-	public ActionListener salvar = new ActionListener() {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			try {
-				salvaGrafico();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-	};
 
 	public ActionListener abreCalendarioIni = new ActionListener() {
 
@@ -487,9 +458,23 @@ public class RelatorioFinCtrl implements ActionListener {
 		if (source == cbCategoria) {
 			carregaComboSubCategoria();
 		}
-		if(source == btnGerar){
+		if (source == btnGerar) {
 			filtroGrafico();
 			internalFrameGrafico.pack();
+
+		}
+		if (source == btnLimpar) {
+			limpaCampos();
+		}
+
+		if (source == btnSalvarImprimir) {
+			try {
+				salvaGrafico();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			limpaCampos();
 		}
 	}
 
