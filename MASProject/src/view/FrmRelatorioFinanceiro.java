@@ -71,6 +71,8 @@ public class FrmRelatorioFinanceiro extends JFrame {
 	public FrmRelatorioFinanceiro() throws ParseException {
 		setTitle("Relatório Financeiro");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setResizable(false);
 		setBounds(100, 100, 749, 604);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -195,13 +197,15 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		
 		RelatorioFinCtrl rFinCtrl = new RelatorioFinCtrl(cbCategoria, cbSubCategoria,  
 				 txtDataIni, txtDataFim, txtGanho, txtDespesa,
-				chart, chartPanel);
+				chart, chartPanel, btnGerar, btnSalvarimprimir,internalFrameGrafico);
 		
 
        btnSalvarimprimir.addActionListener(rFinCtrl.salvar);
        btnDataIni.addActionListener(rFinCtrl.abreCalendarioIni);
        btnDataFim.addActionListener(rFinCtrl.abreCalendarioFim);
-		cbCategoria.addActionListener(rFinCtrl);
-		btnGerar.addActionListener(rFinCtrl.geraGrafico);
+       cbCategoria.addActionListener(rFinCtrl);
+       btnGerar.addActionListener(rFinCtrl);
+       btnSalvarimprimir.addActionListener(rFinCtrl.salvar);
+     
 	}
 }
