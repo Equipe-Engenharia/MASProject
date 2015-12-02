@@ -2,10 +2,12 @@ package controller;
 
 import java.awt.Color;
 import java.awt.GradientPaint;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17,7 +19,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -36,9 +40,8 @@ import com.toedter.calendar.JCalendar;
 
 import view.FrmCalendario;
 
-
 public class RelatorioFinCtrl implements ActionListener {
-	
+
 	private JFreeChart chart;
 	private ChartPanel chartPanel;
 	private static JCalendar calendar;
@@ -47,13 +50,12 @@ public class RelatorioFinCtrl implements ActionListener {
 	private JPanel form;
 
 	private JComboBox<String> cbCategoria, cbSubCategoria;
-	
-	
-	//Fetch, merge, commit
-	public RelatorioFinCtrl(JComboBox<String> cbCategoria, JComboBox<String> cbSubCategoria,
-			 JTextField txtDataInicio, JTextField txtDataFim,
-			JTextField txtGanho, JTextField txtDespesa, JFreeChart chart, ChartPanel chartPanel){
-		
+
+	// Fetch, merge, commit
+	public RelatorioFinCtrl(JComboBox<String> cbCategoria, JComboBox<String> cbSubCategoria, JTextField txtDataInicio,
+			JTextField txtDataFim, JTextField txtGanho, JTextField txtDespesa, JFreeChart chart,
+			ChartPanel chartPanel) {
+
 		this.chart = chart;
 		this.chartPanel = chartPanel;
 		this.txtDataFim = txtDataFim;
@@ -70,49 +72,45 @@ public class RelatorioFinCtrl implements ActionListener {
 
 	public RelatorioFinCtrl(JCalendar calendar) {
 		RelatorioFinCtrl.calendar = calendar;
-		
+
 	}
-	
-	private void carregaComboCategoria(){
+
+	private void carregaComboCategoria() {
 		cbCategoria.addItem("");
 		cbCategoria.addItem("Visitante");
 		cbCategoria.addItem("Acervo");
 	}
-	
-	private void carregaComboSubCategoria(){
-		if(cbCategoria.getSelectedItem().equals("Visitante")){
+
+	private void carregaComboSubCategoria() {
+		if (cbCategoria.getSelectedItem().equals("Visitante")) {
 			cbSubCategoria.removeAllItems();
 			cbSubCategoria.addItem("Todos");
 			cbSubCategoria.addItem("Estudantes");
 			cbSubCategoria.addItem("Comum");
-		}else if(cbCategoria.getSelectedItem().equals("Acervo")){
+		} else if (cbCategoria.getSelectedItem().equals("Acervo")) {
 			cbSubCategoria.removeAllItems();
 			cbSubCategoria.addItem("Manutenção");
 			cbSubCategoria.addItem("Transporte");
 			cbSubCategoria.addItem("Exposição");
 			cbSubCategoria.addItem("Aquisição");
-		}else{
+		} else {
 			return;
 		}
 	}
-	
+
 	public void sessao() {
 
 		SessaoCtrl log = SessaoCtrl.getInstance();
 
-		if (("Operacional").equalsIgnoreCase(log.getLogon().get(0).getNivel()) ||
-				("Administrativo").equalsIgnoreCase(log.getLogon().get(0).getNivel())
-				){
+		if (("Operacional").equalsIgnoreCase(log.getLogon().get(0).getNivel())
+				|| ("Administrativo").equalsIgnoreCase(log.getLogon().get(0).getNivel())) {
 
-			log.registrar(
-					log.getLogon().get(0).getId(), 
-					log.getLogon().get(0).getUsuario(), 
-					log.getLogon().get(0).getNivel(),
-					form.getName());
-		} 
-//			else {
-//			msg("", log.getLogon().get(0).getNivel());
-//		}
+			log.registrar(log.getLogon().get(0).getId(), log.getLogon().get(0).getUsuario(),
+					log.getLogon().get(0).getNivel(), form.getName());
+		}
+		// else {
+		// msg("", log.getLogon().get(0).getNivel());
+		// }
 	}
 
 	public static int getFlag() {
@@ -160,14 +158,12 @@ public class RelatorioFinCtrl implements ActionListener {
 		chart = criaChart(dataset, titulo, nomeEixoX, nomeEixoY);
 		chartPanel = new ChartPanel(chart);
 
-		
 	}
-	
-	public void filtroGrafico(){
+
+	public void filtroGrafico() {
 		String categoria = cbCategoria.getSelectedItem().toString();
 		String subCategoria = cbSubCategoria.getSelectedItem().toString();
-		
-		
+
 	}
 
 	public CategoryDataset criaDataset(List<?> dados) {
@@ -220,14 +216,32 @@ public class RelatorioFinCtrl implements ActionListener {
 	}
 
 	private void salvaGrafico(/* OutputStream out */) throws IOException {
-		OutputStream out = new FileOutputStream("nomeDoGraficoAqui.png");
-		if (chart != null) {
-			ChartUtilities.writeChartAsPNG(out, chart, 500, 350);
-		} else {
-			JOptionPane.showMessageDialog(null,
-					"ATENÇÃO!\nNão há grafico para gravar.\n\nPor favor, complete todos os campos necessários e clique em Gerar gráfico.",
-					"Erro", JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/error.png"));
-		}
+
+//		if (chart != null) {
+
+			FileNameExtensionFilter filtro = new FileNameExtensionFilter("Pasta de Arquivos","dir");
+			
+			String diretorioBase = System.getProperty("user.home") + "/Desktop";
+			File dir = new File(diretorioBase);
+
+			JFileChooser choose = new JFileChooser();
+			choose.setCurrentDirectory(dir);
+			choose.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			choose.setAcceptAllFileFilterUsed(false);
+			choose.addChoosableFileFilter(filtro);
+			String caminhoArquivo = "";
+
+			int retorno = choose.showOpenDialog(null);
+			if (retorno == JFileChooser.APPROVE_OPTION) {
+				caminhoArquivo = choose.getSelectedFile().getAbsolutePath();
+				OutputStream out = new FileOutputStream(caminhoArquivo+"novoGrafico.png");
+				ChartUtilities.writeChartAsPNG(out, chart, 500, 350);
+			}
+//		} else {
+//			JOptionPane.showMessageDialog(null,
+//					"ATENÇÃO!\nNão há grafico para gravar.\n\nPor favor, complete todos os campos necessários e clique em Gerar gráfico.",
+//					"Erro", JOptionPane.PLAIN_MESSAGE, new ImageIcon("../MASProject/icons/error.png"));
+//		}
 	}
 
 	public ActionListener geraGrafico = new ActionListener() {
@@ -279,24 +293,29 @@ public class RelatorioFinCtrl implements ActionListener {
 		}
 
 	};
-	
+
 	// ESTE LISTNER TRATA A BUSCA DA DATA SELECIONADA AO FECHAR A TELA
 	public WindowListener fechaTela = new WindowListener() {
 
 		@Override
-		public void windowOpened(WindowEvent e) {}
+		public void windowOpened(WindowEvent e) {
+		}
 
 		@Override
-		public void windowIconified(WindowEvent e) {}
+		public void windowIconified(WindowEvent e) {
+		}
 
 		@Override
-		public void windowDeiconified(WindowEvent e) {}
+		public void windowDeiconified(WindowEvent e) {
+		}
 
 		@Override
-		public void windowDeactivated(WindowEvent e) {}
+		public void windowDeactivated(WindowEvent e) {
+		}
 
 		@Override
-		public void windowClosing(WindowEvent e) {}
+		public void windowClosing(WindowEvent e) {
+		}
 
 		@Override
 		public void windowClosed(WindowEvent e) {
@@ -304,12 +323,14 @@ public class RelatorioFinCtrl implements ActionListener {
 		}
 
 		@Override
-		public void windowActivated(WindowEvent e) {}
+		public void windowActivated(WindowEvent e) {
+		}
 	};
+
 	@Override
 	public void actionPerformed(ActionEvent actEvt) {
 		Object source = actEvt.getSource();
-		if(source == cbCategoria){
+		if (source == cbCategoria) {
 			carregaComboSubCategoria();
 		}
 	}
