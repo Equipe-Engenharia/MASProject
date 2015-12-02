@@ -29,7 +29,7 @@ public class FormRelatorioEstatistico extends JFrame {
 	private JLabel lblDataInicial, lblDataFinal, lblPerodo, lblFiltrarPor;
 	private JSeparator separator, separator_1, separator_2;
 	private JButton btnGerar, btnSalvarimprimir;
-	private JComboBox<?> cbFiltro;
+	private JComboBox<String> cbFiltro;
 	private JInternalFrame internalFrameGrafico;
 	private PieDataset dataset;
 	private JFreeChart chart;
@@ -122,7 +122,8 @@ public class FormRelatorioEstatistico extends JFrame {
 		contentPane.add(btnSalvarimprimir);
 		internalFrameGrafico.setVisible(true);
 		
-		RelatorioEstCtrl rEst = new RelatorioEstCtrl(chart, chartPanel, internalFrameGrafico);
+		RelatorioEstCtrl rEst = new RelatorioEstCtrl(chart, chartPanel, internalFrameGrafico, txtDataIni, txtDataFim,
+				cbFiltro, btnGerar, btnSalvarimprimir);
 	}
 
 }
