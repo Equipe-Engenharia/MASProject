@@ -46,6 +46,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 	private JComboBox<String> cbCategoria, cbSubCategoria;
 	private JButton btnGerar;
 	private MaskFormatter maskData;
+	private JButton btnLimpar;
 
 	/**
 	 * Launch the application.
@@ -195,16 +196,24 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		btnGerar.setBounds(559, 112, 150, 29);
 		contentPane.add(btnGerar);
 		
+		btnLimpar = new JButton("Limpar Campos");
+		btnLimpar.setIcon(new ImageIcon("../MASProject/icons/clear.png"));
+		btnLimpar.setBounds(381, 548, 155, 29);
+		contentPane.add(btnLimpar);
+		
 		RelatorioFinCtrl rFinCtrl = new RelatorioFinCtrl(cbCategoria, cbSubCategoria,  
 				 txtDataIni, txtDataFim, txtGanho, txtDespesa,
-				chart, chartPanel, btnGerar, btnSalvarimprimir,internalFrameGrafico);
+				chart, chartPanel, btnGerar, btnSalvarimprimir,internalFrameGrafico, btnLimpar);
+		
+		
 		
 
        btnDataIni.addActionListener(rFinCtrl.abreCalendarioIni);
        btnDataFim.addActionListener(rFinCtrl.abreCalendarioFim);
        cbCategoria.addActionListener(rFinCtrl);
        btnGerar.addActionListener(rFinCtrl);
-       btnSalvarimprimir.addActionListener(rFinCtrl.salvar);
+       btnSalvarimprimir.addActionListener(rFinCtrl);
+       btnLimpar.addActionListener(rFinCtrl);
      
 	}
 }
