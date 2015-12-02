@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.EventQueue;
+import java.text.ParseException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,8 +19,10 @@ import javax.swing.JButton;
 import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.border.MatteBorder;
+import javax.swing.text.MaskFormatter;
 
 import java.awt.Color;
 
@@ -31,7 +34,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 	private JInternalFrame internalFrameGrafico;
 	private CategoryDataset dataset;
 	private JFreeChart chart;
-	private ChartPanel chartPanel = new ChartPanel(chart);
+	private ChartPanel chartPanel ;
 	private JTextField txtDataIni;
 	private JTextField txtDataFim;
 	private JTextField txtGanho;
@@ -42,8 +45,8 @@ public class FrmRelatorioFinanceiro extends JFrame {
 	private JSeparator separator, separator_1, separator_2;
 	// arrumar argumento
 	private JComboBox<String> cbCategoria, cbSubCategoria;
-	private JPanel panel;
 	private JButton btnGerar;
+	private MaskFormatter maskData;
 
 	/**
 	 * Launch the application.
@@ -63,8 +66,9 @@ public class FrmRelatorioFinanceiro extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws ParseException 
 	 */
-	public FrmRelatorioFinanceiro() {
+	public FrmRelatorioFinanceiro() throws ParseException {
 		setTitle("Relatório Financeiro");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -74,6 +78,8 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		chartPanel  = new ChartPanel(chart);
+		
 		lblPeriodo = new JLabel("Período:");
 		lblPeriodo.setBounds(41, 12, 60, 14);
 		contentPane.add(lblPeriodo);
@@ -81,8 +87,10 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		lblDataInicial = new JLabel("Data Inicial");
 		lblDataInicial.setBounds(41, 37, 72, 14);
 		contentPane.add(lblDataInicial);
+		
+		maskData = new MaskFormatter("##/##/####");
 
-		txtDataIni = new JTextField();
+		txtDataIni = new JFormattedTextField(maskData);
 		txtDataIni.setBounds(123, 34, 86, 20);
 		contentPane.add(txtDataIni);
 		txtDataIni.setColumns(10);
@@ -91,7 +99,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		lblDataFinal.setBounds(381, 37, 72, 14);
 		contentPane.add(lblDataFinal);
 
-		txtDataFim = new JTextField();
+		txtDataFim = new JFormattedTextField(maskData);
 		txtDataFim.setBounds(463, 34, 86, 20);
 		contentPane.add(txtDataFim);
 		txtDataFim.setColumns(10);
@@ -183,16 +191,21 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		contentPane.add(separator_2);
 		
 		btnGerar = new JButton("Gerar Gráfico");
-		btnGerar.setIcon(new ImageIcon("C:\\Users\\Denys\\git\\MASProject\\MASProject\\icons\\ok.png"));
+		btnGerar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
 		btnGerar.setBounds(559, 112, 150, 29);
 		contentPane.add(btnGerar);
 		
 		RelatorioFinCtrl rFinCtrl = new RelatorioFinCtrl(cbCategoria, cbSubCategoria,  
-				btnGerar, btnSalvarimprimir, txtDataIni, txtDataFim, txtGanho, txtDespesa,
+				 txtDataIni, txtDataFim, txtGanho, txtDespesa,
 				chart, chartPanel);
 		
-		cbCategoria.addActionListener(rFinCtrl);
-		btnGerar.addActionListener(rFinCtrl);
-		btnSalvarimprimir.addActionListener(rFinCtrl.salvar);
+
+       btnSalvarimprimir.addActionListener(rFinCtrl.salvar);
+       btnDataIni.addActionListener(rFinCtrl.abreCalendarioIni);
+       btnDataFim.addActionListener(rFinCtrl.abreCalendarioFim);
+       cbCategoria.addActionListener(rFinCtrl);
+       btnGerar.addActionListener(rFinCtrl);
+       btnSalvarimprimir.addActionListener(rFinCtrl.salvar);
+       btnGerar.addActionListener(rFinCtrl.geraGrafico);
 	}
 }
