@@ -66,11 +66,13 @@ public class RelatorioFinCtrl implements ActionListener {
 	private Date dataFinal;
 
 	private final String[] categorias = { "", "Visitantes", "Acervo" };
-	private final String[] subCategoriaVisitantes = { "Todos", "Estudantes", "Inteira", "Especial", "Meia" };
+	private final String[] subCategoriaVisitantes = {"Todos"};
 	private final String[] subCategoriaAcervo = { "Manutenção", "Transporte", "Aquisição" };
 
 	private ArquivosCtrl arquivos;
 	private List<IngressoMdl> ingressos;
+	
+	private double ganhoComVisitantes[];
 
 	// Fetch, merge, commit
 	public RelatorioFinCtrl(JComboBox<String> cbCategoria, JComboBox<String> cbSubCategoria, JTextField txtDataInicio,
@@ -230,7 +232,7 @@ public class RelatorioFinCtrl implements ActionListener {
 
 
 	private void lerArquivoIngresso() { //modificar esse metodo de acordo com a subcategoria
-			ingressos = new ArrayList<IngressoMdl>();
+		  ingressos = new ArrayList<IngressoMdl>();
 		  arquivos = new ArquivosCtrl();
 		  String linha = new String();
 		  ArrayList<String> list = new ArrayList<>();
@@ -269,120 +271,8 @@ public class RelatorioFinCtrl implements ActionListener {
 		    }
 		    txtGanho.setText(String.valueOf(ganhos));   
 		    txtDespesa.setText("0");
-		    //se a subcategoria for de estudante
-		   }else if(subCategoria.contains("Est")){
-		    double ganhos = 0.0;
-		    for(int i = 0; i < listaIngresso.length; i++){
-		     if(listaIngresso[i].contains("Est")){
-		      String data = listaIngresso[i - 6].toString().substring(12);
-		      if(validaData(data)){
-		       IngressoMdl ingresso = new IngressoMdl();
-		       ingresso.setId(null);
-		       ingresso.setData(null);
-		       ingresso.setHora(null);
-		       ingresso.setBilhete(null);
-		       ingresso.setExpo(null);
-		       ingresso.setVisitaId(null);
-		       ingresso.setVisitante(null);
-		       ingresso.setIngresso(listaIngresso[i].substring(11));
-		       System.out.println(listaIngresso[i].substring(11));
-		       ingresso.setQtd(null);
-		       ingresso.setValor(listaIngresso[i+2].substring(15).replace(",", "."));
-		       System.out.println(listaIngresso[i+2].substring(15).replace(",", "."));
-		       ganhos += Double.parseDouble(listaIngresso[i+2].substring(15).replace(",", "."));
-		       ingresso.setPagamento(null);
-		       ingressos.add(ingresso);
-		       list.clear();
-		      }
-		     }
-		    }
-		    txtGanho.setText(String.valueOf(ganhos));
-		    txtDespesa.setText("0");
-		   }else if(subCategoria.contains("Int")){
-			   double ganhos = 0.0;
-			    for(int i = 0; i < listaIngresso.length; i++){
-			     if(listaIngresso[i].contains("Int")){
-			      String data = listaIngresso[i - 6].toString().substring(12);
-			      if(validaData(data)){
-			       IngressoMdl ingresso = new IngressoMdl();
-			       ingresso.setId(null);
-			       ingresso.setData(null);
-			       ingresso.setHora(null);
-			       ingresso.setBilhete(null);
-			       ingresso.setExpo(null);
-			       ingresso.setVisitaId(null);
-			       ingresso.setVisitante(null);
-			       ingresso.setIngresso(listaIngresso[i].substring(11));
-			       System.out.println(listaIngresso[i].substring(11));
-			       ingresso.setQtd(null);
-			       ingresso.setValor(listaIngresso[i+2].substring(15).replace(",", "."));
-			       System.out.println(listaIngresso[i+2].substring(15).replace(",", "."));
-			       ganhos += Double.parseDouble(listaIngresso[i+2].substring(15).replace(",", "."));
-			       ingresso.setPagamento(null);
-			       ingressos.add(ingresso);
-			       list.clear();
-			      }
-			     }
-			    }
-			    txtGanho.setText(String.valueOf(ganhos));
-			    txtDespesa.setText("0");
-		   }else if(subCategoria.contains("Espec")){
-			   double ganhos = 0.0;
-			    for(int i = 0; i < listaIngresso.length; i++){
-			     if(listaIngresso[i].contains("Espec")){
-			      String data = listaIngresso[i - 6].toString().substring(12);
-			      if(validaData(data)){
-			       IngressoMdl ingresso = new IngressoMdl();
-			       ingresso.setId(null);
-			       ingresso.setData(null);
-			       ingresso.setHora(null);
-			       ingresso.setBilhete(null);
-			       ingresso.setExpo(null);
-			       ingresso.setVisitaId(null);
-			       ingresso.setVisitante(null);
-			       ingresso.setIngresso(listaIngresso[i].substring(11));
-			       System.out.println(listaIngresso[i].substring(11));
-			       ingresso.setQtd(null);
-			       ingresso.setValor(listaIngresso[i+2].substring(15).replace(",", "."));
-			       System.out.println(listaIngresso[i+2].substring(15).replace(",", "."));
-			       ganhos += Double.parseDouble(listaIngresso[i+2].substring(15).replace(",", "."));
-			       ingresso.setPagamento(null);
-			       ingressos.add(ingresso);
-			       list.clear();
-			      }
-			     }
-			    }
-			    txtGanho.setText(String.valueOf(ganhos));
-			    txtDespesa.setText("0");
-		   }else if(subCategoria.contains("Meia")){
-			   double ganhos = 0.0;
-			    for(int i = 0; i < listaIngresso.length; i++){
-			     if(listaIngresso[i].contains("Meia")){
-			      String data = listaIngresso[i - 6].toString().substring(12);
-			      if(validaData(data)){
-			       IngressoMdl ingresso = new IngressoMdl();
-			       ingresso.setId(null);
-			       ingresso.setData(null);
-			       ingresso.setHora(null);
-			       ingresso.setBilhete(null);
-			       ingresso.setExpo(null);
-			       ingresso.setVisitaId(null);
-			       ingresso.setVisitante(null);
-			       ingresso.setIngresso(listaIngresso[i].substring(11));
-			       System.out.println(listaIngresso[i].substring(11));
-			       ingresso.setQtd(null);
-			       ingresso.setValor(listaIngresso[i+2].substring(15).replace(",", "."));
-			       System.out.println(listaIngresso[i+2].substring(15).replace(",", "."));
-			       ganhos += Double.parseDouble(listaIngresso[i+2].substring(15).replace(",", "."));
-			       ingresso.setPagamento(null);
-			       ingressos.add(ingresso);
-			       list.clear();
-			      }
-			     }
-			    }
-			    txtGanho.setText(String.valueOf(ganhos));
-			    txtDespesa.setText("0");
 		   }
+		   
 		  } catch (IOException e) {
 		   JOptionPane.showMessageDialog(form, "Não foi possível ler o arquivo 'ingressos' ");
 		  }
