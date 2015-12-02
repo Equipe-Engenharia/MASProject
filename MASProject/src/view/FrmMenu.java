@@ -1,37 +1,24 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.text.ParseException;
 import javax.swing.*;
 
 import controller.MenuCtrl;
-import controller.SessaoCtrl;
 
 public class FrmMenu extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-	private JMenuItem salvar, imprimir, login, usuarios, sair;
-	private JMenuItem acervoCadastrar, acervoEditar, artistaCadastrar, artistaEditar;
-	private JMenuItem categoriaCadastrar, categoriaEditar, materialCadastrar, materialEditar;
-	private JMenuItem setorCadastrar, setorEditar, emprestimo;
-	private JMenuItem exposicaoCadastrar, exposicaoEditar;
-	private JMenuItem ingressoCadastrar;
-	private JMenuItem visitanteCadastrar, visitanteEditar;
-	private JMenuItem visualizar;
-	private JMenuItem documentacao;
+	private JMenuItem salvar, imprimir, login, usuarios, sair, acervoCadastrar, 
+	acervoEditar, artistaCadastrar, artistaEditar, categoriaCadastrar, 
+	categoriaEditar, materialCadastrar, materialEditar, setorCadastrar, 
+	setorEditar, emprestimo, exposicaoCadastrar, exposicaoEditar, ingressoCadastrar, 
+	visitanteCadastrar, visitanteEditar, visualizar, documentacao;
 	private JMenuBar menuBar;
-	private JMenu obra, artista, categoria, material, setor;
-	private JMenu arquivo, acervo, exposicao, visitante, ingresso, relatorios, ajuda; 
-
-	private FrmLogin         frame11;
+	private JMenu obra, artista, categoria, material, setor, 
+	arquivo, acervo, exposicao, visitante, ingresso, relatorios, ajuda;
 	
 
-	
-
-	
-
-	public FrmMenu() throws ParseException {
+	public FrmMenu() {
 
 		super("Sistema MASP");
 
@@ -44,23 +31,7 @@ public class FrmMenu extends JFrame{
 				screenSize.width  - inset*2,
 				screenSize.height - inset*2);
 
-
 		final JDesktopPane desktopPane = new JDesktopPane();
-
-
-	
-
-
-		visualizar = new JMenuItem("Tipo A");
-		documentacao = new JMenuItem("Documentação");
-		menuBar = new JMenuBar();
-		arquivo = new JMenu("Arquivo");
-		acervo = new JMenu("Acervo");
-		exposicao = new JMenu("Exposição");
-		visitante = new JMenu("Visitante");
-		ingresso = new JMenu("Ingresso");
-		relatorios = new JMenu("Relatórios");
-		ajuda = new JMenu("Ajuda");
 
 		desktopPane.setBackground(Color.gray); // Ajusta uma cor de fundo (opção caso a imagem de fundo dÍ algum problema no programa)
 
@@ -70,6 +41,34 @@ public class FrmMenu extends JFrame{
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		menuBar = new JMenuBar();
+		
+		arquivo = new JMenu("Arquivo");
+		menuBar.add(arquivo);
+		
+		acervo = new JMenu("Acervo");
+		menuBar.add(acervo);
+		
+		exposicao = new JMenu("Exposição");
+		menuBar.add(exposicao);
+		
+		visitante = new JMenu("Visitante");
+		menuBar.add(visitante);
+		
+		ingresso = new JMenu("Ingresso");
+		menuBar.add(ingresso);
+		
+		relatorios = new JMenu("Relatórios");
+		menuBar.add(relatorios);
+		
+		ajuda = new JMenu("Ajuda");
+		menuBar.add(ajuda);
+		
+		visualizar = new JMenuItem("Tipo A");
+		relatorios.add(visualizar);
+		
+		documentacao = new JMenuItem("Documentação");
+		ajuda.add(documentacao);
 
 		login = new JMenuItem("Fazer Login");
 		arquivo.add(login);
@@ -153,17 +152,6 @@ public class FrmMenu extends JFrame{
 		ingressoCadastrar = new JMenuItem("Vender");
 		ingresso.add(ingressoCadastrar);
 		
-		
-		relatorios.add(visualizar);
-		ajuda.add(documentacao);
-		menuBar.add(arquivo);
-		menuBar.add(acervo);
-		menuBar.add(exposicao);
-		menuBar.add(visitante);
-		menuBar.add(ingresso);
-		menuBar.add(relatorios);
-		menuBar.add(ajuda); 
-		
 
 		MenuCtrl controle = new MenuCtrl (desktopPane);
 
@@ -189,10 +177,9 @@ public class FrmMenu extends JFrame{
 		ingressoCadastrar.addActionListener(controle.ingressoCadastrar);
 	}
 
-	public static void main(String args[]) throws ParseException{
+	public static void main(String args[]) {
 
 		@SuppressWarnings("unused")
 		FrmMenu menu = new FrmMenu();
-
 	}  
 }
