@@ -75,8 +75,8 @@ public class MenuCtrl implements ComponentListener{
 
 		case "errorLog":
 			JOptionPane.showMessageDialog(null, 
-					"ACESSO NEGADO!\n\nPor favor, fa√ßa o login no sistema para acessar este recurso.", 
-					"Acesso n√£o Autorizado",
+					"ACESSO NEGADO!\n\nPor favor, faÁa o login no sistema para acessar este recurso.", 
+					"Acesso n„o Autorizado",
 					JOptionPane.PLAIN_MESSAGE, 
 					new ImageIcon("../MASProject/icons/error.png"));
 			//System.exit(0);
@@ -84,7 +84,7 @@ public class MenuCtrl implements ComponentListener{
 
 		case "errorSession":
 			JOptionPane.showMessageDialog(null, 
-					"ACESSO NEGADO!\n\nPor favor, solicite a autoriza√ß√£o de um administrador.", 
+					"ACESSO NEGADO!\n\nPor favor, solicite a autorizaÁ„o de um administrador.", 
 					"Bloqueado", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
@@ -92,7 +92,7 @@ public class MenuCtrl implements ComponentListener{
 
 		case "systemClose":
 			Object[] exit = { "Confirmar", "Cancelar" };  
-			int fechar = JOptionPane.showOptionDialog(null, "ATEN√á√ÉO!\n\nDeseja encerrar a aplica√ß√£o?",
+			int fechar = JOptionPane.showOptionDialog(null, "ATEN«√O!\n\nDeseja encerrar a aplicaÁ„o?",
 					"Fechamento do Programa!", 
 					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
 					new ImageIcon("../MASProject/icons/warning.png"), exit, exit[1]);
@@ -105,7 +105,7 @@ public class MenuCtrl implements ComponentListener{
 
 		default:
 			JOptionPane.showMessageDialog(null, 
-					"ERRO! Algo n√£o deveria ter acontecido‚Ä¶\n\nMenuCtrl - Termo: " + mensagem
+					"ERRO! Algo n„o deveria ter acontecidoÖ\n\nMenuCtrl - Termo: " + mensagem
 					+ "\n\nOcorreu no Controller desta Tela.", 
 					"Erro no Controller", 
 					JOptionPane.PLAIN_MESSAGE,

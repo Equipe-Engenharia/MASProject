@@ -1,5 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/controller/AcervoCtrl.java=UTF-8
+encoding//src/controller/EmprestimoCtrl.java=UTF-8
 encoding//src/persistence/ObraFile.java=UTF-8
 encoding//src/view/FrmAcervoEdit.java=UTF-8
+encoding//src/view/FrmEmprestimo.java=UTF-8
 encoding//src/view/FrmMenu.java=UTF-8

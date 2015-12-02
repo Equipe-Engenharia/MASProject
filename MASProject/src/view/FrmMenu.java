@@ -33,7 +33,7 @@ public class FrmMenu extends JFrame{
 
 		final JDesktopPane desktopPane = new JDesktopPane();
 
-		desktopPane.setBackground(Color.gray); // Ajusta uma cor de fundo (opÃ§Ã£o caso a imagem de fundo dÃ� algum problema no programa)
+		desktopPane.setBackground(Color.gray); // Ajusta uma cor de fundo (opção caso a imagem de fundo dÃ� algum problema no programa)
 
 		
 		menuBar = new JMenuBar();
@@ -49,7 +49,7 @@ public class FrmMenu extends JFrame{
 		acervo = new JMenu("Acervo");
 		menuBar.add(acervo);
 		
-		exposicao = new JMenu("ExposiÃ§Ã£o");
+		exposicao = new JMenu("Exposição");
 		menuBar.add(exposicao);
 		
 		visitante = new JMenu("Visitante");
@@ -58,7 +58,7 @@ public class FrmMenu extends JFrame{
 		ingresso = new JMenu("Ingresso");
 		menuBar.add(ingresso);
 		
-		relatorios = new JMenu("RelatÃ³rios");
+		relatorios = new JMenu("Relatórios");
 		menuBar.add(relatorios);
 		
 		ajuda = new JMenu("Ajuda");
@@ -67,19 +67,19 @@ public class FrmMenu extends JFrame{
 		visualizar = new JMenuItem("Tipo A");
 		relatorios.add(visualizar);
 		
-		documentacao = new JMenuItem("DocumentaÃ§Ã£o");
+		documentacao = new JMenuItem("Documentação");
 		ajuda.add(documentacao);
 
 		login = new JMenuItem("Fazer Login");
 		arquivo.add(login);
 
-		usuarios = new JMenuItem("Configurar UsuÃ¡rios");
+		usuarios = new JMenuItem("Configurar Usuários");
 		arquivo.add(usuarios);
 		
-		salvar = new JMenuItem("Salvar Comoâ€¦");
+		salvar = new JMenuItem("Salvar Como…");
 		arquivo.add(salvar);
 		
-		imprimir = new JMenuItem("Imprimirâ€¦");
+		imprimir = new JMenuItem("Imprimir…");
 		arquivo.add(imprimir);
 		
 		arquivo.add(new JSeparator());
@@ -104,7 +104,7 @@ public class FrmMenu extends JFrame{
 		
 		acervo.add(new JSeparator());
 		
-		emprestimo = new JMenuItem("EmprÃ©stimos");
+		emprestimo = new JMenuItem("Empréstimos");
 		acervo.add(emprestimo);
 		
 		acervoCadastrar = new JMenuItem("Cadastrar");

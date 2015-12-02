@@ -84,12 +84,12 @@ public class FrmLogin extends JInternalFrame {
 		txtId.setColumns(10);
 		contentPane.add(txtId);
 		
-		lblUsuario = new JLabel("UsuÃ¡rio");
+		lblUsuario = new JLabel("Usuário");
 		lblUsuario.setBounds(36, 71, 61, 16);
 		contentPane.add(lblUsuario);
 
 		txtUsuario = new JTextField();
-		txtUsuario.setToolTipText("Digite aqui o usuÃ¡rioâ€¦");
+		txtUsuario.setToolTipText("Digite aqui o usuário…");
 		txtUsuario.setBounds(98, 65, 178, 28);
 		contentPane.add(txtUsuario);
 		txtUsuario.setColumns(10);
@@ -99,7 +99,7 @@ public class FrmLogin extends JInternalFrame {
 		contentPane.add(lblSenha);
 		
 		pwdSenha = new JPasswordField();
-		pwdSenha.setToolTipText("Digite aqui a senhaâ€¦");
+		pwdSenha.setToolTipText("Digite aqui a senha…");
 		pwdSenha.setBounds(98, 105, 178, 28);
 		contentPane.add(pwdSenha);
 		
@@ -142,15 +142,6 @@ public class FrmLogin extends JInternalFrame {
 				//SessaoCtrl log = SessaoCtrl.getInstance();
 				//if (log.acesso() == false){
 					dispose();
-					/*try {
-						FrmIngresso frm = new FrmIngresso();
-						frm.setVisible(true);
-						frm.setLocation(0,0);
-					} catch (ParseException e1) {
-						e1.printStackTrace();
-					}
-					
-				}*/
 			} 
 		});
 		
@@ -159,15 +150,6 @@ public class FrmLogin extends JInternalFrame {
 				//SessaoCtrl log = SessaoCtrl.getInstance();
 				//if (log.acesso() == false){
 					dispose();
-					/*try {
-						FrmIngresso frm = new FrmIngresso();
-						frm.setVisible(true);
-						frm.setLocation(0,0);
-					} catch (ParseException e1) {
-						e1.printStackTrace();
-					}
-					
-				}*/
 			} 
 		});
 		
