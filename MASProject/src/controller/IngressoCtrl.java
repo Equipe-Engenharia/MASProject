@@ -425,11 +425,11 @@ public class IngressoCtrl implements ComponentListener {
 			if(compra.size() == 0){
 				ftxtTotal.setValue(total);
 			}
-		} else {
-			//POR PADRÃƒO A QUANTIDADE Ã‰ "1"
+		} /*else {
+			//POR PADRÃƒO A QUANTIDADE É "1"
 			txtQtd.setText("1");
 			atualizaValor();
-		}
+		}*/
 	}
 
 
@@ -862,7 +862,7 @@ public class IngressoCtrl implements ComponentListener {
 				}
 			}
 			
-			txtQtd.setText(null);
+			//txtQtd.setText(null);
 		}
 
 		@Override
@@ -881,10 +881,10 @@ public class IngressoCtrl implements ComponentListener {
 			case KeyEvent.VK_RIGHT:
 				break;
 			case KeyEvent.VK_ESCAPE:
-				msg("system","Fechamento");
+				/*msg("system","Fechamento");
 				if(validar != false){
 				System.exit(0);
-				}
+				}*/
 				break;
 			case KeyEvent.VK_DELETE:
 				removeLinha();
