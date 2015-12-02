@@ -12,6 +12,7 @@ import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -42,6 +43,7 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 
+
 import com.toedter.calendar.JCalendar;
 
 import view.FrmCalendario;
@@ -65,7 +67,8 @@ public class RelatorioFinCtrl implements ActionListener {
 	private JButton btnGerar, btnSalvarImprimir;
 	
 	private String subCategoria = "";
-	
+	private Date dataIni;
+	private Date dataFinal;
 	
 	private final String[] categorias = {"", "Visitantes", "Acervo"};
 	private final String[] subCategoriaVisitantes = {"Todos", "Estudantes", "Comum", "Especial", "Meia"};
@@ -118,8 +121,6 @@ public class RelatorioFinCtrl implements ActionListener {
 	private void carregaComboSubCategoria(){
 		if(cbCategoria.getSelectedItem().toString().contains("Visi")){
 			cbSubCategoria.removeAllItems();
-			
-		
 			for(String subCategory : subCategoriaVisitantes){
 				cbSubCategoria.addItem(subCategory);
 			}
@@ -193,12 +194,20 @@ public class RelatorioFinCtrl implements ActionListener {
 		chart = criaChart(dataset, titulo, nomeEixoX, nomeEixoY);
 		chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new Dimension(internalFrameGrafico.getContentPane().getWidth(), internalFrameGrafico.getContentPane().getHeight()));
-        internalFrameGrafico.setContentPane(chartPanel);
-        
+        internalFrameGrafico.setContentPane(chartPanel);        
 	}
 
 	
 	private void filtroGrafico(){
+		String dataInicio = txtDataInicio.getText();
+		String dataFim = txtDataFim.getText();
+		SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
+		try{
+			dataIni = (Date) mascara.parse(dataInicio.replace("/", "").replace("/", ""));
+			dataFinal = (Date) mascara.parse(dataFim.replace("/", "").replace("/", ""));
+		}catch(ParseException e){
+			e.printStackTrace();
+		}
 		String categoria = cbCategoria.getSelectedItem().toString();
 		subCategoria = cbSubCategoria.getSelectedItem().toString();
 		String titulo = "Finanças " + categoria + " - Periodo: " + txtDataInicio.getText() + " a " + txtDataFim.getText();
@@ -223,7 +232,7 @@ public class RelatorioFinCtrl implements ActionListener {
 		String linha = new String();
 		ArrayList<String> list = new ArrayList<>();
 		try {
-			arquivos.leArquivo("../MASProject/dados/", "ingressoTipo");
+			arquivos.leArquivo("../MASProject/dados/", "ingresso");
 			linha = arquivos.getBuffer();
 			String[] listaIngresso = linha.split(";");
 			if(subCategoria.contains("Tod")){
@@ -232,43 +241,65 @@ public class RelatorioFinCtrl implements ActionListener {
 					String text = s.replaceAll(".*: ", "");
 					list.add(text);
 					if (s.contains("---")) {
-						IngressoMdl ingresso = new IngressoMdl();
-						ingresso.setId(list.get(0));
-						ingresso.setData(null);
-						ingresso.setHora(null);
-						ingresso.setBilhete(null);
-						ingresso.setExpo(null);
-						ingresso.setVisitaId(null);
-						ingresso.setVisitante(null);
-						ingresso.setIngresso(list.get(1));
-						ingresso.setQtd(null);
-						ingresso.setValor(list.get(2));
-						ganhos += Double.parseDouble(list.get(2));
-						ingresso.setPagamento(null);
-						ingressos.add(ingresso);
-						list.clear();
+						String data = list.get(1).toString();
+						SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
+						try {
+							Date dataAtual = mascara.parse(data.replace("/", "").replace("/", ""));
+							//se a data do arquivo estiver dentro do intervalo de datas, o vetor de objetos é setado
+							if(dataAtual.after(dataIni) && dataAtual.before(dataFinal)){
+								IngressoMdl ingresso = new IngressoMdl();
+								ingresso.setId(list.get(0));
+								ingresso.setData(list.get(1));
+								ingresso.setHora(null);
+								ingresso.setBilhete(null);
+								ingresso.setExpo(null);
+								ingresso.setVisitaId(null);
+								ingresso.setVisitante(null);
+								ingresso.setIngresso(list.get(7));
+								ingresso.setQtd(null);
+								ingresso.setValor(list.get(9).substring(3));
+								ganhos += Double.parseDouble(list.get(9).substring(3));
+								ingresso.setPagamento(null);
+								ingressos.add(ingresso);
+								list.clear();
+							}
+						} catch (ParseException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 				txtGanho.setText(String.valueOf(ganhos));
+				
+				//se a subcategoria for de estudante
 			}else if(subCategoria.contains("Est")){
 				double ganhos = 0.0;
 				for(int i = 0; i < listaIngresso.length; i++){
 					if(listaIngresso[i].contains("Est")){
-						IngressoMdl ingresso = new IngressoMdl();
-						ingresso.setId(null);
-						ingresso.setData(null);
-						ingresso.setHora(null);
-						ingresso.setBilhete(null);
-						ingresso.setExpo(null);
-						ingresso.setVisitaId(null);
-						ingresso.setVisitante(null);
-						ingresso.setIngresso(listaIngresso[i].substring(11));
-						ingresso.setQtd(null);
-						ingresso.setValor(listaIngresso[i+1].substring(11));
-						ganhos += Double.parseDouble(listaIngresso[i+1].substring(11));
-						ingresso.setPagamento(null);
-						ingressos.add(ingresso);
-						list.clear();
+						String data = listaIngresso[i - 6].toString().substring(12);
+						SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
+						try {
+							Date dataAtual = mascara.parse(data.replace("/", "").replace("/", ""));
+							//se a data do arquivo estiver dentro do intervalo de datas, o vetor de objetos é setado
+							if(dataAtual.after(dataIni) && dataAtual.before(dataFinal)){
+								IngressoMdl ingresso = new IngressoMdl();
+								ingresso.setId(null);
+								ingresso.setData(null);
+								ingresso.setHora(null);
+								ingresso.setBilhete(null);
+								ingresso.setExpo(null);
+								ingresso.setVisitaId(null);
+								ingresso.setVisitante(null);
+								ingresso.setIngresso(listaIngresso[i].substring(11));
+								ingresso.setQtd(null);
+								ingresso.setValor(listaIngresso[i+2].substring(15));
+								ganhos += Double.parseDouble(listaIngresso[i+2].substring(15));
+								ingresso.setPagamento(null);
+								ingressos.add(ingresso);
+								list.clear();
+							}
+						}catch(ParseException e){
+							e.printStackTrace();
+						}
 					}
 				}
 				txtGanho.setText(String.valueOf(ganhos));
