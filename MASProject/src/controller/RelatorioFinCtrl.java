@@ -201,19 +201,25 @@ public class RelatorioFinCtrl implements ActionListener {
 	private void filtroGrafico(){
 		String dataInicio = txtDataInicio.getText();
 		String dataFim = txtDataFim.getText();
+		String categoria = cbCategoria.getSelectedItem().toString();
+		subCategoria = cbSubCategoria.getSelectedItem().toString();
+		String titulo = "Finanças " + categoria + " - Periodo: " + dataInicio + " a " + dataFim;
+		
 		SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
+		
 		try{
 			dataIni = (Date) mascara.parse(dataInicio.replace("/", "").replace("/", ""));
 			dataFinal = (Date) mascara.parse(dataFim.replace("/", "").replace("/", ""));
 		}catch(ParseException e){
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(form, "Não foi possível converter a data do arquivo");
 		}
-		String categoria = cbCategoria.getSelectedItem().toString();
-		subCategoria = cbSubCategoria.getSelectedItem().toString();
-		String titulo = "Finanças " + categoria + " - Periodo: " + txtDataInicio.getText() + " a " + txtDataFim.getText();
 		if(categoria.contains("Visi")){
 			lerArquivoIngresso();
-			criaGrafico(titulo, ingressos, "Tipo de ingresso", "Valor do ingresso");
+			if(ingressos.size() > 0)
+				criaGrafico(titulo, ingressos, "Tipo de ingresso", "Valor do ingresso");
+			else{
+				JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
+			}
 		}
 		else{
 			if(subCategoria.contains("Manu")){
