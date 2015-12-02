@@ -192,9 +192,9 @@ public class IngressoCtrl implements ComponentListener {
 		//VALOR INICIAL CASO O ARQUIVO TXT ESTEJA VAZIO
 		txtBilhete.setText(String.format("%09d",1));
 		
-		//VERIFICA SE A TABELA ESTÁ CARREGADA
+		//VERIFICA SE A TABELA ESTÃ� CARREGADA
 		if(tbCompra.getRowCount() > 0){
-			//VERIFICA SE HOUVE EXCLUSÃO NA TABELA E RETORNA O BILHETE ANTERIOR À EXCLUSÃO
+			//VERIFICA SE HOUVE EXCLUSÃƒO NA TABELA E RETORNA O BILHETE ANTERIOR Ã€ EXCLUSÃƒO
 			if(altera != null){
 				txtBilhete.setText(altera);
 				altera = null;
@@ -225,7 +225,7 @@ public class IngressoCtrl implements ComponentListener {
 							txtBilhete.setText(String.format("%09d", num));
 							bilhete.clear();
 						} else {
-							//SE NÀO RETORNAR DADOS DO ARQUIVO TXT INICIA O BILHETE
+							//SE NÃ€O RETORNAR DADOS DO ARQUIVO TXT INICIA O BILHETE
 							txtBilhete.setText(String.format("%09d",1));
 						}
 					}
@@ -233,7 +233,7 @@ public class IngressoCtrl implements ComponentListener {
 					e.printStackTrace();
 				}
 			} else {
-				//SE NÃO EXISTE O ARQUIVO TXT INICIA O BILHETE
+				//SE NÃƒO EXISTE O ARQUIVO TXT INICIA O BILHETE
 				txtBilhete.setText(String.format("%09d", 1));
 			}
 		}
@@ -259,7 +259,7 @@ public class IngressoCtrl implements ComponentListener {
 			linhas.add(item);
 		}
 		
-		//CONFIGURA O ALINHAMENTO DOS TÍTULOS DAS COLUNAS DA TABELA
+		//CONFIGURA O ALINHAMENTO DOS TÃ�TULOS DAS COLUNAS DA TABELA
 		((DefaultTableCellRenderer) tbCompra.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 
 		//CONFIGURA O ALINHAMENTO PARA AS COLUNAS DA TABELA
@@ -411,7 +411,7 @@ public class IngressoCtrl implements ComponentListener {
 		}
 		//PRECORRE O ARRAY DOS DADOS
 		for (int i = 0; i < tipo.size(); i++) {
-			//CARREGA O VALOR DO INGRESSO ESCOLHIDO PARA O PREÇO UNITÁRIO
+			//CARREGA O VALOR DO INGRESSO ESCOLHIDO PARA O PREÃ‡O UNITÃ�RIO
 			if (cbIngresso.getSelectedItem().toString().equals(tipo.get(i).getTipo())) {
 				ftxtValorUnit.setValue(Integer.parseInt(tipo.get(i).getValor()));
 			}
@@ -426,7 +426,7 @@ public class IngressoCtrl implements ComponentListener {
 				ftxtTotal.setValue(total);
 			}
 		} else {
-			//POR PADRÃO A QUANTIDADE É "1"
+			//POR PADRÃƒO A QUANTIDADE Ã‰ "1"
 			txtQtd.setText("1");
 			atualizaValor();
 		}
@@ -585,7 +585,7 @@ public class IngressoCtrl implements ComponentListener {
 					txtId.setText(visitantes.get(i).getId());
 					txtPesquisa.setText(visitantes.get(i).getNome());
 					validar = true;
-					//VERIFICA OS REGISTROS QUE COMEÇAM COM O TEXTO DIGITADO
+					//VERIFICA OS REGISTROS QUE COMEÃ‡AM COM O TEXTO DIGITADO
 				} else if (visitantes.get(i).getNome().toLowerCase().startsWith(txtPesquisa.getText().toLowerCase())) {
 					validar = true;
 				}
@@ -608,7 +608,7 @@ public class IngressoCtrl implements ComponentListener {
 					pesquisa = lista.get(i).getId();
 				}
 				if (filtro != null && filtro.length > 1) {
-					//INFORMA AO USUÁRIO UMA LISTA DOS ID's DOS USUÁRIOS E PEDE RETORNO
+					//INFORMA AO USUÃ�RIO UMA LISTA DOS ID's DOS USUÃ�RIOS E PEDE RETORNO
 					pesquisa = (String) JOptionPane.showInputDialog(form, "Selecione:\n", "Registros Localizados",
 							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
 				} 
@@ -638,7 +638,7 @@ public class IngressoCtrl implements ComponentListener {
 
 			// VERIFICA SE O ARQUIVO TXT EXISTE (E CRIA UM CASO NEGATIVO)
 			new IngressoFile();
-			//INICIALIZA VARIÁVEL COM O MODELO
+			//INICIALIZA VARIÃ�VEL COM O MODELO
 			IngressoMdl ingresso = new IngressoMdl();
 			//VERIFICA SE A TABELA ESTA CARREGADA (SE POSITIVO TRANSFERE PARA O MODELO)
 			if (tbCompra.getRowCount() > 0){
@@ -652,7 +652,7 @@ public class IngressoCtrl implements ComponentListener {
 				((DefaultTableModel) tbCompra.getModel()).setNumRows(0); 
 				tbCompra.updateUI();
 				validar = true;
-				//CASO A TABELA ESTEJA VAZIA, VERIFICA SE O CAMPO VISITANTE E QTD ESTÃO PREENCHIDOS
+				//CASO A TABELA ESTEJA VAZIA, VERIFICA SE O CAMPO VISITANTE E QTD ESTÃƒO PREENCHIDOS
 			} else if (!txtPesquisa.getText().isEmpty() && !txtQtd.getText().isEmpty()) {
 				//PRECORRE O ARRAY VISITANTES PARA ENCONTRAR O NOME DIGITADO NO CAMPO
 				for (int i = 0; i < visitantes.size(); i++) {
@@ -764,8 +764,8 @@ public class IngressoCtrl implements ComponentListener {
 			break;		
 		default:
 			JOptionPane.showMessageDialog(null, 
-					"OOPS!\n\nQue feio, Ed Stark perdeu a cabeça, e algo não deveria ter acontecido…\n\nTermo: " + mensagem
-					+ "\n\nVolte ao trabalho duro e conserte isso!!!", 
+					"ERRO! Algo não deveria ter acontecido…\n\nTermo: " + mensagem
+					+ "\n\nOcorreu no Controller desta Tela.", 
 					"Erro no Controller", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/error.png"));
@@ -847,7 +847,7 @@ public class IngressoCtrl implements ComponentListener {
 		@Override  
 		public void keyTyped(KeyEvent e) {
 			
-			//SELECIONA O CAMPO COM FOCO E BLOQUEIA CARACTERES NÃO AUTORIZADOS
+			//SELECIONA O CAMPO COM FOCO E BLOQUEIA CARACTERES NÃƒO AUTORIZADOS
 			if(txtPesquisa.hasFocus()){
 				String caracteres="0987654321";
 				if(caracteres.contains(e.getKeyChar()+"")){

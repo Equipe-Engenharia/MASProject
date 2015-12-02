@@ -75,8 +75,8 @@ public class MenuCtrl implements ComponentListener{
 
 		case "errorLog":
 			JOptionPane.showMessageDialog(null, 
-					"ACESSO NEGADO!\n\nPor favor, faça o login no sistema para acessar este recurso.", 
-					"Acesso não Autorizado",
+					"ACESSO NEGADO!\n\nPor favor, faÃ§a o login no sistema para acessar este recurso.", 
+					"Acesso nÃ£o Autorizado",
 					JOptionPane.PLAIN_MESSAGE, 
 					new ImageIcon("../MASProject/icons/error.png"));
 			//System.exit(0);
@@ -84,7 +84,7 @@ public class MenuCtrl implements ComponentListener{
 
 		case "errorSession":
 			JOptionPane.showMessageDialog(null, 
-					"ACESSO NEGADO!\n\nPor favor, solicite a autorização de um administrador.", 
+					"ACESSO NEGADO!\n\nPor favor, solicite a autorizaÃ§Ã£o de um administrador.", 
 					"Bloqueado", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/warning.png"));
@@ -92,7 +92,7 @@ public class MenuCtrl implements ComponentListener{
 
 		case "systemClose":
 			Object[] exit = { "Confirmar", "Cancelar" };  
-			int fechar = JOptionPane.showOptionDialog(null, "ATENÇÃO!\n\nDeseja encerrar a aplicação?",
+			int fechar = JOptionPane.showOptionDialog(null, "ATENÃ‡ÃƒO!\n\nDeseja encerrar a aplicaÃ§Ã£o?",
 					"Fechamento do Programa!", 
 					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
 					new ImageIcon("../MASProject/icons/warning.png"), exit, exit[1]);
@@ -105,7 +105,7 @@ public class MenuCtrl implements ComponentListener{
 
 		default:
 			JOptionPane.showMessageDialog(null, 
-					"ERRO! Algo não deveria ter acontecido…\n\nMenuCtrl - Termo: " + mensagem
+					"ERRO! Algo nÃ£o deveria ter acontecidoï¿½\n\nMenuCtrl - Termo: " + mensagem
 					+ "\n\nOcorreu no Controller desta Tela.", 
 					"Erro no Controller", 
 					JOptionPane.PLAIN_MESSAGE,
@@ -129,7 +129,7 @@ public class MenuCtrl implements ComponentListener{
 	}
 
 	
-	// METODO QUE CHAMA AS TELAS //////////////////////////////
+	// METODO TELAS //////////////////////////////
 
 	public void iForm(String iFrame) {
 
@@ -153,8 +153,8 @@ public class MenuCtrl implements ComponentListener{
 						desktop.getSelectedFrame().setVisible(true);
 						desktop.add(desktop.getSelectedFrame());
 					}
-					/*} else {
-				msg("errorSession", "");*/
+					} else {
+				msg("errorSession", "");
 				}
 				break;
 
