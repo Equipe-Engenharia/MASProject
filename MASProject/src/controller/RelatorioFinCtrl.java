@@ -215,93 +215,89 @@ public class RelatorioFinCtrl implements ActionListener {
 
 	}
 
-	private void lerArquivoIngresso() { // modificar esse metodo de acordo com a
-										// subcategoria
-		arquivos = new ArquivosCtrl();
-		String linha = new String();
-		ArrayList<String> list = new ArrayList<>();
-		try {
-			arquivos.leArquivo("../MASProject/dados/", "ingresso");
-			linha = arquivos.getBuffer();
-			String[] listaIngresso = linha.split(";");
-			if (subCategoria.contains("Tod")) {
-				double ganhos = 0.0;
-				for (String s : listaIngresso) {
-					String text = s.replaceAll(".*: ", "");
-					list.add(text);
-					if (s.contains("---")) {
-						String data = list.get(1).toString();
-						SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
-						try {
-							Date dataAtual = mascara.parse(data.replace("/", "").replace("/", ""));
-							// se a data do arquivo estiver dentro do intervalo
-							// de datas, o vetor de objetos é setado
-							if (dataAtual.after(dataIni) && dataAtual.before(dataFinal)) {
-								IngressoMdl ingresso = new IngressoMdl();
-								ingresso.setId(list.get(0));
-								ingresso.setData(list.get(1));
-								ingresso.setHora(null);
-								ingresso.setBilhete(null);
-								ingresso.setExpo(null);
-								ingresso.setVisitaId(null);
-								ingresso.setVisitante(null);
-								ingresso.setIngresso(list.get(7));
-								ingresso.setQtd(null);
-								ingresso.setValor(list.get(9).substring(3));
-								ganhos += Double.parseDouble(list.get(9).substring(3));
-								ingresso.setPagamento(null);
-								ingressos.add(ingresso);
-								list.clear();
-							}
-						} catch (ParseException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-				txtGanho.setText(String.valueOf(ganhos));
 
-				// se a subcategoria for de estudante
-			} else if (subCategoria.contains("Est")) {
-				double ganhos = 0.0;
-				for (int i = 0; i < listaIngresso.length; i++) {
-					if (listaIngresso[i].contains("Est")) {
-						String data = listaIngresso[i - 6].toString().substring(12);
-						SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
-						try {
-							Date dataAtual = mascara.parse(data.replace("/", "").replace("/", ""));
-							// se a data do arquivo estiver dentro do intervalo
-							// de datas, o vetor de objetos é setado
-							if (dataAtual.after(dataIni) && dataAtual.before(dataFinal)) {
-								IngressoMdl ingresso = new IngressoMdl();
-								ingresso.setId(null);
-								ingresso.setData(null);
-								ingresso.setHora(null);
-								ingresso.setBilhete(null);
-								ingresso.setExpo(null);
-								ingresso.setVisitaId(null);
-								ingresso.setVisitante(null);
-								ingresso.setIngresso(listaIngresso[i].substring(11));
-								ingresso.setQtd(null);
-								ingresso.setValor(listaIngresso[i + 2].substring(15));
-								ganhos += Double.parseDouble(listaIngresso[i + 2].substring(15));
-								ingresso.setPagamento(null);
-								ingressos.add(ingresso);
-								list.clear();
-							}
-						} catch (ParseException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-				txtGanho.setText(String.valueOf(ganhos));
-			} else {
+	private void lerArquivoIngresso() { //modificar esse metodo de acordo com a subcategoria
+		  arquivos = new ArquivosCtrl();
+		  String linha = new String();
+		  ArrayList<String> list = new ArrayList<>();
+		  try {
+		   arquivos.leArquivo("../MASProject/dados/", "ingresso");
+		   linha = arquivos.getBuffer();
+		   String[] listaIngresso = linha.split(";");
+		   if(subCategoria.contains("Tod")){
+		    double ganhos = 0.0;
+		    for(String s : listaIngresso){
+		     String text = s.replaceAll(".*: ", "");
+		     list.add(text);
+		     if (s.contains("---")) {
+		      String data = list.get(1).toString();
+		      if(validaData(data)){
+		       IngressoMdl ingresso = new IngressoMdl();
+		       ingresso.setId(list.get(0));
+		       ingresso.setData(list.get(1));
+		       ingresso.setHora(null);
+		       ingresso.setBilhete(null);
+		       ingresso.setExpo(null);
+		       ingresso.setVisitaId(null);
+		       ingresso.setVisitante(null);
+		       ingresso.setIngresso(list.get(7));
+		       ingresso.setQtd(null);
+		       ingresso.setValor(list.get(9).substring(3));
+		       ganhos += Double.parseDouble(list.get(9).substring(3));
+		       ingresso.setPagamento(null);
+		       ingressos.add(ingresso);
+		       list.clear();
+		      }
+		     }
+		    }
+		    txtGanho.setText(String.valueOf(ganhos));   
+		    //se a subcategoria for de estudante
+		   }else if(subCategoria.contains("Est")){
+		    double ganhos = 0.0;
+		    for(int i = 0; i < listaIngresso.length; i++){
+		     if(listaIngresso[i].contains("Est")){
+		      String data = listaIngresso[i - 6].toString().substring(12);
+		      if(validaData(data)){
+		       IngressoMdl ingresso = new IngressoMdl();
+		       ingresso.setId(null);
+		       ingresso.setData(null);
+		       ingresso.setHora(null);
+		       ingresso.setBilhete(null);
+		       ingresso.setExpo(null);
+		       ingresso.setVisitaId(null);
+		       ingresso.setVisitante(null);
+		       ingresso.setIngresso(listaIngresso[i].substring(11));
+		       ingresso.setQtd(null);
+		       ingresso.setValor(listaIngresso[i+2].substring(15));
+		       ganhos += Double.parseDouble(listaIngresso[i+2].substring(15));
+		       ingresso.setPagamento(null);
+		       ingressos.add(ingresso);
+		       list.clear();
+		      }
+		     }
+		    }
+		    txtGanho.setText(String.valueOf(ganhos));
+		   }else{
+		    
+		   }
+		  } catch (IOException e) {
+		   e.printStackTrace();
+		  }
 
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
+		 }
+	
+	private boolean validaData(String dataDoArquivo){
+		  SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
+		  try {
+		   Date dataAtual = mascara.parse(dataDoArquivo.replace("/", "").replace("/", ""));
+		   if(dataAtual.after(dataIni) && dataAtual.before(dataFinal)){
+		    return true;
+		   }
+		  } catch (ParseException e) {
+		   JOptionPane.showMessageDialog(form, "Não foi possível converter a data do arquivo");
+		  }
+		  return false;
+		 }
 
 	public CategoryDataset criaDataset(List<?> dados) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();

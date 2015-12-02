@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.ParseException;
 
 import javax.swing.ImageIcon;
@@ -596,6 +598,46 @@ public class MenuCtrl implements ComponentListener{
 		public void actionPerformed(ActionEvent e) {
 
 			iForm("ingressoCadastrar");
+		}
+	};
+	
+	
+	// CONTROLE TECLA ///////////////////////////////
+
+
+	public KeyListener tecla = new KeyListener() {  
+
+		@Override  
+		public void keyTyped(KeyEvent e) {
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+
+			int keyCode=e.getKeyCode();
+
+			switch (keyCode) {
+
+			case KeyEvent.VK_UP:
+				break;
+			case KeyEvent.VK_DOWN:
+				break;
+			case KeyEvent.VK_LEFT:
+				break;
+			case KeyEvent.VK_RIGHT:
+				break;
+			case KeyEvent.VK_ESCAPE:
+				msg("systemClose","Fechamento");
+				break;
+			case KeyEvent.VK_DELETE:
+				break;
+			case 8: //MAC OSX: DELETE
+				break;
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
 		}
 	};
 

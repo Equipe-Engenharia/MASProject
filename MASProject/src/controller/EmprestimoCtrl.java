@@ -936,10 +936,10 @@ public class EmprestimoCtrl implements ComponentListener {
 			case KeyEvent.VK_RIGHT:
 				break;
 			case KeyEvent.VK_ESCAPE:
-				msg("system","Fechamento");
+				/*msg("system","Fechamento");
 				if(validar != false){
 				System.exit(0);
-				}
+				}*/
 				break;
 			case KeyEvent.VK_DELETE:
 				removeLinha();
