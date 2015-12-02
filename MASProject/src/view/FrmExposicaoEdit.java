@@ -49,11 +49,6 @@ public class FrmExposicaoEdit extends JInternalFrame {
 			e.printStackTrace();
 		}
 	}
-	
-	public void setPosicao() throws ParseException {  
-	    Dimension d = this.getDesktopPane().getSize();  
-	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
-	}
 
 	public FrmExposicaoEdit() throws ParseException {
 		setTitle("Editar Exposi\u00E7\u00E3o");

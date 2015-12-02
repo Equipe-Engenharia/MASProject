@@ -48,11 +48,6 @@ public class FrmExposicaoCad extends JInternalFrame {
 			e.printStackTrace();
 		}
 	}
-	
-	public void setPosicao() throws ParseException {  
-	    Dimension d = this.getDesktopPane().getSize();  
-	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
-	}
 
 	public FrmExposicaoCad() throws ParseException {
 		setResizable(false);
