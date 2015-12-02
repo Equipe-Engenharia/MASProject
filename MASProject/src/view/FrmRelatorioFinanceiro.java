@@ -12,7 +12,6 @@ import org.jfree.data.category.CategoryDataset;
 
 import controller.RelatorioFinCtrl;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -52,6 +51,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -73,7 +73,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		setBounds(100, 100, 749, 604);
+		setBounds(100, 100, 749, 616);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -121,7 +121,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		contentPane.add(lblSelecioneOQue);
 
 		separator = new JSeparator();
-		separator.setBounds(0, 71, 773, 4);
+		separator.setBounds(10, 71, 723, 4);
 		contentPane.add(separator);
 
 		lblCategoria = new JLabel("Categoria");
@@ -143,7 +143,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		contentPane.add(cbSubCategoria);
 
 		separator_1 = new JSeparator();
-		separator_1.setBounds(0, 165, 773, 4);
+		separator_1.setBounds(10, 165, 723, 4);
 		contentPane.add(separator_1);
 
 		internalFrameGrafico = new JInternalFrame("Gráfico");
@@ -183,11 +183,11 @@ public class FrmRelatorioFinanceiro extends JFrame {
 
 		btnSalvarimprimir = new JButton("Salvar/Imprimir");
 		btnSalvarimprimir.setIcon(new ImageIcon("../MASProject/icons/save.png"));
-		btnSalvarimprimir.setBounds(559, 526, 155, 29);
+		btnSalvarimprimir.setBounds(559, 548, 155, 29);
 		contentPane.add(btnSalvarimprimir);
 
 		separator_2 = new JSeparator();
-		separator_2.setBounds(0, 511, 773, 4);
+		separator_2.setBounds(10, 514, 723, 4);
 		contentPane.add(separator_2);
 		
 		btnGerar = new JButton("Gerar Gráfico");
@@ -200,7 +200,6 @@ public class FrmRelatorioFinanceiro extends JFrame {
 				chart, chartPanel, btnGerar, btnSalvarimprimir,internalFrameGrafico);
 		
 
-       btnSalvarimprimir.addActionListener(rFinCtrl.salvar);
        btnDataIni.addActionListener(rFinCtrl.abreCalendarioIni);
        btnDataFim.addActionListener(rFinCtrl.abreCalendarioFim);
        cbCategoria.addActionListener(rFinCtrl);
