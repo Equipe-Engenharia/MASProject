@@ -1,65 +1,13 @@
-ID Obra :ACV151112-115610
-Nome do Artista :Fernando
-Nome da obra :AA
-Descri��o :lolll
-Categoria : Pintura
-Data :11/11/1111
-Imagem :../MASProject/imagens/ACV151112-115610.jpg
-Material : Ferro
-Setor : Preto
-Valor :21.111.111.111,00
-Obra Propria :true
-Status :Exposição
----------------------------
-ID Obra :ACV151112-115631
-Nome do Artista :Alfeu
-Nome da obra :SP
-Descri��o :lkp
-Categoria : Busto
-Data :11/11/1111
-Imagem :../MASProject/imagens/ACV151112-115631.jpg
-Material : Ferro
-Setor : Preto
-Valor :
-Obra Propria :false
-Status :Exposição
----------------------------
-ID Obra :ACV151117-002006
-Nome do Artista :Bruno Martins
-Nome da obra :Teste de Cadastro
-Descrição :Teste de descrisão
-Categoria : Gravura
-Data :17/11/2015
-Imagem :../MASProject/imagens/ACV151117-002006.png
-Material : Vidro
+ID Obra :ACV151202-122516
+Nome do Artista :Henrique
+Nome da obra :mundo
+Descrição :
+Categoria :
+Data :  /  /    
+Imagem :../MASProject/imagens/ACV151202-122516.jpg
+Material :
 Setor : Branco
-Valor :10.000,00
+Valor :12.111,00
 Obra Propria :true
 Status :Exposição
----------------------------
-ID Obra :ACV151130-221604
-Nome do Artista :Vitor
-Nome da obra :Bomba de Hidrogênio
-Descrição :Sem descrição
-Categoria : Pintura
-Data :30/11/2015
-Imagem :../MASProject/imagens/ACV151130-221604.png
-Material : Madeira
-Setor : Preto
-Valor :50,000.00
-Obra Propria :true
-Status :Exposição
----------------------------
-ID Obra :ACV151130-222714
-Nome do Artista :Vitor
-Nome da obra :No name
-Descrição :-----
-Categoria : Estátua
-Data :01/12/2015
-Imagem :../MASProject/imagens/ACV151130-222714.png
-Material : Gesso
-Setor : Cinza
-Valor :500.00
-Obra Propria :true
-Status :Manutenção
 ---------------------------
