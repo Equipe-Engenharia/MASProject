@@ -41,11 +41,6 @@ public class FrmMaterialCad extends JInternalFrame {
 			}
 		});
 	}
-	
-	public void setPosicao() throws ParseException {  
-	    Dimension d = this.getDesktopPane().getSize();  
-	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
-	}
 
 	/**
 	 * Create the frame.

@@ -943,7 +943,7 @@ public class AcervoCtrl implements ComponentListener, ActionListener {
 			// TODO Auto-generated method stub
 			FrmCategoriaEdit frame = new FrmCategoriaEdit();
 			frame.setVisible(true);
-			frame.setLocation(null);
+			frame.setLocation(0,0);
 		}
 	};
 

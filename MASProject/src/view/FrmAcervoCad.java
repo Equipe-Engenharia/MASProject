@@ -65,11 +65,6 @@ public class FrmAcervoCad extends JInternalFrame  {
 			}
 		});
 	}
-	
-	public void setPosicao() throws ParseException {  
-	    Dimension d = this.getDesktopPane().getSize();  
-	    this.setLocation((d.width - this.getSize().width) / 2, (d.height - this.getSize().height) / 2); 
-	}
 
 	/**
 	 * Create the frame.
@@ -130,10 +125,12 @@ public class FrmAcervoCad extends JInternalFrame  {
 
 		btnNovoArtista = new JButton("Novo Artista");
 		btnNovoArtista.setBounds(541, 99, 107, 29);
+		btnNovoArtista.setVisible(false);
 		contentPane.add(btnNovoArtista);
 
 		btnEditarArtista = new JButton("Editar Artista");
 		btnEditarArtista.setBounds(650, 99, 107, 29);
+		btnEditarArtista.setVisible(false);
 		contentPane.add(btnEditarArtista);
 
 		JLabel lblNomeDaObra = new JLabel("Nome da Obra");
@@ -179,19 +176,23 @@ public class FrmAcervoCad extends JInternalFrame  {
 		btnNovaCategoria = new JButton("Nova Categoria");
 		btnNovaCategoria.setToolTipText("Não encontrou a categoria?");
 		btnNovaCategoria.setBounds(317, 178, 126, 29);
+		btnNovaCategoria.setVisible(false);
 		contentPane.add(btnNovaCategoria);
 
 		btnEditarCategoria = new JButton("Editar Categoria");
 		btnEditarCategoria.setBounds(449, 178, 126, 29);
+		btnEditarCategoria.setVisible(false);
 		contentPane.add(btnEditarCategoria);
 
 		btnNovoMaterial = new JButton("Novo Material");
 		btnNovoMaterial.setToolTipText("Não encontrou o material?");
 		btnNovoMaterial.setBounds(317, 216, 126, 29);
+		btnNovoMaterial.setVisible(false);
 		contentPane.add(btnNovoMaterial);
 
 		btnEditarMaterial = new JButton("Editar Material");
 		btnEditarMaterial.setBounds(449, 216, 126, 29);
+		btnEditarMaterial.setVisible(false);
 		contentPane.add(btnEditarMaterial);
 
 		JTabbedPane abas = new JTabbedPane(JTabbedPane.TOP);
@@ -272,18 +273,22 @@ public class FrmAcervoCad extends JInternalFrame  {
 
 		btnNovoSetorT = new JButton("Novo Setor");
 		btnNovoSetorT.setBounds(409, 39, 117, 29);
+		btnNovoSetorT.setVisible(false);
 		panel_terceiros.add(btnNovoSetorT);
 
 		btnEditarSetorT = new JButton("Editar Setor");
 		btnEditarSetorT.setBounds(293, 39, 117, 29);
+		btnEditarSetorT.setVisible(false);
 		panel_terceiros.add(btnEditarSetorT);
 
 		btnEditarSetor = new JButton("Editar Setor");
 		btnEditarSetor.setBounds(293, 39, 117, 29);
+		btnEditarSetor.setVisible(false);
 		panel_proprio.add(btnEditarSetor);
 
 		btnNovoSetor = new JButton("Novo Setor");
 		btnNovoSetor.setBounds(409, 39, 117, 29);
+		btnNovoSetor.setVisible(false);
 		panel_proprio.add(btnNovoSetor);
 
 		btnGravar = new JButton("Gravar");
