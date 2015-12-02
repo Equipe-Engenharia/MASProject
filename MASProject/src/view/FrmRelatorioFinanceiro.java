@@ -197,7 +197,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		
 		RelatorioFinCtrl rFinCtrl = new RelatorioFinCtrl(cbCategoria, cbSubCategoria,  
 				 txtDataIni, txtDataFim, txtGanho, txtDespesa,
-				chart, chartPanel);
+				chart, chartPanel, btnGerar, btnSalvarimprimir);
 		
 
        btnSalvarimprimir.addActionListener(rFinCtrl.salvar);
@@ -206,6 +206,6 @@ public class FrmRelatorioFinanceiro extends JFrame {
        cbCategoria.addActionListener(rFinCtrl);
        btnGerar.addActionListener(rFinCtrl);
        btnSalvarimprimir.addActionListener(rFinCtrl.salvar);
-       btnGerar.addActionListener(rFinCtrl.geraGrafico);
+     
 	}
 }

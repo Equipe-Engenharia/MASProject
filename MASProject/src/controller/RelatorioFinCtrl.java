@@ -73,7 +73,8 @@ public class RelatorioFinCtrl implements ActionListener {
 	//Fetch, merge, commit
 	public RelatorioFinCtrl(JComboBox<String> cbCategoria, JComboBox<String> cbSubCategoria,
 			 JTextField txtDataInicio, JTextField txtDataFim,
-			JTextField txtGanho, JTextField txtDespesa, JFreeChart chart, ChartPanel chartPanel){
+			JTextField txtGanho, JTextField txtDespesa, JFreeChart chart, ChartPanel chartPanel,
+			JButton btnGerar, JButton btnSalvarImprimir){
 		
 		this.chart = chart;
 		this.chartPanel = chartPanel;
@@ -86,6 +87,8 @@ public class RelatorioFinCtrl implements ActionListener {
 		this.txtDataFim = txtDataFim;
 		this.txtGanho = txtGanho;
 		this.txtDespesa = txtDespesa;
+		this.btnGerar = btnGerar;
+		this.btnSalvarImprimir = btnSalvarImprimir;
 		carregaComboCategoria();
 	}
 
