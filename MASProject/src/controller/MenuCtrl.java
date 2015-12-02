@@ -66,6 +66,8 @@ public class MenuCtrl implements ComponentListener{
 			msg("errorLog", "");
 		}
 	}
+	
+	// MENSAGENS //////////////////////////////
 
 	public void msg(String tipo, String mensagem) {
 
@@ -111,6 +113,8 @@ public class MenuCtrl implements ComponentListener{
 		}
 	}
 	
+	// METODO LOGIN //////////////////////////////
+	
 	public void login(){
 		
 		if(desktop.getSelectedFrame() == null){
@@ -124,6 +128,8 @@ public class MenuCtrl implements ComponentListener{
 		}
 	}
 
+	
+	// METODO QUE CHAMA AS TELAS //////////////////////////////
 
 	public void iForm(String iFrame) {
 

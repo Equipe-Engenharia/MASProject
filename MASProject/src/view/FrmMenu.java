@@ -33,15 +33,15 @@ public class FrmMenu extends JFrame{
 
 		final JDesktopPane desktopPane = new JDesktopPane();
 
-		desktopPane.setBackground(Color.gray); // Ajusta uma cor de fundo (opção caso a imagem de fundo dÍ algum problema no programa)
+		desktopPane.setBackground(Color.gray); // Ajusta uma cor de fundo (opÃ§Ã£o caso a imagem de fundo dÃ� algum problema no programa)
 
-		setContentPane(desktopPane);
+		
+		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+		setContentPane(desktopPane);
 		setVisible(true);
 		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		menuBar = new JMenuBar();
 		
 		arquivo = new JMenu("Arquivo");
 		menuBar.add(arquivo);
@@ -49,7 +49,7 @@ public class FrmMenu extends JFrame{
 		acervo = new JMenu("Acervo");
 		menuBar.add(acervo);
 		
-		exposicao = new JMenu("Exposição");
+		exposicao = new JMenu("ExposiÃ§Ã£o");
 		menuBar.add(exposicao);
 		
 		visitante = new JMenu("Visitante");
@@ -58,7 +58,7 @@ public class FrmMenu extends JFrame{
 		ingresso = new JMenu("Ingresso");
 		menuBar.add(ingresso);
 		
-		relatorios = new JMenu("Relatórios");
+		relatorios = new JMenu("RelatÃ³rios");
 		menuBar.add(relatorios);
 		
 		ajuda = new JMenu("Ajuda");
@@ -67,19 +67,19 @@ public class FrmMenu extends JFrame{
 		visualizar = new JMenuItem("Tipo A");
 		relatorios.add(visualizar);
 		
-		documentacao = new JMenuItem("Documentação");
+		documentacao = new JMenuItem("DocumentaÃ§Ã£o");
 		ajuda.add(documentacao);
 
 		login = new JMenuItem("Fazer Login");
 		arquivo.add(login);
 
-		usuarios = new JMenuItem("Configurar Usuários");
+		usuarios = new JMenuItem("Configurar UsuÃ¡rios");
 		arquivo.add(usuarios);
 		
-		salvar = new JMenuItem("Salvar Como…");
+		salvar = new JMenuItem("Salvar Comoâ€¦");
 		arquivo.add(salvar);
 		
-		imprimir = new JMenuItem("Imprimir…");
+		imprimir = new JMenuItem("Imprimirâ€¦");
 		arquivo.add(imprimir);
 		
 		arquivo.add(new JSeparator());
@@ -104,7 +104,7 @@ public class FrmMenu extends JFrame{
 		
 		acervo.add(new JSeparator());
 		
-		emprestimo = new JMenuItem("Empréstimos");
+		emprestimo = new JMenuItem("EmprÃ©stimos");
 		acervo.add(emprestimo);
 		
 		acervoCadastrar = new JMenuItem("Cadastrar");
