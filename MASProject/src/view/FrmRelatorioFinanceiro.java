@@ -121,7 +121,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		contentPane.add(lblSelecioneOQue);
 
 		separator = new JSeparator();
-		separator.setBounds(0, 71, 773, 4);
+		separator.setBounds(10, 71, 723, 4);
 		contentPane.add(separator);
 
 		lblCategoria = new JLabel("Categoria");
@@ -143,7 +143,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		contentPane.add(cbSubCategoria);
 
 		separator_1 = new JSeparator();
-		separator_1.setBounds(0, 165, 773, 4);
+		separator_1.setBounds(10, 165, 723, 4);
 		contentPane.add(separator_1);
 
 		internalFrameGrafico = new JInternalFrame("Gráfico");
@@ -187,7 +187,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		contentPane.add(btnSalvarimprimir);
 
 		separator_2 = new JSeparator();
-		separator_2.setBounds(0, 514, 743, 4);
+		separator_2.setBounds(10, 514, 723, 4);
 		contentPane.add(separator_2);
 		
 		btnGerar = new JButton("Gerar Gráfico");

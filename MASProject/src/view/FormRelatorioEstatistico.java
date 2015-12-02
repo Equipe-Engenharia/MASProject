@@ -1,15 +1,27 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JSeparator;
+import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
+import javax.swing.JButton;
 
 public class FormRelatorioEstatistico extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField txtDataIni;
+	private JTextField txtDataFim;
+	private JLabel lblDataInicial, lblDataFinal, lblPerodo, lblFiltrarPor; 
+	private JSeparator separator, separator_1,separator_2;
+	private JButton btnGerar, btnSalvarimprimir;
+	private JComboBox<?> cbFiltro;
+	private JInternalFrame internalFrameGrafico;
 
 	/**
 	 * Launch the application.
@@ -32,11 +44,67 @@ public class FormRelatorioEstatistico extends JFrame {
 	 */
 	public FormRelatorioEstatistico() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 691, 588);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		lblDataInicial = new JLabel("Data Inicial");
+		lblDataInicial.setBounds(26, 44, 62, 14);
+		contentPane.add(lblDataInicial);
+		
+		txtDataIni = new JTextField();
+		txtDataIni.setBounds(98, 41, 86, 20);
+		contentPane.add(txtDataIni);
+		txtDataIni.setColumns(10);
+		
+		 lblDataFinal = new JLabel("Data Final");
+		lblDataFinal.setBounds(228, 44, 62, 14);
+		contentPane.add(lblDataFinal);
+		
+		txtDataFim = new JTextField();
+		txtDataFim.setBounds(301, 41, 86, 20);
+		contentPane.add(txtDataFim);
+		txtDataFim.setColumns(10);
+		
+		 lblPerodo = new JLabel("Período:");
+		lblPerodo.setBounds(26, 16, 46, 14);
+		contentPane.add(lblPerodo);
+		
+		 separator = new JSeparator();
+		separator.setBounds(10, 78, 655, 2);
+		contentPane.add(separator);
+		
+		 lblFiltrarPor = new JLabel("Filtrar por:");
+		lblFiltrarPor.setBounds(26, 91, 72, 14);
+		contentPane.add(lblFiltrarPor);
+		
+		cbFiltro = new JComboBox();
+		cbFiltro.setBounds(108, 91, 104, 20);
+		contentPane.add(cbFiltro);
+		
+		internalFrameGrafico = new JInternalFrame("Gráfico");
+		internalFrameGrafico.setFrameIcon(null);
+		internalFrameGrafico.setBounds(26, 154, 434, 330);
+		contentPane.add(internalFrameGrafico);
+		
+		 separator_1 = new JSeparator();
+		separator_1.setBounds(10, 136, 655, 2);
+		contentPane.add(separator_1);
+		
+		btnGerar = new JButton("Gerar Gráfico");
+		btnGerar.setBounds(518, 94, 129, 31);
+		contentPane.add(btnGerar);
+		
+		 separator_2 = new JSeparator();
+		separator_2.setBounds(10, 495, 655, 2);
+		contentPane.add(separator_2);
+		
+		btnSalvarimprimir = new JButton("Salvar/Imprimir");
+		btnSalvarimprimir.setBounds(518, 508, 129, 31);
+		contentPane.add(btnSalvarimprimir);
+		internalFrameGrafico.setVisible(true);
 	}
 
 }

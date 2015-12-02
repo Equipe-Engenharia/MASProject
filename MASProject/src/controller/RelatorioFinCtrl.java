@@ -68,7 +68,7 @@ public class RelatorioFinCtrl implements ActionListener {
 	
 	
 	private final String[] categorias = {"", "Visitantes", "Acervo"};
-	private final String[] subCategoriaVisitantes = {"Todos", "Estudantes", "Comum"};
+	private final String[] subCategoriaVisitantes = {"Todos", "Estudantes", "Comum", "Especial", "Meia"};
 	private final String[] subCategoriaAcervo = {"Manutenção", "Transporte", "Aquisição"};
 	
 	private ArquivosCtrl arquivos;
@@ -204,7 +204,7 @@ public class RelatorioFinCtrl implements ActionListener {
 		String titulo = "Finanças " + categoria + " - Periodo: " + txtDataInicio.getText() + " a " + txtDataFim.getText();
 		if(categoria.contains("Visi")){
 			lerArquivoIngresso();
-			criaGrafico(titulo, ingressos, "Não sei ainda", "Não sei ainda");
+			criaGrafico(titulo, ingressos, "Tipo de ingresso", "Valor do ingresso");
 		}
 		else{
 			if(subCategoria.contains("Manu")){
@@ -251,13 +251,34 @@ public class RelatorioFinCtrl implements ActionListener {
 				}
 				txtGanho.setText(String.valueOf(ganhos));
 			}else if(subCategoria.contains("Est")){
-				
+				double ganhos = 0.0;
+				for(int i = 0; i < listaIngresso.length; i++){
+					if(listaIngresso[i].contains("Est")){
+						IngressoMdl ingresso = new IngressoMdl();
+						ingresso.setId(null);
+						ingresso.setData(null);
+						ingresso.setHora(null);
+						ingresso.setBilhete(null);
+						ingresso.setExpo(null);
+						ingresso.setVisitaId(null);
+						ingresso.setVisitante(null);
+						ingresso.setIngresso(listaIngresso[i].substring(11));
+						ingresso.setQtd(null);
+						ingresso.setValor(listaIngresso[i+1].substring(11));
+						ganhos += Double.parseDouble(listaIngresso[i+1].substring(11));
+						ingresso.setPagamento(null);
+						ingressos.add(ingresso);
+						list.clear();
+					}
+				}
+				txtGanho.setText(String.valueOf(ganhos));
 			}else{
 				
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 
@@ -266,7 +287,7 @@ public class RelatorioFinCtrl implements ActionListener {
 		for(int i = 0; i < dados.size(); i++){
         	dataset.addValue(Double.parseDouble(((IngressoMdl)dados.get(i)).getValor()),
         			((IngressoMdl)dados.get(i)).getIngresso(), 
-        			"Teste"); //sis[i].getCategoria());
+        			((IngressoMdl)dados.get(i)).getIngresso()); //sis[i].getCategoria());
         }
 
 		return dataset;
