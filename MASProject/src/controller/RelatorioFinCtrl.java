@@ -354,9 +354,37 @@ public class RelatorioFinCtrl implements ActionListener {
 			    }
 			    txtGanho.setText(String.valueOf(ganhos));
 			    txtDespesa.setText("0");
+		   }else if(subCategoria.contains("Meia")){
+			   double ganhos = 0.0;
+			    for(int i = 0; i < listaIngresso.length; i++){
+			     if(listaIngresso[i].contains("Meia")){
+			      String data = listaIngresso[i - 6].toString().substring(12);
+			      if(validaData(data)){
+			       IngressoMdl ingresso = new IngressoMdl();
+			       ingresso.setId(null);
+			       ingresso.setData(null);
+			       ingresso.setHora(null);
+			       ingresso.setBilhete(null);
+			       ingresso.setExpo(null);
+			       ingresso.setVisitaId(null);
+			       ingresso.setVisitante(null);
+			       ingresso.setIngresso(listaIngresso[i].substring(11));
+			       System.out.println(listaIngresso[i].substring(11));
+			       ingresso.setQtd(null);
+			       ingresso.setValor(listaIngresso[i+2].substring(15).replace(",", "."));
+			       System.out.println(listaIngresso[i+2].substring(15).replace(",", "."));
+			       ganhos += Double.parseDouble(listaIngresso[i+2].substring(15).replace(",", "."));
+			       ingresso.setPagamento(null);
+			       ingressos.add(ingresso);
+			       list.clear();
+			      }
+			     }
+			    }
+			    txtGanho.setText(String.valueOf(ganhos));
+			    txtDespesa.setText("0");
 		   }
 		  } catch (IOException e) {
-		   e.printStackTrace();
+		   JOptionPane.showMessageDialog(form, "Não foi possível ler o arquivo 'ingressos' ");
 		  }
 
 		 }
