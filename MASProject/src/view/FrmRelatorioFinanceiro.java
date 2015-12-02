@@ -12,6 +12,7 @@ import org.jfree.data.category.CategoryDataset;
 
 import controller.RelatorioFinCtrl;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -37,14 +38,13 @@ public class FrmRelatorioFinanceiro extends JFrame {
 	private JTextField txtDataIni;
 	private JTextField txtDataFim;
 	private JTextField txtGanho;
-	private JTextField textField;
+	private JTextField txtDespesa;
 	private JLabel lblPeriodo, lblDataInicial, lblDataFinal, lblSelecioneOQue, lblCategoria, lblSubcategoria,
 			lblInformaesGerais, lblGanhor, lblDespesas;
 	private JButton btnSalvarimprimir, btnDataIni, btnDataFim;
 	private JSeparator separator, separator_1, separator_2;
 	// arrumar argumento
-	private JComboBox<Object> cbCategoria, cbSubCategoria;
-	private JPanel panel;
+	private JComboBox<String> cbCategoria, cbSubCategoria;
 	private JButton btnGerar;
 	private MaskFormatter maskData;
 
@@ -127,7 +127,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		contentPane.add(lblCategoria);
 
 		// arrumar argumentos das combos
-		cbCategoria = new JComboBox<Object>();
+		cbCategoria = new JComboBox<String>();
 		cbCategoria.setBounds(123, 116, 125, 20);
 		contentPane.add(cbCategoria);
 
@@ -136,7 +136,7 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		contentPane.add(lblSubcategoria);
 
 		// Arrumar argumentos das combos
-		cbSubCategoria = new JComboBox<Object>();
+		cbSubCategoria = new JComboBox<String>();
 		cbSubCategoria.setBounds(354, 116, 125, 20);
 		contentPane.add(cbSubCategoria);
 
@@ -173,11 +173,11 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		lblDespesas.setBounds(496, 275, 92, 14);
 		contentPane.add(lblDespesas);
 
-		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setBounds(613, 272, 86, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtDespesa = new JTextField();
+		txtDespesa.setEditable(false);
+		txtDespesa.setBounds(613, 272, 86, 20);
+		contentPane.add(txtDespesa);
+		txtDespesa.setColumns(10);
 
 		btnSalvarimprimir = new JButton("Salvar/Imprimir");
 		btnSalvarimprimir.setIcon(new ImageIcon("../MASProject/icons/save.png"));
@@ -193,14 +193,15 @@ public class FrmRelatorioFinanceiro extends JFrame {
 		btnGerar.setBounds(559, 112, 150, 29);
 		contentPane.add(btnGerar);
 		
-		
+		RelatorioFinCtrl rFinCtrl = new RelatorioFinCtrl(cbCategoria, cbSubCategoria,  
+				 txtDataIni, txtDataFim, txtGanho, txtDespesa,
+				chart, chartPanel);
 		
 
-		RelatorioFinCtrl relaFinCtrl = new RelatorioFinCtrl(chart, chartPanel, txtDataIni, txtDataFim, panel);
-       btnGerar.addActionListener(relaFinCtrl.geraGrafico);	
-       btnSalvarimprimir.addActionListener(relaFinCtrl.salvar);
-       btnDataIni.addActionListener(relaFinCtrl.abreCalendarioIni);
-       btnDataFim.addActionListener(relaFinCtrl.abreCalendarioFim);
-		
+       btnSalvarimprimir.addActionListener(rFinCtrl.salvar);
+       btnDataIni.addActionListener(rFinCtrl.abreCalendarioIni);
+       btnDataFim.addActionListener(rFinCtrl.abreCalendarioFim);
+		cbCategoria.addActionListener(rFinCtrl);
+		btnGerar.addActionListener(rFinCtrl.geraGrafico);
 	}
 }

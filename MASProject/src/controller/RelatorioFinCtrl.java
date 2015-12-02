@@ -16,6 +16,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 import org.jfree.chart.ChartFactory;
@@ -35,25 +36,64 @@ import com.toedter.calendar.JCalendar;
 
 import view.FrmCalendario;
 
-public class RelatorioFinCtrl {
 
+public class RelatorioFinCtrl implements ActionListener {
+	
 	private JFreeChart chart;
 	private ChartPanel chartPanel;
 	private static JCalendar calendar;
 	private static int flag;
-	private JTextField txtDataIni, txtDataFim;
+	private JTextField txtDataInicio, txtDataFim, txtDespesa, txtGanho;
 	private JPanel form;
 
-	public RelatorioFinCtrl(JFreeChart chart, ChartPanel chartPanel, JTextField txtDataIni, JTextField txtDataFim, JPanel form) {
+	private JComboBox<String> cbCategoria, cbSubCategoria;
+	
+	
+	//Fetch, merge, commit
+	public RelatorioFinCtrl(JComboBox<String> cbCategoria, JComboBox<String> cbSubCategoria,
+			 JTextField txtDataInicio, JTextField txtDataFim,
+			JTextField txtGanho, JTextField txtDespesa, JFreeChart chart, ChartPanel chartPanel){
+		
 		this.chart = chart;
 		this.chartPanel = chartPanel;
 		this.txtDataFim = txtDataFim;
-		this.txtDataIni = txtDataIni;
+		this.txtDataInicio = txtDataInicio;
 		this.form = form;
+		this.cbCategoria = cbCategoria;
+		this.cbSubCategoria = cbSubCategoria;
+		this.txtDataInicio = txtDataInicio;
+		this.txtDataFim = txtDataFim;
+		this.txtGanho = txtGanho;
+		this.txtDespesa = txtDespesa;
+		carregaComboCategoria();
 	}
 
 	public RelatorioFinCtrl(JCalendar calendar) {
 		RelatorioFinCtrl.calendar = calendar;
+		
+	}
+	
+	private void carregaComboCategoria(){
+		cbCategoria.addItem("");
+		cbCategoria.addItem("Visitante");
+		cbCategoria.addItem("Acervo");
+	}
+	
+	private void carregaComboSubCategoria(){
+		if(cbCategoria.getSelectedItem().equals("Visitante")){
+			cbSubCategoria.removeAllItems();
+			cbSubCategoria.addItem("Todos");
+			cbSubCategoria.addItem("Estudantes");
+			cbSubCategoria.addItem("Comum");
+		}else if(cbCategoria.getSelectedItem().equals("Acervo")){
+			cbSubCategoria.removeAllItems();
+			cbSubCategoria.addItem("Manutenção");
+			cbSubCategoria.addItem("Transporte");
+			cbSubCategoria.addItem("Exposição");
+			cbSubCategoria.addItem("Aquisição");
+		}else{
+			return;
+		}
 	}
 	
 	public void sessao() {
@@ -99,8 +139,8 @@ public class RelatorioFinCtrl {
 		switch (getFlag()) {
 
 		case 1:
-			txtDataIni.setText(null);
-			txtDataIni.setText(data);
+			txtDataInicio.setText(null);
+			txtDataInicio.setText(data);
 			break;
 		case 2:
 			txtDataFim.setText(null);
@@ -120,6 +160,14 @@ public class RelatorioFinCtrl {
 		chart = criaChart(dataset, titulo, nomeEixoX, nomeEixoY);
 		chartPanel = new ChartPanel(chart);
 
+		
+	}
+	
+	public void filtroGrafico(){
+		String categoria = cbCategoria.getSelectedItem().toString();
+		String subCategoria = cbSubCategoria.getSelectedItem().toString();
+		
+		
 	}
 
 	public CategoryDataset criaDataset(List<?> dados) {
@@ -258,5 +306,12 @@ public class RelatorioFinCtrl {
 		@Override
 		public void windowActivated(WindowEvent e) {}
 	};
+	@Override
+	public void actionPerformed(ActionEvent actEvt) {
+		Object source = actEvt.getSource();
+		if(source == cbCategoria){
+			carregaComboSubCategoria();
+		}
+	}
 
 }
