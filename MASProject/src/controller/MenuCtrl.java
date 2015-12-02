@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -10,6 +11,7 @@ import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
 import view.FrmAcervoCad;
@@ -115,6 +117,28 @@ public class MenuCtrl implements ComponentListener{
 		}
 	}
 	
+	
+	// METODO CENTRALIZAR IFRAME //////////////////////////////
+	
+	public void setPosicao(){  
+		JInternalFrame[] iframes = desktop.getAllFrames();   
+        //percorrendo todos os jinternalframes pegos  
+        for ( JInternalFrame iframe: iframes ) {  
+            //se jinternalframe estiver aberto, vai ser centralizado  
+           if ( iframe.isVisible() ){  
+               //centralizando jinternalframe  
+                 
+               int lDesk = desktop.getWidth();       
+                int aDesk = desktop.getHeight();       
+                int lIFrame = iframe.getWidth();       
+                int aIFrame = iframe.getHeight();       
+
+                iframe.setLocation( lDesk / 2 - lIFrame / 2, aDesk / 2 - aIFrame / 2 );     
+          }    
+       }
+	}
+	
+	
 	// METODO LOGIN //////////////////////////////
 	
 	public void login(){
@@ -123,10 +147,12 @@ public class MenuCtrl implements ComponentListener{
 			desktop.setSelectedFrame(new FrmLogin());
 			desktop.getSelectedFrame().setVisible(true);
 			desktop.add(desktop.getSelectedFrame());
+			setPosicao();
 		}
 		else if(!desktop.getSelectedFrame().isVisible()){
 			desktop.getSelectedFrame().setVisible(true);
 			desktop.add(desktop.getSelectedFrame());
+			setPosicao();
 		}
 	}
 
@@ -404,6 +430,7 @@ public class MenuCtrl implements ComponentListener{
 				msg("","Metodo iForm");
 			}
 		}
+		setPosicao();
 	}
 
 
