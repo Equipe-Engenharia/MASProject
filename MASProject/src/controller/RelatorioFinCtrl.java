@@ -27,6 +27,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import model.AcervoMdl;
 import model.IngressoMdl;
 
 import org.jfree.chart.ChartFactory;
@@ -66,13 +67,12 @@ public class RelatorioFinCtrl implements ActionListener {
 	private Date dataFinal;
 
 	private final String[] categorias = { "", "Visitantes", "Acervo" };
-	private final String[] subCategoriaVisitantes = {"Todos"};
+	private final String[] subCategoriaVisitantes = {"Todos", "Estudante", "Inteira", "Especial", "Meia"};
 	private final String[] subCategoriaAcervo = { "Manutenção", "Transporte", "Aquisição" };
 
 	private ArquivosCtrl arquivos;
 	private List<IngressoMdl> ingressos;
-	
-	private double ganhoComVisitantes[];
+	private List<AcervoMdl> acervo;
 
 	// Fetch, merge, commit
 	public RelatorioFinCtrl(JComboBox<String> cbCategoria, JComboBox<String> cbSubCategoria, JTextField txtDataInicio,
@@ -111,9 +111,7 @@ public class RelatorioFinCtrl implements ActionListener {
 	private void carregaComboSubCategoria() {
 		if (cbCategoria.getSelectedItem().toString().contains("Visi")) {
 			cbSubCategoria.removeAllItems();
-			for (String subCategory : subCategoriaVisitantes) {
-				cbSubCategoria.addItem(subCategory);
-			}
+			cbSubCategoria.addItem(subCategoriaVisitantes[0]);
 		} else if (cbCategoria.getSelectedItem().toString().contains("Ace")) {
 
 			for (String subCategory : subCategoriaAcervo) {
@@ -215,10 +213,15 @@ public class RelatorioFinCtrl implements ActionListener {
 									criaGrafico(titulo, ingressos, "Tipo de ingresso", "Valor do ingresso");
 									return true;
 								}else{
-									JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!"); //verificar
+									JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
 								}
-							}else if(subCategoria.contains("Manu")){
-									
+							}else if(categoria.contains("Acer")){
+									lerArquivoAcervo();
+									if(acervo.size() > 0){
+										criaGrafico(titulo, acervo, "Não sei ainda", "Não sei ainda");
+									}else{
+										JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
+									}
 							}
 						}
 					}else{
@@ -279,6 +282,10 @@ public class RelatorioFinCtrl implements ActionListener {
 
 		 }
 	
+	private void lerArquivoAcervo(){
+		
+	}
+	
 	private boolean validaData(String dataDoArquivo){
 		  SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
 		  try {
@@ -301,11 +308,15 @@ public class RelatorioFinCtrl implements ActionListener {
 
 	public CategoryDataset criaDataset(List<?> dados) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		for (int i = 0; i < dados.size(); i++) {
-			dataset.addValue(Double.parseDouble(((IngressoMdl) dados.get(i)).getValor()),
-					((IngressoMdl) dados.get(i)).getIngresso(), ((IngressoMdl) dados.get(i)).getIngresso()); // sis[i].getCategoria());
+		System.out.println(dados.getClass().isInstance(ingressos));
+		if(dados.getClass().isInstance(ingressos)){
+			for (int i = 0; i < dados.size(); i++) {
+				dataset.addValue(Double.parseDouble(((IngressoMdl) dados.get(i)).getValor()),
+						((IngressoMdl) dados.get(i)).getIngresso(), ((IngressoMdl) dados.get(i)).getIngresso()); // sis[i].getCategoria());
+			}
+		}else if(dados.getClass().isInstance(acervo)){
+			
 		}
-
 		return dataset;
 	}
 
