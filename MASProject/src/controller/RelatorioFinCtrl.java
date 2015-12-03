@@ -27,6 +27,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import model.AcervoMdl;
 import model.IngressoMdl;
 
 import org.jfree.chart.ChartFactory;
@@ -66,11 +67,12 @@ public class RelatorioFinCtrl implements ActionListener {
 	private Date dataFinal;
 
 	private final String[] categorias = { "", "Visitantes", "Acervo" };
-	private final String[] subCategoriaVisitantes = { "Todos", "Estudantes", "Comum", "Especial", "Meia" };
+	private final String[] subCategoriaVisitantes = {"Todos", "Estudante", "Inteira", "Especial", "Meia"};
 	private final String[] subCategoriaAcervo = { "Manutenção", "Transporte", "Aquisição" };
 
 	private ArquivosCtrl arquivos;
-	private List<IngressoMdl> ingressos = new ArrayList<IngressoMdl>();
+	private List<IngressoMdl> ingressos;
+	private List<AcervoMdl> acervo;
 
 	// Fetch, merge, commit
 	public RelatorioFinCtrl(JComboBox<String> cbCategoria, JComboBox<String> cbSubCategoria, JTextField txtDataInicio,
@@ -109,9 +111,7 @@ public class RelatorioFinCtrl implements ActionListener {
 	private void carregaComboSubCategoria() {
 		if (cbCategoria.getSelectedItem().toString().contains("Visi")) {
 			cbSubCategoria.removeAllItems();
-			for (String subCategory : subCategoriaVisitantes) {
-				cbSubCategoria.addItem(subCategory);
-			}
+			cbSubCategoria.addItem(subCategoriaVisitantes[0]);
 		} else if (cbCategoria.getSelectedItem().toString().contains("Ace")) {
 
 			for (String subCategory : subCategoriaAcervo) {
@@ -213,10 +213,15 @@ public class RelatorioFinCtrl implements ActionListener {
 									criaGrafico(titulo, ingressos, "Tipo de ingresso", "Valor do ingresso");
 									return true;
 								}else{
-									JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!"); //verificar
+									JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
 								}
-							}else if(subCategoria.contains("Manu")){
-									
+							}else if(categoria.contains("Acer")){
+									lerArquivoAcervo();
+									if(acervo.size() > 0){
+										criaGrafico(titulo, acervo, "Não sei ainda", "Não sei ainda");
+									}else{
+										JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
+									}
 							}
 						}
 					}else{
@@ -230,6 +235,7 @@ public class RelatorioFinCtrl implements ActionListener {
 
 
 	private void lerArquivoIngresso() { //modificar esse metodo de acordo com a subcategoria
+		  ingressos = new ArrayList<IngressoMdl>();
 		  arquivos = new ArquivosCtrl();
 		  String linha = new String();
 		  ArrayList<String> list = new ArrayList<>();
@@ -257,9 +263,9 @@ public class RelatorioFinCtrl implements ActionListener {
 		       ingresso.setIngresso(list.get(7));
 		       System.out.println(list.get(7));
 		       ingresso.setQtd(null);
-		       ingresso.setValor(list.get(9).substring(3));
+		       ingresso.setValor(list.get(9).substring(3).replace(",", "."));
 		       System.out.println(list.get(9));
-		       ganhos += Double.parseDouble(list.get(9).substring(3));
+		       ganhos += Double.parseDouble(list.get(9).substring(3).replace(",", "."));
 		       ingresso.setPagamento(null);
 		       ingressos.add(ingresso);
 		       list.clear();
@@ -267,40 +273,18 @@ public class RelatorioFinCtrl implements ActionListener {
 		     }
 		    }
 		    txtGanho.setText(String.valueOf(ganhos));   
-		    //se a subcategoria for de estudante
-		   }else if(subCategoria.contains("Est")){
-		    double ganhos = 0.0;
-		    for(int i = 0; i < listaIngresso.length; i++){
-		     if(listaIngresso[i].contains("Est")){
-		      String data = listaIngresso[i - 6].toString().substring(12);
-		      if(validaData(data)){
-		       IngressoMdl ingresso = new IngressoMdl();
-		       ingresso.setId(null);
-		       ingresso.setData(null);
-		       ingresso.setHora(null);
-		       ingresso.setBilhete(null);
-		       ingresso.setExpo(null);
-		       ingresso.setVisitaId(null);
-		       ingresso.setVisitante(null);
-		       ingresso.setIngresso(listaIngresso[i].substring(11));
-		       ingresso.setQtd(null);
-		       ingresso.setValor(listaIngresso[i+2].substring(15));
-		       ganhos += Double.parseDouble(listaIngresso[i+2].substring(15));
-		       ingresso.setPagamento(null);
-		       ingressos.add(ingresso);
-		       list.clear();
-		      }
-		     }
-		    }
-		    txtGanho.setText(String.valueOf(ganhos));
-		   }else{
-		    
+		    txtDespesa.setText("0");
 		   }
+		   
 		  } catch (IOException e) {
-		   e.printStackTrace();
+		   JOptionPane.showMessageDialog(form, "Não foi possível ler o arquivo 'ingressos' ");
 		  }
 
 		 }
+	
+	private void lerArquivoAcervo(){
+		
+	}
 	
 	private boolean validaData(String dataDoArquivo){
 		  SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
@@ -324,11 +308,15 @@ public class RelatorioFinCtrl implements ActionListener {
 
 	public CategoryDataset criaDataset(List<?> dados) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		for (int i = 0; i < dados.size(); i++) {
-			dataset.addValue(Double.parseDouble(((IngressoMdl) dados.get(i)).getValor()),
-					((IngressoMdl) dados.get(i)).getIngresso(), ((IngressoMdl) dados.get(i)).getIngresso()); // sis[i].getCategoria());
+		System.out.println(dados.getClass().isInstance(ingressos));
+		if(dados.getClass().isInstance(ingressos)){
+			for (int i = 0; i < dados.size(); i++) {
+				dataset.addValue(Double.parseDouble(((IngressoMdl) dados.get(i)).getValor()),
+						((IngressoMdl) dados.get(i)).getIngresso(), ((IngressoMdl) dados.get(i)).getIngresso()); // sis[i].getCategoria());
+			}
+		}else if(dados.getClass().isInstance(acervo)){
+			
 		}
-
 		return dataset;
 	}
 
