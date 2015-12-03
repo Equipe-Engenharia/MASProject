@@ -21,13 +21,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -40,8 +38,10 @@ import com.toedter.calendar.JCalendar;
 import model.AgendamentoMdl;
 import model.ExposicaoMdl;
 import persistence.AgendamentoFile;
+import persistence.IngressoTipoFile;
 import view.FrmCalendario;
-import view.FrmLogin;
+import view.FrmExposicaoCad;
+
 
 public class AgendamentoCtrl implements ComponentListener {
 
@@ -63,14 +63,14 @@ public class AgendamentoCtrl implements ComponentListener {
 	private static JCalendar calendar;
 	private JComboBox<String> 
 	cbExpo, 
+	cbTipo, 
 	cbPeriodo, 
-	cbTipo;
+	cbIngresso;
 	private JTable tbAgenda;
+	private String newId;
 	private boolean validar;
-	private static int flag;
-	//private List<EmprestimoObraMdl> obras;
-	private List<ExposicaoMdl> exposicoes;
-	private List<AgendamentoMdl> emprestimos;
+	private List<ExposicaoMdl> expos;
+	private List<AgendamentoMdl> agendamentos;
 	private List<AgendamentoMdl> tabela;
 	private AgendamentoFile arquivo = new AgendamentoFile();
 	
@@ -88,8 +88,9 @@ public class AgendamentoCtrl implements ComponentListener {
 			JFormattedTextField ftxtCusto, 
 			JFormattedTextField ftxtTotal, 
 			JComboBox<String> cbExpo, 
-			JComboBox<String> cbPeriodo, 
 			JComboBox<String> cbTipo, 
+			JComboBox<String> cbPeriodo, 
+			JComboBox<String> cbIngresso, 
 			JTable tbAgenda
 			){
 
@@ -106,52 +107,103 @@ public class AgendamentoCtrl implements ComponentListener {
 		this.ftxtCusto = ftxtCusto;
 		this.ftxtTotal = ftxtTotal;
 		this.cbExpo = cbExpo;
-		this.cbPeriodo = cbPeriodo;
 		this.cbTipo = cbTipo;
+		this.cbPeriodo = cbPeriodo;
+		this.cbIngresso = cbIngresso;
 		this.tbAgenda = tbAgenda;
-		//this.obras = new ArrayList<EmprestimoObraMdl>();
-		this.exposicoes = new ArrayList<ExposicaoMdl>();
-		this.emprestimos = new ArrayList<AgendamentoMdl>();
+		this.expos = new ArrayList<ExposicaoMdl>();
+		this.agendamentos = new ArrayList<AgendamentoMdl>();
 		this.tabela = new ArrayList<AgendamentoMdl>();
 		
 		sessao();
 		lerArquivo();
-		//lerAcervo();
-		//lerMuseu();
 		atualizarId();
-		//atualizarTempo();
-		preencherMuseu();
+		atualizarTempo();
+		preencherPeriodo();
+		preencherTipo();
+		preencherIngresso();
+		preencherExpo();
 		//preencherCampos();
 		formataTabela();
 	}
 	
 	
 	// PREENCHE COMBOBOX /////////////////////
-
 	
-	public void preencherMuseu() {
+	
+	public void preencherExpo() {
 
 		cbExpo.addItem("Selecione…");
-		for(int i = 0; i < exposicoes.size(); i++){	
-			cbExpo.addItem(exposicoes.get(i).getTitulo());
+		String linha = new String();
+		ArrayList<String> listString = new ArrayList<>();	
+		try {
+			//RECUPERA E FILTRA OS DADOS DO ARQUIVO TXT
+			arquivo.leArquivo("../MASProject/dados/", "exposicoes");
+			linha = arquivo.getBuffer();
+			String[] listaExpo = linha.split(";");
+			for (String s : listaExpo) {
+				String text = s.replaceAll(".*:", "");
+				listString.add(text);
+				if (s.contains("---")) {
+					//PREENCHE O ARRAY
+					ExposicaoMdl expo = new ExposicaoMdl();
+					expo.setId(listString.get(0));
+					expo.setTitulo(listString.get(1));
+					expo.setDataIni(listString.get(2));
+					expo.setDataFim(listString.get(3));
+					expo.setDescricao(listString.get(4));
+					expos.add(expo);
+					cbExpo.addItem(listString.get(1));
+					listString.clear();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		cbExpo.addItem("Adicionar novo…");
+		cbExpo.addItem("Adicionar nova…");
 	}
 	
-	
-	/*public void preencherCampos() {
+	public void preencherTipo() {
 
-		for(int i = 0; i < exposicoes.size(); i++)
-			if(cbExpo.getSelectedItem().toString().equals(exposicoes.get(i).getTitulo())){
-				txtTelefone.setText(exposicoes.get(i).getTelefone());
-				txtResponsavel.setText(exposicoes.get(i).getResponsavel());
-				txtResponsavelId.setText(exposicoes.get(i).getResponsavelId());
-			} else if (cbExpo.getSelectedItem() == "Selecione…" || cbExpo.getSelectedItem() == "Adicionar novo…") {
-				txtTelefone.setText(null);
-				txtResponsavel.setText(null);
-				txtResponsavelId.setText(null);
+		cbTipo.addItem("Selecione…");
+		cbTipo.addItem("Escola");
+		cbTipo.addItem("Orfanato");
+		cbTipo.addItem("Associação");
+		cbTipo.addItem("Outros");
+	}
+	
+	public void preencherPeriodo() {
+
+		cbPeriodo.addItem("Selecione…");
+		cbPeriodo.addItem("Matutino");
+		cbPeriodo.addItem("Vespertino");
+		cbPeriodo.addItem("Noturno");
+	}
+	
+	public void preencherIngresso() {
+
+		cbIngresso.addItem("Selecione…");
+		//FILTRA E CARREGA O ARRAY COM A BASE DE DADOS DO TIPOS DE INGRESSO
+		String linha = new String();
+		IngressoTipoFile arquivos = new IngressoTipoFile();
+		arquivos = new IngressoTipoFile();
+		ArrayList<String> listString = new ArrayList<>();
+		try {
+			arquivos.leArquivo("../MASProject/dados/", "ingressoTipo");
+			linha = arquivos.getBuffer();
+			String[] ingresso = linha.split(";");
+			for (String s : ingresso) {
+				String text = s.replaceAll(".*: ", "");
+				listString.add(text);
+				if (s.contains("---")) {
+					cbIngresso.addItem(listString.get(1));
+					listString.clear();
+				}
 			}
-	}*/
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 
 	// METODOS DE SUPORTE ////////////////////////
@@ -182,47 +234,159 @@ public class AgendamentoCtrl implements ComponentListener {
 		String NewId = (dateFormat.format(date));
 		txtId.setText("AGD" + NewId);
 	}
+	
+	public void responsavelId() {
 
+		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
+		Date date = new Date();
+		String NewId = (dateFormat.format(date));
+		txtResponsavelId.setText("AUT" + NewId);
+	}
+	
+	public String InstitutoId() {
 
-	/*public void limpaCampos() {
+		
+		if(agendamentos.size() > 0){
+			for (int i = 0; i < agendamentos.size(); i++) {
+
+				if (txtNome.getText().equals(agendamentos.get(i).getInstituto())){
+					newId = agendamentos.get(i).getInstitutoId();
+				}
+			}
+		} else {
+			DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmmss");
+			Date date = new Date();
+			newId = "ITT" + (dateFormat.format(date));
+		}
+		return newId;
+	}
+
+	public void limpaCampos() {
 
 		txtPesquisa.setText(null);
 		txtNome.setText(null);
-		txtArtista.setText(null);
 		ftxtData.setValue(null);
-		ftxtDataFinal.setValue(null);
 		ftxtCusto.setValue(null);
+		ftxtQtd.setValue(null);
+		ftxtTotal.setValue(null);
+		cbTipo.setSelectedItem("Selecione…");
+		cbPeriodo.setSelectedItem("Selecione…");
+		cbIngresso.setSelectedItem("Selecione…");
+		cbExpo.setSelectedItem("Selecione…");
 		if (tabela.isEmpty()) { 
-			rdbtnEntrada.setEnabled(true);
-			rdbtnSaida.setEnabled(true);
-			cbExpo.setEnabled(true);
 			txtResponsavel.setText(null);
 			txtResponsavelId.setText(null);
 			txtTelefone.setText(null);
+			cbTipo.setSelectedItem("Selecione…");
+			cbPeriodo.setSelectedItem("Selecione…");
+			cbIngresso.setSelectedItem("Selecione…");
 			cbExpo.setSelectedItem("Selecione…");
 			ftxtTotal.setValue(null);
 		}
-	}*/
+		bloquearCampos();
+	}
+	
+	public void ativarCampos(){
+
+		txtPesquisa.setEnabled(false);
+		txtNome.setEnabled(true);
+		txtNome.requestFocus();
+		txtTelefone.setEnabled(true);
+		txtResponsavel.setEnabled(true);
+		responsavelId();
+	}
+
+	public void bloquearCampos(){
+
+		txtPesquisa.setEnabled(true);
+		txtNome.setText(null);
+		txtNome.setEnabled(false);
+		txtTelefone.setText(null);
+		txtTelefone.setEnabled(false);
+		txtResponsavel.setText(null);
+		txtResponsavel.setEnabled(false);
+		txtResponsavelId.setText(null);
+		txtResponsavelId.setEnabled(false);
+	}
+	
+	public void atualizarTempo(){  
+
+		if(ftxtData.getValue() != null){
+
+			SimpleDateFormat temp = new SimpleDateFormat("ddMMyyyy");
+
+			try {
+				Date dt1 = temp.parse(ftxtData.getValue().toString().replace("/","").replace("/",""));			
+				Date dt2 = temp.parse(temp.format(new Date()));
+				if (dt2.after(dt1)) {
+					msg("errorDate", "");
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+	}  
+	
+	public void atualizarValor() {
+
+		if(cbIngresso.getSelectedItem() != "Selecione…"){
+			
+		//FILTRA E CARREGA O ARRAY COM A BASE DE DADOS DO TIPOS DE INGRESSO
+		String linha = new String();
+		IngressoTipoFile arquivos = new IngressoTipoFile();
+		arquivos = new IngressoTipoFile();
+		ArrayList<String> listString = new ArrayList<>();
+		try {
+			arquivos.leArquivo("../MASProject/dados/", "ingressoTipo");
+			linha = arquivos.getBuffer();
+			String[] ingresso = linha.split(";");
+			for (String s : ingresso) {
+				String text = s.replaceAll(".*: ", "");
+				listString.add(text);
+				if (s.contains("---")) {
+
+					//PRECORRE O ARRAY DOS DADOS
+					for (int i = 0; i < listString.size(); i++) {
+						//CARREGA O VALOR DO INGRESSO ESCOLHIDO PARA O PREÇO UNITÁRIO
+						if (cbIngresso.getSelectedItem().toString().equals(listString.get(1))) {
+							ftxtCusto.setValue(Integer.parseInt(listString.get(2)));
+						}
+						listString.clear();
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		//ATUALIZA O VALOR CONFORME A QUANTIDADE
+		if(!ftxtQtd.getText().isEmpty()){	
+			int qtd = Integer.parseInt(ftxtQtd.getText());
+			Object unit = ftxtCusto.getValue();
+			int total = qtd * (int) unit;
+			ftxtTotal.setValue(total);
+			if(tabela.size() == 0){
+				ftxtTotal.setValue(total);
+			}
+		} else {
+			//POR PADRÃO A QUANTIDADE É "1"
+			ftxtQtd.setText("1");
+			atualizarValor();
+		}
+		} else {
+			ftxtCusto.setValue(null);
+			ftxtTotal.setValue(null);
+			ftxtQtd.setValue(null);
+		}
+	}
+	
 	
 	public AgendamentoCtrl(JCalendar calendar) {
 		
 		AgendamentoCtrl.calendar = calendar;
 	}
 	
-	/*
-	 * AS FLAGS FUNCIONAM PARA QUANDO SE TEM MAIS DE UMA CHAMADA DE CALENDARIO
-	 * NA MESMA TELA (AJUDA NO TRATAMENTO DE RETORNO)
-	 */
-	/*public static int getFlag() {
-		
-		return flag;
-	}
-
-	public void setFlag(int n) {
-		
-		flag = n;
-	}*/
-
+	
 	public static void leCalendario() {
 		
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -230,24 +394,8 @@ public class AgendamentoCtrl implements ComponentListener {
 		String data = formato.format(calendar.getDate());
 		ftxtData.setValue(null);
 		ftxtData.setValue(data);
-		//insereDataTextField(data);
 	}
 	
-	/*public static void insereDataTextField(String data) {
-		
-		// TRATAMENTO DAS FLAGS
-		switch (getFlag()) {
-		
-		case 1:
-			ftxtData.setValue(null);
-			ftxtData.setValue(data);
-			break;
-		case 2:
-			ftxtDataFinal.setValue(null);
-			ftxtDataFinal.setValue(data);
-			break;
-		}
-	}*/
 
 	public void chamaCalendario() throws ParseException {
 		FrmCalendario frmCal = new FrmCalendario();
@@ -255,99 +403,21 @@ public class AgendamentoCtrl implements ComponentListener {
 		frmCal.setVisible(true);
 	}
 
-
-	/*public void lerAcervo() {
-
-		String linha = new String();
-		ArrayList<String> list = new ArrayList<>();	
-		try {
-			//RECUPERA E FILTRA OS DADOS DO ARQUIVO TXT
-			arquivo.leArquivo("../MASProject/dados/", "acervo");
-			linha = arquivo.getBuffer();
-			String[] listaAcervo = linha.split(";");
-			for (String s : listaAcervo) {
-				String text = s.replaceAll(".*:", "");
-				list.add(text);
-				if (s.contains("---")) {
-					//PREENCHE O ARRAY
-					EmprestimoObraMdl obra = new EmprestimoObraMdl();
-					obra.setId(list.get(0));
-					obra.setArtista(list.get(1));
-					obra.setNome(list.get(2));
-					obras.add(obra);
-					list.clear();
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}*/
-	
-	
-	/*public void lerMuseu() {
-
-		String linha = new String();
-		ArrayList<String> listaMuseu = new ArrayList<>();	
-		try {
-			//RECUPERA E FILTRA OS DADOS DO ARQUIVO TXT
-			arquivo.leArquivo("../MASProject/dados/", "museus");
-			linha = arquivo.getBuffer();
-			String[] lista = linha.split(";");
-			for (String s : lista) {
-				String text = s.replaceAll(".*: ", "");
-				listaMuseu.add(text);
-				if (s.contains("---")) {
-					//PREENCHE O ARRAY
-					MuseuMdl museu = new MuseuMdl();
-					museu.setId(listaMuseu.get(0));
-					museu.setNome(listaMuseu.get(1));
-					museu.setTelefone(listaMuseu.get(2));
-					museu.setResponsavelId(listaMuseu.get(3));
-					museu.setResponsavel(listaMuseu.get(4));
-					exposicoes.add(museu);
-					listaMuseu.clear();
-				}
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}*/
-
-
-	/*public void atualizarTempo(){  
-
-		if(ftxtData.getValue() != null){
-
-			SimpleDateFormat temp = new SimpleDateFormat("ddMMyyyy");
-
-			try {
-				Date dt1 = temp.parse(ftxtData.getValue().toString().replace("/","").replace("/",""));
-				Date dt2 = temp.parse(ftxtDataFinal.getValue().toString().replace("/","").replace("/",""));
-				if (dt1.after(dt2)) {   
-					msg("errordate", "");
-				}
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-	}  */
-	
-
 	public void formataTabela(){
 		
 		//VETOR DAS LINHAS DA TABELA
 		List<String[]> linhas = new ArrayList<>(); 
 
-		//CARREGA AS LINHAS NA TABELA COM OS DADOS DA COMPRA (SOMENTE AS COLUNAS CONFIGURADAS)
+		//CARREGA AS LINHAS NA TABELA COM OS DADOS (SOMENTE AS COLUNAS CONFIGURADAS)
 		for (int i = 0; i < tabela.size(); i++) {
 
 			String[] item = {  
-					tabela.get(i).getExpo(),
+					tabela.get(i).getExpoNome(),
+					tabela.get(i).getPeriodo(),
+					tabela.get(i).getData(),  
 					tabela.get(i).getResponsavel(), 
-					tabela.get(i).getResponsavelId(), 
-					tabela.get(i).getData(), 
-					tabela.get(i).getInstitutoId(), 
-					tabela.get(i).getCusto()			
+					tabela.get(i).getQtd(), 
+					tabela.get(i).getVlrUnitario()			
 			};
 			linhas.add(item);
 		}
@@ -365,7 +435,7 @@ public class AgendamentoCtrl implements ComponentListener {
 		direita.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		//NOMES DAS COLUNAS DA TABELA
-		String[] nomesColunas = {"Obra", "Responsável", "Autorização", "Data Inicial", "Data Final", "Custo"};
+		String[] nomesColunas = {"Exposição", "Período", "Data", "Responsável", "Qtd. Pessoas", "Valor"};
 
 		//CRIA UM DefaulTableModel COM OS DADOS (LINHAS E COLUNAS)
 		@SuppressWarnings("serial")
@@ -389,85 +459,92 @@ public class AgendamentoCtrl implements ComponentListener {
 		tbAgenda.setModel(model);
 
 		//DEFINE O ALINHAMENTO DAS COLUNAS
-		tbAgenda.getColumnModel().getColumn(0).setCellRenderer(esquerda); 
-		tbAgenda.getColumnModel().getColumn(1).setCellRenderer(esquerda);
+		tbAgenda.getColumnModel().getColumn(0).setCellRenderer(esquerda);
+		tbAgenda.getColumnModel().getColumn(1).setCellRenderer(esquerda); 
 		tbAgenda.getColumnModel().getColumn(2).setCellRenderer(centralizado);
 		tbAgenda.getColumnModel().getColumn(3).setCellRenderer(centralizado);
 		tbAgenda.getColumnModel().getColumn(4).setCellRenderer(centralizado);
-		tbAgenda.getColumnModel().getColumn(5).setCellRenderer(direita);
+		tbAgenda.getColumnModel().getColumn(5).setCellRenderer(centralizado);
 
 		//CONFIGURA O TAMANHO DAS COLUNAS
-		tbAgenda.getColumnModel().getColumn(0).setPreferredWidth(110);
-		tbAgenda.getColumnModel().getColumn(1).setPreferredWidth(80);
-		tbAgenda.getColumnModel().getColumn(2).setPreferredWidth(85);
-		tbAgenda.getColumnModel().getColumn(3).setPreferredWidth(50);
-		tbAgenda.getColumnModel().getColumn(4).setPreferredWidth(50);
-		tbAgenda.getColumnModel().getColumn(5).setPreferredWidth(60);
+		tbAgenda.getColumnModel().getColumn(0).setPreferredWidth(100);
+		tbAgenda.getColumnModel().getColumn(1).setPreferredWidth(30);
+		tbAgenda.getColumnModel().getColumn(2).setPreferredWidth(30);
+		tbAgenda.getColumnModel().getColumn(3).setPreferredWidth(80);
+		tbAgenda.getColumnModel().getColumn(4).setPreferredWidth(30);
+		tbAgenda.getColumnModel().getColumn(5).setPreferredWidth(50);
 	}
 
 
 	public void atualizaTabela(){
 
 		//SE FOR CADASTRADO UM NOVO REGISTRO, ATUALIZAR A BASE DE DADOS
-		//obras.clear();
-		//lerAcervo();
+		agendamentos.clear();
+		lerArquivo();
 
 		//CARREGA O NOVO REGISTRO NA BASE DE DADOS
-		//EmprestimoMdl emprestimo = new EmprestimoMdl();
-		/*if (!txtNome.getText().isEmpty() 
-				&& ftxtData.getValue() != null  
+		AgendamentoMdl agendamento = new AgendamentoMdl();
+		if (!txtNome.getText().isEmpty() 
+				&& ftxtData.getValue() != null 
+				&& cbTipo.getSelectedItem().toString() != "Selecione…" 
+				&& cbPeriodo.getSelectedItem().toString() != "Selecione…" 
 				&& cbExpo.getSelectedItem().toString() != "Selecione…" 
 				&& ftxtCusto.getValue() != null) {
 
-			for (int i = 0; i < obras.size(); i++) {
-				if (txtNome.getText().equals(obras.get(i).getNome())) {
-					emprestimo.setId(txtId.getText());
-					emprestimo.setObraId(obras.get(i).getId());
-					emprestimo.setObra(txtNome.getText());
-					emprestimo.setArtista(txtArtista.getText());
-					emprestimo.setDestino(btgDestino.getSelection().getActionCommand());
-					emprestimo.setDataInicial(ftxtData.getText());
-					emprestimo.setDataFinal(ftxtDataFinal.getText());
-					for (int j = 0; j < exposicoes.size(); j++) { //NECESSÁRIO POIS O ID É DE OUTRA BASE
-						if (cbExpo.getSelectedItem().toString().equals(exposicoes.get(j).getNome())) {
-							emprestimo.setMuseuId(exposicoes.get(j).getId());
+			for (int i = 0; i <= agendamentos.size(); i++) {
+				if (agendamentos.size() == 0 || 
+						txtNome.getText().equals(agendamentos.get(i).getInstituto())) {
+					
+					agendamento.setId(txtId.getText());
+					agendamento.setInstitutoId(InstitutoId());
+					agendamento.setInstituto(txtNome.getText());
+					agendamento.setFone(txtTelefone.getText());
+					agendamento.setResponsavelId(txtResponsavelId.getText());
+					agendamento.setResponsavel(txtResponsavel.getText());
+					agendamento.setTipo(cbTipo.getSelectedItem().toString());
+					agendamento.setData(ftxtData.getText());
+					agendamento.setPeriodo(cbPeriodo.getSelectedItem().toString());
+					agendamento.setQtd(ftxtQtd.getValue().toString());
+					
+					for (int j = 0; j < expos.size(); j++) { //NECESSÁRIO POIS O ID É DE OUTRA BASE
+						if (cbExpo.getSelectedItem().toString().equals(expos.get(j).getTitulo())) {
+							agendamento.setExpoId(expos.get(j).getId());
 						}
 					}
-					emprestimo.setMuseu(cbExpo.getSelectedItem().toString());
-					emprestimo.setResponsavelId(txtResponsavelId.getText());
-					emprestimo.setResponsavel(txtResponsavel.getText());
-					emprestimo.setCusto(ftxtCusto.getValue().toString());			
-					tabela.add(emprestimo);
-					//msg("save", txtObra.getText());
+					
+					agendamento.setExpoNome(cbExpo.getSelectedItem().toString());
+					agendamento.setIngresso(cbIngresso.getSelectedItem().toString());
+					agendamento.setVlrUnitario(ftxtCusto.getValue().toString());
+					agendamento.setVlrTotal(ftxtTotal.getValue().toString()); 			
+					tabela.add(agendamento);
 					validar = true;
 				}
-			}
-			
+			}		
 			//ATUALIZA TOTAL DO CUSTO
 			int total = 0;
 			for(int t = 0; t < tabela.size(); t++){
-				total = total + Integer.parseInt(tabela.get(t).getCusto().replace("R$ ","").replace(",00",""));	
+				total = total + Integer.parseInt(tabela.get(t).getVlrUnitario().replace("R$ ","").replace(",00",""));	
 			}
 			ftxtTotal.setValue(total);
 			limpaCampos();
 			
 			if (validar == false) {
-				msg("errorsave", txtPesquisa.getText());
+				msg("errorSave", txtPesquisa.getText());
 			}
 		} else {
-			msg("errornull", txtPesquisa.getText());
+			msg("errorNull", txtPesquisa.getText());
 		}	
 		//CARREGA O REGISTRO PARA A TABELA
-		formataTabela();*/
+		formataTabela();
 	}
 	
 	
 	public void removeLinha(){
 
-	/*	if(tbAgenda.getRowCount() > 0){
+		if(tbAgenda.getRowCount() > 0){
 			//ATUALIZA A BASE DE DADOS EXCLUINDO O REGISTRO PELO ID DA OBRA COMO FILTRO
 			for(int i = 0; i < tabela.size(); i ++){
-				if((tbAgenda.getValueAt(tbAgenda.getSelectedRow(), 0).toString()).equals(tabela.get(i).getObraId())){
+				if((tbAgenda.getValueAt(tbAgenda.getSelectedRow(), 0).toString()).equals(tabela.get(i).getExpoId())){
 					tabela.remove(i);
 				}
 			}
@@ -480,7 +557,7 @@ public class AgendamentoCtrl implements ComponentListener {
 				tabela.clear();
 				limpaCampos();
 			}
-		}*/
+		}
 	}
 	
 
@@ -493,30 +570,35 @@ public class AgendamentoCtrl implements ComponentListener {
 		ArrayList<String> list = new ArrayList<>();
 		try {
 			// VERIFICA SE O ARQUIVO TXT EXISTE E FAZ LEITURA (E CRIA O TXT CASO NEGATIVO)
-			arquivo.leArquivo("../MASProject/dados/", "emprestimos");
+			arquivo.leArquivo("../MASProject/dados/", "agendamentos");
 			//FILTRA E CARREGA O ARRAY COM A BASE DE DADOS DO ARQUIVO TXT
 			linha = arquivo.getBuffer();
-			String[] listaIngresso = linha.split(";");
-			for (String s : listaIngresso) {
+			String[] listaAgd = linha.split(";");
+			for (String s : listaAgd) {
 				String text = s.replaceAll(".*: ", "");
 				list.add(text);
-				/*if (s.contains("---")) {
-					AgendamentoMdl emprestimo = new AgendamentoMdl();
-					emprestimo.setId(list.get(0));
-					emprestimo.setObraId(list.get(1));
-					emprestimo.setObra(list.get(2));
-					emprestimo.setArtista(list.get(3));
-					emprestimo.setDestino(list.get(4));
-					emprestimo.setDataInicial(list.get(5));
-					emprestimo.setDataFinal(list.get(6));
-					emprestimo.setMuseuId(list.get(7));
-					emprestimo.setMuseu(list.get(8));
-					emprestimo.setResponsavelId(list.get(9));
-					emprestimo.setResponsavel(list.get(10));
-					emprestimo.setCusto(list.get(11));
-					emprestimos.add(emprestimo);
+				if (s.contains("---")) {
+					AgendamentoMdl agendamento = new AgendamentoMdl();
+					
+					
+					agendamento.setId(list.get(0));
+					agendamento.setInstitutoId(list.get(1));
+					agendamento.setInstituto(list.get(2));
+					agendamento.setFone(list.get(3));
+					agendamento.setResponsavelId(list.get(4));
+					agendamento.setResponsavel(list.get(5));
+					agendamento.setTipo(list.get(6));
+					agendamento.setData(list.get(7));
+					agendamento.setPeriodo(list.get(8));
+					agendamento.setQtd(list.get(9));
+					agendamento.setExpoId(list.get(10));
+					agendamento.setExpoNome(list.get(11));
+					agendamento.setIngresso(list.get(12));
+					agendamento.setVlrUnitario(list.get(13));
+					agendamento.setVlrTotal(list.get(14));
+					agendamentos.add(agendamento);
 					list.clear();
-				}*/
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -524,14 +606,14 @@ public class AgendamentoCtrl implements ComponentListener {
 	}
 
 
-	public void atualizaDados(List<AgendamentoMdl> listemprestimos) {
+	public void atualizaDados(List<AgendamentoMdl> listagendamentos) {
 
 		//REALIZA A GRAVAÇÃO NO ARQUIVO TXT
-		File f = new File("../MASProject/dados/emprestimos");
+		File f = new File("../MASProject/dados/agendamentos");
 		f.delete();
-		for (AgendamentoMdl emprestimo : listemprestimos) {
+		for (AgendamentoMdl agendamento : listagendamentos) {
 			try {
-				arquivo.escreveArquivo("../MASProject/dados/", "emprestimos", "", emprestimo);
+				arquivo.escreveArquivo("../MASProject/dados/", "agendamentos", "", agendamento);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -541,51 +623,58 @@ public class AgendamentoCtrl implements ComponentListener {
 
 	public void pesquisar() {
 
-		//LIMPA O ARRAY PARA RECARREGAR COM OS DADOS ATUAIS DO ARQUIVO TXT
-		/*obras.clear();
-		lerAcervo();
-		ArrayList<EmprestimoObraMdl> lista = new ArrayList<>();
+		ArrayList<AgendamentoMdl> lista = new ArrayList<>();
 		String pesquisa ="";
 		if (!txtPesquisa.getText().isEmpty()) {
-			for (int i = 0; i < obras.size(); i++) {
+			for (int i = 0; i < agendamentos.size(); i++) {
+				
 				//VERIFICA SE O ID DIGITADO CONFERE COM ALGUM ID CADASTRADO
-				if (txtPesquisa.getText().equalsIgnoreCase(obras.get(i).getId())) {
-					txtNome.setText(obras.get(i).getNome());
-					txtArtista.setText(obras.get(i).getArtista().toString());
+				if (txtPesquisa.getText().equalsIgnoreCase(agendamentos.get(i).getId())) {
+					txtNome.setText(agendamentos.get(i).getInstituto());
+					txtTelefone.setText(agendamentos.get(i).getFone());
+					txtResponsavel.setText(agendamentos.get(i).getResponsavel());
+					txtResponsavelId.setText(agendamentos.get(i).getResponsavelId());
+					cbTipo.setSelectedItem(agendamentos.get(i).getTipo());
 					validar = true;
+					
 					//VERIFICA OS REGISTROS QUE COMEÇAM COM O TEXTO DIGITADO
-				} else if (obras.get(i).getNome().toLowerCase().startsWith(txtPesquisa.getText().toLowerCase())) {
+				} else if (agendamentos.get(i).getInstituto().toLowerCase().startsWith(txtPesquisa.getText().toLowerCase())) {
 					validar = true;
 				}
 			}
 			if (validar == true) {
 				//CARREGA O ARRAY COM OS NOMES INICIADOS COM O TEXTO DIGITADO
-				for (int i = 0; i < obras.size(); i++) {
-					boolean filtro = obras.get(i).getNome().toLowerCase().startsWith(txtPesquisa.getText().toLowerCase());
+				for (int i = 0; i < agendamentos.size(); i++) {
+					boolean filtro = agendamentos.get(i).getInstituto().toLowerCase().startsWith(txtPesquisa.getText().toLowerCase());
 					if (filtro == true) {
-						EmprestimoObraMdl item = new EmprestimoObraMdl();
-						item.setId(obras.get(i).getId());
-						item.setNome(obras.get(i).getNome());
+						AgendamentoMdl item = new AgendamentoMdl();
+						item.setInstitutoId(agendamentos.get(i).getInstitutoId());
+						item.setInstituto(agendamentos.get(i).getInstituto());
 						lista.add(item);
 					}
 				}
 				//CARREGADO PARA O ARRAY OS IDs COM OS NOMES QUE COINCIDEM COM A DIGITAÇÃO
 				String[] filtro = new String[lista.size()];
 				for (int i = 0; i < lista.size(); i++) {
-					filtro[i] = lista.get(i).getId() + " : " + lista.get(i).getNome();
-					pesquisa = lista.get(i).getId();
+					filtro[i] = lista.get(i).getInstitutoId() + " : " + lista.get(i).getInstituto();
+					pesquisa = lista.get(i).getInstitutoId();
 				}
 				if (filtro != null && filtro.length > 1) {
+				
 					//INFORMA AO USUÁRIO UMA LISTA DOS ID's DOS USUÁRIOS E PEDE RETORNO
 					pesquisa = (String) JOptionPane.showInputDialog(form, "Selecione:\n", "Registros Localizados",
 							JOptionPane.INFORMATION_MESSAGE, null, filtro, filtro[0]);
 				} 
 				if (pesquisa == "0" || pesquisa != null){
+				
 					//SE FOR ESCOLHIDO UM ID, PREENCHE O CAMPO COM O NOME
-					for (int i = 0; i < obras.size(); i++) {
-						if (pesquisa.replaceAll(" : .*", "").equalsIgnoreCase(obras.get(i).getId())) {
-							txtNome.setText(obras.get(i).getNome());
-							txtArtista.setText(obras.get(i).getArtista().toString());
+					for (int i = 0; i < agendamentos.size(); i++) {
+						if (pesquisa.replaceAll(" : .*", "").equalsIgnoreCase(agendamentos.get(i).getInstitutoId())) {
+							txtNome.setText(agendamentos.get(i).getInstituto());
+							txtTelefone.setText(agendamentos.get(i).getFone());
+							txtResponsavel.setText(agendamentos.get(i).getResponsavel());
+							txtResponsavelId.setText(agendamentos.get(i).getResponsavelId());
+							cbTipo.setSelectedItem(agendamentos.get(i).getTipo());
 							txtPesquisa.setText(null);
 						}
 					}
@@ -593,78 +682,88 @@ public class AgendamentoCtrl implements ComponentListener {
 				validar = false;
 			} else {
 				if (pesquisa == "") {
-					msg("errorsave", txtPesquisa.getText());
-					limpaCampos();
+					msg("errorSave", txtPesquisa.getText());
+					txtNome.setText(txtPesquisa.getText().toString());
 				}
 				validar = false;
 			}
 		} else {
-			msg("errorsearch", txtPesquisa.getText());
-		}*/
+			msg("errorSearch", txtPesquisa.getText());
+		}
 	}
 
 
 	public void gravar() {
 
-			//INICIALIZA VARIÁVEL COM O MODELO
-		/*AgendamentoMdl emprestimo = new AgendamentoMdl();
-			//VERIFICA SE A TABELA ESTA CARREGADA (SE POSITIVO TRANSFERE PARA O MODELO)
-			if (tbAgenda.getRowCount() > 0){
-				for(int i = 0; i < tabela.size(); i++){			
-					emprestimos.add(tabela.get(i));
-					atualizaDados(emprestimos);
-				}
-				tabela.clear();					
-				msg("save", txtId.getText());
-				//LIMPA AS LINHAS E ATUALIZA A TABELA
-				((DefaultTableModel) tbAgenda.getModel()).setNumRows(0); 
-				tbAgenda.updateUI();
-				limpaCampos();
-				atualizarId();
-				validar = true;
-				//CASO A TABELA ESTEJA VAZIA, VERIFICA SE OS CAMPOS ESTÃO PREENCHIDOS
-			} else if (!txtNome.getText().isEmpty() 
-					&& ftxtData.getValue() != null 
-					&& ftxtDataFinal.getValue() != null 
-					&& cbExpo.getSelectedItem().toString() != "Selecione…" 
-					&& ftxtCusto.getValue() != null) {
-				//PRECORRE O ARRAY PARA ENCONTRAR O NOME DIGITADO NO CAMPO
-				for (int i = 0; i < obras.size(); i++) {
-					//CARREGA O MODELO COM OS DADOS DOS CAMPOS DA TELA
-					if (txtNome.getText().equals(obras.get(i).getNome())) {
-						emprestimo.setId(txtId.getText());
-						emprestimo.setObraId(obras.get(i).getId());
-						emprestimo.setObra(txtNome.getText());
-						emprestimo.setArtista(txtArtista.getText());
-						emprestimo.setDestino(btgDestino.getSelection().getActionCommand());
-						emprestimo.setDataInicial(ftxtData.getText());
-						emprestimo.setDataFinal(ftxtDataFinal.getText());
-						for (int m = 0; m < exposicoes.size(); m++) { //NECESSÁRIO POIS O ID É DE OUTRA BASE
-							if (cbExpo.getSelectedItem().toString().equals(exposicoes.get(m).getNome())) {
-								emprestimo.setMuseuId(exposicoes.get(m).getId());
-							}
+		//INICIALIZA VARIÁVEL COM O MODELO
+		AgendamentoMdl agendamento = new AgendamentoMdl();
+		//VERIFICA SE A TABELA ESTA CARREGADA (SE POSITIVO TRANSFERE PARA O MODELO)
+		if (tbAgenda.getRowCount() > 0){
+			for(int i = 0; i < tabela.size(); i++){			
+				agendamentos.add(tabela.get(i));
+				atualizaDados(agendamentos);
+			}
+			tabela.clear();					
+			msg("save", txtId.getText());
+			
+			//LIMPA AS LINHAS E ATUALIZA A TABELA
+			((DefaultTableModel) tbAgenda.getModel()).setNumRows(0); 
+			tbAgenda.updateUI();
+			limpaCampos();
+			atualizarId();
+			validar = true;
+			
+			//CASO A TABELA ESTEJA VAZIA, VERIFICA SE OS CAMPOS ESTÃO PREENCHIDOS
+		} else if (!txtNome.getText().isEmpty() 
+				&& ftxtData.getValue() != null 
+				&& cbTipo.getSelectedItem().toString() != "Selecione…" 
+				&& cbPeriodo.getSelectedItem().toString() != "Selecione…" 
+				&& cbExpo.getSelectedItem().toString() != "Selecione…" 
+				&& ftxtCusto.getValue() != null) {
+			
+			//PRECORRE O ARRAY PARA ENCONTRAR O NOME DIGITADO NO CAMPO
+			for (int i = 0; i < agendamentos.size(); i++) {
+
+				//CARREGA O MODELO COM OS DADOS DOS CAMPOS DA TELA
+				if (txtNome.getText().equals(agendamentos.get(i).getInstituto())) {
+					agendamento.setId(txtId.getText());
+					agendamento.setInstitutoId(InstitutoId());
+					agendamento.setInstituto(txtNome.getText());
+					agendamento.setFone(txtTelefone.getText());
+					agendamento.setResponsavelId(txtResponsavelId.getText());
+					agendamento.setResponsavel(txtResponsavel.getText());
+					agendamento.setTipo(cbTipo.getSelectedItem().toString());
+					agendamento.setData(ftxtData.getText());
+					agendamento.setPeriodo(cbPeriodo.getSelectedItem().toString());
+					agendamento.setQtd(ftxtQtd.getValue().toString());
+					
+					for (int j = 0; j < expos.size(); j++) { //NECESSÁRIO POIS O ID É DE OUTRA BASE
+						if (cbExpo.getSelectedItem().toString().equals(expos.get(j).getTitulo())) {
+							agendamento.setExpoId(expos.get(j).getId());
 						}
-						emprestimo.setMuseu(cbExpo.getSelectedItem().toString());
-						emprestimo.setResponsavelId(txtResponsavelId.getText());
-						emprestimo.setResponsavel(txtResponsavel.getText());
-						emprestimo.setCusto(ftxtCusto.getValue().toString()); 				
-						emprestimos.add(emprestimo);
-						msg("save", "O ID " + txtId.getText() + " para o " + cbExpo.getSelectedItem().toString());
-						//ENVIA A ARRAY DO MODELO CARREGADO PARA ESCRITA NO ARQUIVO TXT
-						atualizaDados(emprestimos);
-						limpaCampos();
-						atualizarId();
-						//atualizarTempo();
-						validar = true;
-					} 
-				}
-				if (validar == false) {
-					msg("errorsave", txtPesquisa.getText());
-				}
-			} else {
-				msg("errornull", txtPesquisa.getText());
-			}*/
+					}
+					
+					agendamento.setExpoNome(cbExpo.getSelectedItem().toString());
+					agendamento.setIngresso(cbIngresso.getSelectedItem().toString());
+					agendamento.setVlrUnitario(ftxtCusto.getValue().toString());
+					agendamento.setVlrTotal(ftxtTotal.getValue().toString());			
+					agendamentos.add(agendamento);
+					msg("save", "A Insttuição " + txtNome.getText() + " para a " + cbExpo.getSelectedItem().toString());
+					
+					//ENVIA A ARRAY DO MODELO CARREGADO PARA ESCRITA NO ARQUIVO TXT
+					atualizaDados(agendamentos);
+					limpaCampos();
+					atualizarId();
+					validar = true;
+				} 
+			}
+			if (validar == false) {
+				msg("errorSave", txtPesquisa.getText());
+			}
+		} else {
+			msg("errorNull", txtPesquisa.getText());
 		}
+	}
 
 
 
@@ -675,38 +774,42 @@ public class AgendamentoCtrl implements ComponentListener {
 
 		switch (tipo) {
 
-		case "errornull":
+		case "errorNull":
 			JOptionPane.showMessageDialog(null, 
 					"ATENÇÃO!\nCampo Vazio.\n\nPor favor, complete todos os campos necessários.", 
 					"Erro", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/error.png"));
 			break;
-		case "errorsearch":
+			
+		case "errorSearch":
 			JOptionPane.showMessageDialog(null, 
 					"ATENÇÃO! Por favor, digite para pesquisar!", 
 					"Erro",
 					JOptionPane.PLAIN_MESSAGE, 
 					new ImageIcon("../MASProject/icons/error.png"));
 			break;
-		case "errordate":
+			
+		case "errorDate":
 			JOptionPane.showMessageDialog(null, 
-					"ATENÇÃO! Erro no campo Data.\n\nPor favor, preencha as datas respeitando o Início e o Fim do período.", 
+					"ATENÇÃO! Erro no campo Data.\n\nPor favor, preencha a data respeitando que deve ser superior a data de ontem.", 
 					"Erro", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/error.png"));
 			ftxtData.setValue(null);
 			break;
+			
 		case "save":
 			JOptionPane.showMessageDialog(null, 
-					"Registro(s) processado(s)\n\n" + mensagem + "\n\nEmpréstimo registrado com sucesso.", 
+					"Registro(s) processado(s)\n\n" + mensagem + "\n\nAgendamento registrado com sucesso.", 
 					"Confirmação", 
 					JOptionPane.PLAIN_MESSAGE, 
 					new ImageIcon("../MASProject/icons/confirm.png"));
 			break;
-		case "saveconfirm":
+			
+		case "saveConfirm":
 			Object[] save = { "Confirmar", "Cancelar" };  
-			int confirmar = JOptionPane.showOptionDialog(null, "Confirma o processamento do empréstimo " + mensagem 
+			int confirmar = JOptionPane.showOptionDialog(null, "Confirma o processamento do agendamento " + mensagem 
 					+ " ?",
 					"Aguardando Confirmação", 
 					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
@@ -717,57 +820,46 @@ public class AgendamentoCtrl implements ComponentListener {
 				validar = false;
 			}
 			break;
-		case "errorsave":
+			
+		case "errorSave":
 			Object[] options = { "Confirmar", "Cancelar" };  
-			int cadastro = JOptionPane.showOptionDialog(null, "ATENÇÃO!\n\nA obra '" + mensagem 
-					+ "' não existe na base de dados!\n\nDeseja realizar o cadastro desta obra no acervo?",
+			int cadastro = JOptionPane.showOptionDialog(null, "ATENÇÃO!\n\nA Instituição '" + mensagem 
+					+ "' não existe na base de dados!\n\nDeseja realizar o cadastro desta Instituição?",
 					"Não Localizado", 
 					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
-					new ImageIcon("../MASProject/icons/warning.png"), options, options[1]);
+					new ImageIcon("../MASProject/icons/warning.png"), options, options[0]);
 			if (cadastro == 0) {
-				/*try {
-					FrmAcervoCad frmCad = new FrmAcervoCad();
-					frmCad.setVisible(true);
-					frmCad.setLocationRelativeTo(null);
-					frmCad.txtObra.setText(txtPesquisa.getText());
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}*/
+				ativarCampos();
 			}
 			break;
-		case "novomuseu":
-			Object[] novo = { "Confirmar", "Cancelar" };  
-			int cadastroMuseu = JOptionPane.showOptionDialog(null, "Gostaria de cadastrar um novo Museu \npara o Empréstimo\n\nID " + mensagem 
+			
+		case "novoEpo":
+			Object[] novoExpo = { "Confirmar", "Cancelar" };  
+			int cadastroExpo = JOptionPane.showOptionDialog(null, "Gostaria de cadastrar uma nova Exposição \npara o agendamento\n\nID " + mensagem 
 					+ " ?",
-					"Novo Museu", 
+					"Nova Exposição", 
 					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
-					new ImageIcon("../MASProject/icons/question.png"), novo, novo[1]);
-			if (cadastroMuseu == 0) {
-				FrmLogin frmCad = new FrmLogin();
-				frmCad.setVisible(true);
-				frmCad.setLocation(0,0);
-				//frmCad.txtObra.setText(txtPesquisa.getText());
-			} else {
-				//limpaCampos();
+					new ImageIcon("../MASProject/icons/question.png"), novoExpo, novoExpo[1]);
+			if (cadastroExpo == 0) {
+				if (cadastroExpo == 0) {
+					FrmExposicaoCad frmCad;
+					try {
+						frmCad = new FrmExposicaoCad();
+						frmCad.setVisible(true);
+						frmCad.setLocation(0,0);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+				} else {
+					limpaCampos();
+				}
 			}
 			break;
-		case "system":
-			Object[] exit = { "Confirmar", "Cancelar" };  
-			int fechar = JOptionPane.showOptionDialog(null, "ATENÇÃO!\n\nChamada para o " + mensagem 
-					+ " do sistema!\n\nDeseja encerrar a aplicação?",
-					"Fechamento do Programa!", 
-					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
-					new ImageIcon("../MASProject/icons/warning.png"), exit, exit[1]);
-			if (fechar == 0) {
-				validar = true;
-			} else {
-				validar = false;
-			}
-			break;		
+
 		default:
 			JOptionPane.showMessageDialog(null, 
 					"ERRO! Algo não deveria ter acontecido…\n\nTermo: " + mensagem
-					+ "\n\nOcorreu no Controller desta Tela.", 
+					+ "\n\nOcorreu no Controller desta Tela.\nPor favor, avise a um admnistrador", 
 					"Erro no Controller", 
 					JOptionPane.PLAIN_MESSAGE,
 					new ImageIcon("../MASProject/icons/error.png"));
@@ -794,7 +886,7 @@ public class AgendamentoCtrl implements ComponentListener {
 			
 			//preencherCampos();
 			if(cbExpo.getSelectedItem().toString().equals("Adicionar novo…")){
-				msg("novomuseu",txtId.getText());
+				msg("novoExpo",txtId.getText());
 			}
 		}
 	};
@@ -803,6 +895,7 @@ public class AgendamentoCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			atualizarValor();
 		}
 	};
 
@@ -810,14 +903,9 @@ public class AgendamentoCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//atualizarTempo();
+			atualizarTempo();
 			atualizaTabela();
-			/*if (tabela.size() > 0) { 
-				rdbtnEntrada.setEnabled(false);
-				rdbtnSaida.setEnabled(false);
-				cbExpo.setEnabled(false);
-			}
-*/		}
+		}
 	};
 	
 	public ActionListener apagar = new ActionListener() {
@@ -837,7 +925,6 @@ public class AgendamentoCtrl implements ComponentListener {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			//setFlag(1);
 		}
 	};
 	
@@ -850,7 +937,7 @@ public class AgendamentoCtrl implements ComponentListener {
 			tabela.clear();
 			((DefaultTableModel) tbAgenda.getModel()).setNumRows(0);
 			tbAgenda.updateUI();
-			//limpaCampos();
+			limpaCampos();
 		}
 	};
 
@@ -858,7 +945,7 @@ public class AgendamentoCtrl implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//msg("saveconfirm", txtId.getText());
+			//msg("saveConfirm", txtId.getText());
 			//if(validar == true){
 			gravar();
 			//}
@@ -908,10 +995,10 @@ public class AgendamentoCtrl implements ComponentListener {
 			case KeyEvent.VK_RIGHT:
 				break;
 			case KeyEvent.VK_ESCAPE:
-				msg("system","Fechamento");
+				/*msg("system","Fechamento");
 				if(validar != false){
 				System.exit(0);
-				}
+				}*/
 				break;
 			case KeyEvent.VK_DELETE:
 				removeLinha();

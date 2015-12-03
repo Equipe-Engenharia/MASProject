@@ -1,0 +1,48 @@
+ID             : AGD151203-053814
+ID Instituto   : ITT151203-053848
+Instituto      : FATEC
+Telefone       : (11) 11111-1111
+ID Responsável : AUT151203-053821
+Responsável    : Fernando
+Tipo           : Escola
+Data           : 03/12/2015
+Período        : Vespertino
+Qtd. Pessoas   : 10
+ID Expo        : EXP151201-004842
+Nome Expo      : Teste Final
+Nome Ingresso  : Estudante
+Valor Unitário : 10
+Valor Total    : 10
+---------------------------
+ID             : AGD151203-053814
+ID Instituto   : ITT151203-053958
+Instituto      : ETEC
+Telefone       : (22) 22222-2222
+ID Responsável : AUT151203-053916
+Responsável    : Adriana
+Tipo           : Escola
+Data           : 24/12/2015
+Período        : Noturno
+Qtd. Pessoas   : 20
+ID Expo        : EXP151201-013829
+Nome Expo      : Dormir
+Nome Ingresso  : Estudante
+Valor Unitário : 10
+Valor Total    : 10
+---------------------------
+ID             : AGD151203-065318
+ID Instituto   : ITT151203-053958
+Instituto      : ETEC
+Telefone       : (22) 22222-2222
+ID Responsável : AUT151203-053916
+Responsável    : Adriana
+Tipo           : Escola
+Data           : 03/12/2015
+Período        : Vespertino
+Qtd. Pessoas   : 15
+ID Expo        : EXP151201-013829
+Nome Expo      : Dormir
+Nome Ingresso  : Estudante
+Valor Unitário : 10
+Valor Total    : 150
+---------------------------
