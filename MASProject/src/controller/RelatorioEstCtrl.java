@@ -40,7 +40,7 @@ public class RelatorioEstCtrl implements ActionListener {
 	private JFreeChart chart;
 	private ChartPanel chartPanel;
 	private JInternalFrame internalFrameGrafico;
-	private final String[] categorias = { "", "Idade", "Sexo", "Ingresso", "Grupos", "Idioma", "Nacionalidade" };
+	private final String[] categorias = { "", "Idade", "Sexo", "Idioma", "Nacionalidade" };
 	private JComboBox<String> cbFiltro;
 	private JTextField txtDataIni, txtDataFim;
 	private JButton btnGerar, btnSalvar, btnLimparCampos;
@@ -100,7 +100,7 @@ public class RelatorioEstCtrl implements ActionListener {
 
 	public PieDataset criaDataset(List<?> dados, String titulo) {
 		DefaultPieDataset result = new DefaultPieDataset();
-		if (dados.getClass().isInstance(visitas)) {
+		if (titulo.contains("gênero")) {
 				int qtdeGenero[] = new int[2];
 				for (int i = 0; i < dados.size(); i++) {
 					String sexo = ((VisitanteMdl) dados.get(i)).getSexo();
@@ -144,8 +144,10 @@ public class RelatorioEstCtrl implements ActionListener {
 				for (int i = 0; i < dados.size(); i++) {
 					result.setValue(nacionalidade[i], qtdeNacionalidade[i]);		
 				}
+				
 			} else if (titulo.contains("id")) {
-				String intervalo[] = new String[6];
+				String intervalo[] = {"Menor que 10 anos de idade","Entre 10 e 20 anos de idade","Entre 21 e 30 anos de idade",
+						"Entre 31 e 40 anos de idade","Entre 41 e 50 anos de idade","Maior que 50 anos de idade"};
 				int quantidade[] = new int[6];
 				boolean valida = false;
 				int g = 0;
@@ -153,8 +155,7 @@ public class RelatorioEstCtrl implements ActionListener {
 					String data = selecionaIntervaloIdade(((VisitanteMdl) dados.get(i)).getDataNasc());
 					System.out.println(data);
 					while (valida == false && g < intervalo.length) {
-						if (intervalo[g] == "" || intervalo[g] == data) {
-							intervalo[g] = data;
+						if (intervalo[g].contains(data)) {
 							quantidade[g] += 1;
 							g = 0;
 							valida = true;
@@ -218,7 +219,7 @@ public class RelatorioEstCtrl implements ActionListener {
 					JOptionPane.showMessageDialog(form, e.getMessage());
 				}
 				if (validaData(dataInicio)) {
-					if (categoria.contains("Idad")) {
+					if (categoria.contains("Id")) {
 						lerArquivoIngresso();
 						lerArquivoVisitante();
 						if (visitas.size() > 0) {
@@ -256,7 +257,6 @@ public class RelatorioEstCtrl implements ActionListener {
 							criaGrafico(titulo, visitas);
 							return true;
 						}
-					} else if (categoria.contains("Nac")) {
 					} else if (categoria.contains("Nacio")) {
 						lerArquivoIngresso();
 						lerArquivoVisitante();

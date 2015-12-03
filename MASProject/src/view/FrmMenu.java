@@ -16,6 +16,7 @@ public class FrmMenu extends JFrame{
 	private JMenuBar menuBar;
 	private JMenu obra, artista, categoria, material, setor, 
 	arquivo, acervo, exposicao, visitante, ingresso, relatorios, ajuda;
+	private JLabel lblImage;
 	
 
 	public FrmMenu() {
@@ -34,7 +35,15 @@ public class FrmMenu extends JFrame{
 		final JDesktopPane desktopPane = new JDesktopPane();
 
 		desktopPane.setBackground(Color.gray); // Ajusta uma cor de fundo (opção caso a imagem de fundo dÃ� algum problema no programa)
-
+      
+		
+		ImageIcon img = new ImageIcon("../MASProject/imagens/masp.jpg");
+		Image newImg = img.getImage();
+		//.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT);
+	//	setImage(new ImageIcon(newImg));
+		
+		//setIconImage(newImg);
+		
 		
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -67,7 +76,7 @@ public class FrmMenu extends JFrame{
 		reFinanceiro = new JMenuItem("Relatório Financeiro");
 		relatorios.add(reFinanceiro);
 		
-		reEstatistico = new JMenuItem("Relatório Financeiro");
+		reEstatistico = new JMenuItem("Relatório Estatístico");
 		relatorios.add(reEstatistico);
 		
 		documentacao = new JMenuItem("Documentação");
@@ -157,6 +166,12 @@ public class FrmMenu extends JFrame{
 		
 
 		MenuCtrl controle = new MenuCtrl (desktopPane);
+		
+		lblImage = new JLabel();
+		desktopPane.setLayer(lblImage, -1);
+		lblImage.setIcon(new ImageIcon(newImg));
+		lblImage.setBounds(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		desktopPane.add(lblImage);
 
 		imprimir.addActionListener(controle.imprimir);
 		sair.addActionListener(controle.sair);
@@ -181,6 +196,7 @@ public class FrmMenu extends JFrame{
 		reFinanceiro.addActionListener(controle.reFinanceiro);
 		reEstatistico.addActionListener(controle.reEstatistico);
 	}
+
 
 	public static void main(String args[]) {
 

@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.CategoryDataset;
 
 import controller.RelatorioFinCtrl;
 
@@ -31,7 +30,6 @@ public class FrmRelatorioFinanceiro extends JInternalFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JInternalFrame internalFrameGrafico;
-	private CategoryDataset dataset;
 	private JFreeChart chart;
 	private ChartPanel chartPanel ;
 	private JTextField txtDataIni;
@@ -40,7 +38,7 @@ public class FrmRelatorioFinanceiro extends JInternalFrame {
 	private JTextField txtDespesa;
 	private JLabel lblPeriodo, lblDataInicial, lblDataFinal, lblSelecioneOQue, lblCategoria, lblSubcategoria,
 			lblInformaesGerais, lblGanhor, lblDespesas;
-	private JButton btnSalvarimprimir, btnDataIni, btnDataFim;
+	private JButton btnSalvarimprimir;
 	private JSeparator separator, separator_1, separator_2;
 	// arrumar argumento
 	private JComboBox<String> cbCategoria, cbSubCategoria;
@@ -99,25 +97,13 @@ public class FrmRelatorioFinanceiro extends JInternalFrame {
 		txtDataIni.setColumns(10);
 
 		lblDataFinal = new JLabel("Data Final");
-		lblDataFinal.setBounds(381, 37, 72, 14);
+		lblDataFinal.setBounds(247, 37, 72, 14);
 		contentPane.add(lblDataFinal);
 
 		txtDataFim = new JFormattedTextField(maskData);
-		txtDataFim.setBounds(463, 34, 86, 20);
+		txtDataFim.setBounds(330, 34, 86, 20);
 		contentPane.add(txtDataFim);
 		txtDataFim.setColumns(10);
-
-		btnDataIni = new JButton("");
-		btnDataIni.setIcon(new ImageIcon(
-				FrmRelatorioFinanceiro.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
-		btnDataIni.setBounds(219, 34, 29, 23);
-		contentPane.add(btnDataIni);
-
-		btnDataFim = new JButton("");
-		btnDataFim.setIcon(new ImageIcon(
-				FrmRelatorioFinanceiro.class.getResource("/com/toedter/calendar/images/JDateChooserColor32.gif")));
-		btnDataFim.setBounds(559, 34, 29, 23);
-		contentPane.add(btnDataFim);
 
 		lblSelecioneOQue = new JLabel("Selecione o que você deseja visualizar:");
 		lblSelecioneOQue.setBounds(41, 86, 240, 14);
@@ -206,12 +192,6 @@ public class FrmRelatorioFinanceiro extends JInternalFrame {
 		RelatorioFinCtrl rFinCtrl = new RelatorioFinCtrl(cbCategoria, cbSubCategoria,  
 				 txtDataIni, txtDataFim, txtGanho, txtDespesa,
 				chart, chartPanel, btnGerar, btnSalvarimprimir,internalFrameGrafico, btnLimpar);
-		
-		
-		
-
-       btnDataIni.addActionListener(rFinCtrl.abreCalendarioIni);
-       btnDataFim.addActionListener(rFinCtrl.abreCalendarioFim);
        cbCategoria.addActionListener(rFinCtrl);
        btnGerar.addActionListener(rFinCtrl);
        btnSalvarimprimir.addActionListener(rFinCtrl);
