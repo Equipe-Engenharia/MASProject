@@ -26,6 +26,8 @@ import view.FrmIngresso;
 import view.FrmLogin;
 import view.FrmMaterialCad;
 import view.FrmMaterialEdit;
+import view.FrmRelatorioEstatistico;
+import view.FrmRelatorioFinanceiro;
 import view.FrmSetorCad;
 import view.FrmSetorEdit;
 import view.FrmUsuario;
@@ -424,6 +426,40 @@ public class MenuCtrl implements ComponentListener{
 					desktop.add(desktop.getSelectedFrame());
 				}		
 				break;
+				
+			case "relatorioFinanceiro":
+
+				if(desktop.getSelectedFrame() == null){
+					try {
+						desktop.setSelectedFrame(new FrmRelatorioFinanceiro());
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					desktop.getSelectedFrame().setVisible(true);
+					desktop.add(desktop.getSelectedFrame());
+				}
+				else if(!desktop.getSelectedFrame().isVisible()){
+					desktop.getSelectedFrame().setVisible(true);
+					desktop.add(desktop.getSelectedFrame());
+				}		
+				break;
+
+			case "relatorioEstatistico":
+
+				if(desktop.getSelectedFrame() == null){
+					try {
+						desktop.setSelectedFrame(new FrmRelatorioEstatistico());
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					desktop.getSelectedFrame().setVisible(true);
+					desktop.add(desktop.getSelectedFrame());
+				}
+				else if(!desktop.getSelectedFrame().isVisible()){
+					desktop.getSelectedFrame().setVisible(true);
+					desktop.add(desktop.getSelectedFrame());
+				}		
+				break;
 
 			default:
 				msg("","Metodo iForm");
@@ -627,6 +663,23 @@ public class MenuCtrl implements ComponentListener{
 		}
 	};
 	
+	public ActionListener reFinanceiro = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			iForm("relatorioFinanceiro");
+		}
+	};
+	
+	public ActionListener reEstatistico = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			iForm("relatorioEstatistico");
+		}
+	};
 	
 	// CONTROLE TECLA ///////////////////////////////
 

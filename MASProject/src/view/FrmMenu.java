@@ -12,7 +12,7 @@ public class FrmMenu extends JFrame{
 	acervoEditar, artistaCadastrar, artistaEditar, categoriaCadastrar, 
 	categoriaEditar, materialCadastrar, materialEditar, setorCadastrar, 
 	setorEditar, emprestimo, exposicaoCadastrar, exposicaoEditar, ingressoCadastrar, 
-	visitanteCadastrar, visitanteEditar, visualizar, documentacao;
+	visitanteCadastrar, visitanteEditar, reFinanceiro, reEstatistico, documentacao;
 	private JMenuBar menuBar;
 	private JMenu obra, artista, categoria, material, setor, 
 	arquivo, acervo, exposicao, visitante, ingresso, relatorios, ajuda;
@@ -64,8 +64,11 @@ public class FrmMenu extends JFrame{
 		ajuda = new JMenu("Ajuda");
 		menuBar.add(ajuda);
 		
-		visualizar = new JMenuItem("Tipo A");
-		relatorios.add(visualizar);
+		reFinanceiro = new JMenuItem("Relatório Financeiro");
+		relatorios.add(reFinanceiro);
+		
+		reEstatistico = new JMenuItem("Relatório Financeiro");
+		relatorios.add(reEstatistico);
 		
 		documentacao = new JMenuItem("Documentação");
 		ajuda.add(documentacao);
@@ -175,6 +178,8 @@ public class FrmMenu extends JFrame{
 		visitanteCadastrar.addActionListener(controle.visitanteCadastrar);
 		visitanteEditar.addActionListener(controle.visitanteEditar);
 		ingressoCadastrar.addActionListener(controle.ingressoCadastrar);
+		reFinanceiro.addActionListener(controle.reFinanceiro);
+		reEstatistico.addActionListener(controle.reEstatistico);
 	}
 
 	public static void main(String args[]) {

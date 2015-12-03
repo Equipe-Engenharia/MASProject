@@ -25,7 +25,7 @@ import javax.swing.text.MaskFormatter;
 
 import java.awt.Color;
 
-public class FrmRelatorioFinanceiro extends JFrame {
+public class FrmRelatorioFinanceiro extends JInternalFrame {
 
 	private JPanel contentPane;
 	private static final long serialVersionUID = 1L;
@@ -71,8 +71,10 @@ public class FrmRelatorioFinanceiro extends JFrame {
 	 */
 	public FrmRelatorioFinanceiro() throws ParseException {
 		setTitle("Relatório Financeiro");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+		setClosable(true);
+		setIconifiable(true);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setLocation(0,0);
 		setResizable(false);
 		setBounds(100, 100, 749, 616);
 		contentPane = new JPanel();

@@ -65,9 +65,27 @@ public class RelatorioEstCtrl implements ActionListener {
 		this.cbFiltro = cbFiltro;
 		this.btnLimparCampos = btnLimparCampos;
 
+		sessao();
 		carregaComboCategoria();
 
 	}
+	
+	public void sessao() {
+
+		SessaoCtrl log = SessaoCtrl.getInstance();
+
+		if (("Operacional").equalsIgnoreCase(log.getLogon().get(0).getNivel()) ||
+				("Administrativo").equalsIgnoreCase(log.getLogon().get(0).getNivel())
+				){
+
+			log.registrar(
+					log.getLogon().get(0).getId(), 
+					log.getLogon().get(0).getUsuario(), 
+					log.getLogon().get(0).getNivel(),
+					"RLE");
+		}
+	}
+	
 
 	// O Metodo de coleta deverá chamar esse método passando um titulo, e um
 	// array de objeto carregado

@@ -25,8 +25,12 @@ import controller.RelatorioEstCtrl;
 
 import java.awt.Color;
 
-public class FrmRelatorioEstatistico extends JFrame {
+public class FrmRelatorioEstatistico extends JInternalFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtDataIni;
 	private JTextField txtDataFim;
@@ -63,7 +67,9 @@ public class FrmRelatorioEstatistico extends JFrame {
 	 */
 	public FrmRelatorioEstatistico() throws ParseException {
 		setTitle("Relatorio Estatístico");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setClosable(true);
+		setIconifiable(true);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 691, 588);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

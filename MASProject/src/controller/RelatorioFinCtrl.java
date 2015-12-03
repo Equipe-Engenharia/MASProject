@@ -104,6 +104,8 @@ public class RelatorioFinCtrl implements ActionListener {
 		this.btnSalvarImprimir = btnSalvarImprimir;
 		this.internalFrameGrafico = internalFrameGrafico;
 		this.btnLimpar = btnLimpar;
+		
+		sessao();
 		carregaComboCategoria();
 	}
 
@@ -136,15 +138,16 @@ public class RelatorioFinCtrl implements ActionListener {
 
 		SessaoCtrl log = SessaoCtrl.getInstance();
 
-		if (("Operacional").equalsIgnoreCase(log.getLogon().get(0).getNivel())
-				|| ("Administrativo").equalsIgnoreCase(log.getLogon().get(0).getNivel())) {
+		if (("Operacional").equalsIgnoreCase(log.getLogon().get(0).getNivel()) ||
+				("Administrativo").equalsIgnoreCase(log.getLogon().get(0).getNivel())
+				){
 
-			log.registrar(log.getLogon().get(0).getId(), log.getLogon().get(0).getUsuario(),
-					log.getLogon().get(0).getNivel(), form.getName());
+			log.registrar(
+					log.getLogon().get(0).getId(), 
+					log.getLogon().get(0).getUsuario(), 
+					log.getLogon().get(0).getNivel(),
+					"RLF");
 		}
-		// else {
-		// msg("", log.getLogon().get(0).getNivel());
-		// }
 	}
 
 	public static int getFlag() {
