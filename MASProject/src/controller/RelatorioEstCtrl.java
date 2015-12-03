@@ -123,7 +123,7 @@ public class RelatorioEstCtrl implements ActionListener {
 				}
 				for (int i = 0; i < dados.size(); i++) {
 					for(int j = 0; j < dados.size(); j++){
-						if(nacionalidade[i].equals(((VisitanteMdl) dados.get(i)).getNacionalidade())){ //ARRUMAR ESTE ALGORITMO
+						if(nacionalidade[i].equals(((VisitanteMdl) dados.get(j)).getNacionalidade())){ 
 							qtdeNacionalidade[i] += 1;
 						}
 					}
@@ -259,6 +259,7 @@ public class RelatorioEstCtrl implements ActionListener {
 		        System.out.println(list.get(1));
 		        visita.setDataNasc(list.get(2));
 		        visita.setNacionalidade(list.get(3));
+		        System.out.println("Nacionalidade: " + list.get(3));
 		        visita.setSexo(list.get(4));
 		        visita.setIdioma(list.get(5));
 		        System.out.println(list.get(5));
