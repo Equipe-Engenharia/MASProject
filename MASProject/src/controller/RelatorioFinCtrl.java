@@ -123,7 +123,7 @@ public class RelatorioFinCtrl implements ActionListener {
 			cbSubCategoria.removeAllItems();
 			cbSubCategoria.addItem(subCategoriaVisitantes[0]);
 		} else if (cbCategoria.getSelectedItem().toString().contains("Ace")) {
-
+			cbSubCategoria.removeAllItems();
 			for (String subCategory : subCategoriaAcervo) {
 				cbSubCategoria.addItem(subCategory);
 			}
