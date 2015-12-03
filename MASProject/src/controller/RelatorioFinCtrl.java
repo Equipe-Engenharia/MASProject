@@ -234,6 +234,14 @@ public class RelatorioFinCtrl implements ActionListener {
 									}else{
 										JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
 									}
+								}else if(subCategoria.contains("Manu")){
+									lerArquivoEmprestimos();
+									if(emprestimos.size() > 0){
+										criaGrafico(titulo, emprestimos, "Exposição", "Valor arrecadado");
+										return true;
+									}else{
+										JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
+									}
 								}
 							}
 						}
@@ -380,6 +388,7 @@ public class RelatorioFinCtrl implements ActionListener {
 			String linha = new String();
 			linha = arquivos.getBuffer();
 			String[] linhaEmprestimo = linha.split(";");
+			double despesas = 0.0;
 			for (String s : linhaEmprestimo) {
 				String text = s.replaceAll(".*:", "");
 				list.add(text);
@@ -388,11 +397,14 @@ public class RelatorioFinCtrl implements ActionListener {
 					emprestimo.setId(list.get(0));
 					emprestimo.setDataInicial(list.get(5));
 					emprestimo.setDataFinal(list.get(6));
-					emprestimo.setCusto(list.get(12));
+					emprestimo.setCusto(list.get(11));
+					despesas += Double.parseDouble(list.get(11));
 					emprestimos.add(emprestimo);
 					list.clear();
 				}
 			}
+			txtDespesa.setText(String.valueOf(despesas));
+			
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(form, "Não foi possível ler o arquivo emprestimo");
 		}
@@ -429,9 +441,17 @@ public class RelatorioFinCtrl implements ActionListener {
 						((IngressoMdl) dados.get(i)).getIngresso(), ((IngressoMdl) dados.get(i)).getIngresso()); // sis[i].getCategoria());
 			}
 		}else if(titulo.contains("Acer")){
-			for (int i = 0; i < dados.size(); i++) {
-				dataset.addValue(Double.parseDouble(((IngressoMdl) dados.get(i)).getValor()),
-						((IngressoMdl) dados.get(i)).getExpo(), ((IngressoMdl) dados.get(i)).getExpo()); // sis[i].getCategoria());
+			if(dados.getClass().isInstance(emprestimos)){
+				for (int i = 0; i < dados.size(); i++) {
+					dataset.addValue(Double.parseDouble(((EmprestimoMdl) dados.get(i)).getCusto()),
+							((EmprestimoMdl) dados.get(i)).getId(), ((EmprestimoMdl) dados.get(i)).getId()); // sis[i].getCategoria());
+				}
+			}
+			if(dados.getClass().isInstance(ingressos)){
+				for (int i = 0; i < dados.size(); i++) {
+					dataset.addValue(Double.parseDouble(((IngressoMdl) dados.get(i)).getValor()),
+							((IngressoMdl) dados.get(i)).getExpo(), ((IngressoMdl) dados.get(i)).getExpo()); // sis[i].getCategoria());
+				}
 			}
 		}
 		return dataset;
