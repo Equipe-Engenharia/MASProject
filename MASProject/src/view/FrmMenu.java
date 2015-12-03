@@ -16,6 +16,7 @@ public class FrmMenu extends JFrame{
 	private JMenuBar menuBar;
 	private JMenu obra, artista, categoria, material, setor, 
 	arquivo, acervo, exposicao, visitante, agenda, ingresso, relatorios, ajuda;
+	private JLabel lblImage;
 	
 
 	public FrmMenu() {

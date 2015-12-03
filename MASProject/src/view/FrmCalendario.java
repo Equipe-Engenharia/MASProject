@@ -87,10 +87,7 @@ public class FrmCalendario extends JDialog {
 			//addWindowListener(RelCtrl.fechaTela);
 			break;
 			
-		case "RLF":
-			RelatorioFinCtrl RlfCtrl = new RelatorioFinCtrl(calendar);
-			addWindowListener(RlfCtrl.fechaTela);
-			break;
+		
 
 		default:
 			JOptionPane.showMessageDialog(null, 

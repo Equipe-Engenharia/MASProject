@@ -40,7 +40,7 @@ public class RelatorioEstCtrl implements ActionListener {
 	private JFreeChart chart;
 	private ChartPanel chartPanel;
 	private JInternalFrame internalFrameGrafico;
-	private final String[] categorias = { "", "Idade", "Sexo", "Ingresso", "Grupos", "Idioma", "Nacionalidade" };
+	private final String[] categorias = { "", "Idade", "Sexo", "Idioma", "Nacionalidade" };
 	private JComboBox<String> cbFiltro;
 	private JTextField txtDataIni, txtDataFim;
 	private JButton btnGerar, btnSalvar, btnLimparCampos;
@@ -100,12 +100,7 @@ public class RelatorioEstCtrl implements ActionListener {
 
 	public PieDataset criaDataset(List<?> dados, String titulo) {
 		DefaultPieDataset result = new DefaultPieDataset();
-			if (titulo.contains("Id")) {
-				for (int i = 0; i < dados.size(); i++) {
-					// result.setValue(((VisitanteMdl)
-					// dados.get(i)).getDataNasc(), value);
-				}
-			} else if (titulo.contains("genero")) {
+		if (titulo.contains("gênero")) {
 				int qtdeGenero[] = new int[2];
 				for (int i = 0; i < dados.size(); i++) {
 					String sexo = ((VisitanteMdl) dados.get(i)).getSexo();
@@ -119,20 +114,20 @@ public class RelatorioEstCtrl implements ActionListener {
 				result.setValue("Feminino", qtdeGenero[1]);
 
 			} else if (titulo.contains("idioma")) {
-				int qtdeIdioma[] = new int [3];
+				int qtdeIdioma[] = new int[3];
 				for (int i = 0; i < dados.size(); i++) {
-					String idioma = ((VisitanteMdl)dados.get(i)).getIdioma();
-					if(idioma.contains("Port"))
-						qtdeIdioma[0] +=1;
-					if(idioma.contains("Ingl"))
+					String idioma = ((VisitanteMdl) dados.get(i)).getIdioma();
+					if (idioma.contains("Port"))
+						qtdeIdioma[0] += 1;
+					if (idioma.contains("Ingl"))
 						qtdeIdioma[1] += 1;
-					if(idioma.contains("Esp"))
+					if (idioma.contains("Esp"))
 						qtdeIdioma[2] += 1;
 				}
-					result.setValue("Português",qtdeIdioma[0]);
-					result.setValue("Inglês", qtdeIdioma[1]);
-					result.setValue("Espanhol", qtdeIdioma[2]);
-				
+				result.setValue("Português", qtdeIdioma[0]);
+				result.setValue("Inglês", qtdeIdioma[1]);
+				result.setValue("Espanhol", qtdeIdioma[2]);
+
 			} else if (titulo.contains("nacionalidade")) {
 				String nacionalidade[] = new String[dados.size()];
 				int qtdeNacionalidade[] = new int[dados.size()];
@@ -149,6 +144,35 @@ public class RelatorioEstCtrl implements ActionListener {
 				for (int i = 0; i < dados.size(); i++) {
 					result.setValue(nacionalidade[i], qtdeNacionalidade[i]);		
 				}
+				
+			} else if (titulo.contains("id")) {
+				String intervalo[] = {"Menor que 10 anos de idade","Entre 10 e 20 anos de idade","Entre 21 e 30 anos de idade",
+						"Entre 31 e 40 anos de idade","Entre 41 e 50 anos de idade","Maior que 50 anos de idade"};
+				int quantidade[] = new int[6];
+				boolean valida = false;
+				int g = 0;
+				for (int i = 0; i < dados.size(); i++) {
+					String data = selecionaIntervaloIdade(((VisitanteMdl) dados.get(i)).getDataNasc());
+					System.out.println(data);
+					while (valida == false && g < intervalo.length) {
+						if (intervalo[g].contains(data)) {
+							quantidade[g] += 1;
+							g = 0;
+							valida = true;
+						} else {
+							g += 1;
+						}
+
+					}
+					valida = false;
+				}
+				result.setValue(intervalo[0], quantidade[0]);
+				result.setValue(intervalo[1], quantidade[1]);
+				result.setValue(intervalo[2], quantidade[2]);
+				result.setValue(intervalo[3], quantidade[3]);
+				result.setValue(intervalo[4], quantidade[4]);
+				result.setValue(intervalo[5], quantidade[5]);
+
 			}
 		return result;
 
@@ -195,15 +219,14 @@ public class RelatorioEstCtrl implements ActionListener {
 					JOptionPane.showMessageDialog(form, e.getMessage());
 				}
 				if (validaData(dataInicio)) {
-					if (categoria.contains("Ida")) {
+					if (categoria.contains("Id")) {
+						lerArquivoIngresso();
 						lerArquivoVisitante();
 						if (visitas.size() > 0) {
 							titulo = "Estatística de idades dos visitantes " + categoria + " - Período: " + dataInicio
 									+ " a " + dataFim;
 							criaGrafico(titulo, visitas);
 							return true;
-						} else {
-							JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro");
 						}
 					} else if (categoria.contains("Sex")) { // Funcionando
 						lerArquivoIngresso();
@@ -255,49 +278,47 @@ public class RelatorioEstCtrl implements ActionListener {
 	}
 
 	private void lerArquivoVisitante() {
-		  arquivos = new ArquivosCtrl();
-		  String linha = new String();
-		  ArrayList<String> list = new ArrayList<>();
-		  try {
-		   arquivos.leArquivo("../MASProject/dados/", "visitante");
-		   linha = arquivos.getBuffer();
-		   String[] listaVisita = linha.split(";");
-		   if(categoria.contains("Sex") || categoria.contains("Idio")
-				   || categoria.contains("Nacio")){
-//		    int masc = 0, fem = 0;
-		    for (String s : listaVisita) {
-		     String text = s.replaceAll(".*: ", "");
-		     list.add(text);
-		     if (s.contains("---")) {
-		      for(int i = 0; i < ingressos.size(); i++){
-		       if(list.get(0).equals(ingressos.get(i).getVisitaId())){
-		        VisitanteMdl visita = new VisitanteMdl();
-		        visita.setId(list.get(0));
-		        visita.setNome(list.get(1));
-		        System.out.println(list.get(1));
-		        visita.setDataNasc(list.get(2));
-		        visita.setNacionalidade(list.get(3));
-		        System.out.println("Nacionalidade: " + list.get(3));
-		        visita.setSexo(list.get(4));
-		        visita.setIdioma(list.get(5));
-		        System.out.println(list.get(5));
-//		        if(list.get(4).contains("Masc")) masc += 1;
-//		        if(list.get(4).contains("Femi")) fem += 1;
-		        visitas.add(visita);
-		        list.clear();
-		        i = ingressos.size() + 1;
-		       }
-		      }
-		      list.clear();
-		     }
-		    }
-		   }
-		  }catch (IOException e) {
-		   // TODO Auto-generated catch block
-		   e.printStackTrace();
-		  }
-		 }
-
+		arquivos = new ArquivosCtrl();
+		String linha = new String();
+		ArrayList<String> list = new ArrayList<>();
+		try {
+			arquivos.leArquivo("../MASProject/dados/", "visitante");
+			linha = arquivos.getBuffer();
+			String[] listaVisita = linha.split(";");
+			if (categoria.contains("Sex") || categoria.contains("Idio") || categoria.contains("Ida")  || categoria.contains("Nacio")) {
+				// int masc = 0, fem = 0;
+				for (String s : listaVisita) {
+					String text = s.replaceAll(".*: ", "");
+					list.add(text);
+					if (s.contains("---")) {
+						for (int i = 0; i < ingressos.size(); i++) {
+							if (list.get(0).equals(ingressos.get(i).getVisitaId())) {
+								VisitanteMdl visita = new VisitanteMdl();
+								visita.setId(list.get(0));
+								visita.setNome(list.get(1));
+								System.out.println(list.get(1));
+								visita.setDataNasc(list.get(2));
+								visita.setNacionalidade(list.get(3));
+								visita.setSexo(list.get(4));
+								visita.setIdioma(list.get(5));
+								System.out.println(list.get(5));
+								// if(list.get(4).contains("Masc")) masc += 1;
+								// if(list.get(4).contains("Femi")) fem += 1;
+								visitas.add(visita);
+								list.clear();
+								i = ingressos.size() + 1;
+							}
+						}
+						list.clear();
+					}
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+		  
 	private void lerArquivoIngresso() {
 		try {
 			arquivos = new ArquivosCtrl();
@@ -423,10 +444,10 @@ public class RelatorioEstCtrl implements ActionListener {
 			intervalo = "Entre 21 e 30 anos de idade";
 
 		if (idade >= 31 && idade <= 40)
-			intervalo = "Entre 10 e 20 anos de idade";
+			intervalo = "Entre 31 e 40 anos de idade";
 
 		if (idade >= 41 && idade <= 50)
-			intervalo = "Entre 10 e 20 anos de idade";
+			intervalo = "Entre 41 e 50 anos de idade";
 
 		if (idade > 50)
 			intervalo = "Maior que 50 anos de idade";

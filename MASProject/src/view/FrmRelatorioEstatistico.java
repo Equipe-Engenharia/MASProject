@@ -39,7 +39,6 @@ public class FrmRelatorioEstatistico extends JInternalFrame {
 	private JButton btnGerar, btnSalvarimprimir, btnLimparCampos;
 	private JComboBox<String> cbFiltro;
 	private JInternalFrame internalFrameGrafico;
-	private PieDataset dataset;
 	private JFreeChart chart;
 	private ChartPanel chartPanel;
 	private MaskFormatter maskData;
@@ -99,7 +98,7 @@ public class FrmRelatorioEstatistico extends JInternalFrame {
 		txtDataFim.setColumns(10);
 
 		lblPerodo = new JLabel("Período:");
-		lblPerodo.setBounds(26, 16, 46, 14);
+		lblPerodo.setBounds(26, 16, 72, 14);
 		contentPane.add(lblPerodo);
 
 		separator = new JSeparator();
