@@ -2,17 +2,20 @@ package model;
 
 public class AgendamentoMdl {
 	private String id;
-	private String expoId;
-	private String expoNome;
 	private String institutoId;
-	private String nome;
+	private String instituto;
+	private String fone;
+	private String responsavelId;
+	private String responsavel;
 	private String institutoTipo;
 	private String data;
 	private String periodo;
 	private String qtdPessoas;
-	private String responsavelId;
-	private String responsavel;
-	private String custo;
+	private String expoId;
+	private String expoNome;
+	private String ingresso;
+	private String valorUnitario;
+	private String valorTotal;
 	
 	
 	public String getId() {
@@ -23,22 +26,6 @@ public class AgendamentoMdl {
 		this.id = id;
 	}
 	
-	public String getExpoId() {
-		return expoId;
-	}
-	
-	public void setExpoId(String expoId) {
-		this.expoId = expoId;
-	}
-	
-	public String getExpo() {
-		return expoNome;
-	}
-	
-	public void setExpoNome(String expoNome) {
-		this.expoNome = expoNome;
-	}
-	
 	public String getInstitutoId() {
 		return institutoId;
 	}
@@ -47,12 +34,36 @@ public class AgendamentoMdl {
 		this.institutoId = institutoId;
 	}
 	
-	public String getNome() {
-		return nome;
+	public String getInstituto() {
+		return instituto;
 	}
 	
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setInstituto(String instituto) {
+		this.instituto = instituto;
+	}
+	
+	public String getFone() {
+		return fone;
+	}
+	
+	public void setFone(String fone) {
+		this.fone = fone;
+	}
+	
+	public String getResponsavelId() {
+		return responsavelId;
+	}
+	
+	public void setResponsavelId(String responsavelId) {
+		this.responsavelId = responsavelId;
+	}
+	
+	public String getResponsavel() {
+		return responsavel;
+	}
+	
+	public void setResponsavel(String responsavel) {
+		this.responsavel = responsavel;
 	}
 	
 	public String getTipo() {
@@ -88,27 +99,43 @@ public class AgendamentoMdl {
 		this.qtdPessoas = qtdPessoas;
 	}
 	
-	public String getResponsavelId() {
-		return responsavelId;
+	public String getExpoId() {
+		return expoId;
 	}
 	
-	public void setResponsavelId(String responsavelId) {
-		this.responsavelId = responsavelId;
+	public void setExpoId(String expoId) {
+		this.expoId = expoId;
 	}
 	
-	public String getResponsavel() {
-		return responsavel;
+	public String getExpoNome() {
+		return expoNome;
 	}
 	
-	public void setResponsavel(String responsavel) {
-		this.responsavel = responsavel;
+	public void setExpoNome(String expoNome) {
+		this.expoNome = expoNome;
 	}
 	
-	public String getCusto() {
-		return custo;
+	public String getIngresso() {
+		return ingresso;
 	}
 	
-	public void setCusto(String custo) {
-		this.custo = custo;
+	public void setIngresso(String ingresso) {
+		this.ingresso = ingresso;
+	}
+	
+	public String getVlrUnitario() {
+		return valorUnitario;
+	}
+	
+	public void setVlrUnitario(String valorUnitario) {
+		this.valorUnitario = valorUnitario;
+	}
+	
+	public String getVlrTotal() {
+		return valorTotal;
+	}
+	
+	public void setVlrTotal(String valorTotal) {
+		this.valorTotal = valorTotal;
 	}
 }

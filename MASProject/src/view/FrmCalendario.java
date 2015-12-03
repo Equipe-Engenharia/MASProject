@@ -9,8 +9,11 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JCalendar;
 
+import controller.AgendamentoCtrl;
 import controller.EmprestimoCtrl;
 import controller.ExposicaoCtrl;
+import controller.RelatorioEstCtrl;
+import controller.RelatorioFinCtrl;
 import controller.SessaoCtrl;
 
 
@@ -72,6 +75,21 @@ public class FrmCalendario extends JDialog {
 		case "EPT":
 			EmprestimoCtrl EmpCtrl = new EmprestimoCtrl(calendar);
 			addWindowListener(EmpCtrl.fechaTela);
+			break;
+			
+		case "AGD":
+			AgendamentoCtrl AgdCtrl = new AgendamentoCtrl(calendar);
+			addWindowListener(AgdCtrl.fechaTela);
+			break;
+			
+		case "RLE":
+			//RelatorioEstCtrl RelCtrl = new RelatorioEstCtrl(calendar);
+			//addWindowListener(RelCtrl.fechaTela);
+			break;
+			
+		case "RLF":
+			RelatorioFinCtrl RlfCtrl = new RelatorioFinCtrl(calendar);
+			addWindowListener(RlfCtrl.fechaTela);
 			break;
 
 		default:

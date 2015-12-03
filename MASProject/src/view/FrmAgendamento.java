@@ -33,6 +33,7 @@ public class FrmAgendamento extends JFrame {
 	lblVagas, 
 	lblTipo, 
 	lblPeriodo, 
+	lblIngresso, 
 	lblInstituto, 
 	lblTelefone, 
 	lblResponsavel, 
@@ -44,21 +45,21 @@ public class FrmAgendamento extends JFrame {
 	private JTextField 
 	txtId, 
 	txtPesquisa, 
-	txtNome, 
-	txtTelefone, 
+	txtNome,  
 	txtResponsavel, 
 	txtResponsavelId;
 	private JFormattedTextField 
+	ftxtTelefone, 
 	ftxtData, 
 	ftxtQtd, 
 	ftxtVagas, 
 	ftxtCusto, 
 	ftxtTotal;
-	private JComboBox<String> cbExpo, cbPeriodo, cbTipo;
+	private JComboBox<String> cbExpo, cbTipo, cbPeriodo, cbIngresso;
 	private JTable tbAgenda;
 	private JButton btnPesquisar, btnCal, btnIncluir, btnApagar, btnCancelar, btnGravar;
 	private JScrollPane spTabela;
-	private MaskFormatter maskData;
+	private MaskFormatter maskFone, maskData;
 	private DecimalFormat maskQtd, maskCusto, maskTotal;
 	
 	/**
@@ -128,6 +129,10 @@ public class FrmAgendamento extends JFrame {
 		lblPeriodo.setBounds(527, 129, 55, 16);
 		contentPane.add(lblPeriodo);
 		
+		lblIngresso = new JLabel("Ingresso");
+		lblIngresso.setBounds(527, 164, 55, 16);
+		contentPane.add(lblIngresso);
+		
 		lblTelefone = new JLabel("Telefone");
 		lblTelefone.setBounds(71, 129, 55, 16);
 		contentPane.add(lblTelefone);
@@ -144,59 +149,54 @@ public class FrmAgendamento extends JFrame {
 		lblExpo.setBounds(58, 236, 68, 16);
 		contentPane.add(lblExpo);
 		
-		lblCusto = new JLabel("Custo");
-		lblCusto.setBounds(355, 166, 43, 16);
+		lblCusto = new JLabel("Valor Unitário");
+		lblCusto.setBounds(310, 166, 88, 16);
 		contentPane.add(lblCusto);
 		
-		lblTotal = new JLabel("Total");
-		lblTotal.setBounds(355, 201, 43, 16);
+		lblTotal = new JLabel("Valor Total");
+		lblTotal.setBounds(310, 201, 88, 16);
 		contentPane.add(lblTotal);
 		
 		// CAMPOS ////////////////////////		
 		
 		txtId = new JTextField();
 		txtId.setEnabled(false);
-		txtId.setEditable(false);
 		txtId.setBounds(138, 15, 150, 28);
 		txtId.setHorizontalAlignment(SwingConstants.CENTER);
 		txtId.setColumns(10);
 		contentPane.add(txtId);
 		
 		txtPesquisa = new JTextField();
-		txtPesquisa.setToolTipText("Digite o nome do visitante ou seu ID para realizar a pesquisa");
+		txtPesquisa.setToolTipText("Digite o nome ou ID da instituição para realizar a pesquisa");
 		txtPesquisa.setBounds(138, 50, 310, 28);
 		txtPesquisa.setColumns(10);
 		contentPane.add(txtPesquisa);
 		
 		txtNome = new JTextField();
-		txtNome.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNome.setHorizontalAlignment(SwingConstants.LEFT);
 		txtNome.setEnabled(false);
-		txtNome.setEditable(false);
 		txtNome.setBounds(138, 86, 356, 28);
 		txtNome.setColumns(10);
 		contentPane.add(txtNome);
 			
-		txtTelefone = new JTextField();
-		txtTelefone.setEnabled(false);
-		txtTelefone.setEditable(false);
-		txtTelefone.setToolTipText("");
-		txtTelefone.setBounds(138, 123, 160, 28);
-		txtTelefone.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTelefone.setColumns(10);
-		contentPane.add(txtTelefone);
+		maskFone = new MaskFormatter("(##) #####-####");
+		ftxtTelefone = new JFormattedTextField(maskFone);;
+		ftxtTelefone.setEnabled(false);
+		ftxtTelefone.setBounds(138, 123, 160, 28);
+		ftxtTelefone.setHorizontalAlignment(SwingConstants.LEFT);
+		ftxtTelefone.setColumns(10);
+		contentPane.add(ftxtTelefone);
 		
 		txtResponsavel = new JTextField();
-		txtResponsavel.setHorizontalAlignment(SwingConstants.CENTER);
+		txtResponsavel.setHorizontalAlignment(SwingConstants.LEFT);
 		txtResponsavel.setEnabled(false);
-		txtResponsavel.setEditable(false);
 		txtResponsavel.setBounds(138, 160, 160, 28);
 		txtResponsavel.setColumns(10);
 		contentPane.add(txtResponsavel);
 		
 		txtResponsavelId = new JTextField();
-		txtResponsavelId.setHorizontalAlignment(SwingConstants.CENTER);
+		txtResponsavelId.setHorizontalAlignment(SwingConstants.LEFT);
 		txtResponsavelId.setEnabled(false);
-		txtResponsavelId.setEditable(false);
 		txtResponsavelId.setBounds(138, 195, 160, 28);
 		txtResponsavelId.setColumns(10);
 		contentPane.add(txtResponsavelId);
@@ -225,7 +225,6 @@ public class FrmAgendamento extends JFrame {
 		vaga.setAllowsInvalid(false);
 		ftxtVagas = new JFormattedTextField(maskQtd);
 		ftxtVagas.setEnabled(false);
-		ftxtVagas.setEditable(false);
 		ftxtVagas.setHorizontalAlignment(SwingConstants.CENTER);
 		ftxtVagas.setToolTipText("");
 		ftxtVagas.setBounds(631, 15, 99, 28);
@@ -237,7 +236,6 @@ public class FrmAgendamento extends JFrame {
 		custo.setFormat(maskCusto);
 		custo.setAllowsInvalid(false);
 		ftxtCusto = new JFormattedTextField(maskCusto);
-		ftxtCusto.setEditable(false);
 		ftxtCusto.setEnabled(false);
 		ftxtCusto.setHorizontalAlignment(SwingConstants.RIGHT);
 		ftxtCusto.setBounds(395, 160, 99, 28);
@@ -251,18 +249,21 @@ public class FrmAgendamento extends JFrame {
 		ftxtTotal = new JFormattedTextField(maskTotal);
 		ftxtTotal.setHorizontalAlignment(SwingConstants.RIGHT);
 		ftxtTotal.setEnabled(false);
-		ftxtTotal.setEditable(false);
 		ftxtTotal.setBounds(395, 195, 100, 28);
 		ftxtTotal.setColumns(10);
 		contentPane.add(ftxtTotal);
+		
+		cbTipo = new JComboBox<String>();
+		cbTipo.setBounds(584, 86, 146, 28);
+		contentPane.add(cbTipo);
 		
 		cbPeriodo = new JComboBox<String>();
 		cbPeriodo.setBounds(584, 123, 146, 28);
 		contentPane.add(cbPeriodo);
 		
-		cbTipo = new JComboBox<String>();
-		cbTipo.setBounds(584, 86, 146, 28);
-		contentPane.add(cbTipo);
+		cbIngresso = new JComboBox<String>();
+		cbIngresso.setBounds(584, 160, 146, 28);
+		contentPane.add(cbIngresso);
 		
 		cbExpo = new JComboBox<String>();
 		cbExpo.setBounds(138, 230, 356, 28);
@@ -312,7 +313,7 @@ public class FrmAgendamento extends JFrame {
 				txtId, 
 				txtPesquisa, 
 				txtNome, 
-				txtTelefone, 
+				ftxtTelefone, 
 				txtResponsavel, 
 				txtResponsavelId, 
 				ftxtVagas, 
@@ -321,18 +322,19 @@ public class FrmAgendamento extends JFrame {
 				ftxtCusto, 
 				ftxtTotal, 
 				cbExpo, 
-				cbPeriodo, 
 				cbTipo, 
+				cbPeriodo, 
+				cbIngresso, 
 				tbAgenda
 				);
 		
 		txtPesquisa.addActionListener(controle.pesquisar);
 		txtPesquisa.addKeyListener(controle.tecla);
 		ftxtData.addFocusListener(controle.move);
-		ftxtCusto.addActionListener(controle.valor);
-		ftxtCusto.addKeyListener(controle.tecla);
-		ftxtCusto.addActionListener(controle.incluir);
-		cbPeriodo.addActionListener(controle.atualizar);
+		ftxtQtd.addActionListener(controle.valor);
+		//ftxtCusto.addKeyListener(controle.tecla);
+		//ftxtCusto.addActionListener(controle.incluir);
+		cbIngresso.addActionListener(controle.valor);
 		tbAgenda.addMouseListener(controle.limpaCampo);
 		tbAgenda.addKeyListener(controle.tecla);
 		btnPesquisar.addActionListener(controle.pesquisar);

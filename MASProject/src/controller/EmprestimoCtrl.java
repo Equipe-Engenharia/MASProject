@@ -502,8 +502,8 @@ public class EmprestimoCtrl implements ComponentListener {
 			arquivo.leArquivo("../MASProject/dados/", "emprestimos");
 			//FILTRA E CARREGA O ARRAY COM A BASE DE DADOS DO ARQUIVO TXT
 			linha = arquivo.getBuffer();
-			String[] listaIngresso = linha.split(";");
-			for (String s : listaIngresso) {
+			String[] listaEpt = linha.split(";");
+			for (String s : listaEpt) {
 				String text = s.replaceAll(".*: ", "");
 				list.add(text);
 				if (s.contains("---")) {

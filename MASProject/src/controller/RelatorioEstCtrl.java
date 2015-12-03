@@ -65,9 +65,27 @@ public class RelatorioEstCtrl implements ActionListener {
 		this.cbFiltro = cbFiltro;
 		this.btnLimparCampos = btnLimparCampos;
 
+		sessao();
 		carregaComboCategoria();
 
 	}
+	
+	public void sessao() {
+
+		SessaoCtrl log = SessaoCtrl.getInstance();
+
+		if (("Operacional").equalsIgnoreCase(log.getLogon().get(0).getNivel()) ||
+				("Administrativo").equalsIgnoreCase(log.getLogon().get(0).getNivel())
+				){
+
+			log.registrar(
+					log.getLogon().get(0).getId(), 
+					log.getLogon().get(0).getUsuario(), 
+					log.getLogon().get(0).getNivel(),
+					"RLE");
+		}
+	}
+	
 
 	// O Metodo de coleta deverá chamar esse método passando um titulo, e um
 	// array de objeto carregado
@@ -83,7 +101,6 @@ public class RelatorioEstCtrl implements ActionListener {
 	public PieDataset criaDataset(List<?> dados, String titulo) {
 		DefaultPieDataset result = new DefaultPieDataset();
 		if (dados.getClass().isInstance(visitas)) {
-			if (titulo.contains("gênero")) {
 				int qtdeGenero[] = new int[2];
 				for (int i = 0; i < dados.size(); i++) {
 					String sexo = ((VisitanteMdl) dados.get(i)).getSexo();
@@ -111,11 +128,23 @@ public class RelatorioEstCtrl implements ActionListener {
 				result.setValue("Inglês", qtdeIdioma[1]);
 				result.setValue("Espanhol", qtdeIdioma[2]);
 
-			} else if (titulo.contains("nascionalidade")) {
+			} else if (titulo.contains("nacionalidade")) {
+				String nacionalidade[] = new String[dados.size()];
+				int qtdeNacionalidade[] = new int[dados.size()];
 				for (int i = 0; i < dados.size(); i++) {
-					result.setValue(((VisitanteMdl) dados.get(i)).getNacionalidade(), 1);
+					nacionalidade[i] = ((VisitanteMdl) dados.get(i)).getNacionalidade();
 				}
-			} else if (titulo.contains("idade")) {
+				for (int i = 0; i < dados.size(); i++) {
+					for(int j = 0; j < dados.size(); j++){
+						if(nacionalidade[i].equals(((VisitanteMdl) dados.get(j)).getNacionalidade())){ 
+							qtdeNacionalidade[i] += 1;
+						}
+					}
+				}
+				for (int i = 0; i < dados.size(); i++) {
+					result.setValue(nacionalidade[i], qtdeNacionalidade[i]);		
+				}
+			} else if (titulo.contains("id")) {
 				String intervalo[] = new String[6];
 				int quantidade[] = new int[6];
 				boolean valida = false;
@@ -144,13 +173,6 @@ public class RelatorioEstCtrl implements ActionListener {
 				result.setValue(intervalo[5], quantidade[5]);
 
 			}
-
-		} else if (dados.getClass().isInstance(ingressos)) {
-			for (int i = 0; i < dados.size(); i++) {
-				// TODO
-				result.setValue(((IngressoMdl) dados.get(i)).getIngresso(), i);
-			}
-		}
 		return result;
 
 	}
@@ -235,6 +257,7 @@ public class RelatorioEstCtrl implements ActionListener {
 							return true;
 						}
 					} else if (categoria.contains("Nac")) {
+					} else if (categoria.contains("Nacio")) {
 						lerArquivoIngresso();
 						lerArquivoVisitante();
 						if (visitas.size() > 0) {
@@ -262,7 +285,7 @@ public class RelatorioEstCtrl implements ActionListener {
 			arquivos.leArquivo("../MASProject/dados/", "visitante");
 			linha = arquivos.getBuffer();
 			String[] listaVisita = linha.split(";");
-			if (categoria.contains("Sex") || categoria.contains("Idio") || categoria.contains("Ida")) {
+			if (categoria.contains("Sex") || categoria.contains("Idio") || categoria.contains("Ida")  || categoria.contains("Nacio")) {
 				// int masc = 0, fem = 0;
 				for (String s : listaVisita) {
 					String text = s.replaceAll(".*: ", "");
@@ -295,7 +318,7 @@ public class RelatorioEstCtrl implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-
+		  
 	private void lerArquivoIngresso() {
 		try {
 			arquivos = new ArquivosCtrl();

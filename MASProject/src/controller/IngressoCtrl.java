@@ -192,7 +192,7 @@ public class IngressoCtrl implements ComponentListener {
 		//VALOR INICIAL CASO O ARQUIVO TXT ESTEJA VAZIO
 		txtBilhete.setText(String.format("%09d",1));
 		
-		//VERIFICA SE A TABELA ESTÃ� CARREGADA
+		//VERIFICA SE A TABELA ESTÁ CARREGADA
 		if(tbCompra.getRowCount() > 0){
 			//VERIFICA SE HOUVE EXCLUSÃƒO NA TABELA E RETORNA O BILHETE ANTERIOR Ã€ EXCLUSÃƒO
 			if(altera != null){
@@ -411,7 +411,7 @@ public class IngressoCtrl implements ComponentListener {
 		}
 		//PRECORRE O ARRAY DOS DADOS
 		for (int i = 0; i < tipo.size(); i++) {
-			//CARREGA O VALOR DO INGRESSO ESCOLHIDO PARA O PREÃ‡O UNITÃ�RIO
+			//CARREGA O VALOR DO INGRESSO ESCOLHIDO PARA O PREÇO UNITÁRIO
 			if (cbIngresso.getSelectedItem().toString().equals(tipo.get(i).getTipo())) {
 				ftxtValorUnit.setValue(Integer.parseInt(tipo.get(i).getValor()));
 			}
@@ -426,7 +426,7 @@ public class IngressoCtrl implements ComponentListener {
 				ftxtTotal.setValue(total);
 			}
 		} /*else {
-			//POR PADRÃƒO A QUANTIDADE É "1"
+			//POR PADRÃO A QUANTIDADE É "1"
 			txtQtd.setText("1");
 			atualizaValor();
 		}*/

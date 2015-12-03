@@ -104,6 +104,8 @@ public class RelatorioFinCtrl implements ActionListener {
 		this.btnSalvarImprimir = btnSalvarImprimir;
 		this.internalFrameGrafico = internalFrameGrafico;
 		this.btnLimpar = btnLimpar;
+		
+		sessao();
 		carregaComboCategoria();
 	}
 
@@ -136,15 +138,16 @@ public class RelatorioFinCtrl implements ActionListener {
 
 		SessaoCtrl log = SessaoCtrl.getInstance();
 
-		if (("Operacional").equalsIgnoreCase(log.getLogon().get(0).getNivel())
-				|| ("Administrativo").equalsIgnoreCase(log.getLogon().get(0).getNivel())) {
+		if (("Operacional").equalsIgnoreCase(log.getLogon().get(0).getNivel()) ||
+				("Administrativo").equalsIgnoreCase(log.getLogon().get(0).getNivel())
+				){
 
-			log.registrar(log.getLogon().get(0).getId(), log.getLogon().get(0).getUsuario(),
-					log.getLogon().get(0).getNivel(), form.getName());
+			log.registrar(
+					log.getLogon().get(0).getId(), 
+					log.getLogon().get(0).getUsuario(), 
+					log.getLogon().get(0).getNivel(),
+					"RLF");
 		}
-		// else {
-		// msg("", log.getLogon().get(0).getNivel());
-		// }
 	}
 
 	public static int getFlag() {
@@ -245,7 +248,7 @@ public class RelatorioFinCtrl implements ActionListener {
 								}else if(subCategoria.contains("Aqui")){
 									lerArquivoAcervo();
 									if(obras.size() > 0){
-										criaGrafico(titulo, obras, "Não sei", "Não sei");
+										criaGrafico(titulo, obras, "Obras", "Valor de Aquisição");
 										return true;
 									}else{
 										JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
@@ -357,37 +360,50 @@ public class RelatorioFinCtrl implements ActionListener {
 				String text = s.replaceAll(".*:", "");
 				list.add(text);
 				if (s.contains("---")) {
-					ArtistaMdl artista = new ArtistaMdl();
-					artista.setNome((list.get(1)));
-					ObraMdl obra = new ObraMdl();
-					obra.setId(list.get(0));
-					obra.setNomeObra(list.get(2));
-					obra.setDescricaoObra(list.get(3));
-					CategoriaMdl c = new CategoriaMdl();
-					c.setNome(list.get(4));
-					obra.setDataComposicao(list.get(5));
-					obra.setImagem(list.get(6));
-					MaterialMdl material = new MaterialMdl();
-					material.setNome(list.get(7));
-					SetorMdl setor = new SetorMdl();
-					setor.setNome(list.get(8));
-					obra.setPreco(list.get(9).replace(".", "").replace(",", "."));
-					despesa += Double.parseDouble(list.get(9).replace(".", "").replace(",", "."));
-					obra.setProprietario(Boolean.parseBoolean(list.get(10)));
-					obra.setStatus(list.get(11));
-					obra.setArtista(artista);
-					obra.setMaterial(material);
-					obra.setCategoria(c);
-					obra.setSetor(setor);
-					obras.add(obra);
-					list.clear();
+//					String data = list.get(0).substring(3, 9).toString();
+//					data = inverteData(data);
+//					if(validaData(data)){
+						ArtistaMdl artista = new ArtistaMdl();
+						artista.setNome((list.get(1)));
+						ObraMdl obra = new ObraMdl();
+						obra.setId(list.get(0));
+						obra.setNomeObra(list.get(2));
+						obra.setDescricaoObra(list.get(3));
+						CategoriaMdl c = new CategoriaMdl();
+						c.setNome(list.get(4));
+						obra.setDataComposicao(list.get(5));
+						obra.setImagem(list.get(6));
+						MaterialMdl material = new MaterialMdl();
+						material.setNome(list.get(7));
+						SetorMdl setor = new SetorMdl();
+						setor.setNome(list.get(8));
+						obra.setPreco(list.get(9).replace(".", "").replace(",", "."));
+						despesa += Double.parseDouble(list.get(9).replace(".", "").replace(",", "."));
+						obra.setProprietario(Boolean.parseBoolean(list.get(10)));
+						obra.setStatus(list.get(11));
+						obra.setArtista(artista);
+						obra.setMaterial(material);
+						obra.setCategoria(c);
+						obra.setSetor(setor);
+						obras.add(obra);
+						list.clear();
+					}
 				}
-			}
+//			}
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(form, "Não foi possível ler o arquivo acervo");
 		}
 
 	}
+	
+	private String inverteData(String data) {
+		  StringBuffer buffer = new StringBuffer();
+		  String inversor[] = data.split("");
+		  for (int i = inversor.length - 1; i >= 0; i--) {
+		   buffer.append(inversor[i]);
+		  }
+		  return buffer.toString();
+		 }
 	
 	private void lerArquivoEmprestimos(){
 		try {
@@ -403,14 +419,17 @@ public class RelatorioFinCtrl implements ActionListener {
 				String text = s.replaceAll(".*:", "");
 				list.add(text);
 				if (s.contains("---")) {
-					EmprestimoMdl emprestimo = new EmprestimoMdl();
-					emprestimo.setId(list.get(0));
-					emprestimo.setDataInicial(list.get(5));
-					emprestimo.setDataFinal(list.get(6));
-					emprestimo.setCusto(list.get(11));
-					despesas += Double.parseDouble(list.get(11));
-					emprestimos.add(emprestimo);
-					list.clear();
+					String data = list.get(5);
+					if(validaData(data)){
+						EmprestimoMdl emprestimo = new EmprestimoMdl();
+						emprestimo.setId(list.get(0));
+						emprestimo.setDataInicial(list.get(5));
+						emprestimo.setDataFinal(list.get(6));
+						emprestimo.setCusto(list.get(11));
+						despesas += Double.parseDouble(list.get(11));
+						emprestimos.add(emprestimo);
+						list.clear();
+					}
 				}
 			}
 			txtDespesa.setText(String.valueOf(despesas));
