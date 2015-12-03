@@ -237,13 +237,19 @@ public class RelatorioFinCtrl implements ActionListener {
 								}else if(subCategoria.contains("Manu")){
 									lerArquivoEmprestimos();
 									if(emprestimos.size() > 0){
-										criaGrafico(titulo, emprestimos, "Exposição", "Valor arrecadado");
+										criaGrafico(titulo, emprestimos, "Manutencão", "Valor da Despesa");
 										return true;
 									}else{
 										JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
 									}
 								}else if(subCategoria.contains("Aqui")){
-									//TODO
+									lerArquivoAcervo();
+									if(obras.size() > 0){
+										criaGrafico(titulo, obras, "Não sei", "Não sei");
+										return true;
+									}else{
+										JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
+									}
 								}
 							}
 						}
@@ -346,6 +352,7 @@ public class RelatorioFinCtrl implements ActionListener {
 			String linha = new String();
 			linha = arquivos.getBuffer();
 			String[] categoria = linha.split(";");
+			double despesa = 0.0;
 			for (String s : categoria) {
 				String text = s.replaceAll(".*:", "");
 				list.add(text);
@@ -364,7 +371,8 @@ public class RelatorioFinCtrl implements ActionListener {
 					material.setNome(list.get(7));
 					SetorMdl setor = new SetorMdl();
 					setor.setNome(list.get(8));
-					obra.setPreco(list.get(9));
+					obra.setPreco(list.get(9).replace(".", "").replace(",", "."));
+					despesa += Double.parseDouble(list.get(9).replace(".", "").replace(",", "."));
 					obra.setProprietario(Boolean.parseBoolean(list.get(10)));
 					obra.setStatus(list.get(11));
 					obra.setArtista(artista);
@@ -443,16 +451,22 @@ public class RelatorioFinCtrl implements ActionListener {
 						((IngressoMdl) dados.get(i)).getIngresso(), ((IngressoMdl) dados.get(i)).getIngresso()); // sis[i].getCategoria());
 			}
 		}else if(titulo.contains("Acer")){
-			if(dados.getClass().isInstance(emprestimos)){
+			if(subCategoria.contains("Manu")){
 				for (int i = 0; i < dados.size(); i++) {
 					dataset.addValue(Double.parseDouble(((EmprestimoMdl) dados.get(i)).getCusto()),
 							((EmprestimoMdl) dados.get(i)).getId(), ((EmprestimoMdl) dados.get(i)).getId()); // sis[i].getCategoria());
 				}
 			}
-			if(dados.getClass().isInstance(ingressos)){
+			if(subCategoria.contains("Exp")){
 				for (int i = 0; i < dados.size(); i++) {
 					dataset.addValue(Double.parseDouble(((IngressoMdl) dados.get(i)).getValor()),
 							((IngressoMdl) dados.get(i)).getExpo(), ((IngressoMdl) dados.get(i)).getExpo()); // sis[i].getCategoria());
+				}
+			}
+			if(subCategoria.contains("Aqui")){
+				for (int i = 0; i < dados.size(); i++) {
+					dataset.addValue(Double.parseDouble(((ObraMdl) dados.get(i)).getPreco()),
+							((ObraMdl) dados.get(i)).getNome(), ((ObraMdl) dados.get(i)).getNome()); // sis[i].getCategoria());
 				}
 			}
 		}
