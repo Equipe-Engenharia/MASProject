@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,7 +23,7 @@ import javax.swing.text.NumberFormatter;
 import controller.AgendamentoCtrl;
 
 
-public class FrmAgendamento extends JFrame {
+public class FrmAgendamento extends JInternalFrame {
 
 	static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -85,6 +86,8 @@ public class FrmAgendamento extends JFrame {
 	
 	public FrmAgendamento() throws ParseException{
 		setTitle("Agendamento");
+		setClosable(true);
+		setIconifiable(true);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 768, 480);
@@ -92,7 +95,7 @@ public class FrmAgendamento extends JFrame {
 		contentPane.setName("AGD");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
-		setLocationRelativeTo(null);
+		setLocation(0,0);
 		setContentPane(contentPane);
 			
 		// LABEL ////////////////////////	
@@ -332,8 +335,8 @@ public class FrmAgendamento extends JFrame {
 		txtPesquisa.addKeyListener(controle.tecla);
 		ftxtData.addFocusListener(controle.move);
 		ftxtQtd.addActionListener(controle.valor);
-		//ftxtCusto.addKeyListener(controle.tecla);
-		//ftxtCusto.addActionListener(controle.incluir);
+		ftxtQtd.addKeyListener(controle.tecla);
+		ftxtQtd.addActionListener(controle.incluir);
 		cbIngresso.addActionListener(controle.valor);
 		tbAgenda.addMouseListener(controle.limpaCampo);
 		tbAgenda.addKeyListener(controle.tecla);

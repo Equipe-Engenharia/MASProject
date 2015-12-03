@@ -12,10 +12,10 @@ public class FrmMenu extends JFrame{
 	acervoEditar, artistaCadastrar, artistaEditar, categoriaCadastrar, 
 	categoriaEditar, materialCadastrar, materialEditar, setorCadastrar, 
 	setorEditar, emprestimo, exposicaoCadastrar, exposicaoEditar, ingressoCadastrar, 
-	visitanteCadastrar, visitanteEditar, reFinanceiro, reEstatistico, documentacao;
+	visitanteCadastrar, visitanteEditar, agendaCadastrar, reFinanceiro, reEstatistico, documentacao;
 	private JMenuBar menuBar;
 	private JMenu obra, artista, categoria, material, setor, 
-	arquivo, acervo, exposicao, visitante, ingresso, relatorios, ajuda;
+	arquivo, acervo, exposicao, visitante, agenda, ingresso, relatorios, ajuda;
 	
 
 	public FrmMenu() {
@@ -33,9 +33,8 @@ public class FrmMenu extends JFrame{
 
 		final JDesktopPane desktopPane = new JDesktopPane();
 
-		desktopPane.setBackground(Color.gray); // Ajusta uma cor de fundo (opção caso a imagem de fundo dÃ� algum problema no programa)
+		desktopPane.setBackground(Color.gray); // Ajusta uma cor de fundo
 
-		
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		setContentPane(desktopPane);
@@ -54,6 +53,9 @@ public class FrmMenu extends JFrame{
 		
 		visitante = new JMenu("Visitante");
 		menuBar.add(visitante);
+		
+		agenda = new JMenu("Agendamento");
+		menuBar.add(agenda);
 		
 		ingresso = new JMenu("Ingresso");
 		menuBar.add(ingresso);
@@ -152,6 +154,9 @@ public class FrmMenu extends JFrame{
 		visitanteEditar = new JMenuItem("Editar");
 		visitante.add(visitanteEditar);
 		
+		agendaCadastrar = new JMenuItem("Cadastrar");
+		agenda.add(agendaCadastrar);
+		
 		ingressoCadastrar = new JMenuItem("Vender");
 		ingresso.add(ingressoCadastrar);
 		
@@ -177,6 +182,7 @@ public class FrmMenu extends JFrame{
 		exposicaoEditar.addActionListener(controle.exposicaoEditar);
 		visitanteCadastrar.addActionListener(controle.visitanteCadastrar);
 		visitanteEditar.addActionListener(controle.visitanteEditar);
+		agendaCadastrar.addActionListener(controle.agendaCadastrar);
 		ingressoCadastrar.addActionListener(controle.ingressoCadastrar);
 		reFinanceiro.addActionListener(controle.reFinanceiro);
 		reEstatistico.addActionListener(controle.reEstatistico);

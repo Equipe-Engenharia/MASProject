@@ -243,7 +243,7 @@ public class AgendamentoCtrl implements ComponentListener {
 		txtResponsavelId.setText("AUT" + NewId);
 	}
 	
-	public String InstitutoId() {
+	public String institutoId() {
 
 		
 		if(agendamentos.size() > 0){
@@ -492,11 +492,12 @@ public class AgendamentoCtrl implements ComponentListener {
 				&& ftxtCusto.getValue() != null) {
 
 			for (int i = 0; i <= agendamentos.size(); i++) {
+				//msg("",txtNome.getText() + " = " + agendamentos.get(i).getInstituto());
 				if (agendamentos.size() == 0 || 
 						txtNome.getText().equals(agendamentos.get(i).getInstituto())) {
 					
 					agendamento.setId(txtId.getText());
-					agendamento.setInstitutoId(InstitutoId());
+					agendamento.setInstitutoId(institutoId());
 					agendamento.setInstituto(txtNome.getText());
 					agendamento.setFone(txtTelefone.getText());
 					agendamento.setResponsavelId(txtResponsavelId.getText());
@@ -504,7 +505,7 @@ public class AgendamentoCtrl implements ComponentListener {
 					agendamento.setTipo(cbTipo.getSelectedItem().toString());
 					agendamento.setData(ftxtData.getText());
 					agendamento.setPeriodo(cbPeriodo.getSelectedItem().toString());
-					agendamento.setQtd(ftxtQtd.getValue().toString());
+					agendamento.setQtd(ftxtQtd.getText());
 					
 					for (int j = 0; j < expos.size(); j++) { //NECESSÁRIO POIS O ID É DE OUTRA BASE
 						if (cbExpo.getSelectedItem().toString().equals(expos.get(j).getTitulo())) {
@@ -727,7 +728,7 @@ public class AgendamentoCtrl implements ComponentListener {
 				//CARREGA O MODELO COM OS DADOS DOS CAMPOS DA TELA
 				if (txtNome.getText().equals(agendamentos.get(i).getInstituto())) {
 					agendamento.setId(txtId.getText());
-					agendamento.setInstitutoId(InstitutoId());
+					agendamento.setInstitutoId(institutoId());
 					agendamento.setInstituto(txtNome.getText());
 					agendamento.setFone(txtTelefone.getText());
 					agendamento.setResponsavelId(txtResponsavelId.getText());
@@ -735,7 +736,7 @@ public class AgendamentoCtrl implements ComponentListener {
 					agendamento.setTipo(cbTipo.getSelectedItem().toString());
 					agendamento.setData(ftxtData.getText());
 					agendamento.setPeriodo(cbPeriodo.getSelectedItem().toString());
-					agendamento.setQtd(ftxtQtd.getValue().toString());
+					agendamento.setQtd(ftxtQtd.getText());
 					
 					for (int j = 0; j < expos.size(); j++) { //NECESSÁRIO POIS O ID É DE OUTRA BASE
 						if (cbExpo.getSelectedItem().toString().equals(expos.get(j).getTitulo())) {
@@ -969,7 +970,7 @@ public class AgendamentoCtrl implements ComponentListener {
 				}
 			}*/
 			
-			if(txtTelefone.hasFocus() || ftxtCusto.hasFocus()){
+			if(txtTelefone.hasFocus() || ftxtQtd.hasFocus()){
 				String caracteres="0987654321";
 				if(!caracteres.contains(e.getKeyChar()+"")){
 					e.consume();
