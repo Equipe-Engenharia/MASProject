@@ -25,7 +25,7 @@ import controller.RelatorioEstCtrl;
 
 import java.awt.Color;
 
-public class FormRelatorioEstatistico extends JFrame {
+public class FrmRelatorioEstatistico extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtDataIni;
@@ -48,7 +48,7 @@ public class FormRelatorioEstatistico extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormRelatorioEstatistico frame = new FormRelatorioEstatistico();
+					FrmRelatorioEstatistico frame = new FrmRelatorioEstatistico();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,7 +61,7 @@ public class FormRelatorioEstatistico extends JFrame {
 	 * Create the frame.
 	 * @throws ParseException 
 	 */
-	public FormRelatorioEstatistico() throws ParseException {
+	public FrmRelatorioEstatistico() throws ParseException {
 		setTitle("Relatorio Estatístico");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 691, 588);
