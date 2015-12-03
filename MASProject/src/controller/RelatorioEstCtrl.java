@@ -19,6 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -35,6 +36,7 @@ import model.IngressoMdl;
 import model.VisitanteMdl;
 
 public class RelatorioEstCtrl implements ActionListener {
+	private JPanel form;
 	private JFreeChart chart;
 	private ChartPanel chartPanel;
 	private JInternalFrame internalFrameGrafico;
@@ -143,7 +145,7 @@ public class RelatorioEstCtrl implements ActionListener {
 					dataIni = (Date) mascara.parse(dataInicio.replace("/", "").replace("/", ""));
 					dataFinal = (Date) mascara.parse(dataFim.replace("/", "").replace("/", ""));
 				} catch (ParseException e) {
-					// JOptionPane.showMessageDialog(form, e.getMessage());
+					 JOptionPane.showMessageDialog(form, e.getMessage());
 				}
 				if (validaData(dataInicio)) {
 					if (categoria.contains("Ida")) {
@@ -153,6 +155,8 @@ public class RelatorioEstCtrl implements ActionListener {
 									+ " a " + dataFim;
 							criaGrafico(titulo, visitas);
 							return true;
+						}else{
+							JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro");
 						}
 					} else if (categoria.contains("Sex")) {
 						lerArquivoVisitante();
@@ -191,12 +195,10 @@ public class RelatorioEstCtrl implements ActionListener {
 						}
 					}
 				} else {
-					// JOptionPane.showMessageDialog(form, "Selecione a
-					// categoria");
+					 JOptionPane.showMessageDialog(form, "Selecione a categoria");
 				}
 			} else {
-				// JOptionPane.showMessageDialog(form, "Insira data de inicio
-				// e/ou final para continuar!");
+				 JOptionPane.showMessageDialog(form, "Insira data de inicio e/ou final para continuar!");
 			}
 		}
 		return false;
@@ -215,7 +217,7 @@ public class RelatorioEstCtrl implements ActionListener {
 				list.add(text);
 				if (s.contains("---")) {
 					String data = list.get(2).toString();
-					if (validaData(data)) {
+//					if (validaData(data)) {
 						VisitanteMdl visita = new VisitanteMdl();
 						visita.setId(list.get(0));
 						visita.setNome(list.get(1));
@@ -224,7 +226,7 @@ public class RelatorioEstCtrl implements ActionListener {
 						visita.setSexo(list.get(4));
 						visitas.add(visita);
 						list.clear();
-					}
+//					}
 				}
 			}
 		} catch (IOException e) {
@@ -232,6 +234,8 @@ public class RelatorioEstCtrl implements ActionListener {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	private void lerArquivoIngresso() {
 		try {
@@ -282,13 +286,11 @@ public class RelatorioEstCtrl implements ActionListener {
 					return true;
 				}
 			} else {
-				// JOptionPane.showMessageDialog(form, "Data inicial é maior do
-				// que a data final");
+				 JOptionPane.showMessageDialog(form, "Data inicial é maior do que a data final");
 				return false;
 			}
 		} catch (ParseException e) {
-			// JOptionPane.showMessageDialog(form, "Não foi possível converter a
-			// data do arquivo");
+			 JOptionPane.showMessageDialog(form, "Não foi possível converter a data do arquivo");
 		}
 		return false;
 	}
