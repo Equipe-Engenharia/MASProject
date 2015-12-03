@@ -327,6 +327,39 @@ public class RelatorioEstCtrl implements ActionListener {
 		chartPanel.setChart(null);
 
 	}
+	
+	public static String selecionaIntervaloIdade(String dataNasc){
+		  String [] separaData = dataNasc.split("/");
+		  Date dataSis = new Date(); 
+		  
+		  SimpleDateFormat df = new SimpleDateFormat("yyyy"); 
+		  String data = df.format(dataSis);
+		  int AnoAtual = Integer.parseInt(data);
+		  int AnoNasc = Integer.parseInt(separaData[2]);
+		  int idade = AnoAtual - AnoNasc;
+		  //System.out.println(idade);
+		  
+		  String intervalo ="";
+		  if( idade <10 )
+			  intervalo = "Menor que 10 anos de idade";
+		  
+		  if(idade >= 10 && idade <=20)
+			  intervalo = "Entre 10 e 20 anos de idade";
+		 
+		  if(idade >= 21 && idade <=30)
+			  intervalo = "Entre 21 e 30 anos de idade";
+		 
+		  if(idade >= 31 && idade <=40)
+			  intervalo = "Entre 10 e 20 anos de idade";
+		 
+		  if(idade >= 41 && idade <=50)
+			  intervalo = "Entre 10 e 20 anos de idade";
+		  
+		  if(idade > 50 )
+			  intervalo = "Maior que 50 anos de idade";
+		  
+		  return intervalo;
+		 }
 
 	public void actionPerformed(ActionEvent actEvt) {
 		Object source = actEvt.getSource();
