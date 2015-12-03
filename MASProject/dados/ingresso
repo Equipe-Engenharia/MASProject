@@ -58,3 +58,39 @@ Quantidade: 9
 Valor     : R$ 180,00
 Pagamento : Dinheiro
 ---------------------------
+ID        : PDV151202-190646
+Data      : 02/12/2015
+Hora      : 19:06
+Bilhete   : 000000006
+Exposição : Teste
+ID Visita : VST151120-140815
+Visitante : Alfeu Ximenes Neto
+Ingresso  : Inteira
+Quantidade: 1
+Valor     : R$ 20,00
+Pagamento : Dinheiro
+---------------------------
+ID        : PDV151202-190646
+Data      : 02/12/2015
+Hora      : 19:06
+Bilhete   : 000000007
+Exposição : Teste Final
+ID Visita : VST151120-140649
+Visitante : Maria Souza
+Ingresso  : Especial
+Quantidade: 1
+Valor     : R$ 50,00
+Pagamento : Dinheiro
+---------------------------
+ID        : PDV151202-190646
+Data      : 02/12/2015
+Hora      : 19:06
+Bilhete   : 000000008
+Exposição : Dormir
+ID Visita : VST151113-210929
+Visitante : Fernando M. Oliveira
+Ingresso  : Meia
+Quantidade: 1
+Valor     : R$ 10,00
+Pagamento : Dinheiro
+---------------------------

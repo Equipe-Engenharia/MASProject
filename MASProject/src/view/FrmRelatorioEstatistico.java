@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.EventQueue;
+import java.text.ParseException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,9 +10,12 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
+import javax.swing.text.MaskFormatter;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -21,19 +25,21 @@ import controller.RelatorioEstCtrl;
 
 import java.awt.Color;
 
-public class FormRelatorioEstatistico extends JFrame {
+public class FrmRelatorioEstatistico extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtDataIni;
 	private JTextField txtDataFim;
 	private JLabel lblDataInicial, lblDataFinal, lblPerodo, lblFiltrarPor;
 	private JSeparator separator, separator_1, separator_2;
-	private JButton btnGerar, btnSalvarimprimir;
+	private JButton btnGerar, btnSalvarimprimir, btnLimparCampos;
 	private JComboBox<String> cbFiltro;
 	private JInternalFrame internalFrameGrafico;
 	private PieDataset dataset;
 	private JFreeChart chart;
 	private ChartPanel chartPanel;
+	private MaskFormatter maskData;
+
 
 	/**
 	 * Launch the application.
@@ -42,7 +48,7 @@ public class FormRelatorioEstatistico extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormRelatorioEstatistico frame = new FormRelatorioEstatistico();
+					FrmRelatorioEstatistico frame = new FrmRelatorioEstatistico();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,8 +59,10 @@ public class FormRelatorioEstatistico extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws ParseException 
 	 */
-	public FormRelatorioEstatistico() {
+	public FrmRelatorioEstatistico() throws ParseException {
+		setTitle("Relatorio Estatístico");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 691, 588);
 		contentPane = new JPanel();
@@ -65,20 +73,22 @@ public class FormRelatorioEstatistico extends JFrame {
 		chartPanel = new ChartPanel(chart);
 
 		lblDataInicial = new JLabel("Data Inicial");
-		lblDataInicial.setBounds(26, 44, 62, 14);
+		lblDataInicial.setBounds(54, 44, 62, 14);
 		contentPane.add(lblDataInicial);
+		
+		maskData = new MaskFormatter("##/##/####");
 
-		txtDataIni = new JTextField();
-		txtDataIni.setBounds(98, 41, 86, 20);
+		txtDataIni = new JFormattedTextField(maskData);
+		txtDataIni.setBounds(126, 41, 86, 20);
 		contentPane.add(txtDataIni);
 		txtDataIni.setColumns(10);
 
 		lblDataFinal = new JLabel("Data Final");
-		lblDataFinal.setBounds(228, 44, 62, 14);
+		lblDataFinal.setBounds(267, 47, 62, 14);
 		contentPane.add(lblDataFinal);
 
-		txtDataFim = new JTextField();
-		txtDataFim.setBounds(301, 41, 86, 20);
+		txtDataFim = new JFormattedTextField(maskData);
+		txtDataFim.setBounds(340, 44, 86, 20);
 		contentPane.add(txtDataFim);
 		txtDataFim.setColumns(10);
 
@@ -101,7 +111,7 @@ public class FormRelatorioEstatistico extends JFrame {
 		internalFrameGrafico = new JInternalFrame("Gráfico");
 		internalFrameGrafico.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		internalFrameGrafico.setFrameIcon(null);
-		internalFrameGrafico.setBounds(26, 154, 434, 330);
+		internalFrameGrafico.setBounds(124, 154, 434, 330);
 		internalFrameGrafico.setContentPane(chartPanel);
 		contentPane.add(internalFrameGrafico);
 
@@ -110,7 +120,8 @@ public class FormRelatorioEstatistico extends JFrame {
 		contentPane.add(separator_1);
 
 		btnGerar = new JButton("Gerar Gráfico");
-		btnGerar.setBounds(518, 94, 129, 31);
+		btnGerar.setIcon(new ImageIcon("../MASProject/icons/ok.png"));
+		btnGerar.setBounds(500, 94, 147, 31);
 		contentPane.add(btnGerar);
 
 		separator_2 = new JSeparator();
@@ -118,12 +129,25 @@ public class FormRelatorioEstatistico extends JFrame {
 		contentPane.add(separator_2);
 
 		btnSalvarimprimir = new JButton("Salvar/Imprimir");
-		btnSalvarimprimir.setBounds(518, 508, 129, 31);
+		btnSalvarimprimir.setIcon(new ImageIcon("../MASProject/icons/save.png"));
+		btnSalvarimprimir.setBounds(500, 508, 147, 31);
 		contentPane.add(btnSalvarimprimir);
 		internalFrameGrafico.setVisible(true);
 		
+		
+		
+		btnLimparCampos = new JButton("Limpar Campos");
+		btnLimparCampos.setIcon(new ImageIcon("../MASProject/icons/clear.png"));
+		btnLimparCampos.setBounds(324, 508, 153, 31);
+		contentPane.add(btnLimparCampos);
+		
 		RelatorioEstCtrl rEst = new RelatorioEstCtrl(chart, chartPanel, internalFrameGrafico, txtDataIni, txtDataFim,
-				cbFiltro, btnGerar, btnSalvarimprimir);
+				cbFiltro, btnGerar, btnSalvarimprimir, btnLimparCampos);
+		
+		btnGerar.addActionListener(rEst);
+		btnSalvarimprimir.addActionListener(rEst);
+		btnLimparCampos.addActionListener(rEst);
 	}
+	
 
 }

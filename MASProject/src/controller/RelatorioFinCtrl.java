@@ -7,6 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.ListIterator;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
@@ -27,7 +30,14 @@ import javax.swing.JInternalFrame;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import model.AcervoMdl;
+import model.ArtistaMdl;
+import model.CategoriaMdl;
+import model.EmprestimoMdl;
 import model.IngressoMdl;
+import model.MaterialMdl;
+import model.ObraMdl;
+import model.SetorMdl;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -66,11 +76,13 @@ public class RelatorioFinCtrl implements ActionListener {
 	private Date dataFinal;
 
 	private final String[] categorias = { "", "Visitantes", "Acervo" };
-	private final String[] subCategoriaVisitantes = { "Todos", "Estudantes", "Comum", "Especial", "Meia" };
-	private final String[] subCategoriaAcervo = { "Manutenção", "Transporte", "Aquisição" };
+	private final String[] subCategoriaVisitantes = {"Todos", "Estudante", "Inteira", "Especial", "Meia"};
+	private final String[] subCategoriaAcervo = { "Manutenção", "Exposição", "Aquisição"};
 
 	private ArquivosCtrl arquivos;
-	private List<IngressoMdl> ingressos = new ArrayList<IngressoMdl>();
+	private List<IngressoMdl> ingressos;
+	private List<ObraMdl> obras;
+	private List<EmprestimoMdl> emprestimos;
 
 	// Fetch, merge, commit
 	public RelatorioFinCtrl(JComboBox<String> cbCategoria, JComboBox<String> cbSubCategoria, JTextField txtDataInicio,
@@ -109,11 +121,9 @@ public class RelatorioFinCtrl implements ActionListener {
 	private void carregaComboSubCategoria() {
 		if (cbCategoria.getSelectedItem().toString().contains("Visi")) {
 			cbSubCategoria.removeAllItems();
-			for (String subCategory : subCategoriaVisitantes) {
-				cbSubCategoria.addItem(subCategory);
-			}
+			cbSubCategoria.addItem(subCategoriaVisitantes[0]);
 		} else if (cbCategoria.getSelectedItem().toString().contains("Ace")) {
-
+			cbSubCategoria.removeAllItems();
 			for (String subCategory : subCategoriaAcervo) {
 				cbSubCategoria.addItem(subCategory);
 			}
@@ -178,7 +188,7 @@ public class RelatorioFinCtrl implements ActionListener {
 	}
 
 	public void criaGrafico(String titulo, List<?> dados, String nomeEixoX, String nomeEixoY) {
-		CategoryDataset dataset = criaDataset(dados);
+		CategoryDataset dataset = criaDataset(dados, titulo);
 		chart = criaChart(dataset, titulo, nomeEixoX, nomeEixoY);
 		chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new Dimension(internalFrameGrafico.getContentPane().getWidth(),
@@ -213,10 +223,34 @@ public class RelatorioFinCtrl implements ActionListener {
 									criaGrafico(titulo, ingressos, "Tipo de ingresso", "Valor do ingresso");
 									return true;
 								}else{
-									JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!"); //verificar
+									JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
 								}
-							}else if(subCategoria.contains("Manu")){
-									
+							}else if(categoria.contains("Acer")){
+								if(subCategoria.contains("Exp")){
+									lerArquivoIngresso();
+									if(ingressos.size() > 0){
+										criaGrafico(titulo, ingressos, "Exposição", "Valor arrecadado");
+										return true;
+									}else{
+										JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
+									}
+								}else if(subCategoria.contains("Manu")){
+									lerArquivoEmprestimos();
+									if(emprestimos.size() > 0){
+										criaGrafico(titulo, emprestimos, "Manutencão", "Valor da Despesa");
+										return true;
+									}else{
+										JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
+									}
+								}else if(subCategoria.contains("Aqui")){
+									lerArquivoAcervo();
+									if(obras.size() > 0){
+										criaGrafico(titulo, obras, "Obras", "Valor de Aquisição");
+										return true;
+									}else{
+										JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
+									}
+								}
 							}
 						}
 					}else{
@@ -230,11 +264,12 @@ public class RelatorioFinCtrl implements ActionListener {
 
 
 	private void lerArquivoIngresso() { //modificar esse metodo de acordo com a subcategoria
-		  arquivos = new ArquivosCtrl();
-		  String linha = new String();
-		  ArrayList<String> list = new ArrayList<>();
 		  try {
+		   arquivos = new ArquivosCtrl();
 		   arquivos.leArquivo("../MASProject/dados/", "ingresso");
+		   ingressos = new ArrayList<IngressoMdl>();
+		   String linha = new String();
+		   ArrayList<String> list = new ArrayList<>();
 		   linha = arquivos.getBuffer();
 		   String[] listaIngresso = linha.split(";");
 		   if(subCategoria.contains("Tod")){
@@ -257,9 +292,9 @@ public class RelatorioFinCtrl implements ActionListener {
 		       ingresso.setIngresso(list.get(7));
 		       System.out.println(list.get(7));
 		       ingresso.setQtd(null);
-		       ingresso.setValor(list.get(9).substring(3));
+		       ingresso.setValor(list.get(9).substring(3).replace(",", "."));
 		       System.out.println(list.get(9));
-		       ganhos += Double.parseDouble(list.get(9).substring(3));
+		       ganhos += Double.parseDouble(list.get(9).substring(3).replace(",", "."));
 		       ingresso.setPagamento(null);
 		       ingressos.add(ingresso);
 		       list.clear();
@@ -267,40 +302,142 @@ public class RelatorioFinCtrl implements ActionListener {
 		     }
 		    }
 		    txtGanho.setText(String.valueOf(ganhos));   
-		    //se a subcategoria for de estudante
-		   }else if(subCategoria.contains("Est")){
-		    double ganhos = 0.0;
-		    for(int i = 0; i < listaIngresso.length; i++){
-		     if(listaIngresso[i].contains("Est")){
-		      String data = listaIngresso[i - 6].toString().substring(12);
-		      if(validaData(data)){
-		       IngressoMdl ingresso = new IngressoMdl();
-		       ingresso.setId(null);
-		       ingresso.setData(null);
-		       ingresso.setHora(null);
-		       ingresso.setBilhete(null);
-		       ingresso.setExpo(null);
-		       ingresso.setVisitaId(null);
-		       ingresso.setVisitante(null);
-		       ingresso.setIngresso(listaIngresso[i].substring(11));
-		       ingresso.setQtd(null);
-		       ingresso.setValor(listaIngresso[i+2].substring(15));
-		       ganhos += Double.parseDouble(listaIngresso[i+2].substring(15));
-		       ingresso.setPagamento(null);
-		       ingressos.add(ingresso);
-		       list.clear();
-		      }
-		     }
-		    }
-		    txtGanho.setText(String.valueOf(ganhos));
-		   }else{
-		    
+		    txtDespesa.setText("0");
+		   }else if(subCategoria.contains("Exp")){
+			   double ganhos = 0.0;
+			    for(String s : listaIngresso){
+			     String text = s.replaceAll(".*: ", "");
+			     list.add(text);
+			     if (s.contains("---")) {
+			      String data = list.get(1).toString();
+			      if(validaData(data)){
+			       IngressoMdl ingresso = new IngressoMdl();
+			       ingresso.setId(list.get(0));
+			       ingresso.setData(list.get(1));
+			       System.out.println(list.get(1));
+			       ingresso.setHora(null);
+			       ingresso.setBilhete(null);
+			       ingresso.setExpo(list.get(4));
+			       System.out.println(list.get(4));
+			       ingresso.setVisitaId(null);
+			       ingresso.setVisitante(null);
+			       ingresso.setIngresso(list.get(7));
+			       System.out.println(list.get(7));
+			       ingresso.setQtd(null);
+			       ingresso.setValor(list.get(9).substring(3).replace(",", "."));
+			       System.out.println(list.get(9));
+			       ganhos += Double.parseDouble(list.get(9).substring(3).replace(",", "."));
+			       ingresso.setPagamento(null);
+			       ingressos.add(ingresso);
+			       list.clear();
+			      }
+			     }
+			    }
+			    txtGanho.setText(String.valueOf(ganhos));   
+			    txtDespesa.setText("0");
 		   }
+		   
 		  } catch (IOException e) {
-		   e.printStackTrace();
+		   JOptionPane.showMessageDialog(form, "Não foi possível ler o arquivo 'ingressos' ");
 		  }
 
 		 }
+	
+	private void lerArquivoAcervo(){
+		try {
+			arquivos = new ArquivosCtrl();
+			arquivos.leArquivo("../MASProject/dados/", "acervo");
+			obras = new ArrayList<ObraMdl>();
+			ArrayList<String> list = new ArrayList<>();
+			String linha = new String();
+			linha = arquivos.getBuffer();
+			String[] categoria = linha.split(";");
+			double despesa = 0.0;
+			for (String s : categoria) {
+				String text = s.replaceAll(".*:", "");
+				list.add(text);
+				if (s.contains("---")) {
+//					String data = list.get(0).substring(3, 9).toString();
+//					data = inverteData(data);
+//					if(validaData(data)){
+						ArtistaMdl artista = new ArtistaMdl();
+						artista.setNome((list.get(1)));
+						ObraMdl obra = new ObraMdl();
+						obra.setId(list.get(0));
+						obra.setNomeObra(list.get(2));
+						obra.setDescricaoObra(list.get(3));
+						CategoriaMdl c = new CategoriaMdl();
+						c.setNome(list.get(4));
+						obra.setDataComposicao(list.get(5));
+						obra.setImagem(list.get(6));
+						MaterialMdl material = new MaterialMdl();
+						material.setNome(list.get(7));
+						SetorMdl setor = new SetorMdl();
+						setor.setNome(list.get(8));
+						obra.setPreco(list.get(9).replace(".", "").replace(",", "."));
+						despesa += Double.parseDouble(list.get(9).replace(".", "").replace(",", "."));
+						obra.setProprietario(Boolean.parseBoolean(list.get(10)));
+						obra.setStatus(list.get(11));
+						obra.setArtista(artista);
+						obra.setMaterial(material);
+						obra.setCategoria(c);
+						obra.setSetor(setor);
+						obras.add(obra);
+						list.clear();
+					}
+				}
+//			}
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(form, "Não foi possível ler o arquivo acervo");
+		}
+
+	}
+	
+	private String inverteData(String data) {
+		  StringBuffer buffer = new StringBuffer();
+		  String inversor[] = data.split("");
+		  for (int i = inversor.length - 1; i >= 0; i--) {
+		   buffer.append(inversor[i]);
+		  }
+		  return buffer.toString();
+		 }
+	
+	private void lerArquivoEmprestimos(){
+		try {
+			arquivos = new ArquivosCtrl();
+			arquivos.leArquivo("../MASProject/dados/", "emprestimos");
+			emprestimos = new ArrayList<EmprestimoMdl>();
+			ArrayList<String> list = new ArrayList<>();
+			String linha = new String();
+			linha = arquivos.getBuffer();
+			String[] linhaEmprestimo = linha.split(";");
+			double despesas = 0.0;
+			for (String s : linhaEmprestimo) {
+				String text = s.replaceAll(".*:", "");
+				list.add(text);
+				if (s.contains("---")) {
+					String data = list.get(5);
+					if(validaData(data)){
+						EmprestimoMdl emprestimo = new EmprestimoMdl();
+						emprestimo.setId(list.get(0));
+						emprestimo.setDataInicial(list.get(5));
+						emprestimo.setDataFinal(list.get(6));
+						emprestimo.setCusto(list.get(11));
+						despesas += Double.parseDouble(list.get(11));
+						emprestimos.add(emprestimo);
+						list.clear();
+					}
+				}
+			}
+			txtDespesa.setText(String.valueOf(despesas));
+			
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(form, "Não foi possível ler o arquivo emprestimo");
+		}
+
+	}
+	
+	
 	
 	private boolean validaData(String dataDoArquivo){
 		  SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
@@ -322,13 +459,33 @@ public class RelatorioFinCtrl implements ActionListener {
 		  return false;
 	}
 
-	public CategoryDataset criaDataset(List<?> dados) {
+	public CategoryDataset criaDataset(List<?> dados, String titulo) {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		for (int i = 0; i < dados.size(); i++) {
-			dataset.addValue(Double.parseDouble(((IngressoMdl) dados.get(i)).getValor()),
-					((IngressoMdl) dados.get(i)).getIngresso(), ((IngressoMdl) dados.get(i)).getIngresso()); // sis[i].getCategoria());
+		if(titulo.contains("Visi")){
+			for (int i = 0; i < dados.size(); i++) {
+				dataset.addValue(Double.parseDouble(((IngressoMdl) dados.get(i)).getValor()),
+						((IngressoMdl) dados.get(i)).getIngresso(), ((IngressoMdl) dados.get(i)).getIngresso()); // sis[i].getCategoria());
+			}
+		}else if(titulo.contains("Acer")){
+			if(subCategoria.contains("Manu")){
+				for (int i = 0; i < dados.size(); i++) {
+					dataset.addValue(Double.parseDouble(((EmprestimoMdl) dados.get(i)).getCusto()),
+							((EmprestimoMdl) dados.get(i)).getId(), ((EmprestimoMdl) dados.get(i)).getId()); // sis[i].getCategoria());
+				}
+			}
+			if(subCategoria.contains("Exp")){
+				for (int i = 0; i < dados.size(); i++) {
+					dataset.addValue(Double.parseDouble(((IngressoMdl) dados.get(i)).getValor()),
+							((IngressoMdl) dados.get(i)).getExpo(), ((IngressoMdl) dados.get(i)).getExpo()); // sis[i].getCategoria());
+				}
+			}
+			if(subCategoria.contains("Aqui")){
+				for (int i = 0; i < dados.size(); i++) {
+					dataset.addValue(Double.parseDouble(((ObraMdl) dados.get(i)).getPreco()),
+							((ObraMdl) dados.get(i)).getNome(), ((ObraMdl) dados.get(i)).getNome()); // sis[i].getCategoria());
+				}
+			}
 		}
-
 		return dataset;
 	}
 
