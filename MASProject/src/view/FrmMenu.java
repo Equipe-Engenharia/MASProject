@@ -37,7 +37,7 @@ public class FrmMenu extends JFrame{
 		desktopPane.setBackground(Color.gray); // Ajusta uma cor de fundo (opção caso a imagem de fundo dÃ� algum problema no programa)
       
 		
-		ImageIcon img = new ImageIcon("../MASProject/imagens/masp.jpg");
+		ImageIcon img = new ImageIcon("../MASProject/jcalendar-1.4 (1)/masp.jpg");
 		Image newImg = img.getImage();
 		//.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT);
 	//	setImage(new ImageIcon(newImg));
