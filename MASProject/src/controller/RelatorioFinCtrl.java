@@ -242,6 +242,8 @@ public class RelatorioFinCtrl implements ActionListener {
 									}else{
 										JOptionPane.showMessageDialog(form, "Não há dados de acordo com o filtro!");
 									}
+								}else if(subCategoria.contains("Aqui")){
+									//TODO
 								}
 							}
 						}

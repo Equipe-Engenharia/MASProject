@@ -85,10 +85,16 @@ public class RelatorioEstCtrl implements ActionListener {
 				for (int i = 0; i < dados.size(); i++) {
 					//result.setValue(((VisitanteMdl) dados.get(i)).getDataNasc(), value);
 				}
-			}else if (titulo.contains("genero")){
+			}else if (titulo.contains("gênero")){
+				int qtdeGenero[] = new int[2];
 				for (int i = 0; i < dados.size(); i++) {
-					result.setValue(((VisitanteMdl) dados.get(i)).getSexo(),1);
+					String sexo = ((VisitanteMdl) dados.get(i)).getSexo();
+					if(sexo.contains("Masc")) qtdeGenero[0] += 1;
+					if(sexo.contains("Fem")) qtdeGenero[1] += 1;
 				}
+				
+				result.setValue("Masculino",qtdeGenero[0]);
+				result.setValue("Feminino", qtdeGenero[1]);
 				
 			}else if (titulo.contains("idioma")){
 				for (int i = 0; i< dados.size(); i++){
@@ -133,7 +139,12 @@ public class RelatorioEstCtrl implements ActionListener {
 	private boolean filtroGrafico() {
 		String dataInicio = txtDataIni.getText();
 		String dataFim = txtDataFim.getText();
-		String categoria = cbFiltro.getSelectedItem().toString();
+
+		try{
+			categoria = cbFiltro.getSelectedItem().toString();
+		}catch(NullPointerException e){
+			categoria = "";
+		}
 
 		String titulo = "";
 		if (!dataInicio.trim().equals("/  /") || !dataFim.trim().equals("/  /")) {
@@ -154,7 +165,8 @@ public class RelatorioEstCtrl implements ActionListener {
 							criaGrafico(titulo, visitas);
 							return true;
 						}
-					} else if (categoria.contains("Sex")) {
+					} else if (categoria.contains("Sex")) { //Funcionando
+						lerArquivoIngresso();
 						lerArquivoVisitante();
 						if (visitas.size() > 0) {
 							titulo = "Estatística de gênero dos visitantes " + categoria + " - Período: " + dataInicio
@@ -210,19 +222,29 @@ public class RelatorioEstCtrl implements ActionListener {
 			arquivos.leArquivo("../MASProject/dados/", "visitante");
 			linha = arquivos.getBuffer();
 			String[] listaVisita = linha.split(";");
-			for (String s : listaVisita) {
-				String text = s.replace(".*: ", "");
-				list.add(text);
-				if (s.contains("---")) {
-					String data = list.get(2).toString();
-					if (validaData(data)) {
-						VisitanteMdl visita = new VisitanteMdl();
-						visita.setId(list.get(0));
-						visita.setNome(list.get(1));
-						visita.setDataNasc(list.get(2));
-						visita.setNacionalidade(list.get(3));
-						visita.setSexo(list.get(4));
-						visitas.add(visita);
+			if(categoria.contains("Sex")){
+				int masc = 0, fem = 0;
+				for (String s : listaVisita) {
+					String text = s.replaceAll(".*: ", "");
+					list.add(text);
+					if (s.contains("---")) {
+						for(int i = 0; i < ingressos.size(); i++){
+							if(list.get(0).equals(ingressos.get(i).getVisitaId())){
+								VisitanteMdl visita = new VisitanteMdl();
+								visita.setId(list.get(0));
+								visita.setNome(list.get(1));
+								System.out.println(list.get(1));
+								visita.setDataNasc(list.get(2));
+								visita.setNacionalidade(list.get(3));
+								visita.setSexo(list.get(4));
+								System.out.println(list.get(4));
+//								if(list.get(4).contains("Masc")) masc += 1;
+//								if(list.get(4).contains("Femi")) fem += 1;
+								visitas.add(visita);
+								list.clear();
+								i = ingressos.size() + 1;
+							}
+						}
 						list.clear();
 					}
 				}
@@ -232,9 +254,10 @@ public class RelatorioEstCtrl implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-
+	
 	private void lerArquivoIngresso() {
 		try {
+			arquivos = new ArquivosCtrl();
 			arquivos.leArquivo("../MASProject/dados/", "ingresso");
 			String linha = new String();
 			ArrayList<String> list = new ArrayList<>();
@@ -248,19 +271,20 @@ public class RelatorioEstCtrl implements ActionListener {
 					if (validaData(data)) {
 						IngressoMdl ingresso = new IngressoMdl();
 						ingresso.setId(null);
-						ingresso.setData(null);
+						ingresso.setData(list.get(1));
+						System.out.println(list.get(1));
 						ingresso.setHora(null);
 						ingresso.setBilhete(null);
 						ingresso.setExpo(null);
-						ingresso.setVisitaId(null);
+						ingresso.setVisitaId(list.get(5));
+						System.out.println(list.get(5));
 						ingresso.setVisitante(null);
+						System.out.println(list.get(6));
 						ingresso.setIngresso(list.get(7));
 						System.out.println(list.get(7));
 						ingresso.setQtd(null);
 						ingresso.setValor(null);
 						ingresso.setPagamento(null);
-						
-						
 						ingressos.add(ingresso);
 						list.clear();
 					}
@@ -276,19 +300,18 @@ public class RelatorioEstCtrl implements ActionListener {
 		SimpleDateFormat mascara = new SimpleDateFormat("ddMMyyyy");
 		try {
 			Date dataAtual = mascara.parse(dataDoArquivo.replace("/", "").replace("/", ""));
-			if (dataIni.before(dataFinal) || dataIni.compareTo(dataFinal) == 0) {
-				if (dataAtual.after(dataIni) && dataAtual.before(dataFinal) || dataAtual.compareTo(dataIni) == 0
-						|| dataAtual.compareTo(dataFinal) == 0) {
-					return true;
-				}
-			} else {
-				// JOptionPane.showMessageDialog(form, "Data inicial é maior do
-				// que a data final");
+			 if(dataIni.before(dataFinal) || dataIni.compareTo(dataFinal) == 0){
+				   if(dataAtual.after(dataIni) && dataAtual.before(dataFinal) 
+						   || dataAtual.compareTo(dataIni) == 0 || dataAtual.compareTo(dataFinal) == 0){
+					    return true;
+				   }
+			   }
+			 	else {
+				 JOptionPane.showMessageDialog(null, "Data inicial é maior do que a data final");
 				return false;
 			}
 		} catch (ParseException e) {
-			// JOptionPane.showMessageDialog(form, "Não foi possível converter a
-			// data do arquivo");
+			JOptionPane.showMessageDialog(null, "Não foi possível converter a data do arquivo");
 		}
 		return false;
 	}
