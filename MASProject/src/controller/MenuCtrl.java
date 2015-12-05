@@ -1,5 +1,8 @@
 package controller;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -8,13 +11,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.ParseException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
+import java.awt.Image;    
+import java.awt.Toolkit;
+import java.io.File;
+
 import view.FrmAcervoCad;
 import view.FrmAcervoEdit;
+import view.FrmAgendamento;
 import view.FrmArtistaCad;
 import view.FrmArtistaEdit;
 import view.FrmCategoriaCad;
@@ -37,6 +46,7 @@ import view.FrmVisitanteEdit;
 public class MenuCtrl implements ComponentListener{
 
 	private JDesktopPane desktop;
+	private Image imagem;  
 	private boolean validar;
 	SessaoCtrl log = SessaoCtrl.getInstance();
 
@@ -45,11 +55,14 @@ public class MenuCtrl implements ComponentListener{
 
 		this.desktop = desktop;
 		
+		//backGround();
 		limpaSessao();
 		login();
 		
 	}
 
+	// METODO NOVA SESSÃO //////////////////////////////   
+	
 	public void limpaSessao() {
 		SessaoCtrl log = SessaoCtrl.getInstance();
 
@@ -72,51 +85,34 @@ public class MenuCtrl implements ComponentListener{
 		}
 	}
 	
-	// MENSAGENS //////////////////////////////
+	
+	// METODO IMAGEM BACKGROUND //////////////////////////////    
+    
+  
 
-	public void msg(String tipo, String mensagem) {
+    public void backGround() {
+  
+    	try {    
+        	//imagem = Toolkit.getDefaultToolkit().createImage(new File("/MASProject/imagens/background.jpg").getAbsolutePath());    
+    		imagem = ImageIO.read(new File("../MASProject/imagens/background.jpg"));
+    	} catch (Exception ex) {
+        	JOptionPane.showMessageDialog(null, ex.getMessage());  
+        	System.out.println("" + ex.getMessage());  
+        	System.out.println("" + ex.getLocalizedMessage());  
+        	System.out.println(" " + ex.getStackTrace());
+        }  
+ 
+        if (imagem != null) {
+            Dimension dimension = desktop.getSize();    
+            int x = (int)(dimension.getWidth() - imagem.getWidth(desktop)) / 2;    
+            int y = (int)(dimension.getHeight() - imagem.getHeight(desktop)) / 2;    
 
-		switch (tipo) {
-
-		case "errorLog":
-			JOptionPane.showMessageDialog(null, 
-					"ACESSO NEGADO!\n\nPor favor, faça o login no sistema para acessar este recurso.", 
-					"Acesso não Autorizado",
-					JOptionPane.PLAIN_MESSAGE, 
-					new ImageIcon("../MASProject/icons/error.png"));
-			//System.exit(0);
-			break;
-
-		case "errorSession":
-			JOptionPane.showMessageDialog(null, 
-					"ACESSO NEGADO!\n\nPor favor, solicite a autorização de um administrador.", 
-					"Bloqueado", 
-					JOptionPane.PLAIN_MESSAGE,
-					new ImageIcon("../MASProject/icons/warning.png"));
-			break;
-
-		case "systemClose":
-			Object[] exit = { "Confirmar", "Cancelar" };  
-			int fechar = JOptionPane.showOptionDialog(null, "ATENÇÃO!\n\nDeseja encerrar a aplicação?",
-					"Fechamento do Programa!", 
-					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
-					new ImageIcon("../MASProject/icons/warning.png"), exit, exit[1]);
-			if (fechar == 0) {
-				validar = true;
-			} else {
-				validar = false;
-			}
-			break;
-
-		default:
-			JOptionPane.showMessageDialog(null, 
-					"ERRO! Algo não deveria ter acontecido�\n\nMenuCtrl - Termo: " + mensagem
-					+ "\n\nOcorreu no Controller desta Tela.", 
-					"Erro no Controller", 
-					JOptionPane.PLAIN_MESSAGE,
-					new ImageIcon("../MASProject/icons/error.png"));
-		}
-	}
+            desktop.getGraphics().drawImage(imagem, x, y, imagem.getWidth(desktop), imagem.getHeight(desktop), desktop);
+         } else {    
+        	desktop.getGraphics().drawString("Imagem nao encontrada", 50, 50);    
+        }    
+    }  
+	
 	
 	
 	// METODO CENTRALIZAR IFRAME //////////////////////////////
@@ -409,6 +405,23 @@ public class MenuCtrl implements ComponentListener{
 					desktop.add(desktop.getSelectedFrame());
 				}
 				break;
+				
+			case "agendaCadastrar":
+
+				if(desktop.getSelectedFrame() == null){
+					try {
+						desktop.setSelectedFrame(new FrmAgendamento());
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					desktop.getSelectedFrame().setVisible(true);
+					desktop.add(desktop.getSelectedFrame());
+				}
+				else if(!desktop.getSelectedFrame().isVisible()){
+					desktop.getSelectedFrame().setVisible(true);
+					desktop.add(desktop.getSelectedFrame());
+				}
+				break;
 
 			case "ingressoCadastrar":
 
@@ -466,6 +479,52 @@ public class MenuCtrl implements ComponentListener{
 			}
 		}
 		setPosicao();
+	}
+	
+	// MENSAGENS //////////////////////////////
+
+	public void msg(String tipo, String mensagem) {
+
+		switch (tipo) {
+
+		case "errorLog":
+			JOptionPane.showMessageDialog(null, 
+					"ACESSO NEGADO!\n\nPor favor, faça o login no sistema para acessar este recurso.", 
+					"Acesso não Autorizado",
+					JOptionPane.PLAIN_MESSAGE, 
+					new ImageIcon("../MASProject/icons/error.png"));
+			//System.exit(0);
+			break;
+
+		case "errorSession":
+			JOptionPane.showMessageDialog(null, 
+					"ACESSO NEGADO!\n\nPor favor, solicite a autorização de um administrador.", 
+					"Bloqueado", 
+					JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/warning.png"));
+			break;
+
+		case "systemClose":
+			Object[] exit = { "Confirmar", "Cancelar" };  
+			int fechar = JOptionPane.showOptionDialog(null, "ATENÇÃO!\n\nDeseja encerrar a aplicação?",
+					"Fechamento do Programa!", 
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
+					new ImageIcon("../MASProject/icons/warning.png"), exit, exit[1]);
+			if (fechar == 0) {
+				validar = true;
+			} else {
+				validar = false;
+			}
+			break;
+
+		default:
+			JOptionPane.showMessageDialog(null, 
+					"ERRO! Algo não deveria ter acontecido�\n\nMenuCtrl - Termo: " + mensagem
+					+ "\n\nOcorreu no Controller desta Tela.", 
+					"Erro no Controller", 
+					JOptionPane.PLAIN_MESSAGE,
+					new ImageIcon("../MASProject/icons/error.png"));
+		}
 	}
 
 
@@ -651,6 +710,15 @@ public class MenuCtrl implements ComponentListener{
 		public void actionPerformed(ActionEvent e) {
 
 			iForm("visitanteEditar");
+		}
+	};
+	
+	public ActionListener agendaCadastrar = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			iForm("agendaCadastrar");
 		}
 	};
 
